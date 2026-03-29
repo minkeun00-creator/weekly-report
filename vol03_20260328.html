@@ -40,11 +40,11 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .w{max-width:940px;margin:0 auto;padding:0 24px 48px;}
 
 /* WSJ SOURCE BAR */
-.wsj-bar{background:var(--cream);border-left:4px solid var(--ink);padding:10px 16px;margin:20px 0 0;font-family:var(--mono);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:12px;}
+.wsj-bar{background:var(--cream);border-left:4px solid var(--ink);padding:10px 16px;margin:20px 0 0;font-family:var(--mono);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .wsj-logo{font-family:var(--serif);font-size:14px;color:var(--ink);font-weight:bold;}
 
 /* SECTION HEAD */
-.sh{display:flex;align-items:center;gap:12px;margin:28px 0 14px;padding-top:8px;border-top:2px solid var(--ink);}
+.sh{display:flex;align-items:center;gap:12px;margin:28px 0 14px;padding-top:8px;border-top:2px solid var(--ink);flex-wrap:wrap;}
 .sh-lbl{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--muted);white-space:nowrap;}
 .sh-title{font-family:var(--serif);font-size:20px;line-height:1.1;}
 .pbadge{font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:2px;letter-spacing:1px;}
@@ -65,11 +65,11 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:20px;}
 .mkt-col{background:var(--paper);padding:16px;}
 .mkt-col-title{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;}
-.mkt-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--cream);}
+.mkt-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--cream);gap:6px;}
 .mkt-row:last-child{border-bottom:none;}
-.mkt-name{font-size:11px;color:var(--ink);}
-.mkt-val{font-family:var(--mono);font-size:11px;font-weight:500;}
-.mkt-chg{font-family:var(--mono);font-size:10px;padding:1px 5px;border-radius:2px;}
+.mkt-name{font-size:11px;color:var(--ink);flex:1;min-width:0;}
+.mkt-val{font-family:var(--mono);font-size:11px;font-weight:500;white-space:nowrap;}
+.mkt-chg{font-family:var(--mono);font-size:10px;padding:1px 5px;border-radius:2px;white-space:nowrap;flex-shrink:0;}
 .up{color:var(--green);} .dn{color:var(--red);}
 .up-bg{background:var(--green-bg);color:var(--green);}
 .dn-bg{background:var(--red-bg);color:var(--red);}
@@ -78,7 +78,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 /* WSJ NEWS FLOW */
 .news-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
 .news-item{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--rule);background:var(--paper);}
-.news-tag{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:2px;white-space:nowrap;letter-spacing:.5px;}
+.news-tag{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:2px;white-space:nowrap;letter-spacing:.5px;flex-shrink:0;}
 .nt-break{background:#b83232;color:#fff;}
 .nt-mkt{background:#b06010;color:#fff;}
 .nt-geo{background:#184898;color:#fff;}
@@ -93,7 +93,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .cc-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid var(--cream);}
 .cc-nm{font-family:var(--mono);font-size:11px;font-weight:500;}
 .cc-nm span{color:var(--muted);font-weight:400;}
-.sb{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:2px;letter-spacing:.8px;}
+.sb{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:2px;letter-spacing:.8px;flex-shrink:0;}
 .sb-f{background:var(--red-bg);color:var(--red);}
 .sb-g{background:var(--amber-bg);color:var(--amber);}
 .sb-b{background:var(--green-bg);color:var(--green);}
@@ -112,7 +112,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .xc-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;color:#fff;flex-shrink:0;}
 .xc-handle{font-family:var(--mono);font-size:10px;font-weight:500;}
 .xc-desc{font-size:10px;color:var(--muted);margin-top:1px;}
-.xs{margin-left:auto;font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:2px;}
+.xs{margin-left:auto;font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:2px;flex-shrink:0;}
 .xs-bear{background:var(--red-bg);color:var(--red);}
 .xs-bull{background:var(--green-bg);color:var(--green);}
 .xs-warn{background:var(--amber-bg);color:var(--amber);}
@@ -121,9 +121,10 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .xc-meta{font-family:var(--mono);font-size:9px;color:var(--muted);display:flex;gap:8px;}
 
 /* TREND TABLE */
-.tt{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:20px;}
+.tt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:20px;}
+.tt{width:100%;border-collapse:collapse;font-size:11px;min-width:560px;}
 .tt thead tr{border-bottom:2px solid var(--ink);}
-.tt th{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:7px 7px;text-align:left;font-weight:500;}
+.tt th{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:7px 7px;text-align:left;font-weight:500;white-space:nowrap;}
 .tt td{padding:8px 7px;border-bottom:1px solid var(--cream);vertical-align:middle;}
 .tt tr:hover td{background:var(--cream);}
 .ttag{font-family:var(--mono);font-size:10px;font-weight:500;background:var(--ink);color:var(--paper);padding:2px 5px;border-radius:2px;}
@@ -198,9 +199,154 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .ch-title{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 
 /* FOOTER */
-.footer{border-top:2px solid var(--ink);padding:16px 0;display:flex;justify-content:space-between;align-items:flex-start;margin-top:24px;}
+.footer{border-top:2px solid var(--ink);padding:16px 0;display:flex;justify-content:space-between;align-items:flex-start;margin-top:24px;flex-wrap:wrap;gap:12px;}
 .fl{font-family:var(--mono);font-size:9px;color:var(--muted);line-height:1.8;}
 .fr{font-size:10px;color:var(--muted);max-width:300px;text-align:right;line-height:1.5;}
+
+/* ================================================
+   MOBILE RESPONSIVE — 768px 이하
+   ================================================ */
+@media (max-width: 768px) {
+
+  /* 전체 패딩 줄이기 */
+  .w { padding: 0 14px 36px; }
+
+  /* 마스트헤드 */
+  .mh-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px 16px 14px;
+  }
+  .mh-title { font-size: clamp(22px, 6vw, 32px); }
+  .mh-eye { font-size: 8px; letter-spacing: 2px; }
+  .mh-r { text-align: left; }
+  .mh-iss { font-size: 15px; }
+  .mh-tickers {
+    padding: 8px 14px;
+    gap: 5px;
+  }
+  .tick { font-size: 9px; padding: 3px 7px; }
+  .mh-warn { margin-left: 0; font-size: 9px; }
+
+  /* 섹션 헤더 */
+  .sh { gap: 8px; margin: 22px 0 12px; }
+  .sh-title { font-size: 16px; }
+  .sh-lbl { font-size: 8px; }
+
+  /* 요약 스트립: 5열 → 2+3 분리 */
+  .sum-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sum-strip .sc:last-child {
+    grid-column: 1 / -1;
+  }
+  .sc { padding: 11px 10px; }
+  .sc-v { font-size: 18px; }
+  .sc-l { font-size: 7px; }
+  .sc-s { font-size: 8px; }
+
+  /* 마켓 그리드: 2열 → 1열 */
+  .mkt-grid {
+    grid-template-columns: 1fr;
+  }
+  .mkt-name { font-size: 11px; }
+  .mkt-val { font-size: 11px; }
+
+  /* 커뮤니티 카드: 2열 → 1열 */
+  .comm-grid {
+    grid-template-columns: 1fr;
+  }
+  .cc { padding: 14px; }
+  .cc-hl { font-size: 13px; }
+  .cc-bd { font-size: 11px; }
+
+  /* X 카드: 3열 → 1열 */
+  .x-grid {
+    grid-template-columns: 1fr;
+  }
+  .xc { padding: 13px; }
+
+  /* 트렌드 테이블: 가로 스크롤 */
+  .tt-wrap {
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  .tt { min-width: 520px; }
+  .tt th, .tt td { padding: 7px 6px; }
+
+  /* 키워드 클라우드: 2열 → 1열 */
+  .kw-row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .kw-sec { padding: 16px 14px; }
+  .kxl { font-size: 13px; padding: 4px 9px; }
+  .klg { font-size: 11px; padding: 3px 8px; }
+
+  /* VS 비교: 3열 → 1열 (VS 배지 수평으로) */
+  .vs-wrap {
+    grid-template-columns: 1fr;
+  }
+  .vs-col.vc-r { border-right: none; border-bottom: 1px solid var(--rule); }
+  .vs-col.vc-x { border-left: none; }
+  .vs-mid {
+    padding: 10px;
+    writing-mode: horizontal-tb;
+    font-size: 14px;
+  }
+  .vs-col { padding: 14px; }
+  .vs-tx { font-size: 11px; }
+
+  /* 시그널 그리드: 4열 → 2열 */
+  .sig-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sig { padding: 12px; }
+  .sig-v { font-size: 24px; }
+  .sig-d { font-size: 10px; }
+
+  /* 차트: 3열 → 1열 */
+  .ch-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .ch-card { padding: 12px; }
+
+  /* 인사이트 */
+  .ins { padding: 11px 12px; gap: 9px; }
+  .ins-title { font-size: 11px; }
+  .ins-body { font-size: 11px; }
+
+  /* 다음주 그리드: 3열 → 1열 */
+  .nw-grid {
+    grid-template-columns: 1fr;
+  }
+  .nwc { padding: 12px 13px; }
+
+  /* 푸터 */
+  .footer { flex-direction: column; }
+  .fr { text-align: left; max-width: 100%; }
+
+  /* WSJ 소스바 */
+  .wsj-bar { font-size: 9px; flex-direction: column; align-items: flex-start; gap: 4px; }
+  .wsj-bar span[style] { margin-left: 0 !important; }
+
+  /* 알림 박스 */
+  .alert-t { font-size: 14px; }
+  .alert-b { font-size: 11px; }
+}
+
+/* 소형 폰 추가 보정 (480px 이하) */
+@media (max-width: 480px) {
+  .mh-title { font-size: 20px; }
+  .sum-strip { grid-template-columns: 1fr 1fr; }
+  .sh-title { font-size: 14px; }
+  .sig-grid { grid-template-columns: 1fr 1fr; }
+  .cc-nm { font-size: 10px; }
+  .ins { grid-template-columns: 20px 1fr; gap: 8px; }
+  .ins-n { font-size: 16px; }
+}
 </style>
 </head>
 <body>
@@ -508,6 +654,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
   <span class="pbadge pb-both">REDDIT+X</span>
 </div>
 
+<div class="tt-wrap">
 <table class="tt">
   <thead>
     <tr>
@@ -573,6 +720,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
     </tr>
   </tbody>
 </table>
+</div>
 
 <!-- SECTION 07: KEYWORDS -->
 <div class="sh">
