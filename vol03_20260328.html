@@ -347,6 +347,134 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
   .ins { grid-template-columns: 20px 1fr; gap: 8px; }
   .ins-n { font-size: 16px; }
 }
+
+/* ================================================
+   PRINT STYLES — 인쇄 최적화
+   ================================================ */
+@media print {
+  /* 컬러 배경·색상 그대로 인쇄 */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 페이지 여백 및 크기 */
+  @page {
+    size: A4;
+    margin: 12mm 10mm 15mm;
+  }
+
+  /* 기본 폰트 축소 */
+  body { font-size: 10.5px; line-height: 1.55; }
+
+  /* 전체 너비 활용 */
+  .w { padding: 0 0 20px; max-width: 100%; }
+  .mh-top, .mh-tickers { max-width: 100% !important; padding-left: 10px !important; padding-right: 10px !important; }
+
+  /* 마스트헤드: 첫 페이지 상단에 고정 */
+  .mh { page-break-after: avoid; break-after: avoid; }
+  .mh-title { font-size: 26px; }
+  .mh-tickers { padding: 6px 10px; }
+  .tick { font-size: 9px; padding: 2px 7px; }
+
+  /* WSJ 소스바 */
+  .wsj-bar { margin: 10px 0 0; padding: 7px 12px; font-size: 9px; }
+
+  /* 섹션 헤더: 다음 내용과 함께 유지 */
+  .sh { margin: 18px 0 10px; padding-top: 6px; page-break-after: avoid; break-after: avoid; }
+  .sh-title { font-size: 15px; }
+
+  /* ── 요약 스트립 ── */
+  .sum-strip { grid-template-columns: repeat(5, 1fr); margin: 10px 0 14px; page-break-inside: avoid; break-inside: avoid; }
+  .sc { padding: 9px 8px; }
+  .sc-v { font-size: 18px; }
+  .sc-l { font-size: 7px; }
+
+  /* ── 마켓 테이블 ── */
+  .mkt-grid { grid-template-columns: 1fr 1fr; page-break-inside: avoid; break-inside: avoid; margin-bottom: 12px; }
+  .mkt-col { padding: 10px; }
+  .mkt-name { font-size: 10px; }
+  .mkt-val { font-size: 10px; }
+  .mkt-chg { font-size: 9px; }
+  .mkt-row { padding: 3px 0; }
+
+  /* ── 뉴스 리스트 ── */
+  .news-list { gap: 5px; margin-bottom: 12px; }
+  .news-item { padding: 8px 10px; page-break-inside: avoid; break-inside: avoid; }
+  .news-body { font-size: 10px; }
+  .news-ref { font-size: 8px; }
+  .news-tag { font-size: 8px; }
+
+  /* ── 알림 박스 ── */
+  .alert { padding: 9px 12px; margin-bottom: 12px; page-break-inside: avoid; break-inside: avoid; }
+  .alert-t { font-size: 12px; }
+  .alert-b { font-size: 10px; }
+
+  /* ── 커뮤니티 카드 (2열 유지) ── */
+  .comm-grid { grid-template-columns: 1fr 1fr; margin-bottom: 12px; }
+  .cc { padding: 10px; page-break-inside: avoid; break-inside: avoid; }
+  .cc-hl { font-size: 11px; }
+  .cc-bd { font-size: 10px; }
+  .pt { font-size: 10px; }
+
+  /* ── X 인플루언서 카드 (3열 유지) ── */
+  .x-grid { grid-template-columns: repeat(3, 1fr); margin-bottom: 12px; }
+  .xc { padding: 9px; page-break-inside: avoid; break-inside: avoid; }
+  .xc-quote { font-size: 10px; }
+  .xc-meta { font-size: 8px; }
+
+  /* ── 트렌드 테이블 ── */
+  .tt-wrap { overflow: visible; margin-bottom: 12px; page-break-inside: avoid; break-inside: avoid; }
+  .tt { min-width: auto; width: 100%; font-size: 10px; }
+  .tt th { font-size: 7px; padding: 5px; }
+  .tt td { padding: 5px; }
+  .tt tr { page-break-inside: avoid; break-inside: avoid; }
+  .tt tr:hover td { background: transparent; }
+
+  /* ── 키워드 클라우드 ── */
+  .kw-sec { padding: 12px 14px; margin-bottom: 12px; page-break-inside: avoid; break-inside: avoid; }
+  .kw-row { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .kxl { font-size: 12px; padding: 3px 8px; }
+  .klg { font-size: 10px; padding: 3px 7px; }
+  .kmd { font-size: 9px; padding: 2px 5px; }
+  .ksm { font-size: 8px; padding: 2px 4px; }
+
+  /* ── VS 비교 ── */
+  .vs-wrap { page-break-inside: avoid; break-inside: avoid; margin-bottom: 12px; }
+  .vs-col { padding: 10px; }
+  .vs-tx { font-size: 10px; }
+  .vs-note { font-size: 9px; }
+
+  /* ── 시그널 그리드 (4열 유지) ── */
+  .sig-grid { grid-template-columns: repeat(4, 1fr); margin-bottom: 12px; page-break-inside: avoid; break-inside: avoid; }
+  .sig { padding: 10px; }
+  .sig-v { font-size: 24px; }
+  .sig-d { font-size: 9px; }
+  .sig-src { font-size: 7px; }
+
+  /* ── 차트 섹션 ── */
+  .ch-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+  .ch-card { padding: 9px; page-break-inside: avoid; break-inside: avoid; }
+  .ch-title { font-size: 7px; margin-bottom: 6px; }
+  canvas { max-height: 130px !important; }
+
+  /* ── 인사이트 ── */
+  .ins-list { gap: 6px; margin-bottom: 12px; }
+  .ins { padding: 9px 10px; page-break-inside: avoid; break-inside: avoid; }
+  .ins-title { font-size: 10.5px; }
+  .ins-body { font-size: 10px; }
+
+  /* ── 다음 주 그리드 (3열) ── */
+  .nw-grid { grid-template-columns: repeat(3, 1fr); margin-bottom: 12px; }
+  .nwc { padding: 9px 10px; page-break-inside: avoid; break-inside: avoid; }
+  .nwc-title { font-size: 11px; }
+  .nwc-body { font-size: 10px; }
+
+  /* ── 푸터 ── */
+  .footer { padding: 10px 0; margin-top: 14px; }
+  .fl { font-size: 8px; }
+  .fr { font-size: 9px; }
+}
 </style>
 </head>
 <body>

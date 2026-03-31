@@ -168,6 +168,158 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
   .kw-grid{grid-template-columns:1fr;}
   .sc-v{font-size:18px;}
 }
+
+/* ================================================
+   PRINT STYLES — 인쇄 최적화 (다크→라이트 전환)
+   ================================================ */
+@media print {
+  /* 컬러 그대로 인쇄 */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 페이지 설정 */
+  @page { size: A4; margin: 12mm 10mm 15mm; }
+
+  /* 다크 → 라이트 모드 전환 */
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f7;
+    --bg3: #ebebed;
+    --border: #d0d0d8;
+    --text: #111111;
+    --muted: #555566;
+    --dim: #c0c0cc;
+    --red: #cc2020;
+    --red-dim: rgba(200,30,30,.1);
+    --blue: #1a50c8;
+    --blue-dim: rgba(30,80,200,.1);
+    --amber: #b06000;
+    --amber-dim: rgba(176,96,0,.1);
+    --green: #0a8040;
+    --green-dim: rgba(10,128,64,.1);
+    --purple: #7030c0;
+    --purple-dim: rgba(112,48,192,.1);
+  }
+
+  body { font-size: 10.5px; line-height: 1.55; background: #fff; color: #111; }
+
+  /* 전체 너비 */
+  .w { padding: 0 0 20px; max-width: 100%; }
+  .mh-inner { padding: 0 10px; }
+
+  /* 마스트헤드 라이트 변환 */
+  .mh {
+    background: #f0f0f5 !important;
+    border-bottom: 2px solid #111 !important;
+    padding: 16px 0 0;
+  }
+  .mh-title { color: #111 !important; font-size: 26px; }
+  .mh-title .accent { color: var(--red) !important; }
+  .mh-title .sub { color: #555 !important; font-size: 13px; }
+  .mh-eyebrow { color: #888 !important; }
+  .mh-vol { color: #888 !important; }
+  .mh-issue { color: #333 !important; }
+  .mh-bar { border-top: 1px solid #ccc !important; padding: 7px 0; }
+
+  /* 티커 배지 */
+  .tick, [class*="tk-"] { border-width: 1px; }
+  .tk-r { background: rgba(200,30,30,.1) !important; color: #cc2020 !important; border-color: rgba(200,30,30,.3) !important; }
+  .tk-b { background: rgba(30,80,200,.1) !important; color: #1a50c8 !important; border-color: rgba(30,80,200,.3) !important; }
+  .tk-a { background: rgba(176,96,0,.1) !important; color: #b06000 !important; border-color: rgba(176,96,0,.3) !important; }
+  .tk-g { background: rgba(10,128,64,.1) !important; color: #0a8040 !important; border-color: rgba(10,128,64,.3) !important; }
+  .tk-n { background: #ebebed !important; color: #555 !important; }
+
+  /* 섹션 헤더 */
+  .sh { margin: 16px 0 9px; padding-top: 6px; border-top: 1px solid #ccc; page-break-after: avoid; break-after: avoid; }
+  .sh-title { font-size: 14px; color: #111; }
+  .sh-num { color: #888; }
+
+  /* 노티스 바 */
+  .notice { background: #f5f5f2 !important; border-color: #ccc !important; border-left-color: #b06000 !important; color: #555 !important; }
+  .notice span { color: #b06000 !important; }
+
+  /* ── 요약 스트립 ── */
+  .sum-strip { grid-template-columns: repeat(4, 1fr); margin: 10px 0 14px; page-break-inside: avoid; break-inside: avoid; }
+  .sc { background: #f0f0f5 !important; padding: 9px 10px; }
+  .sc-l { color: #888 !important; font-size: 7px; }
+  .sc-v { font-size: 17px; }
+  .sc-v.r { color: var(--red) !important; }
+  .sc-v.a { color: var(--amber) !important; }
+  .sc-v.g { color: var(--green) !important; }
+  .sc-v.b { color: var(--blue) !important; }
+  .sc-s { color: #888 !important; font-size: 8px; }
+
+  /* ── HOT 테이블 ── */
+  .hot-wrap { overflow: visible; page-break-inside: avoid; break-inside: avoid; border-color: #ccc !important; }
+  .hot-table { width: 100%; min-width: auto; font-size: 10px; }
+  .hot-table th { background: #f0f0f5 !important; color: #888 !important; padding: 6px 8px; font-size: 7px; }
+  .hot-table td { background: #fff !important; padding: 6px 8px; border-bottom-color: #e8e8ee !important; }
+  .hot-table tr:hover td { background: #fff !important; }
+  .hot-table tr { page-break-inside: avoid; break-inside: avoid; }
+  .rank { color: #888 !important; }
+  .rank.top { color: var(--red) !important; }
+  .stock-name { color: #111 !important; font-size: 11px; }
+  .views-count { color: #333 !important; }
+
+  /* ── 알림 박스 ── */
+  .alert { page-break-inside: avoid; break-inside: avoid; margin-bottom: 10px; padding: 9px 12px; }
+  .alert-t { font-size: 12px; color: #111 !important; }
+  .alert-b { font-size: 10px; color: #333 !important; }
+
+  /* ── 클러스터 카드 (2열) ── */
+  .cluster-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cluster-card { background: #f5f5f7 !important; border-color: #d0d0d8 !important; padding: 10px; page-break-inside: avoid; break-inside: avoid; }
+  .cluster-head { border-bottom-color: #d0d0d8 !important; }
+  .cluster-name { color: #111 !important; font-size: 12px; }
+  .cluster-note { color: #555 !important; font-size: 10px; }
+  .cluster-titles { border-top-color: #d0d0d8 !important; }
+  .ct { color: #888 !important; font-size: 9px; }
+  .ct::before { color: #bbb !important; }
+  .cs { background: #ebebed !important; color: #333 !important; border-color: #ccc !important; font-size: 9px; }
+  .cs.hot { background: rgba(200,30,30,.1) !important; color: #cc2020 !important; border-color: rgba(200,30,30,.25) !important; }
+  .cs.warm { background: rgba(176,96,0,.1) !important; color: #b06000 !important; border-color: rgba(176,96,0,.25) !important; }
+  .cs.cool { background: rgba(30,80,200,.1) !important; color: #1a50c8 !important; border-color: rgba(30,80,200,.25) !important; }
+
+  /* ── 심리 온도계 ── */
+  .thermo-grid { grid-template-columns: 1fr 2fr; gap: 1px; page-break-inside: avoid; break-inside: avoid; }
+  .thermo-gauge { background: #f0f0f5 !important; padding: 16px; }
+  .thermo-num { font-size: 44px; }
+  .thermo-detail { background: #f5f5f7 !important; padding: 14px; }
+  .td-title { color: #888 !important; }
+  .td-label { font-size: 10px; }
+  .td-bar-bg { background: #ddd !important; }
+  .td-note { color: #555 !important; font-size: 9px; border-top-color: #d0d0d8 !important; }
+  .td-val { color: #888 !important; font-size: 9px; }
+
+  /* ── 차트 ── */
+  .ch-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ch-card { background: #f5f5f7 !important; border-color: #d0d0d8 !important; padding: 10px; page-break-inside: avoid; break-inside: avoid; }
+  .ch-title { color: #888 !important; font-size: 7px; }
+  canvas { max-height: 160px !important; }
+
+  /* ── 인사이트 ── */
+  .ins-list { gap: 6px; }
+  .ins { background: #f5f5f7 !important; border-color: #d0d0d8 !important; padding: 9px 10px; page-break-inside: avoid; break-inside: avoid; }
+  .ins-n { color: #ccc !important; }
+  .ins-title { color: #111 !important; font-size: 10.5px; }
+  .ins-body { color: #555 !important; font-size: 10px; }
+
+  /* ── 배지 ── */
+  .badge { font-size: 7px; }
+  .bd-r { background: rgba(200,30,30,.1) !important; color: #cc2020 !important; border-color: rgba(200,30,30,.25) !important; }
+  .bd-b { background: rgba(30,80,200,.1) !important; color: #1a50c8 !important; border-color: rgba(30,80,200,.25) !important; }
+  .bd-a { background: rgba(176,96,0,.1) !important; color: #b06000 !important; border-color: rgba(176,96,0,.25) !important; }
+  .bd-g { background: rgba(10,128,64,.1) !important; color: #0a8040 !important; border-color: rgba(10,128,64,.25) !important; }
+  .bd-p { background: rgba(112,48,192,.1) !important; color: #7030c0 !important; border-color: rgba(112,48,192,.25) !important; }
+
+  /* ── 푸터 ── */
+  .footer { border-top-color: #ccc !important; padding: 10px 0; margin-top: 14px; }
+  .fl { color: #888 !important; font-size: 8px; }
+  .fl .link { color: var(--blue) !important; }
+  .fr { color: #888 !important; font-size: 9px; }
+}
 </style>
 </head>
 <body>
