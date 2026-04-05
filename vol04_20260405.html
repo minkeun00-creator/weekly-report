@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reddit × X 위클리 센티먼트 리포트 Vol.04 | 2026.04.05</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111010;
+    --paper: #f4f1ea;
+    --accent: #c8382a;
+    --gold: #b8860b;
+    --muted: #6b6560;
+    --border: #d6d0c8;
+    --card: #ede9e0;
+    --green: #1a7a3c;
+    --red: #c8382a;
+    --blue: #1a4a7a;
+    --orange: #d4620a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px 28px;
+  }
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(244,241,234,0.2);
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .masthead-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 5vw, 34px);
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--paper);
+  }
+  .masthead-brand span { color: #e8a04a; }
+  .masthead-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(244,241,234,0.55);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .war-banner {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-align: center;
+    padding: 7px 20px;
+  }
+
+  /* ── TICKER STRIP ── */
+  .ticker-strip {
+    background: var(--ink);
+    border-top: 1px solid rgba(244,241,234,0.1);
+    overflow: hidden;
+    padding: 10px 0;
+  }
+  .ticker-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .tick {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: rgba(244,241,234,0.8);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .tick-name { color: rgba(244,241,234,0.5); font-size: 10px; }
+  .tick-val { color: var(--paper); font-weight: 500; }
+  .tick-chg { font-size: 11px; }
+  .up { color: #4ade80; }
+  .dn { color: #f87171; }
+  .flat { color: #94a3b8; }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+  }
+
+  .section { margin-bottom: 44px; }
+
+  /* ── WSJ NEWS FLOW ── */
+  .headline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  @media(max-width:600px){.headline-grid{grid-template-columns:1fr;}}
+  .headline-item {
+    padding: 16px 18px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .headline-item:nth-child(2n){border-right:none;}
+  .headline-item:nth-last-child(-n+2){border-bottom:none;}
+  @media(max-width:600px){
+    .headline-item{border-right:none;}
+    .headline-item:last-child{border-bottom:none;}
+  }
+  .hl-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .hl-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(15px, 2.5vw, 17px);
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .hl-body {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── REDDIT CARDS ── */
+  .reddit-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media(max-width:600px){.reddit-cards{grid-template-columns:1fr;}}
+  .reddit-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 18px;
+  }
+  .reddit-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .subreddit-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .sentiment-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .s-bull { background: #d1fae5; color: #065f46; }
+  .s-bear { background: #fee2e2; color: #991b1b; }
+  .s-neutral { background: #f1f5f9; color: #475569; }
+  .s-mixed { background: #fef3c7; color: #92400e; }
+  .card-topics { list-style: none; margin-top: 10px; }
+  .card-topics li {
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .card-topics li:last-child { border-bottom: none; }
+  .topic-icon { font-size: 11px; flex-shrink: 0; }
+  .card-summary {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.6;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── X INFLUENCER CARDS ── */
+  .x-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+  @media(max-width:768px){.x-cards{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.x-cards{grid-template-columns:1fr;}}
+  .x-card {
+    border: 1px solid var(--border);
+    padding: 16px;
+    background: var(--paper);
+    position: relative;
+  }
+  .x-card::before {
+    content: 'X';
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--border);
+    font-weight: 500;
+  }
+  .x-handle {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    margin-bottom: 4px;
+  }
+  .x-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .x-stance {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .x-signal {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    display: inline-block;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    overflow-x: auto;
+    display: block;
+  }
+  .compare-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+    background: var(--card);
+  }
+  .compare-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: var(--card); }
+  .ticker-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 7px;
+    display: inline-block;
+    letter-spacing: 0.5px;
+  }
+  .score-bar {
+    height: 6px;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  .bar-bull { background: #10b981; }
+  .bar-bear { background: #ef4444; }
+
+  /* ── SIGNAL INDICATORS ── */
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  @media(max-width:600px){.signal-grid{grid-template-columns:1fr 1fr;}}
+  .signal-box {
+    border: 1px solid var(--border);
+    padding: 16px 14px;
+    text-align: center;
+    background: var(--card);
+  }
+  .signal-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .signal-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .signal-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--ink);
+  }
+
+  /* ── CHART (SVG) ── */
+  .chart-wrap {
+    border: 1px solid var(--border);
+    padding: 20px;
+    background: var(--card);
+    overflow-x: auto;
+  }
+  .chart-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── INSIGHTS ── */
+  .insights-block {
+    border-left: 3px solid var(--accent);
+    padding: 20px 24px;
+    background: var(--card);
+    margin-bottom: 16px;
+  }
+  .insight-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .insight-body {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #2a2826;
+  }
+
+  /* ── WATCHLIST ── */
+  .watchlist {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media(max-width:600px){.watchlist{grid-template-columns:1fr 1fr;}}
+  .watch-item {
+    border: 1px solid var(--border);
+    padding: 14px;
+    background: var(--paper);
+  }
+  .watch-ticker {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 3px;
+  }
+  .watch-name {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .watch-reason {
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .watch-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 6px;
+    display: inline-block;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    @page { size: A4; margin: 12mm; }
+    body { font-size: 10.5px; background: #fff; color: #000; }
+    .war-banner, .ticker-strip { display: none; }
+    .masthead { background: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    * { page-break-inside: avoid; }
+    .headline-grid, .reddit-cards, .x-cards, .watchlist { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- WAR BANNER -->
+<div class="war-banner">⚠ BREAKING — 이란전 5주차 진입 | 호르무즈 해협 봉쇄 지속 | 미군 F-15E·A-10 피격 | WTI $111.54</div>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-top">
+      <div class="masthead-brand">Reddit<span> × </span>X<br>위클리 센티먼트 리포트</div>
+      <div class="masthead-meta">
+        VOL.04 / 2026.04.05<br>
+        Buy-Side Weekly<br>
+        Powered by WSJ · Reddit · X
+      </div>
+    </div>
+    <div style="font-size:13px; color:rgba(244,241,234,0.7); line-height:1.7;">
+      이란 전쟁 5주차, 호르무즈 봉쇄 지속 · 3월 고용 서프라이즈 +178K · 시장 전쟁 종전 기대감으로 주간 +3~4% 반등 · 드러켄밀러 하우스 바이사이드 시각
+    </div>
+  </div>
+</div>
+
+<!-- TICKER STRIP -->
+<div class="ticker-strip">
+  <div class="ticker-inner">
+    <div class="tick"><span class="tick-name">DJIA</span><span class="tick-val">46,504</span><span class="tick-chg up">+2.96%↑</span></div>
+    <div class="tick"><span class="tick-name">S&P500</span><span class="tick-val">6,582</span><span class="tick-chg up">+3.36%↑</span></div>
+    <div class="tick"><span class="tick-name">NASDAQ</span><span class="tick-val">21,879</span><span class="tick-chg up">+4.44%↑</span></div>
+    <div class="tick"><span class="tick-name">WTI</span><span class="tick-val">$111.54</span><span class="tick-chg up">+11.94%↑</span></div>
+    <div class="tick"><span class="tick-name">GOLD</span><span class="tick-val">$4,651</span><span class="tick-chg up">+3.54%↑</span></div>
+    <div class="tick"><span class="tick-name">10Y UST</span><span class="tick-val">4.344%</span><span class="tick-chg dn">↑ yld</span></div>
+    <div class="tick"><span class="tick-name">VIX</span><span class="tick-val">23.87</span><span class="tick-chg up">-23.12%↓</span></div>
+    <div class="tick"><span class="tick-name">EUR/USD</span><span class="tick-val">1.1521</span><span class="tick-chg flat">→</span></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- WSJ 뉴스플로우 -->
+  <div class="section">
+    <div class="section-label">WSJ Market Brief — 2026.04.04–05</div>
+    <div class="headline-grid">
+      <div class="headline-item">
+        <div class="hl-tag">🔴 지정학 / 에너지</div>
+        <div class="hl-title">미군 F-15E·A-10 피격<br>호르무즈 봉쇄 5주째</div>
+        <div class="hl-body">이란이 처음으로 미군 전투기 2대를 격추. 호르무즈 해협 봉쇄 지속으로 WTI $111 돌파. 트럼프 "2~3주 내 강력 타격" 발언. 마크롱 불화.</div>
+      </div>
+      <div class="headline-item">
+        <div class="hl-tag">📈 고용</div>
+        <div class="hl-title">3월 비농업 고용 +178,000<br>예상치(+59K) 대폭 상회</div>
+        <div class="hl-body">헬스케어 +90K 주도. 실업률 4.3%로 하락. 노동참가율 61.9%로 2021년 이후 최저. 연방정부 일자리 -18K 계속. 고용은 견조하나 이란전 영향 아직 미반영.</div>
+      </div>
+      <div class="headline-item">
+        <div class="hl-tag">🏦 연준 / 금리</div>
+        <div class="hl-title">연준 금리 동결 전망 강화<br>4월 28~29일 회의 주목</div>
+        <div class="hl-body">10년물 국채금리 4.344%. CME 연내 동결 확률 76%. 고유가·기저 인플레 3%가 금리 인하 문을 닫음. 파월 "전쟁이 스태그플레이션 딜레마 위험 키워".</div>
+      </div>
+      <div class="headline-item">
+        <div class="hl-tag">📊 시장</div>
+        <div class="hl-title">주간 S&P +3.36%<br>종전 기대감 반등</div>
+        <div class="hl-body">Good Friday 휴장 속 목요일 마감. 종전 기대로 주간 3~4% 반등. S&P YTD -3.8% 여전히 마이너스. VIX 23.87로 급락. 폴리마켓 4월내 美지상군 진입 87%.</div>
+      </div>
+      <div class="headline-item">
+        <div class="hl-tag">💼 정치 / 예산</div>
+        <div class="hl-title">트럼프 군사예산 $1.5조<br>법무장관 Bondi 전격 해임</div>
+        <div class="hl-body">FY2027 국방예산 사상 최대 $1.5T 요청. 비국방 10% 삭감 계획. Pam Bondi 법무장관 해임, Zeldin 거론. Epstein 파일 처리 불만이 주요 원인.</div>
+      </div>
+      <div class="headline-item">
+        <div class="hl-tag">🛢️ 원자재 / 물가</div>
+        <div class="hl-title">서비스 PMI 49.8 수축<br>가솔린 평균 $4.09/갤런</div>
+        <div class="hl-body">S&P 글로벌 서비스 PMI 3년 만에 최초 수축. 에너지 충격이 소비 심리 압박. 디젤 $5.53. 달걀 외 초콜릿·사탕도 10% 이상 가격 상승. 코코아 정상화 지연.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reddit 커뮤니티 심리 -->
+  <div class="section">
+    <div class="section-label">Reddit 커뮤니티 센티먼트 — 주간 분석</div>
+    <div class="reddit-cards">
+
+      <div class="reddit-card">
+        <div class="reddit-card-header">
+          <span class="subreddit-name">r/wallstreetbets</span>
+          <span class="sentiment-pill s-bull">강세 🔥</span>
+        </div>
+        <ul class="card-topics">
+          <li><span class="topic-icon">🚀</span>방산주(LMT·RTX·HII) 폭등 베팅 열기</li>
+          <li><span class="topic-icon">🛢️</span>에너지주 OXY·CVX 콜옵션 집중</li>
+          <li><span class="topic-icon">💥</span>PLTR 방위산업 AI 수혜 론 밈 확산</li>
+          <li><span class="topic-icon">📉</span>테슬라 Q1 판매 쇼크 쇼트 증가</li>
+          <li><span class="topic-icon">🏦</span>JPM 어닝 기대감 선제 매수</li>
+        </ul>
+        <div class="card-summary">이란전 방산 테마 집중. "전쟁 = 방산 YOLO" 정서 지배. 에너지주 콜옵션 매수 폭증. 단, 종전 베팅 양방향 갭리스크 경고 목소리도.</div>
+      </div>
+
+      <div class="reddit-card">
+        <div class="reddit-card-header">
+          <span class="subreddit-name">r/investing</span>
+          <span class="sentiment-pill s-mixed">혼조 ⚖️</span>
+        </div>
+        <ul class="card-topics">
+          <li><span class="topic-icon">⚠️</span>스태그플레이션 위험 장기 토론</li>
+          <li><span class="topic-icon">📊</span>고용 서프라이즈 긍정적이나 지속성 의문</li>
+          <li><span class="topic-icon">🥇</span>금·원자재 비중 확대 조언 인기</li>
+          <li><span class="topic-icon">🌍</span>미국 외 시장(KOSPI·유럽) 재평가</li>
+          <li><span class="topic-icon">🏠</span>Hartford 부동산 버블 경계감</li>
+        </ul>
+        <div class="card-summary">장기투자자 사이 혼조. 1970년대 오일쇼크 비교 스레드 인기. 인플레 헤지 수단(금·원자재) 비중 확대 권고가 상위 게시물 점령.</div>
+      </div>
+
+      <div class="reddit-card">
+        <div class="reddit-card-header">
+          <span class="subreddit-name">r/stocks</span>
+          <span class="sentiment-pill s-neutral">관망 👀</span>
+        </div>
+        <ul class="card-topics">
+          <li><span class="topic-icon">💊</span>헬스케어 고용 견조 → 관련주 재조명</li>
+          <li><span class="topic-icon">🤖</span>AI 투자 사이클 지속 여부 논쟁</li>
+          <li><span class="topic-icon">📱</span>OpenAI IPO 기대감 ChatGPT 관련주</li>
+          <li><span class="topic-icon">✈️</span>항공·여행주 유가 부담 리스크 주의</li>
+          <li><span class="topic-icon">📦</span>아마존 Project Hail Mary 효과 눈길</li>
+        </ul>
+        <div class="card-summary">개별 섹터 분석이 주류. 헬스케어 구조적 강세 재확인. 에너지 비용 전가로 항공·소매 약세 우려. 종전 시나리오 이후 포지셔닝 활발 논의.</div>
+      </div>
+
+      <div class="reddit-card">
+        <div class="reddit-card-header">
+          <span class="subreddit-name">r/economics</span>
+          <span class="sentiment-pill s-bear">약세 🌧️</span>
+        </div>
+        <ul class="card-topics">
+          <li><span class="topic-icon">📉</span>서비스 PMI 49.8 수축 경고</li>
+          <li><span class="topic-icon">🛢️</span>에너지 충격의 2차 인플레 경로</li>
+          <li><span class="topic-icon">👷</span>고용 참가율 61.9% 우려 심각</li>
+          <li><span class="topic-icon">💵</span>연방 부채 $1.5T 군사비 재정 리스크</li>
+          <li><span class="topic-icon">🌐</span>글로벌 공급망 LNG 재편 논의</li>
+        </ul>
+        <div class="card-summary">스태그플레이션 시나리오 토론이 가장 뜨거운 스레드. "고용 좋아도 참가율 하락은 구조적 경고"가 공감. 연준 딜레마 지속 예상.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- X 인플루언서 포지셔닝 -->
+  <div class="section">
+    <div class="section-label">X 인플루언서 포지셔닝</div>
+    <div class="x-cards">
+
+      <div class="x-card">
+        <div class="x-handle">@Nouriel</div>
+        <div class="x-name">Nouriel Roubini</div>
+        <div class="x-stance">"트럼프 확전이 불가피. 물러서면 선거 패배. 에스컬레이션→승리 or 1970년대 스태그플레이션. 시장이 꼬리 리스크를 과소평가 중."</div>
+        <span class="x-signal" style="background:#fee2e2;color:#991b1b;">BEARISH — 스태그 경고</span>
+      </div>
+
+      <div class="x-card">
+        <div class="x-handle">@zeihan</div>
+        <div class="x-name">Peter Zeihan</div>
+        <div class="x-stance">"호르무즈 봉쇄는 글로벌 공급망의 구조 재편을 가속. 카타르 LNG 지연이 2027~28년 에너지 가격 재차 상승을 예고. 미국 에너지 독립 가속화."</div>
+        <span class="x-signal" style="background:#dbeafe;color:#1e40af;">NEUTRAL — 구조 변화</span>
+      </div>
+
+      <div class="x-card">
+        <div class="x-handle">@biancoresearch</div>
+        <div class="x-name">Bianco Research</div>
+        <div class="x-stance">"채권 시장이 진짜 경고를 보내고 있다. 10년물 4.34%는 전쟁 리스크+인플레 동시 반영. 연준 금리 인하는 2026년 불가. 주식 밸류에이션 재조정 불가피."</div>
+        <span class="x-signal" style="background:#fee2e2;color:#991b1b;">BEARISH — 채권 압박</span>
+      </div>
+
+      <div class="x-card">
+        <div class="x-handle">@LynAldenContact</div>
+        <div class="x-name">Lyn Alden</div>
+        <div class="x-stance">"에너지 공급 충격 구간에서 리얼애셋, 금, 상품이 S&P 대비 초과 수익. 통화 팽창+전쟁 조합은 역사적으로 리얼애셋 강세. 비트코인도 디지털 골드로 재조명."</div>
+        <span class="x-signal" style="background:#d1fae5;color:#065f46;">BULLISH — 리얼애셋</span>
+      </div>
+
+      <div class="x-card">
+        <div class="x-handle">@kole_finance</div>
+        <div class="x-name">Kole Finance</div>
+        <div class="x-stance">"VIX 23 급락이 오히려 경계 신호. 폴리마켓 87% 지상군 진입 확률. 시장이 너무 빠른 종전을 가격에 반영 중. 방산주 롱, 여행주 숏 유지."</div>
+        <span class="x-signal" style="background:#fef3c7;color:#92400e;">MIXED — 변동성 주의</span>
+      </div>
+
+      <div class="x-card">
+        <div class="x-handle">@SoberLook</div>
+        <div class="x-name">Sober Look</div>
+        <div class="x-stance">"고용 서프라이즈는 이란전 이전 데이터. 진짜 테스트는 4월 지표. 프라이빗 크레딧 환매 제한(Blue Owl, Cliffwater)이 금융 시스템 취약고리로 부상."</div>
+        <span class="x-signal" style="background:#f1f5f9;color:#475569;">NEUTRAL — 지표 대기</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Reddit vs X 비교 -->
+  <div class="section">
+    <div class="section-label">Reddit vs X — 플랫폼 포지션 비교</div>
+    <div style="overflow-x:auto;">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>테마</th>
+          <th>Reddit 심리</th>
+          <th>X 인플루언서</th>
+          <th>Reddit</th>
+          <th>X</th>
+          <th>乖離</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="ticker-badge">방산</span></td>
+          <td>YOLO 매수 열기</td>
+          <td>구조적 강세 동의</td>
+          <td><span class="score-bar bar-bull" style="width:42px;"></span> 85</td>
+          <td><span class="score-bar bar-bull" style="width:36px;"></span> 75</td>
+          <td style="color:var(--green)">낮음 ✓</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge">에너지</span></td>
+          <td>콜옵션 집중 매수</td>
+          <td>지속성 의문, 구조 변화</td>
+          <td><span class="score-bar bar-bull" style="width:40px;"></span> 80</td>
+          <td><span class="score-bar bar-bull" style="width:30px;"></span> 60</td>
+          <td style="color:var(--orange)">중간 △</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge">스태그플레이션</span></td>
+          <td>인식 높아지는 중</td>
+          <td>Roubini 강력 경고</td>
+          <td><span class="score-bar bar-bear" style="width:25px;"></span> 50</td>
+          <td><span class="score-bar bar-bear" style="width:40px;"></span> 80</td>
+          <td style="color:var(--accent)">높음 ⚠</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge">금/리얼애셋</span></td>
+          <td>비중 확대 조언 인기</td>
+          <td>Lyn Alden 강하게 추천</td>
+          <td><span class="score-bar bar-bull" style="width:35px;"></span> 70</td>
+          <td><span class="score-bar bar-bull" style="width:40px;"></span> 80</td>
+          <td style="color:var(--green)">낮음 ✓</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge">연준/금리</span></td>
+          <td>동결 당연시 분위기</td>
+          <td>Bianco: 인하 불가 강조</td>
+          <td><span class="score-bar bar-bull" style="width:30px;"></span> 60</td>
+          <td><span class="score-bar bar-bear" style="width:38px;"></span> 75</td>
+          <td style="color:var(--orange)">중간 △</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge">AI/테크</span></td>
+          <td>변동 심하나 긍정 유지</td>
+          <td>에너지 비용 부담 경고</td>
+          <td><span class="score-bar bar-bull" style="width:32px;"></span> 65</td>
+          <td><span class="score-bar bar-bull" style="width:25px;"></span> 50</td>
+          <td style="color:var(--orange)">중간 △</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- 시그널 인디케이터 -->
+  <div class="section">
+    <div class="section-label">주요 시그널 지표</div>
+    <div class="signal-grid">
+      <div class="signal-box">
+        <span class="signal-icon">🌡️</span>
+        <div class="signal-label">공포탐욕지수</div>
+        <div class="signal-value" style="color:var(--orange)">공포 38</div>
+      </div>
+      <div class="signal-box">
+        <span class="signal-icon">🛢️</span>
+        <div class="signal-label">WTI 오일</div>
+        <div class="signal-value" style="color:var(--accent)">$111.54</div>
+      </div>
+      <div class="signal-box">
+        <span class="signal-icon">🏠</span>
+        <div class="signal-label">10년 국채</div>
+        <div class="signal-value" style="color:var(--ink)">4.344%</div>
+      </div>
+      <div class="signal-box">
+        <span class="signal-icon">🥇</span>
+        <div class="signal-label">Gold/oz</div>
+        <div class="signal-value" style="color:var(--gold)">$4,651</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SVG 차트: 주요 자산 주간 성과 -->
+  <div class="section">
+    <div class="section-label">주간 자산별 성과</div>
+    <div class="chart-wrap">
+      <div class="chart-title">Week of April 4–5, 2026 — 주간 수익률 (%)</div>
+      <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'DM Mono',monospace;">
+        <!-- Grid lines -->
+        <line x1="100" y1="20" x2="680" y2="20" stroke="#d6d0c8" stroke-width="0.5"/>
+        <line x1="100" y1="70" x2="680" y2="70" stroke="#d6d0c8" stroke-width="0.5"/>
+        <line x1="100" y1="120" x2="680" y2="120" stroke="#d6d0c8" stroke-width="0.5"/>
+        <line x1="100" y1="170" x2="680" y2="170" stroke="#d6d0c8" stroke-width="0.5"/>
+        <!-- Zero line -->
+        <line x1="100" y1="120" x2="680" y2="120" stroke="#111010" stroke-width="1"/>
+        <!-- Y axis labels -->
+        <text x="90" y="24" text-anchor="end" font-size="9" fill="#6b6560">+12%</text>
+        <text x="90" y="74" text-anchor="end" font-size="9" fill="#6b6560">+6%</text>
+        <text x="90" y="124" text-anchor="end" font-size="9" fill="#6b6560">0</text>
+        <text x="90" y="174" text-anchor="end" font-size="9" fill="#6b6560">-6%</text>
+
+        <!-- WTI: +11.94% → bar from y=120, height=(11.94/12)*100 = 99.5px up -->
+        <rect x="115" y="21" width="60" height="99" fill="#c8382a" opacity="0.85"/>
+        <text x="145" y="16" text-anchor="middle" font-size="9" fill="#c8382a" font-weight="500">+11.94%</text>
+        <text x="145" y="208" text-anchor="middle" font-size="9" fill="#6b6560">WTI</text>
+
+        <!-- GOLD: +3.54% → 29.5px up -->
+        <rect x="210" y="91" width="60" height="29" fill="#b8860b" opacity="0.85"/>
+        <text x="240" y="86" text-anchor="middle" font-size="9" fill="#b8860b" font-weight="500">+3.54%</text>
+        <text x="240" y="208" text-anchor="middle" font-size="9" fill="#6b6560">Gold</text>
+
+        <!-- NASDAQ: +4.44% → 37px up -->
+        <rect x="305" y="83" width="60" height="37" fill="#1a4a7a" opacity="0.85"/>
+        <text x="335" y="78" text-anchor="middle" font-size="9" fill="#1a4a7a" font-weight="500">+4.44%</text>
+        <text x="335" y="208" text-anchor="middle" font-size="9" fill="#6b6560">NASDAQ</text>
+
+        <!-- S&P500: +3.36% → 28px up -->
+        <rect x="400" y="92" width="60" height="28" fill="#1a7a3c" opacity="0.85"/>
+        <text x="430" y="87" text-anchor="middle" font-size="9" fill="#1a7a3c" font-weight="500">+3.36%</text>
+        <text x="430" y="208" text-anchor="middle" font-size="9" fill="#6b6560">S&P 500</text>
+
+        <!-- DJIA: +2.96% → 24.7px up -->
+        <rect x="495" y="95" width="60" height="25" fill="#1a7a3c" opacity="0.65"/>
+        <text x="525" y="90" text-anchor="middle" font-size="9" fill="#1a7a3c" font-weight="500">+2.96%</text>
+        <text x="525" y="208" text-anchor="middle" font-size="9" fill="#6b6560">DJIA</text>
+
+        <!-- VIX: -23.12% → 192.7px down, but cap at chart bottom, show negative -->
+        <rect x="590" y="120" width="60" height="48" fill="#f87171" opacity="0.7"/>
+        <text x="620" y="185" text-anchor="middle" font-size="9" fill="#991b1b" font-weight="500">-23.1%</text>
+        <text x="620" y="208" text-anchor="middle" font-size="9" fill="#6b6560">VIX</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 바이사이드 인사이트 -->
+  <div class="section">
+    <div class="section-label">바이사이드 인사이트 — 드러켄밀러 헤지펀드 하우스 리서치</div>
+
+    <div class="insights-block">
+      <div class="insight-title">① 이란전 5주차: "Short-War Premium" vs "Long-War Discount"</div>
+      <div class="insight-body">
+        시장은 현재 종전 시나리오를 상당 부분 가격에 반영(S&P 주간 +3.36%). 그러나 이란의 미군 전투기 격추, 호르무즈 봉쇄 지속, 폴리마켓 지상군 진입 87%는 확전 꼬리 리스크가 여전히 높음을 시사한다. Roubini의 경고처럼 에스컬레이션이 계속될 경우 WTI $130~150 시나리오와 함께 스태그플레이션 리스크가 본격화된다. 단, 역사적으로 지정학 이벤트 후 S&P는 6개월 평균 +3.4% 회복. 핵심 변수는 호르무즈 해협의 부분 개방 여부다.
+      </div>
+    </div>
+
+    <div class="insights-block">
+      <div class="insight-title">② 3월 고용 서프라이즈의 역설: 연준 발목 잡힌다</div>
+      <div class="insight-body">
+        +178K 고용은 강하다. 그러나 참가율 61.9%(2021년 이후 최저)와 연방 고용 -18K는 구조적 약화 신호다. 이 강한 고용이 역설적으로 연준의 금리 인하 가능성을 차단한다. 10년물 4.34%는 인플레+전쟁 리스크+연준 동결의 트리플 조합. 4월 28~29일 FOMC에서 금리 동결은 확실시, 진짜 관전 포인트는 파월의 스태그플레이션 리스크에 대한 언급 강도다.
+      </div>
+    </div>
+
+    <div class="insights-block">
+      <div class="insight-title">③ 프라이빗 크레딧의 조용한 경고: Blue Owl·Cliffwater 환매 제한</div>
+      <div class="insight-body">
+        WSJ B12에서 상세히 다뤄진 프라이빗 크레딧 NAV 문제는 시스템 리스크의 숨겨진 뇌관이다. Blue Owl OCIC 환매 요청 21.9% → 5% 상한 제한. Cliffwater의 16% 환매 요청. 소프트웨어 섹터 AI 대체 우려로 촉발된 사태가 더 광범위한 유동성 위기로 비화될 가능성. 2022년 이후 고금리 지속으로 이미 취약해진 프라이빗 크레딧에 에너지 충격까지 겹침. 모니터링 강화 필요.
+      </div>
+    </div>
+
+    <div class="insights-block">
+      <div class="insight-title">④ 소셜 심리 vs 기관: 방산주 과열 경계</div>
+      <div class="insight-body">
+        Reddit WSB의 방산주 YOLO 열기(LMT·RTX·HII·PLTR)와 X 인플루언서의 구조적 강세론이 맞닿아 있다. 그러나 한화에어로스페이스 국내 사례처럼 투자경고 공시에도 상한가 기대가 넘치는 과열 신호가 공통으로 포착된다. $1.5T 군사예산은 다년간 섹터 지지대가 되나, 단기 급등에 따른 차익 실현 압력도 고려해야 한다. 실질 EPS 상향 조정 타이밍(Q1 어닝 시즌)을 체크 포인트로 삼아야.
+      </div>
+    </div>
+  </div>
+
+  <!-- 다음 주 워치리스트 -->
+  <div class="section">
+    <div class="section-label">다음 주 워치리스트 — 2026.04.06~10</div>
+    <div class="watchlist">
+      <div class="watch-item">
+        <div class="watch-tag">거시/정치</div>
+        <div class="watch-ticker">이란 휴전 협상</div>
+        <div class="watch-name">호르무즈 개방 여부</div>
+        <div class="watch-reason">4월 6일 에너지 시설 공격 중단 기한 만료. 협상 결과에 따라 WTI 급변동 가능성. 종전 시 S&P 갭상승, 확전 시 급락.</div>
+      </div>
+      <div class="watch-item">
+        <div class="watch-tag">연준/금리</div>
+        <div class="watch-ticker">파월 연설</div>
+        <div class="watch-name">스태그플레이션 언급 강도</div>
+        <div class="watch-reason">4월 FOMC(28~29일) 전 파월 발언 주목. 인플레+성장 딜레마에 대한 톤 변화 여부. 10년물 4.4% 돌파 시 주식 재조정.</div>
+      </div>
+      <div class="watch-item">
+        <div class="watch-tag">어닝</div>
+        <div class="watch-ticker">JP모건(JPM)</div>
+        <div class="watch-name">4/10 Q1 어닝 발표</div>
+        <div class="watch-reason">금융 섹터 첫 타자. 프라이빗 크레딧 익스포저, 전쟁 관련 대손충당금 여부가 관건. 예상치 하회 시 금융주 전반 압박.</div>
+      </div>
+      <div class="watch-item">
+        <div class="watch-tag">에너지</div>
+        <div class="watch-ticker">WTI $111~130</div>
+        <div class="watch-name">유가 레벨 테스트</div>
+        <div class="watch-reason">호르무즈 협상 결과 연동. $120 돌파 시 연준 긴급 대응 요구 커질 것. 에너지주·항공주 방향 가르는 핵심 변수.</div>
+      </div>
+      <div class="watch-item">
+        <div class="watch-tag">방산</div>
+        <div class="watch-ticker">LMT / RTX</div>
+        <div class="watch-name">$1.5T 예산 수혜 종목</div>
+        <div class="watch-reason">트럼프 FY2027 국방예산 $1.5T 세부 내역 주목. 골든돔 미사일 방어, 신형 구축함 예산 집중 수혜 방산 종목 선별.</div>
+      </div>
+      <div class="watch-item">
+        <div class="watch-tag">리스크</div>
+        <div class="watch-ticker">프라이빗 크레딧</div>
+        <div class="watch-name">Blue Owl / Cliffwater</div>
+        <div class="watch-reason">환매 제한 사태 확산 여부. 소프트웨어 익스포저 추가 평가 절하 가능성. 시스템 리스크로 번지면 광범위한 신용 스프레드 확대 경보.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 면책조항 -->
+  <div class="report-footer">
+    <p>본 리포트는 WSJ Saturday Edition(2026.04.04~05), Reddit(r/wallstreetbets·r/investing·r/stocks·r/economics·r/geopolitics), X 주요 인플루언서 분석을 종합한 바이사이드 참고 자료입니다. 투자 권유가 아니며 모든 투자 결정의 책임은 투자자 본인에게 있습니다.</p>
+    <p style="margin-top:6px;">© 2026 Buy-Side Weekly · minkeun00-creator.github.io/weekly-report/ · 텔레그램·카카오톡 오픈채팅 배포</p>
+  </div>
+
+</div>
+</body>
+</html>
