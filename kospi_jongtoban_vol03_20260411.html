@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>종토방 위클리 Vol.03 — 2026.04.11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0e0f13;--bg2:#13151c;--bg3:#1a1d28;
+  --text:#e8e6e0;--muted:#8a8880;--border:#2a2d3a;
+  --red:#e05050;--grn:#40c880;--gold:#d4a030;--cyan:#40c8d0;--purple:#a080e0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;line-height:1.6}
+
+.wrap{max-width:900px;margin:0 auto;padding:0 14px 48px}
+
+/* MASTHEAD */
+.mast{background:linear-gradient(135deg,#0e0f13 60%,#1a1020);border-bottom:2px solid var(--gold);padding:26px 28px 20px;margin-bottom:0}
+.mast-eye{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.mast-title{font-size:clamp(24px,5vw,38px);font-weight:900;line-height:1.1;margin-bottom:4px}
+.mast-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
+.mast-stat{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap}
+.mstat{background:rgba(255,255,255,.05);border:1px solid var(--border);padding:6px 14px;border-radius:3px;font-family:'DM Mono',monospace;font-size:10px}
+.mstat span{color:var(--gold);font-size:13px;font-weight:700;display:block}
+
+/* SECTION LABEL */
+.sec{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:24px 0 10px;border-top:1px solid var(--border);padding-top:10px}
+
+/* HOT TABLE */
+.hot-table{width:100%;border-collapse:collapse;font-size:12px}
+.hot-table thead tr{border-bottom:1px solid var(--gold)}
+.hot-table th{padding:7px 8px;text-align:left;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.hot-table tbody tr{border-bottom:1px solid var(--border)}
+.hot-table tbody tr:hover{background:var(--bg2)}
+.hot-table td{padding:8px 8px;font-family:'DM Mono',monospace}
+.rank{color:var(--gold);font-size:11px;font-weight:700}
+.ticker{font-weight:700;color:var(--text)}
+.hot-bar{display:flex;align-items:center;gap:6px}
+.bar-bg{flex:1;height:4px;background:var(--border);border-radius:2px}
+.bar-fill{height:4px;border-radius:2px;background:var(--gold)}
+.vol-num{color:var(--muted);font-size:10px;min-width:52px;text-align:right}
+
+/* SIGNAL CARDS */
+.sig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sig-card{background:var(--bg2);border:1px solid var(--border);padding:12px;border-radius:3px}
+.sig-icon{font-size:18px;margin-bottom:3px}
+.sig-t{font-size:9px;font-family:'DM Mono',monospace;color:var(--muted);text-transform:uppercase;margin-bottom:2px}
+.sig-v{font-size:13px;font-weight:700}
+.sig-n{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* THEME CLUSTER */
+.theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.theme-card{background:var(--bg2);border:1px solid var(--border);padding:12px;border-radius:3px}
+.theme-title{font-size:11px;font-weight:700;margin-bottom:4px}
+.theme-items{font-size:11px;color:var(--muted);line-height:1.5}
+.theme-heat{font-family:'DM Mono',monospace;font-size:9px;margin-top:4px}
+.hot-tag{color:var(--red)}.warm-tag{color:var(--gold)}.cool-tag{color:var(--grn)}
+
+/* SENTIMENT METER */
+.meter-wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:4px}
+.meter-item{background:var(--bg2);padding:10px 8px;text-align:center}
+.meter-emoji{font-size:18px;margin-bottom:2px}
+.meter-name{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace}
+.meter-pct{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;margin-top:2px}
+
+/* INSIGHT */
+.insight-box{background:var(--bg2);border:1px solid var(--gold);padding:20px 22px;border-radius:3px}
+.ins-eye{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.ins-lead{font-size:18px;font-weight:900;line-height:1.3;margin-bottom:10px}
+.ins-body{font-size:12.5px;line-height:1.7;color:#c8c4c0}
+.ins-body p{margin-bottom:8px}
+.ins-body strong{color:var(--text)}
+
+/* TOP TITLES */
+.title-list{display:flex;flex-direction:column;gap:4px}
+.title-item{background:var(--bg2);border:1px solid var(--border);padding:8px 12px;border-radius:2px;display:flex;gap:8px;align-items:flex-start}
+.title-rank{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);min-width:24px;flex-shrink:0}
+.title-stock{font-family:'DM Mono',monospace;font-size:10px;color:var(--cyan);flex-shrink:0;min-width:80px}
+.title-txt{font-size:12px;color:var(--text)}
+
+/* CHART */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chart-box{background:var(--bg2);border:1px solid var(--border);padding:12px;border-radius:3px}
+.chart-title{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px}
+canvas{max-height:180px}
+
+/* FOOTER */
+.footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;flex-wrap:wrap;gap:6px}
+
+/* PRINT */
+@media print{
+  :root{
+    --bg:#fff;--bg2:#f8f8f5;--bg3:#f0ede6;
+    --text:#111;--muted:#666;--border:#ddd;
+    --red:#c03030;--grn:#207040;--gold:#906010;--cyan:#207880;--purple:#6040a0;
+  }
+  body{background:#fff;color:#111;font-size:10px}
+  .mast{background:#fff!important;border-bottom:2px solid var(--gold);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:A4;margin:12mm}
+  .sig-grid,.theme-grid,.chart-grid,.meter-wrap{break-inside:avoid}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sig-grid{grid-template-columns:1fr 1fr}
+  .theme-grid{grid-template-columns:1fr 1fr}
+  .chart-grid{grid-template-columns:1fr}
+  .meter-wrap{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:480px){
+  .sig-grid,.theme-grid{grid-template-columns:1fr}
+  .meter-wrap{grid-template-columns:1fr 1fr}
+  .mast-stat{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- MASTHEAD -->
+<div class="mast">
+  <div class="mast-eye">네이버 종목토론실 기반 · 코스피·코스닥 개인투자자 심리 분석</div>
+  <div class="mast-title">종토방 위클리</div>
+  <div class="mast-sub">Vol.03 · 2026.04.11 SAT · 크롤링 기준: 2026.04.11 15:05 KST</div>
+  <div class="mast-stat">
+    <div class="mstat">분석 종목<span>20개</span></div>
+    <div class="mstat">총 게시글<span>1,541건</span></div>
+    <div class="mstat">총 조회수<span>477,638회</span></div>
+    <div class="mstat">KOSPI 주간<span class="hot-tag">+8.96% 🏆</span></div>
+    <div class="mstat">이번 주 테마<span>이란 휴전 수혜</span></div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="sec">00 / 이번 주 요약</div>
+<div class="insight-box" style="margin-bottom:0">
+  <div class="ins-eye">주간 한줄 요약</div>
+  <div class="ins-lead">미-이란 휴전 랠리에 코스피 +8.96% — 건설·방산·금융이 종토방 핫 종목 장악</div>
+  <div class="ins-body">
+    <p>이번 주 종토방은 <strong>휴전 수혜 기대감</strong>이 모든 논의를 지배했다. 중동 재건 수요를 겨냥한 대우건설·GS건설이 조회수 상위권에 올랐고, 우리금융지주는 1분기 배당금 입금 러시로 "배당 인증" 글이 넘쳤다. LS ELECTRIC은 분할 상장 기대로 거래 정지 중에도 토론이 폭주했고, 신성이엔지는 JP모건 1,300만주 매집 이슈로 열기가 극에 달했다. 개인들의 심리는 <strong>조심스러운 낙관</strong>으로, "이제 뭐 사냐" 방향 탐색이 활발하다.</p>
+  </div>
+</div>
+
+<!-- HOT TABLE -->
+<div class="sec">01 / 종토방 HOT 20 — 게시글·조회수 기준</div>
+<table class="hot-table">
+  <thead>
+    <tr>
+      <th>순위</th><th>종목</th><th>코드</th><th>게시글</th><th>조회수</th><th>열기</th><th>주요 이슈</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="rank">1</td><td class="ticker">KODEX 200위클리커버드콜</td><td>498400</td><td>57</td><td>41,505</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div><span class="vol-num">100%</span></div></td><td style="font-size:11px;color:var(--muted)">4월 분배금 확정 기대, 보유 vs 매도 논쟁</td></tr>
+    <tr><td class="rank">2</td><td class="ticker">LS ELECTRIC</td><td>010120</td><td>80</td><td>35,193</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div><span class="vol-num">85%</span></div></td><td style="font-size:11px;color:var(--muted)">분할상장 앞두고 거래정지 중, 17~18만원 기대</td></tr>
+    <tr><td class="rank">3</td><td class="ticker">신성이엔지</td><td>011930</td><td>78</td><td>34,246</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:82%"></div></div><span class="vol-num">82%</span></div></td><td style="font-size:11px;color:var(--muted)">JP모건 1,300만주 매집 이슈 폭발적 관심</td></tr>
+    <tr><td class="rank">4</td><td class="ticker">TIGER 미국S&P500</td><td>360750</td><td>48</td><td>33,655</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:81%"></div></div><span class="vol-num">81%</span></div></td><td style="font-size:11px;color:var(--muted)">지금 들어가도 될지 장기투자 방향성 고민</td></tr>
+    <tr><td class="rank">5</td><td class="ticker">대우건설</td><td>047040</td><td>80</td><td>32,723</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:79%"></div></div><span class="vol-num">79%</span></div></td><td style="font-size:11px;color:var(--muted)">중동 재건 수혜 기대, 월요일 +20% 전망 글 다수</td></tr>
+    <tr><td class="rank">6</td><td class="ticker">우리금융지주</td><td>316140</td><td>80</td><td>29,483</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:71%"></div></div><span class="vol-num">71%</span></div></td><td style="font-size:11px;color:var(--muted)">1분기 배당금 입금 인증글 폭주, 배당 재투자</td></tr>
+    <tr><td class="rank">7</td><td class="ticker">메지온</td><td>140410</td><td>80</td><td>28,491</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:69%"></div></div><span class="vol-num">69%</span></div></td><td style="font-size:11px;color:var(--muted)">CB발행가 조율 의혹, 투자 공시 다음주 기대</td></tr>
+    <tr><td class="rank">8</td><td class="ticker">현대엘리베이터</td><td>017800</td><td>80</td><td>27,324</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:66%"></div></div><span class="vol-num">66%</span></div></td><td style="font-size:11px;color:var(--muted)">삼성증권 목표주가 12만원, 배당 언제인지 질문</td></tr>
+    <tr><td class="rank">9</td><td class="ticker">한국첨단소재</td><td>062970</td><td>80</td><td>24,355</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:59%"></div></div><span class="vol-num">59%</span></div></td><td style="font-size:11px;color:var(--muted)">3:1 주식병합 공시, 무상증자·품절주 논쟁</td></tr>
+    <tr><td class="rank">10</td><td class="ticker">엘앤에프</td><td>066970</td><td>80</td><td>22,295</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:54%"></div></div><span class="vol-num">54%</span></div></td><td style="font-size:11px;color:var(--muted)">양극재 1분기 추정실적 탑픽, 3년 존버 보상 50%</td></tr>
+    <tr><td class="rank">11</td><td class="ticker">GS건설</td><td>006360</td><td>80</td><td>22,107</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:53%"></div></div><span class="vol-num">53%</span></div></td><td style="font-size:11px;color:var(--muted)">호르무즈 호재, 카자흐 31조 신도시 수주 기대</td></tr>
+    <tr><td class="rank">12</td><td class="ticker">SK</td><td>034730</td><td>80</td><td>22,090</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:53%"></div></div><span class="vol-num">53%</span></div></td><td style="font-size:11px;color:var(--muted)">이혼소송 파기환송심 변론기일, 로열티 증가 기대</td></tr>
+    <tr><td class="rank">13</td><td class="ticker">빛과전자</td><td>069540</td><td>80</td><td>21,823</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:53%"></div></div><span class="vol-num">53%</span></div></td><td style="font-size:11px;color:var(--muted)">신주 5월6일 상장 예정, 목표가 논쟁</td></tr>
+    <tr><td class="rank">14</td><td class="ticker">우리기술</td><td>032820</td><td>80</td><td>21,818</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:53%"></div></div><span class="vol-num">53%</span></div></td><td style="font-size:11px;color:var(--muted)">국민연금 매일 매수, 해상풍력 특별법 기대</td></tr>
+    <tr><td class="rank">15</td><td class="ticker">현대바이오</td><td>048410</td><td>80</td><td>21,645</td><td><div class="hot-bar"><div class="bar-bg"><div class="bar-fill" style="width:52%"></div></div><span class="vol-num">52%</span></div></td><td style="font-size:11px;color:var(--muted)">베트남 뎅기열 긴급승인 임박 기대감</td></tr>
+  </tbody>
+</table>
+
+<!-- SIGNAL -->
+<div class="sec">02 / 종토방 심리 시그널</div>
+<div class="sig-grid">
+  <div class="sig-card">
+    <div class="sig-icon">🏗️</div>
+    <div class="sig-t">건설 테마</div>
+    <div class="sig-v" style="color:var(--red)">ULTRA HOT</div>
+    <div class="sig-n">대우건설·GS건설 동시 급등 기대</div>
+  </div>
+  <div class="sig-card">
+    <div class="sig-icon">💰</div>
+    <div class="sig-t">배당주 열기</div>
+    <div class="sig-v" style="color:var(--gold)">HIGH</div>
+    <div class="sig-n">우리금융 배당 인증 글 폭주</div>
+  </div>
+  <div class="sig-card">
+    <div class="sig-icon">⚡</div>
+    <div class="sig-t">외인 수급</div>
+    <div class="sig-v" style="color:var(--grn)">BULLISH</div>
+    <div class="sig-n">신성이엔지 JP모건 1,300만주</div>
+  </div>
+  <div class="sig-card">
+    <div class="sig-icon">😰</div>
+    <div class="sig-t">공포지수</div>
+    <div class="sig-v" style="color:var(--gold)">MODERATE</div>
+    <div class="sig-n">방향 탐색 + 추격매수 주저</div>
+  </div>
+</div>
+
+<!-- THEME CLUSTER -->
+<div class="sec">03 / 테마 클러스터 분석</div>
+<div class="theme-grid">
+  <div class="theme-card">
+    <div class="theme-title" style="color:var(--red)">🔥 중동재건·건설</div>
+    <div class="theme-items">대우건설 · GS건설<br>카자흐 31조 신도시 수주 기대<br>수주잔고 50~60조 부각<br>공매도 우려 vs 상승 기대 혼재</div>
+    <div class="theme-heat hot-tag">■ ULTRA HOT — 종토방 전체 1위 관심</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title" style="color:var(--gold)">💛 배당·금융</div>
+    <div class="theme-items">우리금융지주 배당 입금 인증<br>분기별 배당 재투자 논의<br>은행주 밸류업 기대<br>"배당금으로 재매수" 패턴 형성</div>
+    <div class="theme-heat warm-tag">■ HOT — 배당 시즌 특수</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title" style="color:var(--cyan)">🔵 전력·에너지 인프라</div>
+    <div class="theme-items">LS ELECTRIC 분할상장 대기<br>우리기술 해상풍력 특별법<br>신성이엔지 JP모건 매집<br>에너지 전환 장기 수혜 논거</div>
+    <div class="theme-heat warm-tag">■ HOT — 외인 수급 이슈</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title" style="color:var(--grn)">🟢 바이오·신약</div>
+    <div class="theme-items">현대바이오 베트남 뎅기 긴급승인<br>메지온 CB발행가 · 투자공시<br>엘앤씨바이오 전환사채 이슈<br>임상 진행 상황 모니터링</div>
+    <div class="theme-heat cool-tag">■ WARM — 이벤트 드리븐</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title" style="color:var(--purple)">🟣 이차전지·소재</div>
+    <div class="theme-items">엘앤에프 3년 존버 보상 논의<br>양극재 1분기 추정 탑픽<br>음극재 침체 vs 양극재 반등<br>서진시스템 전환사채 불안</div>
+    <div class="theme-heat cool-tag">■ WARM — 업황 바닥 탐색</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title" style="color:var(--gold)">🟡 글로벌 지수 ETF</div>
+    <div class="theme-items">TIGER S&P500 "지금 들어가도 되나"<br>KODEX 위클리커버드콜 분배금<br>괴리율 2% 논쟁<br>장기 vs 단기투자 혼재</div>
+    <div class="theme-heat warm-tag">■ HOT — 방향 탐색 중</div>
+  </div>
+</div>
+
+<!-- SENTIMENT METER -->
+<div class="sec">04 / 심리 온도계 — 전체 종목 감성 분포</div>
+<div class="meter-wrap">
+  <div class="meter-item">
+    <div class="meter-emoji">🚀</div>
+    <div class="meter-name">극강 낙관</div>
+    <div class="meter-pct" style="color:var(--grn)">22%</div>
+  </div>
+  <div class="meter-item">
+    <div class="meter-emoji">📈</div>
+    <div class="meter-name">낙관</div>
+    <div class="meter-pct" style="color:var(--grn)">31%</div>
+  </div>
+  <div class="meter-item">
+    <div class="meter-emoji">😐</div>
+    <div class="meter-name">중립 관망</div>
+    <div class="meter-pct" style="color:var(--muted)">20%</div>
+  </div>
+  <div class="meter-item">
+    <div class="meter-emoji">😟</div>
+    <div class="meter-name">불안</div>
+    <div class="meter-pct" style="color:var(--gold)">18%</div>
+  </div>
+  <div class="meter-item">
+    <div class="meter-emoji">🔥</div>
+    <div class="meter-name">손절·공포</div>
+    <div class="meter-pct" style="color:var(--red)">9%</div>
+  </div>
+</div>
+<p style="font-size:10px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace">* 게시글 제목 키워드 분석 기반 추정치 | 낙관 53% &gt; 공포 27% — 조심스러운 낙관 우세</p>
+
+<!-- TOP TITLES -->
+<div class="sec">05 / 종토방 HOT 게시글 제목</div>
+<div class="title-list">
+  <div class="title-item">
+    <span class="title-rank">🔥</span>
+    <span class="title-stock">대우건설</span>
+    <span class="title-txt">대차 리콜 반대매매 시 주가는 최소... (댓글 39개)</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">🔥</span>
+    <span class="title-stock">신성이엔지</span>
+    <span class="title-txt">JP모건 1,300만주 ㄷㄷ 매집 — Jp 모건 처돌았네</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">🔥</span>
+    <span class="title-stock">우리금융지주</span>
+    <span class="title-txt">배당금 7천만원 감사합니다^^ (댓글 8개)</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">🌡️</span>
+    <span class="title-stock">대우건설</span>
+    <span class="title-txt">엘지승리기념 — 전쟁특수 편 · 월요일 +20% 이상 상승 마감 예상</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">🌡️</span>
+    <span class="title-stock">GS건설</span>
+    <span class="title-txt">호르무즈 해협 빅뉴스 · 제2의 중동붐 카자흐스탄 31조 신도시</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">🌡️</span>
+    <span class="title-stock">TIGER S&P500</span>
+    <span class="title-txt">지금 들어가도 될까요? · S&P500은 단기투자 상품이 아닙니다</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">📊</span>
+    <span class="title-stock">현대바이오</span>
+    <span class="title-txt">베트남인 지인과의 톡 내용 · 만약 베트남 긴급승인 나면 (댓글 6개)</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">📊</span>
+    <span class="title-stock">엘앤에프</span>
+    <span class="title-txt">에코프로 9만원 때 이랬었지 · 3년 존버 보상이 50%</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">⚠️</span>
+    <span class="title-stock">KODEX 커버드콜</span>
+    <span class="title-txt">뭐하러 이거 들고있지 (댓글11) · 절대 이 종목 소개하지 마세요</span>
+  </div>
+  <div class="title-item">
+    <span class="title-rank">⚠️</span>
+    <span class="title-stock">서진시스템</span>
+    <span class="title-txt">애들아 기사 내용 가볍게 볼 게 아니다(댓글10) · 전환사채 진짜 돌아버리겠네</span>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<div class="sec">06 / 데이터 차트</div>
+<div class="chart-grid">
+  <div class="chart-box">
+    <div class="chart-title">테마별 조회수 비중 (%)</div>
+    <canvas id="c1"></canvas>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">TOP 10 조회수 (만회)</div>
+    <canvas id="c2"></canvas>
+  </div>
+</div>
+
+<!-- INSIGHT -->
+<div class="sec">07 / 바이사이드 인사이트 — 종토방 관점</div>
+<div class="insight-box">
+  <div class="ins-eye">드러켄밀러 헤지펀드 리서치 헤드 / Vol.03 국내 시각</div>
+  <div class="ins-lead">KOSPI +8.96% 글로벌 1위 — 휴전 수혜 기대의 개인 심리가 이미 선반영됐다</div>
+  <div class="ins-body">
+    <p>이번 주 종토방은 한 마디로 <strong>"중동 재건 테마 축제"</strong>였다. 대우건설·GS건설 토론방에는 "월요일 +20%"라는 글이 즐비했고, 카자흐스탄 신도시 수주 기대까지 가세했다. 그러나 바이사이드 관점에서 주목할 것은 <strong>이미 상당한 기대가 가격에 선반영됐을 가능성</strong>이다.</p>
+    <p><strong>JP모건의 신성이엔지 1,300만주 매집</strong>은 이번 주 최대 외인 수급 이슈다. 종토방은 이를 명확한 상승 신호로 해석하고 있지만, 기관이 왜 지금 이 시점에 대규모 매집을 단행했는지에 대한 정보 비대칭이 존재한다. 개인 투자자의 낙관이 극에 달할 때 기관의 목적이 반드시 일치하지 않는다는 점을 기억해야 한다.</p>
+    <p><strong>커버드콜 ETF(KODEX 위클리)</strong>에 대한 불신 글("절대 소개하지 마세요", "뭐하러 들고있지")과 장기 보유자의 방어 글이 동시에 올라오는 것은 이 상품의 복잡한 구조에 대한 이해 부족을 방증한다. 분배금 수익률 계산을 못 하는 투자자들이 급증하는 것은 경계 신호다.</p>
+    <p><strong>핵심 모니터링:</strong> 다음 주 이슬라마바드 협상 결과가 건설·방산 테마의 지속성을 결정한다. 협상 실패 → 오일 재급등 → 건설 비용 상승 모순. 협상 성공 → 재건 수혜 현실화. 배당주(우리금융)는 실적 가시성이 높아 상대적으로 안정적인 포지션이다.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span>종토방 위클리 Vol.03 · 2026.04.11 · Source: 네이버 종목토론실</span>
+  <span>본 리포트는 종토방 공개 데이터 기반 심리 분석이며 투자 권유가 아닙니다.</span>
+</div>
+
+</div>
+
+<script>
+const font={family:"'DM Mono', monospace",size:9};
+const dark='rgba(255,255,255,0.05)';
+new Chart(document.getElementById('c1'),{type:'doughnut',data:{labels:['건설·중동','배당·금융','에너지인프라','바이오','이차전지','ETF·기타'],datasets:[{data:[24,18,16,14,12,16],backgroundColor:['#e05050','#d4a030','#40c8d0','#40c880','#a080e0','#6080a0'],borderWidth:1,borderColor:'#0e0f13'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#8a8880',font,boxWidth:10,padding:8}}},cutout:'55%'}});
+new Chart(document.getElementById('c2'),{type:'bar',data:{labels:['KODEX커버드콜','LS ELECTRIC','신성이엔지','TIGER S&P','대우건설','우리금융','메지온','현대엘리베','한국첨단','엘앤에프'],datasets:[{data:[4.15,3.52,3.42,3.37,3.27,2.95,2.85,2.73,2.44,2.23],backgroundColor:'#d4a030',borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#8a8880',font,callback:v=>v+'만'},grid:{color:'rgba(255,255,255,0.05)'}},y:{ticks:{color:'#8a8880',font},grid:{display:false}}}}});
+</script>
+</body>
+</html>

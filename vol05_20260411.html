@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Reddit × X 위클리 센티먼트 리포트 Vol.05 — 2026.04.11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --ink:#111010;--paper:#f4f1ea;--cream:#ede9df;--red:#b83232;--green:#1a6040;--gold:#b08030;
+  --muted:#6a6660;--border:#d4cec4;--accent:#c85a00;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+/* ── WRAPPER ── */
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 48px}
+
+/* ── MASTHEAD ── */
+.mast{background:var(--ink);color:#f4f1ea;padding:28px 32px 22px;margin-bottom:0}
+.mast-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+.mast-title{font-family:'DM Serif Display',serif;font-size:clamp(22px,5vw,36px);line-height:1.1;margin-bottom:4px}
+.mast-sub{font-size:11px;opacity:.55;font-family:'DM Mono',monospace}
+.mast-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.badge{display:inline-block;padding:3px 8px;font-family:'DM Mono',monospace;font-size:10px;border:1px solid rgba(255,255,255,.25);border-radius:2px;color:#f4f1ea}
+.badge.red{border-color:#b83232;color:#ff9090}
+.badge.grn{border-color:#1a6040;color:#80d0a0}
+.badge.gld{border-color:#b08030;color:#f0c860}
+
+/* ── STRIP ── */
+.strip{background:var(--cream);border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:0;overflow:hidden}
+.strip-item{flex:1 1 110px;padding:10px 14px;border-right:1px solid var(--border)}
+.strip-item:last-child{border-right:none}
+.strip-label{font-size:9px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.strip-val{font-family:'DM Serif Display',serif;font-size:17px;margin-top:1px}
+.strip-chg{font-family:'DM Mono',monospace;font-size:10px;margin-top:1px}
+.up{color:var(--green)}.down{color:var(--red)}
+
+/* ── SECTION LABEL ── */
+.sec-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:28px 0 10px;border-top:1px solid var(--border);padding-top:10px}
+
+/* ── MARKET DATA ── */
+.mkt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:4px}
+.mkt-cell{background:var(--paper);padding:10px 12px}
+.mkt-name{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:2px}
+.mkt-price{font-family:'DM Serif Display',serif;font-size:15px}
+.mkt-row{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:1px}
+
+/* ── NEWS FLOW ── */
+.news-list{border:1px solid var(--border)}
+.news-item{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start}
+.news-item:last-child{border-bottom:none}
+.news-tag{flex-shrink:0;width:52px;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.news-txt{font-size:12px;line-height:1.45}
+.news-impact{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.hi{background:var(--red)}.me{background:var(--gold)}.lo{background:var(--green)}
+
+/* ── REDDIT CARDS ── */
+.r-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.r-card{border:1px solid var(--border);padding:14px}
+.r-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.r-name{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--accent)}
+.r-tone{font-family:'DM Mono',monospace;font-size:9px;padding:2px 6px;border-radius:2px}
+.bear-bg{background:#fde8e8;color:var(--red)}
+.bull-bg{background:#e8f5ee;color:var(--green)}
+.neu-bg{background:#f0ede6;color:var(--muted)}
+.r-body{font-size:12px;line-height:1.5;color:#333}
+.r-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.r-tag{font-size:10px;font-family:'DM Mono',monospace;background:var(--cream);padding:2px 6px;border-radius:2px}
+
+/* ── X CARDS ── */
+.x-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.x-card{border:1px solid var(--border);padding:12px}
+.x-handle{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);margin-bottom:4px}
+.x-type{font-size:9px;font-family:'DM Mono',monospace;color:var(--muted)}
+.x-quote{font-size:11.5px;line-height:1.45;margin-top:6px;font-style:italic;border-left:2px solid var(--border);padding-left:8px}
+.x-pos{margin-top:6px;font-family:'DM Mono',monospace;font-size:10px;padding:2px 6px;display:inline-block;border-radius:2px}
+
+/* ── VS SECTION ── */
+.vs-wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;border:1px solid var(--border);padding:16px}
+.vs-side{font-size:12px}
+.vs-platform{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:4px}
+.vs-center{font-family:'DM Serif Display',serif;font-size:22px;color:var(--muted)}
+
+/* ── TICKER TABLE ── */
+.ticker-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead tr{border-bottom:2px solid var(--ink)}
+thead th{padding:6px 8px;text-align:left;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody td{padding:7px 8px;font-family:'DM Mono',monospace}
+.t-ticker{font-weight:500}
+.t-bull{color:var(--green);font-weight:700}
+.t-bear{color:var(--red);font-weight:700}
+.t-neu{color:var(--muted)}
+
+/* ── KEYWORDS ── */
+.kw-cloud{display:flex;flex-wrap:wrap;gap:6px;padding:14px;background:var(--cream);border:1px solid var(--border)}
+.kw{font-family:'DM Mono',monospace;padding:3px 8px;border-radius:2px;border:1px solid var(--border)}
+.kw.s1{font-size:16px;font-weight:700}
+.kw.s2{font-size:13px;font-weight:500}
+.kw.s3{font-size:11px}
+.kw.hot{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.kw.warm{background:var(--cream)}
+.kw.cool{background:var(--paper)}
+
+/* ── SIGNAL ── */
+.sig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sig-card{border:1px solid var(--border);padding:12px;text-align:center}
+.sig-icon{font-size:20px;margin-bottom:4px}
+.sig-title{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:2px;text-transform:uppercase}
+.sig-val{font-size:13px;font-weight:700;font-family:'DM Serif Display',serif}
+.sig-note{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* ── CHARTS ── */
+.chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.chart-box{border:1px solid var(--border);padding:12px}
+.chart-title{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px}
+canvas{max-height:160px}
+
+/* ── INSIGHT ── */
+.insight-box{border:2px solid var(--ink);padding:20px 24px}
+.insight-eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.insight-lead{font-family:'DM Serif Display',serif;font-size:20px;line-height:1.3;margin-bottom:12px;color:var(--ink)}
+.insight-body{font-size:12.5px;line-height:1.7;color:#333}
+.insight-body p{margin-bottom:8px}
+.insight-body strong{color:var(--ink)}
+
+/* ── WATCHLIST ── */
+.watch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.watch-card{border:1px solid var(--border);padding:10px 12px}
+.watch-ticker{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--accent)}
+.watch-reason{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── FOOTER ── */
+.footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;flex-wrap:wrap;gap:8px}
+
+/* ── PRINT ── */
+@media print{
+  body{font-size:10.5px}
+  .mast{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .strip,.mkt-grid,.r-grid,.x-grid,.sig-grid,.chart-grid,.watch-grid{break-inside:avoid}
+  @page{size:A4;margin:12mm}
+}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .mkt-grid,.r-grid,.x-grid,.sig-grid,.chart-grid,.watch-grid{grid-template-columns:1fr 1fr}
+  .vs-wrap{grid-template-columns:1fr;text-align:center}
+  .vs-center{display:none}
+  .strip-item{flex:1 1 80px}
+}
+@media(max-width:480px){
+  .mkt-grid,.x-grid,.sig-grid,.chart-grid,.watch-grid{grid-template-columns:1fr}
+  .r-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- MASTHEAD -->
+<div class="mast">
+  <div class="mast-eyebrow">바이사이드 하우스 애널리스트 · 드러켄밀러 헤지펀드 리서치 헤드</div>
+  <div class="mast-title">Reddit × X 위클리 센티먼트 리포트</div>
+  <div class="mast-sub">Vol.05 · 2026.04.11 SAT · Source: WSJ 2026.04.11 B6 · Reddit · X(Twitter)</div>
+  <div class="mast-badges">
+    <span class="badge gld">⚠️ 이란 휴전 협상 진행 중</span>
+    <span class="badge red">📈 CPI 3.3% 2년 최고</span>
+    <span class="badge grn">📉 WTI 주간 -13.4%</span>
+    <span class="badge gld">🎯 이슬라마바드 미-이란 협상</span>
+  </div>
+</div>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <div class="strip-label">S&P 500</div>
+    <div class="strip-val">6,816</div>
+    <div class="strip-chg"><span class="up">+3.56% WK</span> | <span class="down">-0.11% D</span></div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">NASDAQ</div>
+    <div class="strip-val">22,903</div>
+    <div class="strip-chg"><span class="up">+4.68% WK</span> | <span class="up">+0.35% D</span></div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">DJIA</div>
+    <div class="strip-val">47,917</div>
+    <div class="strip-chg"><span class="up">+3.04% WK</span> | <span class="down">-0.56% D</span></div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">WTI Oil</div>
+    <div class="strip-val">$96.57</div>
+    <div class="strip-chg"><span class="down">-13.42% WK</span></div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">Gold</div>
+    <div class="strip-val">$4,762</div>
+    <div class="strip-chg"><span class="up">+2.37% WK</span></div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">10Y UST</div>
+    <div class="strip-val">4.316%</div>
+    <div class="strip-chg"><span>EUR $1.1726</span></div>
+  </div>
+</div>
+
+<!-- WSJ MARKET DATA -->
+<div class="sec-label">01 / WSJ MARKET DATA — 2026.04.10 기준</div>
+<div class="mkt-grid">
+  <div class="mkt-cell">
+    <div class="mkt-name">S&P 500</div>
+    <div class="mkt-price">6,816.89</div>
+    <div class="mkt-row down">▼ -7.77 (-0.11%) D | <span class="up">WK +3.56%</span></div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">NASDAQ Comp</div>
+    <div class="mkt-price">22,902.89</div>
+    <div class="mkt-row up">▲ +80.48 (+0.35%) D | <span>WK +4.68%</span></div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">DJIA</div>
+    <div class="mkt-price">47,916.57</div>
+    <div class="mkt-row down">▼ -269.23 (-0.56%) D | <span class="up">WK +3.04%</span></div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">Russell 2000</div>
+    <div class="mkt-price">2,630.59</div>
+    <div class="mkt-row up">WK +3.97%</div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">KOSPI (글로벌 1위)</div>
+    <div class="mkt-price">5,858.87</div>
+    <div class="mkt-row up">▲ WK +8.96% 🏆</div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">NIKKEI 225</div>
+    <div class="mkt-price">56,924.11</div>
+    <div class="mkt-row up">WK +7.15%</div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">WTI Crude</div>
+    <div class="mkt-price">$96.57 /bbl</div>
+    <div class="mkt-row down">WK -13.42% (2020년 이후 최대 주간 낙폭)</div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">Gold</div>
+    <div class="mkt-price">$4,761.90 /oz</div>
+    <div class="mkt-row up">WK +2.37%</div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">Silver</div>
+    <div class="mkt-price">$76.32 /oz</div>
+    <div class="mkt-row up">WK +4.93%</div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">EUR/USD</div>
+    <div class="mkt-price">1.1726</div>
+    <div class="mkt-row up">WK +1.78%</div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">USD/JPY</div>
+    <div class="mkt-price">159.29</div>
+    <div class="mkt-row up">WK +0.23%</div>
+  </div>
+  <div class="mkt-cell">
+    <div class="mkt-name">VIX</div>
+    <div class="mkt-price">19.23</div>
+    <div class="mkt-row down">WK -48.8% (전쟁전 수준 복귀)</div>
+  </div>
+</div>
+
+<!-- NEWS FLOW -->
+<div class="sec-label">02 / WSJ 뉴스플로우 — 이번 주 시장 임팩트 순</div>
+<div class="news-list">
+  <div class="news-item">
+    <div class="news-tag">긴급</div>
+    <div class="news-txt"><span class="news-impact hi"></span><strong>이란-미 2주 휴전 합의 (4.8)</strong> — 트럼프, 오후 8시 데드라인 2시간 전 휴전 발표. 다우 +1,325pt(연간 최대), WTI -16.4% 단일 최대 낙폭. 이슬라마바드에서 JD Vance·이란 외무 협상 진행 중(4.12). 호르무즈는 일 12척 제한 상태로 여전히 부분 봉쇄.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">인플레</div>
+    <div class="news-txt"><span class="news-impact hi"></span><strong>3월 CPI 3.3% — 2년 최고치</strong> — 에너지가 전체 상승분의 75% 차지. 가솔린 +18.9% yoy, 연료유 +44.2%. 근원 CPI 2.6%(예상치 하회). 미시간대 소비자심리 47.6 (사상 최저). 연준, 금리 동결 확률 77%로 상승.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">지정학</div>
+    <div class="news-txt"><span class="news-impact me"></span><strong>이란, 호르무즈 "통행료 부스" 운영 지속</strong> — 위안화·암호화폐로 통행료 징수 중. 700척 이상 선박 억류. 이란, 여전히 수천 기 탄도미사일 보유(미 정보 당국). Vance, 이슬라마바드 협상 주도 — 실패시 군사 재개 위협.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">트럼프</div>
+    <div class="news-txt"><span class="news-impact me"></span><strong>트럼프의 중국 플레이북 전환</strong> — 中 희토류 반격에 굴복, 강경 관세 유예. 시진핑 5월 정상회담 준비. Nvidia 中 칩 판매 허용. 바이든 기조 이어받되 더 유화적.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">마켓</div>
+    <div class="news-txt"><span class="news-impact lo"></span><strong>주간 상위 수익률 — KOSPI +8.96%·NIKKEI +7.15%</strong> — 휴전 랠리에 아시아 선두. 에너지 섹터 WK -4.07%, 나스닥 +4.68%. S&P 연간 고점 대비 여전히 -2.3%. 대형 은행들, 사모대출 숏 인덱스(FINDX) 출시 준비.</div>
+  </div>
+</div>
+
+<!-- REDDIT -->
+<div class="sec-label">03 / REDDIT 커뮤니티 센티먼트</div>
+<div class="r-grid">
+  <div class="r-card">
+    <div class="r-header">
+      <span class="r-name">r/wallstreetbets</span>
+      <span class="r-tone bear-bg">BEAR-CAUTION</span>
+    </div>
+    <div class="r-body">휴전 랠리 숏 스퀴즈 이후 "이제 뭐 사냐" 혼란. 에너지 포지션 대거 손절. XLE 숏이 가장 많이 터진 한 주. "트럼프가 또 말 바꾸면?" 우려로 신규 롱 진입 주저. 반도체(NVDA, AMD) 매수세 복귀 조짐. LEAP 콜 관심 상승. 일부는 "이게 데드캣 바운스" 주장.</div>
+    <div class="r-tags"><span class="r-tag">#숏스퀴즈</span><span class="r-tag">#NVDA</span><span class="r-tag">#에너지손절</span><span class="r-tag">#AMD</span></div>
+  </div>
+  <div class="r-card">
+    <div class="r-header">
+      <span class="r-name">r/investing</span>
+      <span class="r-tone neu-bg">CAUTIOUS</span>
+    </div>
+    <div class="r-body">CPI 3.3% 충격 — "스태그플레이션 시나리오 현실화 가능성" 토론 폭증. TIPS 매수 논거 확산. 연준의 금리 인하 기대 사실상 소멸. "에너지 구조적 플로어 $85" 전망 우세. 방산주 차익실현 vs 추가 보유 논쟁. 소비자 심리 사상 최저에 "경기침체 앞당겨질 수 있다" 경고.</div>
+    <div class="r-tags"><span class="r-tag">#TIPS</span><span class="r-tag">#스태그플레이션</span><span class="r-tag">#연준딜레마</span><span class="r-tag">#방산</span></div>
+  </div>
+  <div class="r-card">
+    <div class="r-header">
+      <span class="r-name">r/stocks</span>
+      <span class="r-tone bull-bg">MILD BULL</span>
+    </div>
+    <div class="r-body">빅테크 반등 모멘텀 — NVDA 반도체 주간 +25.5%, 라엔에프·에코프로 관련 글로벌 리튬 체인 관심. Meta Muse Spark 출시로 AI 레이스 복귀. CoreWeave-Anthropic 파트너십 주목. Nike, Porsche 등 실적 실망주 매도 논리 정리. 반도체 수퍼사이클 재개론 등장.</div>
+    <div class="r-tags"><span class="r-tag">#NVDA</span><span class="r-tag">#반도체</span><span class="r-tag">#AI</span><span class="r-tag">#MetaMuseSpark</span></div>
+  </div>
+  <div class="r-card">
+    <div class="r-header">
+      <span class="r-name">r/geopolitics</span>
+      <span class="r-tone bear-bg">RISK-AWARE</span>
+    </div>
+    <div class="r-body">이란의 호르무즈 지렛대가 "새로운 세계 질서의 신호탄" — 중국의 남중국해 확장 선례 우려. 테헤란 "3주 만에 4번째 글로벌 강대국" 자처. Vance 이슬라마바드 협상 결과가 다음 주 최대 변수. 이란이 핵 협상 조건 강화 시 협상 결렬 리스크.</div>
+    <div class="r-tags"><span class="r-tag">#호르무즈</span><span class="r-tag">#신세계질서</span><span class="r-tag">#이슬라마바드</span><span class="r-tag">#핵협상</span></div>
+  </div>
+  <div class="r-card">
+    <div class="r-header">
+      <span class="r-name">r/economics</span>
+      <span class="r-tone bear-bg">STAGFLATION WATCH</span>
+    </div>
+    <div class="r-body">에너지 가격 구조적 상승분이 3~6개월 차 식품·서비스 가격으로 전이될 전망. 실질 주간임금 -0.9%(6월 2022년 이후 최대 하락). 공장 주문 2월 동결. 건설 PVC 가격 +50%. 인프라 프로젝트 취소·지연 우려 확산. 연준 "올해 금리 인하 사실상 불가" 선반영.</div>
+    <div class="r-tags"><span class="r-tag">#스태그플레이션</span><span class="r-tag">#실질임금하락</span><span class="r-tag">#건설둔화</span></div>
+  </div>
+  <div class="r-card">
+    <div class="r-header">
+      <span class="r-name">r/options</span>
+      <span class="r-tone neu-bg">HEDGING</span>
+    </div>
+    <div class="r-body">VIX 19.23 — 전쟁 전 수준 복귀. 풋 비용 급감으로 보험 수요 오히려 증가. "이 가격에 풋 사야 하는 거 아냐?" 댓글 급증. OXY, XLE 콜 매도(covered call) 전략 공유 다수. S&P 6,500 풋 헤지 롤오버 논의. 다음 주 이슬라마바드 협상 결과 기다리며 중립 포지션.</div>
+    <div class="r-tags"><span class="r-tag">#VIX급락</span><span class="r-tag">#풋헤지</span><span class="r-tag">#커버드콜</span></div>
+  </div>
+</div>
+
+<!-- X INFLUENCERS -->
+<div class="sec-label">04 / X 인플루언서 포지셔닝</div>
+<div class="x-grid">
+  <div class="x-card">
+    <div class="x-handle">@LynAlden</div>
+    <div class="x-type">고정 코어 · 매크로/통화</div>
+    <div class="x-quote">"에너지 충격이 일시적이든 아니든, 재정·통화 당국이 대응 여력이 없다는 게 이번 위기의 핵심. 달러 헤게모니 균열의 서막일 수 있다."</div>
+    <div class="x-pos bear-bg">포지션: 금·에너지·비달러자산 LONG</div>
+  </div>
+  <div class="x-card">
+    <div class="x-handle">@biancoresearch</div>
+    <div class="x-type">고정 코어 · 채권/금리</div>
+    <div class="x-quote">"소비자심리 47.6 — 레코드 로우는 연준에 최악의 시나리오다. 인플레 3.3% 하에 심리 붕괴가 동시에 오는 것. 스태그플레이션 플레이북이 맞다."</div>
+    <div class="x-pos bear-bg">포지션: 장기채 UNDERWEIGHT, TIPS LONG</div>
+  </div>
+  <div class="x-card">
+    <div class="x-handle">@SoberLook</div>
+    <div class="x-type">고정 코어 · 크레딧/리스크</div>
+    <div class="x-quote">"신용스프레드 정상화가 너무 빠르다. VIX 19는 지금 상황에서 지나치게 낮다. 시장은 협상 성공을 기정사실로 반영 중 — 위험한 가정."</div>
+    <div class="x-pos bear-bg">포지션: HY 스프레드 와이드닝 헤지</div>
+  </div>
+  <div class="x-card">
+    <div class="x-handle">@Nouriel Roubini</div>
+    <div class="x-type">이번 주 교체 · 지정학/꼬리리스크</div>
+    <div class="x-quote">"이란이 협상 깨면 WTI $130 돌파 가능. 이게 1970년대 오일쇼크와 다른 점은 이번엔 지정학적 인질이 자발적으로 잡혀 있다는 것."</div>
+    <div class="x-pos bear-bg">포지션: 원자재 LONG, 리세션 헤지</div>
+  </div>
+  <div class="x-card">
+    <div class="x-handle">@PeterZeihan</div>
+    <div class="x-type">이번 주 교체 · 공급망/지정학</div>
+    <div class="x-quote">"호르무즈가 위안화 통행료 루트가 되면 페트로달러 종언 가속. 미국에겐 군사적 승리가 경제적 패배가 될 수 있다."</div>
+    <div class="x-pos bear-bg">포지션: 달러 약세, 에너지 인프라 LONG</div>
+  </div>
+  <div class="x-card">
+    <div class="x-handle">@elonmusk</div>
+    <div class="x-type">이번 주 교체 · 트럼프/지정학</div>
+    <div class="x-quote">"협상 실패시 군사 옵션은 여전히 테이블 위. 테슬라 전기차 수요가 고유가 덕에 유럽·아시아에서 반등 중."</div>
+    <div class="x-pos bull-bg">포지션: TSLA LONG 암시, 에너지 전환 수혜</div>
+  </div>
+</div>
+
+<!-- VS COMPARISON -->
+<div class="sec-label">05 / REDDIT vs X — 이번 주 주요 시각차</div>
+<div class="vs-wrap">
+  <div class="vs-side">
+    <div class="vs-platform">REDDIT (개인투자자)</div>
+    <strong>숏 스퀴즈 후 방향성 혼란</strong><br>
+    <span style="font-size:11px;color:#555">휴전 랠리를 "데드캣 바운스"로 보는 시각 vs 반도체·AI 반등 지속 기대 혼재. 에너지 포지션은 대부분 청산 완료. 다음 주 협상 결과 관망 모드.</span>
+  </div>
+  <div class="vs-center">⟷</div>
+  <div class="vs-side">
+    <div class="vs-platform">X (기관/인플루언서)</div>
+    <strong>스태그플레이션 확신 + 달러 약세</strong><br>
+    <span style="font-size:11px;color:#555">CPI 3.3%·심리 47.6 동시 충격에 스태그 플레이북 고수. 휴전 지속 가능성에 회의적. 금·TIPS·에너지 인프라 장기 LONG 유지. 개인보다 훨씬 더 비관적.</span>
+  </div>
+</div>
+
+<!-- TICKER TABLE -->
+<div class="sec-label">06 / 티커 센티먼트 테이블 — 주요 종목·ETF</div>
+<div class="ticker-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>티커</th><th>섹터</th><th>Reddit</th><th>X</th><th>주간%</th><th>코멘트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="t-ticker">NVDA</td><td>반도체</td><td class="t-bull">BULL 🔥</td><td class="t-bull">BULL</td><td class="up">+25.5%</td><td>중국 칩 판매 허용 + AI 레이스 재점화</td></tr>
+    <tr><td class="t-ticker">XLE</td><td>에너지ETF</td><td class="t-bear">BEAR</td><td class="t-bear">BEAR</td><td class="down">-4.1%</td><td>휴전에 에너지 숏 스퀴즈 해소, 차익실현</td></tr>
+    <tr><td class="t-ticker">GLD</td><td>금ETF</td><td class="t-neu">NEUTRAL</td><td class="t-bull">BULL</td><td class="up">+2.4%</td><td>안전자산·인플레 헤지 동시 수요</td></tr>
+    <tr><td class="t-ticker">LMT</td><td>방산</td><td class="t-bull">BULL</td><td class="t-neu">NEUTRAL</td><td class="up">+0.9%</td><td>휴전 소식에도 장기 방산 수요 지속 전망</td></tr>
+    <tr><td class="t-ticker">TSLA</td><td>EV</td><td class="t-neu">NEUTRAL</td><td class="t-bull">BULL</td><td class="down">-22.4%</td><td>고유가로 EV 수요 반등 기대, 주가는 부진</td></tr>
+    <tr><td class="t-ticker">META</td><td>빅테크</td><td class="t-bull">BULL</td><td class="t-bull">BULL</td><td class="down">-4.7%</td><td>Muse Spark 출시로 AI 레이스 복귀</td></tr>
+    <tr><td class="t-ticker">TIPS</td><td>채권ETF</td><td class="t-neu">NEUTRAL</td><td class="t-bull">BULL 🔥</td><td class="up">+0.2%</td><td>실질금리 2%+에 기관 매수 급증</td></tr>
+    <tr><td class="t-ticker">USO</td><td>원유ETF</td><td class="t-bear">BEAR</td><td class="t-neu">NEUTRAL</td><td class="down">-13.4%</td><td>휴전 후 급락, 협상 결렬시 반등 리스크</td></tr>
+    <tr><td class="t-ticker">AMD</td><td>반도체</td><td class="t-bull">BULL</td><td class="t-neu">NEUTRAL</td><td class="up">+8.0%</td><td>NVDA 랠리 온기 수혜</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- KEYWORDS -->
+<div class="sec-label">07 / 키워드 클라우드 — Reddit</div>
+<div class="kw-cloud">
+  <span class="kw s1 hot">호르무즈</span>
+  <span class="kw s1 hot">스태그플레이션</span>
+  <span class="kw s2 warm">CPI 3.3%</span>
+  <span class="kw s2 warm">숏스퀴즈</span>
+  <span class="kw s2 warm">NVDA</span>
+  <span class="kw s2 warm">휴전랠리</span>
+  <span class="kw s2 warm">TIPS</span>
+  <span class="kw s3 cool">VIX급락</span>
+  <span class="kw s3 cool">이슬라마바드</span>
+  <span class="kw s3 cool">페트로달러</span>
+  <span class="kw s3 cool">Vance</span>
+  <span class="kw s3 cool">AMD</span>
+  <span class="kw s3 cool">반도체</span>
+  <span class="kw s3 cool">에너지차익</span>
+  <span class="kw s3 cool">MuseSpark</span>
+</div>
+<div class="sec-label" style="margin-top:8px">07-B / 키워드 클라우드 — X(Twitter)</div>
+<div class="kw-cloud">
+  <span class="kw s1 hot">달러약세</span>
+  <span class="kw s1 hot">스태그플레이션</span>
+  <span class="kw s2 warm">이란협상결렬리스크</span>
+  <span class="kw s2 warm">금LONG</span>
+  <span class="kw s2 warm">TIPS</span>
+  <span class="kw s2 warm">연준딜레마</span>
+  <span class="kw s3 cool">위안화통행료</span>
+  <span class="kw s3 cool">페트로위안</span>
+  <span class="kw s3 cool">VIX과매도</span>
+  <span class="kw s3 cool">장기채언더웨이트</span>
+  <span class="kw s3 cool">오일바닥어딘가</span>
+</div>
+
+<!-- SIGNALS -->
+<div class="sec-label">08 / 주간 시그널 인디케이터</div>
+<div class="sig-grid">
+  <div class="sig-card">
+    <div class="sig-icon">🌡️</div>
+    <div class="sig-title">시장 온도</div>
+    <div class="sig-val" style="color:var(--gold)">경계 회복</div>
+    <div class="sig-note">숏스퀴즈 후 방향 탐색</div>
+  </div>
+  <div class="sig-card">
+    <div class="sig-icon">⚡</div>
+    <div class="sig-title">에너지 충격</div>
+    <div class="sig-val" style="color:var(--red)">HIGH</div>
+    <div class="sig-note">구조적 $85+ 플로어 형성</div>
+  </div>
+  <div class="sig-card">
+    <div class="sig-icon">🎯</div>
+    <div class="sig-title">지정학 리스크</div>
+    <div class="sig-val" style="color:var(--gold)">ELEVATED</div>
+    <div class="sig-note">이슬라마바드 협상 결정적</div>
+  </div>
+  <div class="sig-card">
+    <div class="sig-icon">💰</div>
+    <div class="sig-title">인플레 추세</div>
+    <div class="sig-val" style="color:var(--red)">RISING</div>
+    <div class="sig-note">CPI 3.3%, 근원 2.6%</div>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<div class="sec-label">09 / 차트</div>
+<div class="chart-grid">
+  <div class="chart-box">
+    <div class="chart-title">센티먼트 포지션 (Bull/Bear Score)</div>
+    <canvas id="c1"></canvas>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">주간 섹터 수익률 (%)</div>
+    <canvas id="c2"></canvas>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">글로벌 시장 심리 분포</div>
+    <canvas id="c3"></canvas>
+  </div>
+</div>
+
+<!-- INSIGHT -->
+<div class="sec-label">10 / 바이사이드 인사이트</div>
+<div class="insight-box">
+  <div class="insight-eyebrow">드러켄밀러 헤지펀드 리서치 헤드 / Vol.05 핵심 논지</div>
+  <div class="insight-lead">휴전은 끝이 아니라 협상의 시작이다 — 이란의 호르무즈 지렛대는 유지된다</div>
+  <div class="insight-body">
+    <p>이번 주 시장은 "평화 랠리"에 환호했지만, 진단은 냉정해야 한다. <strong>WTI -13.4% 주간 낙폭</strong>은 기술적 반전이지, 공급 문제의 해결이 아니다. 호르무즈 해협은 여전히 하루 12척 제한 상태다. 이란은 앞으로 2주 협상에서 최대한 유리한 조건을 끌어내기 위해 호르무즈 카드를 끝까지 쥐고 있을 것이다.</p>
+    <p><strong>CPI 3.3%와 소비자심리 47.6의 동시 출현</strong>은 역사적으로 가장 어려운 매크로 환경을 의미한다. 연준은 인플레를 잡기 위해 금리를 올려야 하지만, 이미 심리가 사상 최저인 소비자를 더 압박할 수 없다. 결국 "아무것도 못하는 연준"이 확정되는 주였다.</p>
+    <p><strong>바이사이드 포지션:</strong> 단기적으로 이슬라마바드 협상 결과에 따라 오일 변동성이 극대화될 것이다. 협상 실패 → WTI $115 재도전, 성공 → $88~90 테스트. 그 어느 경우도 에너지 구조적 플로어는 $85 이상이다. <strong>금(Gold)·TIPS는 공통 헤지 자산</strong>으로 양쪽 시나리오에서 모두 유효하다. 반도체(NVDA, AMD) 랠리는 AI 수요 펀더멘털 기반이나, 연준 동결 장기화 시 밸류에이션 부담이 재부각될 수 있다.</p>
+  </div>
+</div>
+
+<!-- WATCHLIST -->
+<div class="sec-label">11 / 다음 주 워치리스트</div>
+<div class="watch-grid">
+  <div class="watch-card">
+    <div class="watch-ticker">이슬라마바드 협상</div>
+    <div class="watch-reason">Vance vs 이란 외무 — 성패가 오일·주식 방향 결정</div>
+  </div>
+  <div class="watch-card">
+    <div class="watch-ticker">WTI $90 vs $100</div>
+    <div class="watch-reason">협상 결과에 따른 오일 레벨이 시장 심리 기준점</div>
+  </div>
+  <div class="watch-card">
+    <div class="watch-ticker">TIPS / GLD</div>
+    <div class="watch-reason">스태그 헤지 공통 수혜 — 기관 추가 매수 모니터링</div>
+  </div>
+  <div class="watch-card">
+    <div class="watch-ticker">NVDA / AMD</div>
+    <div class="watch-reason">AI 랠리 지속성 — 반도체 4월 어닝 프리뷰</div>
+  </div>
+  <div class="watch-card">
+    <div class="watch-ticker">VIX 옵션 헤지</div>
+    <div class="watch-reason">VIX 19는 너무 낮다 — 협상 결렬 시 스파이크 대비</div>
+  </div>
+  <div class="watch-card">
+    <div class="watch-ticker">미시간 소비자심리</div>
+    <div class="watch-reason">4월 최종치 — 휴전 이후 반등 여부 확인</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span>바이사이드 위클리 Vol.05 · 2026.04.11 · Source: WSJ B6 · Reddit · X(Twitter)</span>
+  <span>본 리포트는 소셜 센티먼트 분석이며 투자 권유가 아닙니다. 모든 투자는 본인 책임입니다.</span>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const font = {family:"'DM Mono', monospace",size:9};
+const grid = {color:'rgba(0,0,0,0.05)'};
+new Chart(document.getElementById('c1'),{type:'bar',data:{labels:['Gold','TIPS','방산','반도체','현금','에너지','채권'],datasets:[{data:[78,72,65,62,55,25,42],backgroundColor:['#b08030','#1a6040','#1a6040','#1a6040','#9a9080','#b83232','#b83232'],borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:100,ticks:{font},grid},y:{ticks:{font},grid:{display:false}}}}});
+new Chart(document.getElementById('c2'),{type:'bar',data:{labels:['KOSPI','NIKKEI','나스닥','S&P500','다우','에너지','WTI'],datasets:[{data:[8.96,7.15,4.68,3.56,3.04,-4.07,-13.42],backgroundColor:['#1a6040','#1a6040','#1a6040','#1a6040','#1a6040','#b83232','#b83232'],borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font,callback:v=>v+'%'},grid},y:{ticks:{font},grid:{display:false}}}}});
+new Chart(document.getElementById('c3'),{type:'doughnut',data:{labels:['약세(BEAR)','중립','강세(BULL)'],datasets:[{data:[7,2,1],backgroundColor:['#b83232','#9a9080','#1a6040'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font,boxWidth:10,padding:8}}},cutout:'62%'}});
+</script>
+</body>
+</html>
