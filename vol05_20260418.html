@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Buy-Side Digest Vol.05 · 2026.04.18</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111010;
+    --paper:#f4f1ea;
+    --cream:#ebe6d9;
+    --accent:#b5361c;
+    --teal:#0d6b4f;
+    --amber:#7d5a0a;
+    --navy:#1a4f8a;
+    --line:#1c1c1c;
+    --muted:#6b6559;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR','DM Mono',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55;}
+  body{padding:0;margin:0;}
+  .wrap{max-width:1160px;margin:0 auto;padding:32px 24px 120px;}
+  .masthead{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:32px;}
+  .masthead-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+  .brand{font-family:'DM Serif Display',serif;font-size:clamp(32px,6vw,68px);line-height:0.95;letter-spacing:-0.02em;}
+  .brand .serif-it{font-style:italic;color:var(--accent);}
+  .meta{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;text-align:right;color:var(--muted);line-height:1.7;}
+  .meta strong{color:var(--ink);}
+  .sub{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.15em;margin-top:12px;display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);}
+  .sub .tag{padding:3px 10px;border:1px solid var(--ink);border-radius:2px;color:var(--ink);background:var(--cream);}
+  .sub .tag.hot{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  h2.section{font-family:'DM Serif Display',serif;font-size:clamp(26px,4vw,42px);line-height:1.05;margin:48px 0 8px;letter-spacing:-0.01em;}
+  h2.section .num{font-family:'DM Mono',monospace;font-size:0.35em;vertical-align:top;color:var(--accent);letter-spacing:0.15em;padding-right:12px;}
+  .lede{font-size:15px;color:var(--muted);margin-bottom:24px;max-width:720px;}
+  .rule{border-top:1px solid var(--ink);margin:32px 0;}
+
+  /* WSJ Market snapshot */
+  .wsj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px;}
+  .wsj-cell{background:var(--cream);border:1px solid var(--ink);padding:14px 16px;border-radius:2px;position:relative;}
+  .wsj-cell .lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;}
+  .wsj-cell .val{font-family:'DM Serif Display',serif;font-size:24px;line-height:1.1;margin-top:4px;}
+  .wsj-cell .chg{font-family:'DM Mono',monospace;font-size:12px;margin-top:6px;font-weight:500;}
+  .wsj-cell .chg.up{color:var(--teal);}
+  .wsj-cell .chg.dn{color:var(--accent);}
+  .wsj-cell .wk{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;border-top:1px dotted var(--muted);padding-top:6px;}
+
+  /* news flow */
+  .newsflow{display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-top:24px;}
+  .flow-main{border-left:3px solid var(--accent);padding-left:18px;}
+  .flow-main h3{font-family:'DM Serif Display',serif;font-size:22px;line-height:1.15;margin-bottom:8px;}
+  .flow-main p{font-size:14px;margin-bottom:12px;}
+  .flow-side{background:var(--cream);border:1px solid var(--ink);padding:16px;}
+  .flow-side h4{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;color:var(--accent);}
+  .flow-side ul{list-style:none;}
+  .flow-side li{font-size:13px;padding:8px 0;border-bottom:1px dashed var(--muted);line-height:1.45;}
+  .flow-side li:last-child{border:0;}
+  .flow-side li .t{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);display:block;margin-bottom:2px;}
+
+  /* Reddit/X cards */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px;}
+  .card{background:#fff;border:1px solid var(--ink);padding:18px;border-radius:2px;position:relative;}
+  .card.reddit{border-left:4px solid var(--accent);}
+  .card.x{border-left:4px solid var(--navy);}
+  .card .src{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;}
+  .card .src strong{color:var(--ink);}
+  .card .src .pin{background:var(--ink);color:#fff;padding:1px 6px;font-size:9px;}
+  .card .src .pin.hot{background:var(--accent);}
+  .card h4{font-family:'DM Serif Display',serif;font-size:17px;line-height:1.25;margin-bottom:8px;}
+  .card .body{font-size:13px;color:var(--ink);}
+  .card .body em{font-style:normal;background:#fde9b2;padding:0 3px;}
+  .card .take{margin-top:12px;padding-top:10px;border-top:1px dotted var(--muted);font-size:12px;color:var(--navy);}
+  .card .take b{color:var(--accent);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:2px;}
+
+  /* comparison chart */
+  .compare{background:var(--cream);border:1px solid var(--ink);padding:20px;margin-top:20px;}
+  .compare h3{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;color:var(--accent);}
+  .bar-row{display:grid;grid-template-columns:160px 1fr 70px;align-items:center;gap:10px;padding:6px 0;font-family:'DM Mono',monospace;font-size:11px;}
+  .bar-row .nm{font-size:12px;}
+  .bar{height:16px;border-radius:2px;position:relative;}
+  .bar.up{background:linear-gradient(90deg,var(--teal),#13a076);}
+  .bar.dn{background:linear-gradient(90deg,var(--accent),#e06548);}
+  .bar-val{text-align:right;font-weight:500;}
+
+  /* ticker table */
+  .tick-wrap{overflow-x:auto;margin-top:16px;border:1px solid var(--ink);}
+  table.tick{width:100%;border-collapse:collapse;font-size:12px;min-width:640px;background:#fff;}
+  table.tick th{background:var(--ink);color:#fff;padding:10px 8px;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;text-align:right;}
+  table.tick th:first-child,table.tick th:nth-child(2){text-align:left;}
+  table.tick td{padding:8px;border-bottom:1px solid #e8e3d5;text-align:right;font-family:'DM Mono',monospace;}
+  table.tick td:first-child{font-weight:700;text-align:left;}
+  table.tick td:nth-child(2){text-align:left;color:var(--muted);font-size:11px;}
+  table.tick tr:nth-child(even) td{background:#faf7ef;}
+  table.tick .up{color:var(--teal);font-weight:500;}
+  table.tick .dn{color:var(--accent);font-weight:500;}
+
+  /* keywords */
+  .kw-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .kw{background:var(--cream);border:1px solid var(--ink);padding:6px 12px;font-family:'DM Mono',monospace;font-size:12px;border-radius:100px;}
+  .kw.hot{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .kw.cool{background:var(--teal);color:#fff;border-color:var(--teal);}
+  .kw.warn{background:#fde9b2;border-color:var(--amber);}
+  .kw small{opacity:0.7;margin-left:4px;}
+
+  /* signals */
+  .signals{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;}
+  .sig{padding:18px;border:1px solid var(--ink);background:#fff;border-top:6px solid;}
+  .sig.bull{border-top-color:var(--teal);}
+  .sig.bear{border-top-color:var(--accent);}
+  .sig.watch{border-top-color:var(--amber);}
+  .sig .lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+  .sig h4{font-family:'DM Serif Display',serif;font-size:18px;line-height:1.2;margin:6px 0 10px;}
+  .sig p{font-size:13px;line-height:1.5;}
+
+  /* chart */
+  .chart-box{background:#fff;border:1px solid var(--ink);padding:20px;margin-top:16px;}
+  .chart-box h4{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;color:var(--muted);}
+  svg{max-width:100%;height:auto;display:block;}
+
+  /* insight */
+  .insight{background:var(--ink);color:var(--paper);padding:28px 30px;margin-top:20px;border-radius:2px;}
+  .insight h3{font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;margin-bottom:14px;color:#fff;}
+  .insight h3 em{color:#f5b040;font-style:italic;}
+  .insight p{font-size:14px;line-height:1.65;margin-bottom:12px;color:#e8e3d5;}
+  .insight p.signature{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;margin-top:18px;padding-top:14px;border-top:1px solid #5a5648;color:#a49d87;}
+  .insight .call{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0;}
+  .insight .call-box{background:#2a2825;padding:14px;border-left:3px solid #f5b040;}
+  .insight .call-box .tag{font-family:'DM Mono',monospace;font-size:10px;color:#f5b040;letter-spacing:0.12em;display:block;margin-bottom:6px;}
+  .insight .call-box .body{font-size:13px;color:#e8e3d5;}
+
+  /* watchlist */
+  .watch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;}
+  .watch-cell{background:var(--cream);border:1px solid var(--ink);padding:16px;}
+  .watch-cell .ctg{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);}
+  .watch-cell h5{font-family:'DM Serif Display',serif;font-size:17px;line-height:1.2;margin:6px 0 10px;}
+  .watch-cell ul{list-style:none;font-size:12px;line-height:1.8;}
+  .watch-cell li{display:flex;justify-content:space-between;border-bottom:1px dotted var(--muted);padding:3px 0;font-family:'DM Mono',monospace;}
+  .watch-cell li:last-child{border:0;}
+  .watch-cell li b{font-weight:500;}
+  .watch-cell li span.up{color:var(--teal);}
+  .watch-cell li span.dn{color:var(--accent);}
+
+  /* footer */
+  footer{border-top:3px solid var(--ink);margin-top:60px;padding-top:20px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+  footer .dis{display:grid;grid-template-columns:2fr 1fr;gap:20px;line-height:1.7;}
+
+  /* mobile */
+  @media (max-width:768px){
+    .wrap{padding:20px 14px 80px;}
+    .wsj-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+    .wsj-cell{padding:10px 12px;}
+    .wsj-cell .val{font-size:18px;}
+    .newsflow{grid-template-columns:1fr;gap:16px;}
+    .cards{grid-template-columns:1fr;}
+    .signals{grid-template-columns:1fr;}
+    .watch-grid{grid-template-columns:1fr;}
+    .insight{padding:20px 18px;}
+    .insight h3{font-size:20px;}
+    .insight .call{grid-template-columns:1fr;}
+    .bar-row{grid-template-columns:100px 1fr 60px;font-size:10px;}
+    .bar-row .nm{font-size:11px;}
+    footer .dis{grid-template-columns:1fr;}
+    .meta{text-align:left;}
+    .masthead-top{flex-direction:column;align-items:flex-start;}
+  }
+  @media (max-width:480px){
+    .brand{font-size:36px;}
+    h2.section{font-size:22px;}
+    .wsj-cell .val{font-size:16px;}
+    .card h4{font-size:15px;}
+  }
+
+  /* print */
+  @page{size:A4;margin:12mm;}
+  @media print{
+    html,body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:10.5px;}
+    .wrap{padding:0;max-width:100%;}
+    .masthead,.wsj-cell,.card,.sig,.chart-box,.insight,.watch-cell,.compare,.flow-side,.tick-wrap{page-break-inside:avoid;}
+    h2.section{page-break-after:avoid;}
+    .cards,.signals,.watch-grid,.wsj-grid{page-break-inside:avoid;}
+    .insight{background:#111 !important;color:#fff !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ====================== MASTHEAD ====================== -->
+<header class="masthead">
+  <div class="masthead-top">
+    <div>
+      <div class="brand">The <span class="serif-it">Buy-Side</span><br>Weekly Digest</div>
+      <div class="sub">
+        <span class="tag">Vol. 05</span>
+        <span class="tag">Global · Week of Apr 13–17</span>
+        <span class="tag hot">Iran War · Week 7</span>
+      </div>
+    </div>
+    <div class="meta">
+      Issued <strong>Sat, April 18 2026</strong><br>
+      Editor · Research Desk<br>
+      Style · Druckenmiller hedge-fund house<br>
+      Sources · WSJ B6 · Reddit · X · KRX · FRED
+    </div>
+  </div>
+</header>
+
+<!-- ====================== 1. WSJ MARKET SNAPSHOT ====================== -->
+<h2 class="section"><span class="num">01</span>WSJ Market — <span style="font-style:italic;">Friday Close</span></h2>
+<p class="lede">호르무즈 개방 선언으로 리스크온 랠리 정점 — 지수 사상 최고치, 유가 일간 −10%. 그러나 이 수치는 "진짜 종전"에 베팅한 가격이다.</p>
+
+<div class="wsj-grid">
+  <div class="wsj-cell">
+    <div class="lbl">S&amp;P 500</div>
+    <div class="val">7,126.06</div>
+    <div class="chg up">+84.78 / +1.20%</div>
+    <div class="wk">Weekly +4.54% · YTD +4.1% · 신고가</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">Nasdaq Composite</div>
+    <div class="val">24,468.48</div>
+    <div class="chg up">+365.78 / +1.52%</div>
+    <div class="wk">Weekly +6.84% · 13거래일 연속 상승</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">DJIA</div>
+    <div class="val">49,447.43</div>
+    <div class="chg up">+868.71 / +1.79%</div>
+    <div class="wk">Weekly +3.19% · YTD +2.9%</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">Russell 2000</div>
+    <div class="val">2,776.90</div>
+    <div class="chg up">+57.30 / +2.11%</div>
+    <div class="wk">Weekly +5.56% · 중소형 스퀴즈</div>
+  </div>
+
+  <div class="wsj-cell">
+    <div class="lbl">WTI Crude (May)</div>
+    <div class="val">$83.85</div>
+    <div class="chg dn">−$10.84 / −11.4%</div>
+    <div class="wk">Weekly <b>−13.17%</b> · 호르무즈 쇼크 해제</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">Gold (Apr)</div>
+    <div class="val">$4,857.60</div>
+    <div class="chg up">+72.20 / +1.51%</div>
+    <div class="wk">YTD +20.0% · 랠리 속 헤지 수요</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">US 10Y Yield</div>
+    <div class="val">4.244%</div>
+    <div class="chg dn">−5bp w/w</div>
+    <div class="wk">전주 4.340% · 스트레스 완화</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">USD/KRW</div>
+    <div class="val">1,467.11</div>
+    <div class="chg dn">YTD +1.8%</div>
+    <div class="wk">WSJ Dollar Index 95.17 (−0.52%)</div>
+  </div>
+
+  <div class="wsj-cell">
+    <div class="lbl">VIX</div>
+    <div class="val">17.48</div>
+    <div class="chg dn">−0.46 / −2.56%</div>
+    <div class="wk">52주 하단 부근 · 평온 모드</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">PHLX Semi</div>
+    <div class="val">9,555.88</div>
+    <div class="chg up">+226.53 / +2.43%</div>
+    <div class="wk">YTD +34.9% · 52주 +149%</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">KOSPI Composite</div>
+    <div class="val">6,196.92</div>
+    <div class="chg dn">−34.13 / −0.55%</div>
+    <div class="wk">Weekly <b>+5.68%</b> · 글로벌 지수 2위</div>
+  </div>
+  <div class="wsj-cell">
+    <div class="lbl">High Yield Spread</div>
+    <div class="val">6.244%</div>
+    <div class="chg dn">−22bp w/w</div>
+    <div class="wk">신용 여건 완화 · 리스크온 재진입</div>
+  </div>
+</div>
+
+<!-- ====================== 2. NEWS FLOW ====================== -->
+<h2 class="section"><span class="num">02</span>News Flow — <span style="font-style:italic;">48시간의 반전</span></h2>
+<div class="newsflow">
+  <div class="flow-main">
+    <h3>호르무즈 개방 → 재폐쇄: 시장이 놓친 72시간</h3>
+    <p>금요일(4/17) 이란 외무장관 아라그치가 레바논 휴전과 연동해 호르무즈 해협 전면 개방을 선언. WTI는 장중 −10%, 브렌트 −9%. S&amp;P 500은 3주 연속 상승, 나스닥은 13거래일 연속 상승이라는 1월 이후 가장 강한 모멘텀.</p>
+    <p>하지만 같은 날 트럼프는 "美 해상봉쇄는 유지"를 못박았고, 토요일(4/18) 오전 이란 혁명수비대 해군은 "해협 통제 원상 복구" 선언. 인도국적 유조선 2척 사격, 영국국적 탱커 피격, 컨테이너선 로켓 피격 보고. 4월 12일 이슬라마바드 협상 결렬 이후 일주일 만의 재충돌.</p>
+    <p>즉 WSJ 금요일 종가는 <b>"진짜 종전"</b>을 가정한 가격이었으나, 주말 개장 전까지 그 전제는 소멸. 월요일 시가갭 위험이 가장 높은 주간.</p>
+  </div>
+  <aside class="flow-side">
+    <h4>Timeline</h4>
+    <ul>
+      <li><span class="t">Mon 4/13</span>美 해군, 이란 항구 봉쇄 시작. CENTCOM 72시간 내 14척 회항.</li>
+      <li><span class="t">Wed 4/15</span>이스라엘·레바논 10일 휴전 합의 발표.</li>
+      <li><span class="t">Fri 4/17 AM</span>이란 "호르무즈 완전 개방" 선언. WTI −10%.</li>
+      <li><span class="t">Fri 4/17 PM</span>Trump "봉쇄 유지" 발언. 이란측 즉시 반발.</li>
+      <li><span class="t">Sat 4/18</span>이란, 호르무즈 재폐쇄 + 유조선 3척 사격. 8주차 전쟁 진입.</li>
+    </ul>
+  </aside>
+</div>
+
+<!-- ====================== 3. REDDIT SENTIMENT ====================== -->
+<h2 class="section"><span class="num">03</span>Reddit Pulse — <span style="font-style:italic;">Crowd Mode</span></h2>
+<p class="lede">r/wallstreetbets · r/investing · r/stocks · r/economics · r/geopolitics 5개 서브레딧 이번 주 주요 내러티브.</p>
+<div class="cards">
+
+  <div class="card reddit">
+    <div class="src"><strong>r/wallstreetbets</strong> <span class="pin hot">TOP</span></div>
+    <h4>"Netflix 실적 미스 아님, 가이던스 미스." — 숏 스퀴즈 랠리 재개 시그널</h4>
+    <div class="body">Q1 revenue $12.25B beat + EPS beat임에도 <em>Q2 가이던스 $12.57B(vs 컨센서스 $12.64B)</em>에 −9.72%. WBD 인수 실패 후 회사 방향성 의문. Hastings 이사회 퇴임 소식까지 겹쳐 "성장 디셀러레이션" 베팅으로 전환. 반면 금요일 지수 랠리는 Goldman PB 기준 숏커버링 주도로 해석되는 분위기.</div>
+    <div class="take"><b>Take</b>"지수와 개별주 스토리가 분리되는 전형적 과열 시그널. Netflix 낙폭은 서프라이즈보다 '포지셔닝 과밀' 결과."</div>
+  </div>
+
+  <div class="card reddit">
+    <div class="src"><strong>r/economics</strong> <span class="pin">하이트래픽</span></div>
+    <h4>소비자심리지수 47.6 — 역사적 최저. 금요일 랠리와 가장 큰 괴리.</h4>
+    <div class="body">4월 미시간대 소비자심리 <em>역사적 최저 47.6</em>, 1년 기대인플레이션 4.8%. 3월 CPI +0.9% 월간(1967년 이래 가솔린 최대 월간상승 기여). 응답자 상당수가 "이란 전쟁"을 불안 요인으로 직접 인용. 지수는 사상최고지만 실물은 1970년대 스태그플레이션 프레임.</div>
+    <div class="take"><b>Take</b>"시장 내러티브 ≠ 실물 체감. 이 갭이 가장 크게 벌어진 주차 — 과거 1973·2008 사례 유사."</div>
+  </div>
+
+  <div class="card reddit">
+    <div class="src"><strong>r/geopolitics</strong> <span class="pin">이슈</span></div>
+    <h4>호르무즈 재폐쇄 스레드 — "시장은 너무 빨리 기대한다"</h4>
+    <div class="body">이슬라마바드 협상 결렬 → 美 해상봉쇄 → 이란 개방 선언 → 트럼프 봉쇄 유지 → 이란 재폐쇄. 72시간 사이클이 이미 3번째. 4/12·4/17·4/18이 핵심 날짜. 상당수 유저가 "트럼프는 미드텀 전까지 종전 서사가 필요하지만 이란은 핵 협상 결렬 시 레버리지가 호르무즈뿐"이라는 구조적 분석.</div>
+    <div class="take"><b>Take</b>"해협은 'headline trade'의 본진. 트레이딩데스크는 주말 갭 위험을 가격 대비 너무 낮게 평가."</div>
+  </div>
+
+  <div class="card reddit">
+    <div class="src"><strong>r/investing</strong> <span class="pin">진지</span></div>
+    <h4>에너지 섹터 10% 조정 — Buy the dip vs Sell the bounce</h4>
+    <div class="body">S&amp;P 500 Energy 주간 −3.52%. LYB −12%, DOW −11%, VLO −7.5%, EQNR −7.3%, CNQ −7.2%, CF −9.7%. 석유화학·정유·비료 동반 매도. 댓글 분위기는 "재폐쇄 뉴스 감안시 월요일 갭업 기대" vs "어쨌든 수요 파괴 프레임은 살아있음"으로 양분.</div>
+    <div class="take"><b>Take</b>"공급 프리미엄 재확대 가능성이 수요 둔화 프레임보다 일시적으로 우세할 확률. 단 숏사이드는 $85 브렌트 레벨에서 반응."</div>
+  </div>
+
+  <div class="card reddit">
+    <div class="src"><strong>r/stocks</strong> <span class="pin">양극화</span></div>
+    <h4>반도체·금융·소비재 독주, 유틸·에너지·소재 소외 — 양극화 심화</h4>
+    <div class="body">주간 Info Tech +8.09%, Consumer Discr +6.64%, Communication +6.28%, Financials +3.27%. 반면 Energy −3.52%, Utilities −1.69%, Materials −0.39%. PHLX Semi YTD +34.9%. 댓글에선 "AAOI +357%·SNDK +288%·BE +139% YTD 같은 반도체·AI인프라 2차주가 이미 폭주" 논쟁.</div>
+    <div class="take"><b>Take</b>"테크 집중도는 2021년 이래 최고 수준. Barbell(테크+유틸) 전략이 무너진 구간 — 핵심 헤지는 골드·단기채."</div>
+  </div>
+
+  <div class="card reddit">
+    <div class="src"><strong>r/wallstreetbets</strong> <span class="pin">MEME</span></div>
+    <h4>MSTR +11.80% · EFOI +210% — 레버리지 투기 회귀</h4>
+    <div class="body">Strategy(MSTR) 일간 +11.80%, 다만 관련 2X 숏 ETF(SMST −23.69%, MSDD −23.43%) 급락. BTC 연동 레버리지 상품에 자금 재유입. Energy Focus(EFOI) +210%, Kailera(KLRA) +62.5% 등 마이크로캡 화려. "실물 경기는 침체, 투기는 도박장" 내러티브 재부상.</div>
+    <div class="take"><b>Take</b>"변동성 소멸 + 레버리지 증가 = 2021년 후반부 유형. 본진 포지션은 줄이고 주변부 투기로 파이 확장되는 구간."</div>
+  </div>
+
+</div>
+
+<!-- ====================== 4. X INFLUENCER ====================== -->
+<h2 class="section"><span class="num">04</span>X Feed — <span style="font-style:italic;">Smart Money Voices</span></h2>
+<p class="lede">고정 코어 3인(Alden·Bianco·SoberLook) + 이번 주 이슈 교체 3인(Zeihan·Roubini·Minervini).</p>
+<div class="cards">
+
+  <div class="card x">
+    <div class="src"><strong>@LynAldenContact</strong> <span class="pin">매크로</span></div>
+    <h4>"Flywheel of Chaos — 오일 쇼크는 재정 우위 체제의 가속기"</h4>
+    <div class="body">3월 뉴스레터에서 제시한 3-pillar 포트폴리오(수익성 높은 주식+원자재 생산자+단기 현금성)를 유지. 전쟁 프리미엄이 일시적으로 빠지더라도 <em>"재정 우위(fiscal dominance)"</em> 체제가 구조적으로 자산 가격의 하방을 지지. 금·은은 인플레이션 방어 축으로 매수 유지.</div>
+    <div class="take"><b>Take</b>"호르무즈 변동성을 단기 노이즈로 보고 포트 구조 건드리지 말 것 — 구조적으로는 여전히 하드머니 우위."</div>
+  </div>
+
+  <div class="card x">
+    <div class="src"><strong>@biancoresearch</strong> <span class="pin">채권</span></div>
+    <h4>"10Y 4.24%에서 5%는 이미 포기한 시장 — 연준 딜레마 심화"</h4>
+    <div class="body">UST 10Y가 전주 4.34%에서 4.24%로 완화, HY 스프레드도 22bp 축소. 2Y 3.699%로 레이트컷 기대 부분 반영. 다만 4월 미시간 1년 기대인플레이션 4.8%는 <em>1970년대 중반 수준</em>. 공급쇼크가 실질화되면 연준은 금리를 올리는 게 아니라 "못 내리는" 프레임.</div>
+    <div class="take"><b>Take</b>"채권시장은 이미 성장둔화 vs 인플 재점화 중 전자에 베팅. 호르무즈 재폐쇄가 이 베팅을 뒤집는 촉매."</div>
+  </div>
+
+  <div class="card x">
+    <div class="src"><strong>@SoberLook</strong> <span class="pin">데이터</span></div>
+    <h4>소비자심리 47.6 vs S&P 500 신고가 — 사상 최대 디커플링</h4>
+    <div class="body">1978년 이래 미시간 소비자심리와 S&amp;P 500의 상관계수가 가장 크게 음(−)으로 전환. 1년 기대인플레이션 4.8%는 2022년 팬데믹 피크도 넘어선 수준. <em>"지수는 현실을 외면하고, 현실은 지수를 외면한다"</em>는 구간이 얼마나 지속될지가 관건.</div>
+    <div class="take"><b>Take</b>"디커플링 폭이 닉슨쇼크기 이래 최대 — 평균회귀는 기업이익 추정치 하향조정 경로로 이뤄질 가능성."</div>
+  </div>
+
+  <div class="card x">
+    <div class="src"><strong>@PeterZeihan</strong> <span class="pin hot">이슈</span></div>
+    <h4>"美 봉쇄는 블러프 아님 — 이란 수입 채널 차단이 본진"</h4>
+    <div class="body">최근 팟캐스트에서 美 해상봉쇄가 이란 드론·미사일 중국산 부품 수입을 차단하는 의미. 다만 차바하르 항구(호르무즈 밖, 오만만)는 여전히 열려있어 완벽한 봉쇄는 아님. <em>"지금 종전 선언하고 물러서면 이란은 강해진 채로 전쟁에서 빠져나옴"</em>. 미군이 쉽게 물러설 수 없는 구조.</div>
+    <div class="take"><b>Take</b>"지정학자 관점에서 '짧은 종전' 시나리오는 가장 가능성 낮음. 시장 합의와 구조적 동학이 정반대."</div>
+  </div>
+
+  <div class="card x">
+    <div class="src"><strong>@Nouriel</strong> <span class="pin hot">매크로</span></div>
+    <h4>"1970s Stagflation 꼬리위험 여전 — Tug-of-War 국면"</h4>
+    <div class="body">4월 그린위치 경제포럼(홍콩, 4/13)에서 "스태그플레이션 이벤트 vs 테크붐 성장"의 줄다리기로 현 국면을 규정. <em>"전쟁이 길어지고 이란이 호르무즈를 계속 차단하면 1970년대 스태그플레이션"</em>. 다만 베이스라인은 완만한 성장 둔화. 트럼프의 에스컬레이션 유인이 여전히 강하다는 분석.</div>
+    <div class="take"><b>Take</b>"당분간 변동성 장세 계속. 방산·석유장비·AI인프라 선별 보유 + 원자재/금 헤지 조합이 합리적."</div>
+  </div>
+
+  <div class="card x">
+    <div class="src"><strong>@markminervini</strong> <span class="pin">모멘텀</span></div>
+    <h4>"나스닥 13연승 + 변동성 소멸 = 'Too Clean to Last'"</h4>
+    <div class="body">Stage 2 상승 추세 종목이 4월 들어 폭발적으로 증가. 다만 <em>VIX 17.48로 평온 모드 + RSI 과매수 대형주 급증</em>. 단기 모멘텀 플레이어는 트레일링 스톱을 타이트하게 가져가고, 신규 진입은 조정 시점까지 대기. 과거 3주 연속 3% 이상 상승 후 다음 주 결과는 혼조(1970-2024년 15회 사례).</div>
+    <div class="take"><b>Take</b>"추세 추종 관점에서 가장 위험한 구간 = 모멘텀이 강해질수록 손절폭 타이트화. 월요일 갭 위험 대비 필수."</div>
+  </div>
+
+</div>
+
+<!-- ====================== 5. WEEKLY COMPARISON ====================== -->
+<h2 class="section"><span class="num">05</span>Weekly Comparison — <span style="font-style:italic;">Winners &amp; Losers</span></h2>
+
+<div class="compare">
+  <h3>Top 10 주간 상승 자산</h3>
+  <div class="bar-row"><div class="nm">DJ Transportation</div><div><div class="bar up" style="width:100%;"></div></div><div class="bar-val up">+10.24%</div></div>
+  <div class="bar-row"><div class="nm">S&P Info Tech</div><div><div class="bar up" style="width:79%;"></div></div><div class="bar-val up">+8.09%</div></div>
+  <div class="bar-row"><div class="nm">Comex Silver</div><div><div class="bar up" style="width:69%;"></div></div><div class="bar-val up">+7.09%</div></div>
+  <div class="bar-row"><div class="nm">Nasdaq Composite</div><div><div class="bar up" style="width:67%;"></div></div><div class="bar-val up">+6.84%</div></div>
+  <div class="bar-row"><div class="nm">S&P Consumer Discr</div><div><div class="bar up" style="width:65%;"></div></div><div class="bar-val up">+6.64%</div></div>
+  <div class="bar-row"><div class="nm">S&P Communication</div><div><div class="bar up" style="width:61%;"></div></div><div class="bar-val up">+6.28%</div></div>
+  <div class="bar-row"><div class="nm">Nasdaq-100</div><div><div class="bar up" style="width:61%;"></div></div><div class="bar-val up">+6.20%</div></div>
+  <div class="bar-row"><div class="nm">KOSPI Composite ★</div><div><div class="bar up" style="width:55%;"></div></div><div class="bar-val up">+5.68%</div></div>
+  <div class="bar-row"><div class="nm">Russell 2000</div><div><div class="bar up" style="width:54%;"></div></div><div class="bar-val up">+5.56%</div></div>
+  <div class="bar-row"><div class="nm">S&P 500</div><div><div class="bar up" style="width:44%;"></div></div><div class="bar-val up">+4.54%</div></div>
+</div>
+
+<div class="compare" style="margin-top:14px;">
+  <h3>Bottom 10 주간 하락 자산</h3>
+  <div class="bar-row"><div class="nm">Nymex Crude</div><div><div class="bar dn" style="width:100%;"></div></div><div class="bar-val dn">−13.17%</div></div>
+  <div class="bar-row"><div class="nm">Nymex ULSD</div><div><div class="bar dn" style="width:73%;"></div></div><div class="bar-val dn">−9.68%</div></div>
+  <div class="bar-row"><div class="nm">S&P Energy</div><div><div class="bar dn" style="width:27%;"></div></div><div class="bar-val dn">−3.52%</div></div>
+  <div class="bar-row"><div class="nm">S&P Utilities</div><div><div class="bar dn" style="width:13%;"></div></div><div class="bar-val dn">−1.69%</div></div>
+  <div class="bar-row"><div class="nm">Nymex RBOB Gasoline</div><div><div class="bar dn" style="width:8%;"></div></div><div class="bar-val dn">−1.07%</div></div>
+  <div class="bar-row"><div class="nm">Bovespa (Brazil)</div><div><div class="bar dn" style="width:6%;"></div></div><div class="bar-val dn">−0.81%</div></div>
+  <div class="bar-row"><div class="nm">Soybeans</div><div><div class="bar dn" style="width:5%;"></div></div><div class="bar-val dn">−0.72%</div></div>
+  <div class="bar-row"><div class="nm">WSJ Dollar Index</div><div><div class="bar dn" style="width:4%;"></div></div><div class="bar-val dn">−0.52%</div></div>
+  <div class="bar-row"><div class="nm">Bloomberg Commodity</div><div><div class="bar dn" style="width:4%;"></div></div><div class="bar-val dn">−0.50%</div></div>
+  <div class="bar-row"><div class="nm">S&P Materials</div><div><div class="bar dn" style="width:3%;"></div></div><div class="bar-val dn">−0.39%</div></div>
+</div>
+
+<!-- ====================== 6. TICKER TABLE ====================== -->
+<h2 class="section"><span class="num">06</span>Key Ticker Scorecard — <span style="font-style:italic;">Names We Track</span></h2>
+<p class="lede">보유·관심 13종 + 금주 최대변동 종목.</p>
+
+<div class="tick-wrap">
+<table class="tick">
+  <thead>
+    <tr><th>Sym</th><th>Name</th><th>Close</th><th>Daily</th><th>YTD%</th><th>PE</th><th>Note</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>NVDA</td><td>NVIDIA</td><td>201.68</td><td class="up">+1.68%</td><td class="up">+8.14</td><td>41</td><td>AI 인프라 대장</td></tr>
+    <tr><td>ASML</td><td>ASML</td><td>1,459.80</td><td class="up">+3.47%</td><td class="up">+36.45</td><td>49</td><td>반도체 장비 신고가</td></tr>
+    <tr><td>TSM</td><td>TaiwanSemi</td><td>370.50</td><td class="up">+1.97%</td><td class="up">+21.92</td><td>35</td><td>파운드리 1위</td></tr>
+    <tr><td>AMD</td><td>AdvMicroDevices</td><td>278.39</td><td class="up">+0.05%</td><td class="up">+29.99</td><td>105</td><td>PE 부담 재확산</td></tr>
+    <tr><td>AAPL</td><td>Apple</td><td>270.23</td><td class="up">+2.59%</td><td class="dn">−0.60</td><td>34</td><td>중국 아이폰 출하 +20%</td></tr>
+    <tr><td>MSFT</td><td>Microsoft</td><td>422.79</td><td class="up">+0.60%</td><td class="dn">−12.58</td><td>26</td><td>YTD 유일한 M7 약세</td></tr>
+    <tr><td>GOOGL</td><td>Alphabet A</td><td>341.68</td><td class="up">+1.68%</td><td class="up">+9.16</td><td>32</td><td>Comm 섹터 주간 +6.28%</td></tr>
+    <tr><td>TSLA</td><td>Tesla</td><td>400.62</td><td class="up">+3.01%</td><td class="dn">−10.92</td><td>372</td><td>4/22 Q1 실적 예정</td></tr>
+    <tr><td>META</td><td>MetaPlatforms</td><td>688.55</td><td class="up">+1.72%</td><td class="up">+4.31</td><td>29</td><td>광고 프라이싱 견조</td></tr>
+    <tr><td>AMZN</td><td>Amazon</td><td>250.56</td><td class="up">+0.34%</td><td class="up">+8.55</td><td>35</td><td>—</td></tr>
+    <tr><td>AVGO</td><td>Broadcom</td><td>406.54</td><td class="up">+2.02%</td><td class="up">+17.46</td><td>79</td><td>반도체 YTD 선두권</td></tr>
+    <tr><td>PLTR</td><td>PalantirTech</td><td>146.39</td><td class="up">+2.54%</td><td class="dn">−17.64</td><td>231</td><td>실적 시즌 앞둔 낙폭 회복</td></tr>
+    <tr><td>NFLX</td><td>Netflix</td><td>97.31</td><td class="dn">−9.72%</td><td class="up">+6.0</td><td>—</td><td>Q2 가이던스 미스</td></tr>
+    <tr><td>MSTR</td><td>Strategy</td><td>166.52</td><td class="up">+11.80%</td><td class="dn">—</td><td>—</td><td>BTC 레버리지 복귀</td></tr>
+    <tr><td>LYB</td><td>LyondellBasell</td><td>66.27</td><td class="dn">−11.98%</td><td class="dn">—</td><td>—</td><td>석유화학 최대 낙폭</td></tr>
+    <tr><td>DOW</td><td>Dow Inc</td><td>35.60</td><td class="dn">−10.82%</td><td class="dn">—</td><td>—</td><td>유가 급락 직격</td></tr>
+    <tr><td>VLO</td><td>Valero</td><td>223.65</td><td class="dn">−7.48%</td><td class="dn">—</td><td>—</td><td>정유 크랙스프레드 축소</td></tr>
+    <tr><td>ALB</td><td>Albemarle</td><td>197.75</td><td class="dn">−8.29%</td><td class="dn">—</td><td>—</td><td>리튬 수요둔화 우려</td></tr>
+    <tr><td>CF</td><td>CF Industries</td><td>112.68</td><td class="dn">−9.65%</td><td class="dn">—</td><td>—</td><td>비료 랠리 반납</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ====================== 7. KEYWORDS ====================== -->
+<h2 class="section"><span class="num">07</span>Keyword Cloud — <span style="font-style:italic;">Sentiment Tags</span></h2>
+<div class="kw-cloud">
+  <span class="kw hot">Hormuz Re-Close <small>×7</small></span>
+  <span class="kw hot">Short Squeeze <small>×5</small></span>
+  <span class="kw hot">Netflix Guide Miss <small>×4</small></span>
+  <span class="kw cool">Oil −13% <small>×6</small></span>
+  <span class="kw cool">Risk On <small>×5</small></span>
+  <span class="kw cool">Nasdaq 13 Day Streak <small>×3</small></span>
+  <span class="kw warn">Sentiment 47.6 <small>×4</small></span>
+  <span class="kw warn">CPI Gas +15.7% <small>×3</small></span>
+  <span class="kw warn">Stagflation 1970s <small>×4</small></span>
+  <span class="kw">Semi YTD +34.9%</span>
+  <span class="kw">KOSPI +5.68%</span>
+  <span class="kw">VIX 17</span>
+  <span class="kw">Gold $4,857</span>
+  <span class="kw">Silver +7%</span>
+  <span class="kw">AI Infra 2차주</span>
+  <span class="kw">Reed Hastings Exit</span>
+  <span class="kw">MSTR +12%</span>
+  <span class="kw">Iran Sanctions</span>
+  <span class="kw">Fed Rate Dilemma</span>
+  <span class="kw">USD Weak −0.52%</span>
+</div>
+
+<!-- ====================== 8. SIGNALS ====================== -->
+<h2 class="section"><span class="num">08</span>Signals — <span style="font-style:italic;">Bull / Bear / Watch</span></h2>
+<div class="signals">
+  <div class="sig bull">
+    <span class="lbl">Bull Signal</span>
+    <h4>반도체·AI인프라 YTD 폭주</h4>
+    <p>PHLX Semi YTD +34.9%, 52주 +149%. AAOI +357%·SNDK +288%·LITE +143% 등 AI인프라 2차주가 M7 대비 더 가파른 리레이팅. HBM·Networking·Optical 서브섹터로 재투자 지속.</p>
+  </div>
+  <div class="sig bear">
+    <span class="lbl">Bear Signal</span>
+    <h4>미시간 소비자심리 47.6 역대 최저</h4>
+    <p>S&amp;P 500 신고가와 동시에 실물 체감은 1980년 수준. 1년 기대인플레이션 4.8%. 연준은 레이트컷 뒤로 밀 수밖에 없고, 이는 고평가 구간 리레이팅 부담으로 환류.</p>
+  </div>
+  <div class="sig watch">
+    <span class="lbl">Watch Signal</span>
+    <h4>호르무즈 재폐쇄 — 월요일 갭 위험</h4>
+    <p>4/18 주말 재폐쇄 + 유조선 사격은 WSJ 금요일 종가가 베팅한 "진짜 종전" 프레임 붕괴. 원유 선물 +5~8% 갭업, 주가지수 선물 −0.5~−1% 갭다운 시나리오 우선 대비.</p>
+  </div>
+  <div class="sig bull">
+    <span class="lbl">Bull Signal</span>
+    <h4>채권수익률 완화 · HY 스프레드 축소</h4>
+    <p>10Y 4.244% (−5bp), HY 6.244% (−22bp). 신용 여건 완화는 주식·BDC·REIT에 긍정적. 전쟁 리스크 완화 재료가 이 자리에 반영된 상태라는 점이 역설.</p>
+  </div>
+  <div class="sig bear">
+    <span class="lbl">Bear Signal</span>
+    <h4>에너지·소재·유틸리티 섹터 동반 약세</h4>
+    <p>주간 Energy −3.52%, Utilities −1.69%, Materials −0.39%. 원유 급락 + 순환적 둔화 기대가 겹친 구간. S-Oil·SK이노 등 한국 정유·화학주도 동반 부담 예상.</p>
+  </div>
+  <div class="sig watch">
+    <span class="lbl">Watch Signal</span>
+    <h4>Netflix Q2 가이던스 미스 — 성장주 리프라이싱 신호?</h4>
+    <p>Q1 비트에도 불구 Q2 가이던스 미스로 −9.72%. 고멀티플 성장주 전반의 "2026년 이익 노코어 가이던스" 민감도 급상승. 4/22 Tesla 실적이 테스트베드.</p>
+  </div>
+</div>
+
+<!-- ====================== 9. SPARK CHART ====================== -->
+<h2 class="section"><span class="num">09</span>Chart — <span style="font-style:italic;">Narrative vs Reality Gap</span></h2>
+<div class="chart-box">
+  <h4>S&amp;P 500 (검정) vs UMich Consumer Sentiment (주황) · 최근 3개월</h4>
+  <svg viewBox="0 0 700 260" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <pattern id="grid" width="70" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 70 0 L 0 0 0 40" fill="none" stroke="#cfc9bb" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="700" height="260" fill="url(#grid)"/>
+    <!-- SP500 line (normalized 0-100, ends high) -->
+    <polyline fill="none" stroke="#111010" stroke-width="2.2" points="20,180 80,170 140,155 200,140 260,200 320,210 380,180 440,150 500,110 560,80 620,55 680,30"/>
+    <!-- Sentiment line (normalized, declining) -->
+    <polyline fill="none" stroke="#b5361c" stroke-width="2.2" stroke-dasharray="4,3" points="20,100 80,110 140,125 200,140 260,155 320,175 380,190 440,210 500,225 560,235 620,240 680,250"/>
+    <!-- Gap shaded -->
+    <line x1="680" y1="30" x2="680" y2="250" stroke="#f5b040" stroke-width="2" stroke-dasharray="3,2"/>
+    <text x="686" y="40" font-family="DM Mono" font-size="10" fill="#111">S&amp;P 신고가</text>
+    <text x="686" y="52" font-family="DM Mono" font-size="10" fill="#111">7,126.06</text>
+    <text x="686" y="240" font-family="DM Mono" font-size="10" fill="#b5361c">Sentiment</text>
+    <text x="686" y="252" font-family="DM Mono" font-size="10" fill="#b5361c">47.6 역대최저</text>
+    <text x="20" y="18" font-family="DM Mono" font-size="10" fill="#6b6559">2026.01.20</text>
+    <text x="620" y="18" font-family="DM Mono" font-size="10" fill="#6b6559">2026.04.17</text>
+    <!-- war marker -->
+    <line x1="240" y1="10" x2="240" y2="250" stroke="#b5361c" stroke-width="0.8" stroke-dasharray="2,2"/>
+    <text x="244" y="24" font-family="DM Mono" font-size="9" fill="#b5361c">Iran War Start 2/28</text>
+  </svg>
+</div>
+
+<!-- ====================== 10. INSIGHT ====================== -->
+<h2 class="section"><span class="num">10</span>House View — <span style="font-style:italic;">The Buy-Side Call</span></h2>
+<div class="insight">
+  <h3>"Friday's price was <em>a bet on peace</em>.<br>Saturday's headline <em>broke the bet</em>."</h3>
+  <p>이번 주는 드러켄밀러가 평생 말해온 "가장 큰 돈은 내러티브가 합의로 굳어지기 직전, 또는 그 합의가 깨지는 순간 만들어진다"는 원칙이 그대로 구현된 주차다. 4/17 금요일 시장은 호르무즈 개방 선언 하나에 "이란 전쟁은 사실상 종전"을 가격에 새겼다. 유가 −13%, 지수 사상최고, 변동성 17까지 붕괴. 그리고 그 다음 날인 4/18 토요일, 이란은 해협을 다시 닫고 유조선 3척에 사격을 가했다.</p>
+  <p>즉 우리는 지금, <b>합의가 깨지는 순간</b>에 서 있다. 월요일 개장은 주말 내내 축적된 재폐쇄 뉴스를 한꺼번에 가격에 반영해야 하는 구간이고, 이는 (1) 원유 갭업 (2) 에너지·방산 갭업 (3) 지수 갭다운 (4) 채권 수익률 소폭 반등 (5) 원달러 반등의 조합을 예상한다. 다만 변동성은 급등 후 다시 가라앉을 가능성이 높다 — 왜냐하면 시장은 이미 "호르무즈 open/close 사이클"을 학습했기 때문이다.</p>
+  <div class="call">
+    <div class="call-box">
+      <span class="tag">Core Position</span>
+      <div class="body">반도체·AI인프라 선두주(NVDA·TSM·ASML·AVGO) <b>보유 유지</b>. 다만 비중 25% 이내로 조절. PHLX Semi YTD +34.9%는 리레이팅 한계권 진입.</div>
+    </div>
+    <div class="call-box">
+      <span class="tag">Hedge Overlay</span>
+      <div class="body">금 7~10% / 은 3% / 단기 UST(6M-2Y) 15%. 스태그플레이션 꼬리위험 방어. USD 약세 + Gold 랠리 시그널 살아있음.</div>
+    </div>
+    <div class="call-box">
+      <span class="tag">Tactical Trade</span>
+      <div class="body">월요일 에너지 <b>갭업 매도</b>(숏프리미엄) + 반도체 하방 옵션 스트러들. Netflix 같은 고멀티플 성장주 비중 축소.</div>
+    </div>
+    <div class="call-box">
+      <span class="tag">Avoid</span>
+      <div class="body">석유화학·비료·정유 재반등 매수 추격 금지 — 수요 둔화 프레임 살아있음. 방산은 과열 매수, 4/22 Tesla 실적 앞두고 옵션 프리미엄 비싼 상태.</div>
+    </div>
+  </div>
+  <p>한 가지 더 — 이번 주 KOSPI 주간 +5.68%는 WSJ가 집계한 글로벌 지수 랭킹에서 2위다. 한국 시장은 <b>"전쟁 리스크 프리미엄이 가장 컸다가 가장 빨리 빠진 자산"</b> 특성을 보였다. 코스피 2월 고점(6,347.41) 대비 3월 저점(4,899.30)까지 −22.8% 급락 후 현재 6,196.92로 12거래일 만에 +26.5% 반등. 이는 반도체·건설·금융 주도의 양극화 랠리이며, 바이사이드 관점에서는 "종전 시나리오"를 가장 노출된 자산이 한국. 만약 월요일 호르무즈 재폐쇄 뉴스가 반영된다면 한국 증시의 갭다운 민감도가 가장 높을 수 있다.</p>
+  <p>우리의 결론은 간단하다: <b>시장이 옳을 수도 있고 틀릴 수도 있다. 하지만 금요일 종가에 "완전 평화"를 가격한 건 분명히 과격한 베팅이었다.</b> 드러켄밀러라면 이런 구간에서 포지션 크기는 줄이고 변동성은 낮게 사두는 걸 택했을 것이다. 우리도 그렇다.</p>
+  <p class="signature">Druckenmiller-House Style · Research Desk · Week 7 of Iran Conflict · Vol.05 Closed</p>
+</div>
+
+<!-- ====================== 11. WATCHLIST ====================== -->
+<h2 class="section"><span class="num">11</span>Watchlist — <span style="font-style:italic;">Next Week Setup</span></h2>
+<div class="watch-grid">
+
+  <div class="watch-cell">
+    <div class="ctg">Earnings · Week Apr 21–25</div>
+    <h5>실적 발표 캘린더</h5>
+    <ul>
+      <li><b>TSLA</b><span>4/22 (화) 장마감 후</span></li>
+      <li><b>IBM</b><span>4/23 (수) 장마감 후</span></li>
+      <li><b>GOOGL</b><span>4/24 (목) 장마감 후</span></li>
+      <li><b>INTC</b><span>4/24 (목) 장마감 후</span></li>
+      <li><b>V</b><span>4/24 (목) 장마감 후</span></li>
+      <li>Q1 실적 시즌 10% 진행 · 평균 beat rate 회복 중</li>
+    </ul>
+  </div>
+
+  <div class="watch-cell">
+    <div class="ctg">Macro Events</div>
+    <h5>거시 이벤트</h5>
+    <ul>
+      <li><b>US 3월 Existing Home Sales</b><span>발표됨 −3.6%</span></li>
+      <li><b>4/23 S&P Flash PMI</b><span>수요일</span></li>
+      <li><b>4/24 Durable Goods</b><span>목요일</span></li>
+      <li><b>4/25 UMich 최종</b><span>금요일 · 47.6 확정</span></li>
+      <li><b>이스라엘-레바논 휴전</b><span>4/22 (수) 만료</span></li>
+      <li><b>이슬라마바드 협상</b><span>재개 조율중</span></li>
+    </ul>
+  </div>
+
+  <div class="watch-cell">
+    <div class="ctg">Watch Tickers</div>
+    <h5>집중 모니터링 종목</h5>
+    <ul>
+      <li><b>XOM · CVX</b><span class="up">갭업 베팅</span></li>
+      <li><b>LMT · NOC · GD</b><span class="up">방산 리프라이싱</span></li>
+      <li><b>USO · XLE</b><span class="up">원유 ETF</span></li>
+      <li><b>NFLX · META</b><span class="dn">성장주 리테스트</span></li>
+      <li><b>GLD · SLV</b><span class="up">헤지 유지</span></li>
+      <li><b>VIX · UVXY</b><span>변동성 재매수</span></li>
+    </ul>
+  </div>
+
+  <div class="watch-cell">
+    <div class="ctg">Korea Watch</div>
+    <h5>한국 관련 모니터링</h5>
+    <ul>
+      <li><b>한화에어로</b><span>1,423,000원 (−6.32%)</span></li>
+      <li><b>LIG넥스원</b><span class="up">방산 재리프라이싱</span></li>
+      <li><b>S-Oil · SK이노</b><span class="dn">정유 디스카운트</span></li>
+      <li><b>삼성전자 · SK하이닉스</b><span class="up">반도체 선두</span></li>
+      <li><b>KOSPI</b><span>6,196 → 6,300 돌파 관건</span></li>
+      <li><b>USD/KRW</b><span>1,467 → 1,480 재돌파 가능</span></li>
+    </ul>
+  </div>
+
+  <div class="watch-cell">
+    <div class="ctg">Levels to Watch</div>
+    <h5>핵심 가격대</h5>
+    <ul>
+      <li><b>S&P 500</b><span>7,126 / 7,000 지지</span></li>
+      <li><b>WTI</b><span>$83.85 / $90 저항</span></li>
+      <li><b>Brent</b><span>$90 / $100 심리선</span></li>
+      <li><b>UST 10Y</b><span>4.244% / 4.34% 상단</span></li>
+      <li><b>VIX</b><span>17.48 / 22 스파이크</span></li>
+      <li><b>Gold</b><span>$4,857 / $4,900 돌파</span></li>
+    </ul>
+  </div>
+
+  <div class="watch-cell">
+    <div class="ctg">Scenario Matrix</div>
+    <h5>시나리오별 대응</h5>
+    <ul>
+      <li><b>Peace Holds</b><span class="up">35%</span></li>
+      <li><b>Short War Extension</b><span>40%</span></li>
+      <li><b>Full Escalation</b><span class="dn">15%</span></li>
+      <li><b>Regime Change</b><span>10%</span></li>
+      <li>Base case: Headline-sensitive sideways</li>
+      <li>Tail hedge: 원유 롱 콜 + 금 물리 스팟</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ====================== FOOTER ====================== -->
+<footer>
+  <div class="dis">
+    <div>
+      The Buy-Side Weekly Digest · Vol. 05 · Global Edition<br>
+      Week of April 13–17, 2026 · Iran Conflict Week 7<br>
+      Editor's desk · Druckenmiller-house style research · For institutional discussion only.
+    </div>
+    <div>
+      Sources · WSJ Markets B6 · Reddit 5 subs · X core + rotation<br>
+      Data · FRED · KRX · Investing.com · 한국은행 · Stock Rover<br>
+      © 2026 · minkeun00-creator.github.io/weekly-report
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

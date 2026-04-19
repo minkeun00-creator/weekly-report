@@ -2,168 +2,264 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>바이사이드 위클리 — 리포트 아카이브</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Buy-Side Reports · 아카이브</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#111010;--paper:#f4f1ea;--cream:#ede9df;--red:#b83232;--green:#1a6040;--gold:#b08030;--muted:#6a6660;--border:#d4cec4}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',sans-serif;line-height:1.6}
-.wrap{max-width:840px;margin:0 auto;padding:0 16px 60px}
+  :root{
+    --ink:#111010;
+    --paper:#f4f1ea;
+    --cream:#ebe6d9;
+    --accent:#b5361c;
+    --muted:#6b6559;
+    --teal:#0d6b4f;
+    --navy:#1a4f8a;
+    --dark:#0e0f13;
+    --dark-2:#22252e;
+    --red:#ff4d4d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55;}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 24px 100px;}
 
-/* HEADER */
-header{background:var(--ink);color:#f4f1ea;padding:32px 32px 26px;margin-bottom:0}
-.h-eye{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;opacity:.5;margin-bottom:6px}
-.h-title{font-family:'DM Serif Display',serif;font-size:clamp(24px,5vw,38px);line-height:1.1;margin-bottom:4px}
-.h-sub{font-family:'DM Mono',monospace;font-size:10px;opacity:.5}
+  /* hero */
+  .hero{border-bottom:4px solid var(--ink);padding-bottom:28px;margin-bottom:40px;}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+  .title{font-family:'DM Serif Display',serif;font-size:clamp(36px,6vw,72px);line-height:0.95;letter-spacing:-0.02em;}
+  .title .it{font-style:italic;color:var(--accent);}
+  .sub{font-size:15px;color:var(--muted);max-width:640px;margin-top:14px;}
+  .meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;line-height:1.7;text-align:right;}
+  .meta strong{color:var(--ink);}
 
-/* SECTION */
-.sec{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:28px 0 12px;border-top:1px solid var(--border);padding-top:12px}
+  /* section header */
+  h2.sec{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,40px);margin:50px 0 10px;display:flex;align-items:baseline;gap:14px;letter-spacing:-0.01em;}
+  h2.sec .tag{font-family:'DM Mono',monospace;font-size:11px;background:var(--ink);color:#fff;padding:4px 10px;letter-spacing:0.1em;text-transform:uppercase;border-radius:2px;font-weight:500;}
+  h2.sec.ko{color:var(--accent);}
+  h2.sec.ko .tag{background:var(--accent);}
+  .sec-lede{font-size:14px;color:var(--muted);margin-bottom:22px;max-width:760px;}
 
-/* CARD */
-.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{border:1px solid var(--border);padding:18px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s}
-.card:hover{border-color:var(--ink)}
-.card-vol{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted)}
-.card-title{font-family:'DM Serif Display',serif;font-size:18px;line-height:1.2}
-.card-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
-.card-desc{font-size:11.5px;color:#555;line-height:1.5}
-.card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
-.tag{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:2px;background:var(--cream);border:1px solid var(--border)}
-.tag.hot{background:var(--ink);color:#f4f1ea;border-color:var(--ink)}
-.card-link{display:inline-block;margin-top:6px;font-family:'DM Mono',monospace;font-size:10px;text-decoration:underline;color:var(--ink);text-underline-offset:2px}
+  /* report cards */
+  .reports{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px;}
+  .rpt{background:#fff;border:1px solid var(--ink);border-radius:3px;padding:22px;display:flex;flex-direction:column;gap:10px;transition:transform 0.2s;position:relative;text-decoration:none;color:var(--ink);}
+  .rpt:hover{transform:translateY(-3px);box-shadow:4px 4px 0 var(--ink);}
+  .rpt .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .rpt .vol{font-family:'DM Serif Display',serif;font-size:40px;line-height:1;color:var(--accent);}
+  .rpt .date{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.5;}
+  .rpt .date strong{color:var(--ink);display:block;font-size:11px;}
+  .rpt h3{font-family:'DM Serif Display',serif;font-size:18px;line-height:1.25;margin-top:6px;}
+  .rpt p{font-size:13px;color:var(--muted);line-height:1.55;}
+  .rpt .kpis{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+  .rpt .kpi{font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;background:var(--cream);border:1px solid var(--muted);border-radius:100px;}
+  .rpt .kpi.hot{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .rpt .kpi.bull{background:var(--teal);color:#fff;border-color:var(--teal);}
+  .rpt .cta{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);border-top:1px solid var(--muted);padding-top:10px;margin-top:auto;display:flex;justify-content:space-between;align-items:center;}
+  .rpt .cta .arrow{font-size:16px;}
+  .rpt.ko{border-color:var(--dark);background:linear-gradient(180deg,#ffffff 85%,#ffebe8);}
+  .rpt.ko .vol{color:var(--dark);}
+  .rpt.ko:hover{box-shadow:4px 4px 0 var(--red);}
+  .rpt.new::after{content:"NEW";position:absolute;top:-10px;right:-10px;background:var(--accent);color:#fff;font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;letter-spacing:0.1em;border-radius:100px;font-weight:700;}
+  .rpt.ko.new::after{background:var(--red);}
 
-/* DARK CARD for 종토방 */
-.card.dark{background:#0e0f13;border-color:#2a2d3a;color:#e8e6e0}
-.card.dark .card-vol,.card.dark .card-date,.card.dark .card-desc{color:#8a8880}
-.card.dark .tag{background:#1a1d28;border-color:#2a2d3a;color:#8a8880}
-.card.dark .tag.hot{background:#d4a030;color:#0e0f13;border-color:#d4a030}
-.card.dark .card-link{color:#d4a030}
-.card.dark:hover{border-color:#d4a030}
+  /* divider */
+  .divider{text-align:center;margin:60px 0 20px;padding:20px 0;border-top:1px dashed var(--muted);border-bottom:1px dashed var(--muted);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
 
-/* LATEST BADGE */
-.latest-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;background:var(--red);color:#fff;border-radius:2px;margin-left:6px;vertical-align:middle}
+  /* about */
+  .about{background:var(--cream);border:1px solid var(--ink);padding:28px;margin-top:10px;border-radius:3px;display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .about h3{font-family:'DM Serif Display',serif;font-size:22px;line-height:1.2;margin-bottom:10px;}
+  .about p{font-size:13.5px;line-height:1.7;color:var(--ink);}
+  .about ul{list-style:none;font-size:13px;line-height:1.8;color:var(--ink);}
+  .about ul li{padding-left:16px;position:relative;}
+  .about ul li::before{content:"—";position:absolute;left:0;color:var(--accent);}
+  .about .stack{font-family:'DM Mono',monospace;font-size:11px;margin-top:10px;color:var(--muted);}
 
-/* FOOTER */
-footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
+  /* footer */
+  footer{border-top:3px solid var(--ink);margin-top:60px;padding-top:20px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;line-height:1.8;}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent);}
 
-/* MOBILE */
-@media(max-width:600px){
-  .card-grid{grid-template-columns:1fr}
-  header{padding:24px 16px 20px}
-}
+  /* mobile */
+  @media (max-width:768px){
+    .wrap{padding:24px 14px 60px;}
+    .reports{grid-template-columns:1fr;}
+    .about{grid-template-columns:1fr;padding:20px;}
+    .hero-top{flex-direction:column;align-items:flex-start;}
+    .meta{text-align:left;}
+  }
+  @media (max-width:480px){
+    .title{font-size:40px;}
+  }
+
+  /* print */
+  @page{size:A4;margin:12mm;}
+  @media print{
+    html,body{background:#fff;-webkit-print-color-adjust:exact;}
+    .wrap{padding:0;max-width:100%;}
+    .rpt,.about{page-break-inside:avoid;}
+    .reports{grid-template-columns:repeat(3,1fr);}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header>
-  <div class="h-eye">바이사이드 하우스 애널리스트 · 드러켄밀러 헤지펀드 리서치 헤드</div>
-  <div class="h-title">바이사이드 위클리 아카이브</div>
-  <div class="h-sub">Reddit × X 글로벌 센티먼트 | 종토방 국내 심리 분석 | 매주 토요일 발간</div>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="title">Weekly <span class="it">Buy-Side</span><br>Digest · Archive</div>
+      <p class="sub">드러켄밀러 하우스 스타일 주간 리포트 아카이브. 글로벌 소셜 심리(WSJ · Reddit · X) + 국내 종토방 심리 분석 두 축으로 발행.</p>
+    </div>
+    <div class="meta">
+      Latest Update<br>
+      <strong>2026.04.18 (Sat)</strong><br>
+      Iran War · Week 7<br>
+      KOSPI 6,196.92 · S&P 7,126.06<br>
+      Editor · Research Desk
+    </div>
+  </div>
 </header>
 
-<!-- GLOBAL SERIES -->
-<div class="sec">Reddit × X 위클리 센티먼트 리포트 — 글로벌 시리즈</div>
-<div class="card-grid">
+<!-- ============ GLOBAL ARCHIVE ============ -->
+<h2 class="sec">Global Buy-Side <span class="tag">WSJ · Reddit · X</span></h2>
+<p class="sec-lede">월가 매크로·소셜 심리 통합 리포트. WSJ 주말판 종가 + 5개 서브레딧 크롤링 + X 인플루언서 6인(고정 코어 3 + 교체 3) 기반 인사이트.</p>
 
-  <div class="card">
-    <span class="card-vol">Vol.05 <span class="latest-badge">LATEST</span></span>
-    <div class="card-title">휴전은 시작이다 — 호르무즈 지렛대는 유지된다</div>
-    <div class="card-date">2026.04.11 SAT</div>
-    <div class="card-desc">미-이란 2주 휴전 합의 후 WTI -13.4% 주간 낙폭. CPI 3.3% 2년 최고·소비자심리 47.6 사상 최저 동시 충격. 이슬라마바드 협상이 이번 주말 최대 변수. KOSPI 주간 +8.96% 글로벌 1위.</div>
-    <div class="card-tags">
-      <span class="tag hot">이란휴전</span>
-      <span class="tag hot">CPI 3.3%</span>
-      <span class="tag">WTI -13.4%</span>
-      <span class="tag">스태그플레이션</span>
-      <span class="tag">NVDA +25.5%</span>
-    </div>
-    <a class="card-link" href="vol05_20260411.html">리포트 보기 →</a>
-  </div>
+<div class="reports">
 
-  <div class="card">
-    <span class="card-vol">Vol.04</span>
-    <div class="card-title">오일 $110 돌파 — 전쟁 5주차, 연준 스태그 딜레마</div>
-    <div class="card-date">2026.04.04 SAT</div>
-    <div class="card-desc">WTI $110.5 돌파, S&P +3.36% 주간. 이란 호르무즈 봉쇄 지속. 스태그플레이션 우려 속 방산·에너지 overweight. r/geopolitics에서 이란의 전략적 우위 논의 폭발.</div>
-    <div class="card-tags">
-      <span class="tag">WTI $110+</span>
-      <span class="tag">호르무즈봉쇄</span>
-      <span class="tag">방산</span>
-      <span class="tag">스태그</span>
+  <a href="vol05_20260418.html" class="rpt new">
+    <div class="head">
+      <div class="vol">05</div>
+      <div class="date"><strong>2026.04.18</strong>Week of Apr 13–17<br>Iran War · Week 7</div>
     </div>
-    <a class="card-link" href="vol04_20260404.html">리포트 보기 →</a>
-  </div>
+    <h3>48시간의 반전 — 호르무즈 개방 → 재폐쇄</h3>
+    <p>이란 해협 개방 선언으로 WTI 주간 −13%, 지수 사상최고 랠리. 그러나 같은 날 밤 트럼프 "봉쇄 유지" + 토요일 이란 재폐쇄 & 유조선 3척 사격. WSJ 금요일 종가는 "완전 평화" 가격.</p>
+    <div class="kpis">
+      <span class="kpi bull">S&P +4.54%</span>
+      <span class="kpi bull">Nasdaq +6.84%</span>
+      <span class="kpi hot">WTI −13.17%</span>
+      <span class="kpi">KOSPI +5.68%</span>
+    </div>
+    <div class="cta">Open Report<span class="arrow">→</span></div>
+  </a>
 
-  <div class="card">
-    <span class="card-vol">Vol.03</span>
-    <div class="card-title">이란전쟁 데이터 반영 첫 주 — 에너지 쇼크의 시작</div>
-    <div class="card-date">2026.03.28 SAT</div>
-    <div class="card-desc">WSJ B6 자동 추출 첫 적용. WTI $87 돌파, 에너지 섹터 급등, 방산 강세. Reddit WSB에서 "Peak panic is yet to come" 경고. 스태그플레이션 시나리오 확산.</div>
-    <div class="card-tags">
-      <span class="tag">전쟁첫반영</span>
-      <span class="tag">WTI $87</span>
-      <span class="tag">에너지</span>
-      <span class="tag">방산</span>
+  <a href="vol04_20260404.html" class="rpt">
+    <div class="head">
+      <div class="vol">04</div>
+      <div class="date"><strong>2026.04.04</strong>Week of Mar 30–Apr 3<br>Iran War · Week 5</div>
     </div>
-    <a class="card-link" href="vol03_20260328.html">리포트 보기 →</a>
-  </div>
+    <h3>2차 오일쇼크 가격의 도달 — WTI $100대</h3>
+    <p>호르무즈 5주차 봉쇄 지속. WTI $100선 돌파 정점. 소비자심리 지수 악화 시작. X 인플루언서 6인 체제 확정 (Alden·Bianco·SoberLook 고정 + 교체 3인).</p>
+    <div class="kpis">
+      <span class="kpi hot">WTI $100+</span>
+      <span class="kpi">Stagflation Watch</span>
+      <span class="kpi">VIX 28</span>
+      <span class="kpi">Fed On Hold</span>
+    </div>
+    <div class="cta">Open Report<span class="arrow">→</span></div>
+  </a>
+
+  <a href="vol02_20260328.html" class="rpt">
+    <div class="head">
+      <div class="vol">02</div>
+      <div class="date"><strong>2026.03.28</strong>Week of Mar 23–27<br>Iran War · Week 4</div>
+    </div>
+    <h3>협상 결렬과 봉쇄 선언 — Roubini 경고 재부상</h3>
+    <p>美 해상 블록케이드 개시. CPI 0.9% 월간 급등, 가솔린 +15.7% YoY. Roubini "1970s 스태그플레이션 꼬리위험" 재강조. 안전자산·방산 쏠림 극대화.</p>
+    <div class="kpis">
+      <span class="kpi hot">CPI +0.9%</span>
+      <span class="kpi">Gold $4,800</span>
+      <span class="kpi">Blockade</span>
+      <span class="kpi">UST 10Y 4.4%</span>
+    </div>
+    <div class="cta">Open Report<span class="arrow">→</span></div>
+  </a>
 
 </div>
 
-<!-- DOMESTIC SERIES -->
-<div class="sec">종토방 위클리 — 네이버 종목토론실 국내 시리즈</div>
-<div class="card-grid">
+<!-- ============ DIVIDER ============ -->
+<div class="divider">국내 종토방 섹션으로 이동 ↓</div>
 
-  <div class="card dark">
-    <span class="card-vol">Vol.03 <span class="latest-badge" style="background:#d4a030;color:#0e0f13">LATEST</span></span>
-    <div class="card-title" style="color:#e8e6e0">휴전 랠리 — 건설·금융이 종토방 점령</div>
-    <div class="card-date">2026.04.11 SAT</div>
-    <div class="card-desc">KOSPI +8.96% 글로벌 1위. 대우건설·GS건설 중동재건 기대 폭발. JP모건 신성이엔지 1,300만주 매집 이슈. 우리금융 배당 입금 인증 러시. LS ELECTRIC 분할상장 대기 열기.</div>
-    <div class="card-tags">
-      <span class="tag hot">중동재건건설</span>
-      <span class="tag hot">JP모건매집</span>
-      <span class="tag">배당입금</span>
-      <span class="tag">LS ELECTRIC분할</span>
-    </div>
-    <a class="card-link" href="kospi_jongtoban_vol03_20260411.html">리포트 보기 →</a>
-  </div>
+<!-- ============ KOREA ARCHIVE ============ -->
+<h2 class="sec ko">코스피 종토방 주간 <span class="tag">Naver · 종목토론방</span></h2>
+<p class="sec-lede">네이버 금융 종목토론방 Top 20 종목의 게시글 수·조회수·제목 200개 기반 개인투자자 심리 분석. Druckenmiller 하우스 스타일.</p>
 
-  <div class="card dark">
-    <span class="card-vol">Vol.02</span>
-    <div class="card-title" style="color:#e8e6e0">전쟁 4주차 — 방산·에너지 종토방 장악</div>
-    <div class="card-date">2026.04.04 SAT</div>
-    <div class="card-desc">한화에어로스페이스·한화오션 종토방 1~2위. 두산에너빌 원전 수혜 논의. 대한광통신 AI 광케이블 관심 급증. 이차전지 저점 매집 vs 손절 논쟁 지속.</div>
-    <div class="card-tags">
-      <span class="tag hot">방산</span>
-      <span class="tag">원전</span>
-      <span class="tag">광통신</span>
-      <span class="tag">이차전지저점</span>
-    </div>
-    <a class="card-link" href="kospi_jongtoban_vol02_20260404.html">리포트 보기 →</a>
-  </div>
+<div class="reports">
 
-  <div class="card dark">
-    <span class="card-vol">Vol.01</span>
-    <div class="card-title" style="color:#e8e6e0">창간호 — 배당 시즌 + 전쟁 충격 첫 반영</div>
-    <div class="card-date">2026.03.29 SAT</div>
-    <div class="card-desc">3월 배당 시즌으로 우리금융·하나금융 등 은행주 독점. POSCO홀딩스 이란 제철소 피해 이슈. 미래에셋증권 SpaceX IPO 논의 폭주. TIGER 반도체 항복 심리 감지.</div>
-    <div class="card-tags">
-      <span class="tag">배당시즌</span>
-      <span class="tag">POSCO이란</span>
-      <span class="tag">SpaceX</span>
-      <span class="tag">반도체항복</span>
+  <a href="kospi_jongtoban_vol03_20260418.html" class="rpt ko new">
+    <div class="head">
+      <div class="vol">03</div>
+      <div class="date"><strong>2026.04.18</strong>Week of Apr 13–17<br>Iran War · Week 7</div>
     </div>
-    <a class="card-link" href="kospi_jongtoban_vol01_20260329.html">리포트 보기 →</a>
-  </div>
+    <h3>ETF 쏠림 + 바이오 6종 동시 진입 + "호루무즈" 종토방 직접 등장</h3>
+    <p>TIGER 미국S&P500 1위 + KODEX 커버드콜 2위. 메지온·디앤디·코미팜·현대바이오·에이비엘·코오롱티슈진 Top20 동시. 고영·미래에셋벤처·에이비엘 제목에 "호루무즈"·"이란전" 직접 등장.</p>
+    <div class="kpis">
+      <span class="kpi bull">KOSPI +5.68%</span>
+      <span class="kpi hot">바이오 6종</span>
+      <span class="kpi">ETF 5종</span>
+      <span class="kpi">심리지수 72</span>
+    </div>
+    <div class="cta">Open Report<span class="arrow">→</span></div>
+  </a>
+
+  <a href="kospi_jongtoban_vol02_20260404.html" class="rpt ko">
+    <div class="head">
+      <div class="vol">02</div>
+      <div class="date"><strong>2026.04.04</strong>Week of Mar 30–Apr 3<br>Iran War · Week 5</div>
+    </div>
+    <h3>방산주 쏠림 피크 — "오일쇼크 수혜" 키워드 팽창</h3>
+    <p>한화에어로·LIG넥스원·현대로템 종토방 조회수 급등. 원/달러 1,500원 위협. 개인은 "전쟁 수혜주" 추격 매수. 5주차 프레임 정점.</p>
+    <div class="kpis">
+      <span class="kpi hot">방산 3종</span>
+      <span class="kpi">USD/KRW 1,500</span>
+      <span class="kpi">오일쇼크</span>
+      <span class="kpi">개인 추격</span>
+    </div>
+    <div class="cta">Open Report<span class="arrow">→</span></div>
+  </a>
+
+  <a href="kospi_jongtoban_vol01_20260328.html" class="rpt ko">
+    <div class="head">
+      <div class="vol">01</div>
+      <div class="date"><strong>2026.03.28</strong>Week of Mar 23–27<br>Iran War · Week 4</div>
+    </div>
+    <h3>전쟁 직격 — KOSPI 5,100선 붕괴 직후 심리 바닥</h3>
+    <p>종토방 "공포" 키워드 사상 최다. 외국인 대규모 이탈 + 개인 패닉셀 구간. 바이오·금 ETF로의 피난 흐름 관찰. 방어적 포지션 내러티브 정착.</p>
+    <div class="kpis">
+      <span class="kpi hot">KOSPI 5,093</span>
+      <span class="kpi">외인 이탈</span>
+      <span class="kpi">공포지수</span>
+      <span class="kpi">바이오 피난</span>
+    </div>
+    <div class="cta">Open Report<span class="arrow">→</span></div>
+  </a>
 
 </div>
 
+<!-- ============ ABOUT ============ -->
+<h2 class="sec">About</h2>
+<div class="about">
+  <div>
+    <h3>왜 이 리포트를 쓰는가</h3>
+    <p>시장 지수는 수치를 보여주지만, 그 뒤에서 자금을 움직이는 주체의 심리는 오직 소셜 채널에만 드러난다. 미국은 Reddit·X, 한국은 네이버 종토방이 그 거울이다. 이 두 거울을 같은 날 같은 프레임으로 읽어내려는 시도 — 그것이 이 리포트의 목적이다.</p>
+    <p>드러켄밀러의 투자 철학 중 하나: <b>"가장 큰 돈은 내러티브가 합의로 굳어지기 직전, 또는 그 합의가 깨지는 순간 만들어진다."</b> 매주 토요일, 그 전환점을 포착하려 한다.</p>
+  </div>
+  <div>
+    <h3>Methodology</h3>
+    <ul>
+      <li><b>Global</b> · WSJ B6 Markets 종가 + 5개 서브레딧(r/wallstreetbets · r/investing · r/stocks · r/economics · r/geopolitics) + X 인플루언서 6인(Alden·Bianco·SoberLook 고정 + 주간 교체 3인)</li>
+      <li><b>Korea</b> · 네이버 금융 종토방 Python 크롤러(매주 토요일 실행) · Top 20 종목 게시글 수·조회수·제목 10개씩 수집</li>
+      <li><b>Design</b> · 모바일 퍼스트 · 다크모드(국내만) · 인쇄 최적화 A4 · 세 가지 원칙 모두 비협상</li>
+      <li><b>Publish</b> · GitHub Pages + 텔레그램 채널 + 카카오톡 오픈채팅 링크 배포</li>
+    </ul>
+    <p class="stack">Stack · Python Crawler · Claude Code · HTML/CSS · GitHub Pages</p>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
 <footer>
-  <p>바이사이드 위클리 · minkeun00-creator.github.io/weekly-report/ · 매주 토요일 발간</p>
-  <p style="margin-top:4px">본 리포트는 소셜 미디어 데이터 기반 심리 분석이며 투자 권유가 아닙니다.</p>
+  Weekly Buy-Side Reports · Editor · Research Desk<br>
+  <a href="https://minkeun00-creator.github.io/weekly-report/">minkeun00-creator.github.io/weekly-report</a> · © 2026<br>
+  For institutional discussion only · Not investment advice
 </footer>
 
 </div>
