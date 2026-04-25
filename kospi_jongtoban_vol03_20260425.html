@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>바이사이드 위클리 Vol.03 | 국내 종토방 심리 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0f13;
+  --bg2:#161820;
+  --card:#1c1e26;
+  --border:#2a2d38;
+  --text:#e8e6e0;
+  --muted:#7a7a8a;
+  --accent:#e84545;
+  --accent2:#4a90d9;
+  --green:#3dba6f;
+  --gold:#d4a92a;
+  --red:#e84545;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;line-height:1.7;}
+
+/* MASTHEAD */
+.masthead{background:var(--bg2);border-bottom:1px solid var(--border);padding:30px 40px 24px;}
+.vol-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.masthead-title{font-size:clamp(26px,5vw,44px);font-weight:900;line-height:1.1;margin:10px 0;}
+.masthead-title span{color:var(--accent);}
+.masthead-meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:12px;}
+.meta-item{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);}
+.meta-item strong{color:var(--text);}
+
+.container{max-width:900px;margin:0 auto;padding:0 24px;}
+.sec-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;padding:32px 0 12px;border-bottom:1px solid var(--border);}
+
+/* SUMMARY CARDS */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;padding:20px 0;}
+.sum-card{background:var(--card);border:1px solid var(--border);padding:18px;}
+.sum-card .label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.sum-card .val{font-size:22px;font-weight:700;}
+.sum-card .sub{font-size:11px;color:var(--muted);margin-top:4px;}
+.val.up{color:var(--green);}
+.val.dn{color:var(--red);}
+.val.gold{color:var(--gold);}
+
+/* HOT TABLE */
+.hot-table{width:100%;border-collapse:collapse;margin:20px 0;}
+.hot-table th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--border);padding:10px 12px;text-align:left;}
+.hot-table td{padding:12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top;}
+.hot-table tr:hover td{background:var(--card);}
+.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--accent);font-weight:700;font-size:11px;color:white;}
+.rank-badge.gold{background:var(--gold);color:var(--bg);}
+.rank-badge.silver{background:#888;}
+.rank-badge.bronze{background:#c0724e;}
+.tag-pill{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:2px;margin:2px;letter-spacing:1px;}
+.pill-bull{background:rgba(61,186,111,0.15);color:var(--green);border:1px solid rgba(61,186,111,0.3);}
+.pill-bear{background:rgba(232,69,69,0.15);color:var(--red);border:1px solid rgba(232,69,69,0.3);}
+.pill-mixed{background:rgba(212,169,42,0.15);color:var(--gold);border:1px solid rgba(212,169,42,0.3);}
+.pill-hot{background:var(--accent);color:white;}
+.trend-bar{height:3px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden;}
+.trend-fill-up{background:var(--green);}
+.trend-fill-dn{background:var(--red);}
+.trend-fill-mx{background:var(--gold);}
+
+/* SIGNAL SECTION */
+.signal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:20px 0;}
+.signal-item{background:var(--card);border:1px solid var(--border);padding:18px;}
+.signal-item .icon{font-size:28px;margin-bottom:8px;}
+.signal-item h4{font-size:14px;font-weight:700;margin-bottom:6px;}
+.signal-item p{font-size:12px;color:var(--muted);line-height:1.6;}
+.signal-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:3px 8px;margin-top:10px;letter-spacing:1px;}
+.badge-bull{background:rgba(61,186,111,0.15);color:var(--green);border:1px solid var(--green);}
+.badge-bear{background:rgba(232,69,69,0.15);color:var(--red);border:1px solid var(--red);}
+.badge-warn{background:rgba(212,169,42,0.15);color:var(--gold);border:1px solid var(--gold);}
+
+/* THEME CLUSTER */
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;padding:20px 0;}
+.theme-card{background:var(--card);border:1px solid var(--border);padding:18px;}
+.theme-card .theme-name{font-weight:700;font-size:15px;margin-bottom:8px;}
+.theme-card .tickers{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+.tick-chip{font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:2px;}
+.theme-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+.theme-temp{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;float:right;}
+.temp-hot{color:var(--red);}
+.temp-warm{color:var(--gold);}
+.temp-cool{color:var(--accent2);}
+
+/* THERMOMETER */
+.thermo-section{padding:20px 0;}
+.thermo-bar{height:20px;background:linear-gradient(to right, var(--accent2), var(--gold), var(--red));border-radius:4px;position:relative;margin:20px 0 8px;}
+.thermo-marker{position:absolute;top:-8px;width:3px;height:36px;background:white;border-radius:2px;}
+.thermo-labels{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
+.thermo-score{font-size:48px;font-weight:900;text-align:center;padding:20px 0;}
+
+/* CHART */
+.chart-area{background:var(--card);border:1px solid var(--border);padding:24px;margin:20px 0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;}
+
+/* INSIGHT */
+.insight-block{border-left:4px solid var(--accent);padding:22px 26px;margin:20px 0;background:var(--card);}
+.insight-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:12px;}
+.insight-block p{font-size:13px;line-height:1.75;color:var(--text);}
+.insight-block strong{color:var(--gold);}
+
+/* PRINT — dark to light override */
+@media print{
+  @page{size:A4;margin:12mm;}
+  :root{
+    --bg:#ffffff;
+    --bg2:#f4f4f4;
+    --card:#f0f0f0;
+    --border:#cccccc;
+    --text:#111111;
+    --muted:#666666;
+  }
+  body{font-size:10.5px;}
+  .masthead{background:#f4f4f4 !important;}
+  .hot-table tr:hover td{background:#f0f0f0 !important;}
+}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:24px 40px;margin-top:60px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+footer p{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
+
+/* MOBILE */
+@media(max-width:768px){
+  .masthead{padding:20px 20px 16px;}
+  .container{padding:0 16px;}
+  .signal-grid{grid-template-columns:1fr;}
+  .theme-grid{grid-template-columns:1fr;}
+  .hot-table{font-size:12px;overflow-x:auto;display:block;}
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="vol-label">Buyside Weekly · 국내 종토방 Edition</div>
+  <div class="masthead-title">네이버 종토방이 말하는<br><span>이번 주 한국 시장</span></div>
+  <div class="masthead-meta">
+    <span class="meta-item">Vol.<strong>03</strong></span>
+    <span class="meta-item"><strong>2026.04.25</strong> 주차</span>
+    <span class="meta-item">Top 20 종목 &nbsp;|&nbsp; 총 조회 <strong>640,831</strong>회</span>
+    <span class="meta-item">KOSPI 주간 <strong style="color:var(--green)">+4.58%</strong></span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- SUMMARY KPI -->
+<div class="sec-label">§1 &nbsp; 이번 주 종토방 요약 KPI</div>
+<div class="summary-grid">
+  <div class="sum-card">
+    <div class="label">총 조회수</div>
+    <div class="val gold">640,831</div>
+    <div class="sub">Top 20 종목 합산</div>
+  </div>
+  <div class="sum-card">
+    <div class="label">총 게시글 수</div>
+    <div class="val">1,503</div>
+    <div class="sub">주간 게시글</div>
+  </div>
+  <div class="sum-card">
+    <div class="label">KOSPI 주간</div>
+    <div class="val up">+4.58%</div>
+    <div class="sub">글로벌 주간 최강</div>
+  </div>
+  <div class="sum-card">
+    <div class="label">1위 관심 종목</div>
+    <div class="val" style="font-size:16px">KODEX 200<br>위클리커버드콜</div>
+    <div class="sub">조회 53,634회</div>
+  </div>
+  <div class="sum-card">
+    <div class="label">핫 테마</div>
+    <div class="val" style="font-size:15px">바이오<br>원전·방산</div>
+    <div class="sub">게시글 밀도 최고</div>
+  </div>
+  <div class="sum-card">
+    <div class="label">심리 온도계</div>
+    <div class="val up">66°</div>
+    <div class="sub">온기 강세 우위</div>
+  </div>
+</div>
+
+<!-- HOT TABLE -->
+<div class="sec-label">§2 &nbsp; TOP 20 종목 종토방 HOT 테이블</div>
+<div style="overflow-x:auto;">
+<table class="hot-table">
+  <tr>
+    <th>순위</th><th>종목명</th><th>조회수</th><th>게시글</th><th>주요 논점</th><th>심리</th>
+  </tr>
+  <tr>
+    <td><span class="rank-badge gold">1</span></td>
+    <td><strong>KODEX 200타겟<br>위클리커버드콜</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">498400</small></td>
+    <td>53,634</td><td>73</td>
+    <td>
+      월배당 수령 경험 공유, 2만원 회복 환호, "장기 투자하면 망한다" vs "은퇴준비 최적" 논쟁 활발. 5억원 일시 매수 인증 글.
+      <div class="trend-bar"><div class="trend-fill-mx" style="width:60%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-mixed">혼조</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge silver">2</span></td>
+    <td><strong>TIGER 미국S&P500</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">360750</small></td>
+    <td>50,262</td><td>43</td>
+    <td>
+      40대 주린이 지금 매수 가능 여부 토론. S&P 신고가에 "사기 종목" vs "돌고돌아 S&P500" 대립. 미장 하락에도 상승하는 이유 질문 다수.
+      <div class="trend-bar"><div class="trend-fill-up" style="width:72%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-bull">강세</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge bronze">3</span></td>
+    <td><strong>대우건설</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">047040</small></td>
+    <td>37,589</td><td>80</td>
+    <td>
+      "20만원 간다" vs 경고 예고 10일 논쟁. 이란전쟁 종전 소식 기대감. 베트남 K건설 글로벌 확장 기대. 원전주 미장 나락과의 상관관계 우려.
+      <div class="trend-bar"><div class="trend-fill-mx" style="width:55%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-mixed">혼조</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">4</span></td>
+    <td><strong>코미팜</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">041960</small></td>
+    <td>36,521</td><td>79</td>
+    <td>
+      필리핀 백신컨퍼런스 결과 기대. 정상회담 연계 기대감. ASF백신 임박 루머. 10년 장기보유 인증. "아무 이유 없이 오른다" 의심글 다수.
+      <div class="trend-bar"><div class="trend-fill-up" style="width:68%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-bull">기대 강세</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">5</span></td>
+    <td><strong>현대바이오</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">048410</small></td>
+    <td>35,802</td><td>80</td>
+    <td>
+      베트남 MOU 체결 (4/24). 대통령사절단 동행 이슈. 뎅기열·전립선암 글로벌 임상 기대. 이대통령 지지 언급. 투약 13일 만에 결과 터진다는 기대글.
+      <div class="trend-bar"><div class="trend-fill-up" style="width:80%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-hot">🔥 핫</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">6</span></td>
+    <td><strong>두산에너빌리티</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">034020</small></td>
+    <td>35,711</td><td>80</td>
+    <td>
+      원전 수출 기대. 이란 종전 시나리오와 원전 재건 수혜 논의. SMR 글로벌 수주 기대. 국내 원전 정책 전환 기대.
+      <div class="trend-bar"><div class="trend-fill-up" style="width:75%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-bull">원전 강세</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">7</span></td>
+    <td><strong>아주IB투자</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">027360</small></td>
+    <td>35,335</td><td>80</td>
+    <td>
+      VC/PE 시장 회복 기대. 스타트업 IPO 시장 회복 모멘텀. 금리 인하 기대감 반영 논의.
+      <div class="trend-bar"><div class="trend-fill-mx" style="width:50%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-mixed">관망</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">8</span></td>
+    <td><strong>SK텔레콤</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">017670</small></td>
+    <td>33,537</td><td>80</td>
+    <td>
+      해킹 사태 피해 보상 논의 지속. AI 인프라 투자 기대감. 배당 매력 재평가. "해킹 이후 오히려 저가 매수 기회" 글 증가.
+      <div class="trend-bar"><div class="trend-fill-mx" style="width:52%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-mixed">회복 기대</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">9</span></td>
+    <td><strong>KODEX 200</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">069500</small></td>
+    <td>33,046</td><td>50</td>
+    <td>
+      KOSPI +4.58% 주간 랠리 반영. 외국인 순매수 지속. 미 증시 신고가에 동조 기대. 적립식 매수 인증 다수.
+      <div class="trend-bar"><div class="trend-fill-up" style="width:78%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-bull">강세</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">10</span></td>
+    <td><strong>삼성SDI</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">006400</small></td>
+    <td>30,372</td><td>80</td>
+    <td>
+      전기차 배터리 사이클 회복 기대. 미국 에너지 인프라 투자 수혜. 주가 급락 이후 저점 매수 논의. 전고체 배터리 일정 관심.
+      <div class="trend-bar"><div class="trend-fill-mx" style="width:55%"></div></div>
+    </td>
+    <td><span class="tag-pill pill-mixed">저점 탐색</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">11</span></td>
+    <td><strong>TIGER 리츠부동산인프라</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">329200</small></td>
+    <td>30,066</td><td>61</td>
+    <td>금리 인하 기대 시 리츠 수혜 논의. 월배당 안정성 선호.</td>
+    <td><span class="tag-pill pill-bull">배당 선호</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">12</span></td>
+    <td><strong>삼성중공업</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">010140</small></td>
+    <td>29,657</td><td>80</td>
+    <td>조선 수주 랠리 지속 기대. LNG 운반선 발주 증가. 이란전쟁 이후 에너지 인프라 재건 수혜.</td>
+    <td><span class="tag-pill pill-bull">조선 강세</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">13</span></td>
+    <td><strong>주성엔지니어링</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">036930</small></td>
+    <td>29,578</td><td>80</td>
+    <td>반도체 장비 사이클 회복. Intel/TSMC 투자 확대 수혜. SOX 랠리 동조 기대.</td>
+    <td><span class="tag-pill pill-bull">반도체 수혜</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">14</span></td>
+    <td><strong>휴림로봇</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">090710</small></td>
+    <td>29,356</td><td>79</td>
+    <td>AI 로봇 수혜 테마. Optimus, Figure 글로벌 모멘텀 국내 반영 기대. 급등 후 차익 실현 논의.</td>
+    <td><span class="tag-pill pill-mixed">모멘텀 경계</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">15</span></td>
+    <td><strong>한화갤러리아</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">452260</small></td>
+    <td>29,200</td><td>79</td>
+    <td>방산 그룹 리레이팅 기대. 소비 프리미엄 회복 기대. 지배구조 이슈 논의.</td>
+    <td><span class="tag-pill pill-mixed">혼조</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">16</span></td>
+    <td><strong>메지온</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">140410</small></td>
+    <td>27,643</td><td>76</td>
+    <td>심장 치료제 임상 결과 기대. FDA 허가 이슈 집중 모니터링.</td>
+    <td><span class="tag-pill pill-bull">임상 기대</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">17</span></td>
+    <td><strong>대한광통신</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">010170</small></td>
+    <td>26,937</td><td>79</td>
+    <td>AI 데이터센터 광통신 수요 폭증. 미국 데이터센터 투자 확대 수혜.</td>
+    <td><span class="tag-pill pill-bull">AI 인프라</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">18</span></td>
+    <td><strong>펩트론</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">087010</small></td>
+    <td>26,314</td><td>80</td>
+    <td>비만치료제 국산화 기대. GLP-1 계열 기술이전 협상 이슈. 글로벌 비만약 시장 수혜 논의.</td>
+    <td><span class="tag-pill pill-hot">🔥 바이오 핫</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">19</span></td>
+    <td><strong>제주반도체</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">080220</small></td>
+    <td>25,118</td><td>80</td>
+    <td>반도체 소부장 수혜. AI 메모리 수요 증가 연계. Intel/삼성 투자 확대 간접 수혜.</td>
+    <td><span class="tag-pill pill-bull">반도체 수혜</span></td>
+  </tr>
+  <tr>
+    <td><span class="rank-badge">20</span></td>
+    <td><strong>파두</strong><br><small style="color:var(--muted);font-family:'DM Mono',monospace">440110</small></td>
+    <td>25,050</td><td>80</td>
+    <td>AI SSD 컨트롤러 수요 기대. 데이터센터 스토리지 사이클 회복 기대. 실적 개선 가시성 논의.</td>
+    <td><span class="tag-pill pill-mixed">회복 기대</span></td>
+  </tr>
+</table>
+</div>
+
+<!-- SIGNAL -->
+<div class="sec-label">§3 &nbsp; 종토방 핵심 시그널</div>
+<div class="signal-grid">
+  <div class="signal-item">
+    <div class="icon">🔥</div>
+    <h4>바이오 섹터 — 압도적 관심</h4>
+    <p>현대바이오(베트남 MOU), 펩트론(비만약), 코미팜(ASF백신), 메지온(심장치료)이 Top 20 내 4개 진입. 대통령 사절단 동행 이슈가 바이오 종목 특수 재료로 부상. 글로벌 비만약·항바이러스 수혜 기대가 국내 바이오 전반을 부양.</p>
+    <span class="signal-badge badge-bull">BULL DOMINANT</span>
+  </div>
+  <div class="signal-item">
+    <div class="icon">⚡</div>
+    <h4>원전·에너지 — 이란전쟁 종전 기대</h4>
+    <p>두산에너빌리티, 삼성중공업이 원전·조선 수혜 테마로 부각. "이란 종전 시 중동 재건 + 원전 발주" 시나리오 논의 시작. 이란전쟁 5주차 협상 가시성이 국내 방산·원전주 변동성 확대.</p>
+    <span class="signal-badge badge-warn">WATCH CLOSELY</span>
+  </div>
+  <div class="signal-item">
+    <div class="icon">💹</div>
+    <h4>ETF 투자 — 월배당·커버드콜 확산</h4>
+    <p>KODEX 200 위클리커버드콜이 1위 등극. "5억 일시 매수" "2만주 보유" 인증이 월배당 ETF 문화 확산 반영. TIGER S&P500 적립식도 상위권. 개인투자자들의 ETF 장기 전환 가속화.</p>
+    <span class="signal-badge badge-bull">구조적 트렌드</span>
+  </div>
+  <div class="signal-item">
+    <div class="icon">🤖</div>
+    <h4>AI·반도체 간접 수혜 — 소부장 주목</h4>
+    <p>주성엔지니어링, 제주반도체, 대한광통신, 파두가 글로벌 AI 투자 확대의 국내 수혜주로 주목. SOX 18연속 상승에 국내 반도체 소부장 종목 동조 기대. AI 데이터센터 인프라 투자 수혜 논의 활발.</p>
+    <span class="signal-badge badge-bull">AI 수혜 인식</span>
+  </div>
+</div>
+
+<!-- THEME CLUSTER -->
+<div class="sec-label">§4 &nbsp; 이번 주 종토방 테마 클러스터</div>
+<div class="theme-grid">
+  <div class="theme-card">
+    <span class="theme-temp temp-hot">🔴 82°</span>
+    <div class="theme-name">바이오·헬스케어</div>
+    <div class="tickers">
+      <span class="tick-chip">048410 현대바이오</span>
+      <span class="tick-chip">087010 펩트론</span>
+      <span class="tick-chip">041960 코미팜</span>
+      <span class="tick-chip">140410 메지온</span>
+    </div>
+    <p>대통령 사절단 동행, 베트남 MOU, 비만치료제, ASF백신. 실적 가시성보다 기대감 주도. 변동성 극대 구간.</p>
+  </div>
+  <div class="theme-card">
+    <span class="theme-temp temp-hot">🔴 75°</span>
+    <div class="theme-name">원전·에너지 재건</div>
+    <div class="tickers">
+      <span class="tick-chip">034020 두산에너빌리티</span>
+      <span class="tick-chip">010140 삼성중공업</span>
+      <span class="tick-chip">047040 대우건설</span>
+    </div>
+    <p>이란 종전 후 중동 재건 수혜. 글로벌 SMR 수주 기대. 조선 LNG 발주 사이클.</p>
+  </div>
+  <div class="theme-card">
+    <span class="theme-temp temp-warm">🟡 68°</span>
+    <div class="theme-name">AI 인프라·반도체</div>
+    <div class="tickers">
+      <span class="tick-chip">036930 주성엔지니어링</span>
+      <span class="tick-chip">010170 대한광통신</span>
+      <span class="tick-chip">080220 제주반도체</span>
+      <span class="tick-chip">440110 파두</span>
+    </div>
+    <p>SOX 랠리 간접 수혜. AI 데이터센터 광통신·스토리지 수요. 글로벌 투자 확대 국내 파급.</p>
+  </div>
+  <div class="theme-card">
+    <span class="theme-temp temp-warm">🟡 62°</span>
+    <div class="theme-name">ETF·월배당</div>
+    <div class="tickers">
+      <span class="tick-chip">498400 KODEX 커버드콜</span>
+      <span class="tick-chip">360750 TIGER S&P500</span>
+      <span class="tick-chip">069500 KODEX 200</span>
+      <span class="tick-chip">329200 TIGER 리츠</span>
+    </div>
+    <p>개인 ETF 장기 전환. 월배당 문화 정착. 적립식 매수 확산.</p>
+  </div>
+  <div class="theme-card">
+    <span class="theme-temp temp-cool">🔵 55°</span>
+    <div class="theme-name">AI 로봇·통신</div>
+    <div class="tickers">
+      <span class="tick-chip">090710 휴림로봇</span>
+      <span class="tick-chip">017670 SK텔레콤</span>
+    </div>
+    <p>Optimus 글로벌 모멘텀 국내 파급. SK텔레콤 해킹 이후 반등 기대. 차익실현 물량 혼재.</p>
+  </div>
+  <div class="theme-card">
+    <span class="theme-temp temp-cool">🔵 52°</span>
+    <div class="theme-name">금융·기타</div>
+    <div class="tickers">
+      <span class="tick-chip">027360 아주IB투자</span>
+      <span class="tick-chip">006400 삼성SDI</span>
+      <span class="tick-chip">452260 한화갤러리아</span>
+    </div>
+    <p>금리 인하 기대 수혜. 배터리 사이클 저점 탐색. 방산 그룹 리레이팅.</p>
+  </div>
+</div>
+
+<!-- THERMOMETER -->
+<div class="sec-label">§5 &nbsp; 종토방 심리 온도계</div>
+<div class="thermo-section">
+  <div class="thermo-score" style="color:var(--green)">66°</div>
+  <div style="font-family:'DM Mono',monospace;font-size:12px;text-align:center;color:var(--muted);margin-bottom:20px;">
+    온기 강세 우위 &nbsp;|&nbsp; KOSPI +4.58% 주간 랠리 반영
+  </div>
+  <div class="thermo-bar">
+    <div class="thermo-marker" style="left:calc(66% - 1.5px)"></div>
+  </div>
+  <div class="thermo-labels">
+    <span>0° 극도 공포</span>
+    <span>25° 약세</span>
+    <span>50° 중립</span>
+    <span>75° 강세</span>
+    <span>100° 극도 탐욕</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:24px;">
+    <div style="background:var(--card);border:1px solid var(--border);padding:14px;text-align:center;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">강세 우위 종목</div>
+      <div style="font-size:28px;font-weight:700;color:var(--green);">11개</div>
+      <div style="font-size:11px;color:var(--muted);">Top 20 중</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);padding:14px;text-align:center;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">혼조·관망</div>
+      <div style="font-size:28px;font-weight:700;color:var(--gold);">7개</div>
+      <div style="font-size:11px;color:var(--muted);">Top 20 중</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);padding:14px;text-align:center;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">약세·경계</div>
+      <div style="font-size:28px;font-weight:700;color:var(--red);">2개</div>
+      <div style="font-size:11px;color:var(--muted);">Top 20 중</div>
+    </div>
+  </div>
+</div>
+
+<!-- CHART -->
+<div class="sec-label">§6 &nbsp; Top 5 종목 관심도 비교</div>
+<div class="chart-area">
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:16px;letter-spacing:2px;">TOP 5 종목 주간 조회수 (천 회)</div>
+  <svg width="100%" height="160" viewBox="0 0 560 160" style="max-width:560px;">
+    <!-- bars -->
+    <rect x="30" y="10" width="70" height="107" fill="var(--gold)" opacity="0.8"/>
+    <rect x="140" y="14" width="70" height="100" fill="var(--accent2)" opacity="0.8"/>
+    <rect x="250" y="42" width="70" height="75" fill="var(--green)" opacity="0.8"/>
+    <rect x="360" y="45" width="70" height="73" fill="var(--green)" opacity="0.7"/>
+    <rect x="460" y="47" width="70" height="71" fill="var(--green)" opacity="0.6"/>
+    <!-- values -->
+    <text x="65" y="7" font-family="DM Mono,monospace" font-size="10" fill="var(--gold)" text-anchor="middle">53.6K</text>
+    <text x="175" y="11" font-family="DM Mono,monospace" font-size="10" fill="var(--accent2)" text-anchor="middle">50.3K</text>
+    <text x="285" y="39" font-family="DM Mono,monospace" font-size="10" fill="var(--green)" text-anchor="middle">37.6K</text>
+    <text x="395" y="42" font-family="DM Mono,monospace" font-size="10" fill="var(--green)" text-anchor="middle">36.5K</text>
+    <text x="495" y="44" font-family="DM Mono,monospace" font-size="10" fill="var(--green)" text-anchor="middle">35.8K</text>
+    <!-- baseline -->
+    <line x1="15" y1="117" x2="545" y2="117" stroke="var(--border)" stroke-width="1"/>
+    <!-- labels -->
+    <text x="65" y="132" font-family="DM Mono,monospace" font-size="9" fill="var(--muted)" text-anchor="middle">KODEX 커버드콜</text>
+    <text x="175" y="132" font-family="DM Mono,monospace" font-size="9" fill="var(--muted)" text-anchor="middle">TIGER S&amp;P500</text>
+    <text x="285" y="132" font-family="DM Mono,monospace" font-size="9" fill="var(--muted)" text-anchor="middle">대우건설</text>
+    <text x="395" y="132" font-family="DM Mono,monospace" font-size="9" fill="var(--muted)" text-anchor="middle">코미팜</text>
+    <text x="495" y="132" font-family="DM Mono,monospace" font-size="9" fill="var(--muted)" text-anchor="middle">현대바이오</text>
+  </svg>
+</div>
+
+<!-- INSIGHT -->
+<div class="sec-label">§7 &nbsp; 바이사이드 인사이트 — 종토방에서 읽는 시장</div>
+<div class="insight-block">
+  <div class="insight-tag">This Week's Domestic Thesis</div>
+  <p>
+    이번 주 국내 종토방의 가장 중요한 신호는 <strong>바이오 섹터의 압도적 관심 집중</strong>이다. 현대바이오, 펩트론, 코미팜, 메지온이 동시에 Top 20에 진입한 것은 단순 테마 유행이 아니라, 이대통령 베트남 순방·정상회담 일정이 만들어낸 <strong>정책 모멘텀과 글로벌 바이오 수혜 기대의 결합</strong>이다. 글로벌 비만약(GLP-1) 붐이 국내 바이오에 간접 프리미엄을 부여하는 중.
+  </p>
+  <br>
+  <p>
+    두 번째 관찰: <strong>KOSPI +4.58% 주간 강세에도 종토방 심리는 신중</strong>하다. ETF 장기 적립식 전환, 월배당 문화 확산이 감지된다 — 단타 수익보다 안정적 현금흐름을 원하는 개인 투자자 구조 변화. 커버드콜 ETF가 1위에 오른 것은 이런 심리 변화를 단적으로 보여준다.
+  </p>
+  <br>
+  <p>
+    <strong>이란전쟁 시나리오 반영:</strong> 대우건설·두산에너빌리티의 상위 진입은 "종전 후 중동 재건" 기대를 선반영한다. 아직 협상이 불투명하지만, 종토방은 이미 다음 챕터를 베팅하고 있다. 반면 삼성SDI 배터리는 저점 탐색 국면 — 전기차 회복 타이밍 불확실성이 종토방 심리에도 반영됨.
+  </p>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <p>바이사이드 위클리 Vol.03 &nbsp;|&nbsp; 국내 종토방 Edition &nbsp;|&nbsp; 2026.04.25 주차</p>
+  <p>Data: 네이버 종목토론방 크롤러 (2026.04.25 15:12) &nbsp;|&nbsp; Top 20 기준</p>
+  <p>본 리포트는 투자 권유가 아니며, 소셜 심리 분석을 목적으로 합니다.</p>
+</footer>
+
+</body>
+</html>
