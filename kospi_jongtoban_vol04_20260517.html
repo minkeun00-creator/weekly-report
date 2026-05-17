@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>종토방 위클리 Vol.04 | 2026.05.11–05.17</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0f13;
+  --surface:#16181f;
+  --surface2:#1e2029;
+  --text:#e8e6e0;
+  --muted:#8a8680;
+  --border:#2a2c35;
+  --accent:#f5a623;
+  --accent2:#4fc3f7;
+  --green:#4caf82;
+  --red:#e05a5a;
+  --sans:'Noto Sans KR',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.7;}
+
+/* MASTHEAD */
+.masthead{background:var(--surface);border-bottom:1px solid var(--border);padding:28px 0 22px;}
+.masthead-inner{max-width:1060px;margin:0 auto;padding:0 20px;}
+.masthead-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.masthead-top .vol{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.masthead-top .date{font-size:10px;letter-spacing:0.1em;color:var(--muted);}
+.masthead-title{font-size:clamp(30px,6vw,56px);font-weight:900;line-height:1.05;letter-spacing:-0.03em;margin-bottom:10px;}
+.masthead-title .hl{color:var(--accent);}
+.masthead-sub{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--border);padding-top:10px;}
+
+.container{max-width:1060px;margin:0 auto;padding:0 20px;}
+.section-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:20px;}
+section{padding:28px 0;border-bottom:1px solid var(--border);}
+
+/* SUMMARY CARDS */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--border);}
+.sum-card{background:var(--surface);padding:16px;}
+.sum-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.sum-val{font-size:22px;font-weight:900;line-height:1.1;}
+.sum-note{font-size:10px;color:var(--muted);margin-top:4px;}
+.up{color:var(--green);}
+.dn{color:var(--red);}
+.neu{color:var(--accent);}
+
+/* HOT TABLE */
+.hot-table{width:100%;border-collapse:collapse;}
+.hot-table th{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);background:var(--surface);}
+.hot-table td{padding:10px 10px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+.hot-table tr:hover td{background:var(--surface2);}
+.rank-num{font-weight:900;font-size:16px;color:var(--muted);min-width:28px;}
+.rank-num.top{color:var(--accent);}
+.stock-code{font-size:10px;color:var(--muted);font-family:monospace;}
+.stock-name{font-weight:700;}
+.posts-bar{display:inline-block;height:6px;background:var(--accent2);opacity:0.5;vertical-align:middle;margin-right:6px;border-radius:0;}
+.views-num{font-family:monospace;font-size:12px;}
+.hot-titles{font-size:11px;color:var(--muted);line-height:1.5;max-width:360px;}
+.sentiment-pill{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:0;font-weight:700;white-space:nowrap;}
+.pill-bull{background:rgba(76,175,130,0.15);color:var(--green);border:1px solid var(--green);}
+.pill-bear{background:rgba(224,90,90,0.15);color:var(--red);border:1px solid var(--red);}
+.pill-neut{background:rgba(245,166,35,0.12);color:var(--accent);border:1px solid var(--accent);}
+
+/* SIGNAL */
+.signal-box{background:var(--surface2);border:1px solid var(--accent);padding:24px;position:relative;overflow:hidden;}
+.signal-box::before{content:'SIGNAL';position:absolute;top:-1px;right:20px;background:var(--accent);color:var(--bg);font-size:9px;letter-spacing:0.15em;font-weight:900;padding:2px 10px;}
+.signal-title{font-size:clamp(16px,3vw,22px);font-weight:900;line-height:1.3;margin-bottom:14px;margin-top:10px;}
+.signal-body{font-size:13px;line-height:1.75;color:#ccc;}
+.signal-gauge{margin-top:18px;display:flex;align-items:center;gap:12px;}
+.gauge-label{font-size:10px;letter-spacing:0.1em;color:var(--muted);white-space:nowrap;}
+.gauge-track{flex:1;height:6px;background:var(--border);}
+.gauge-fill{height:100%;}
+
+/* THEME CLUSTERS */
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.theme-card{background:var(--surface);border:1px solid var(--border);padding:18px;border-left:3px solid var(--accent2);}
+.theme-card.bear{border-left-color:var(--red);}
+.theme-card.bull{border-left-color:var(--green);}
+.theme-card.neut{border-left-color:var(--muted);}
+.theme-name{font-size:13px;font-weight:700;margin-bottom:6px;}
+.theme-stocks{font-size:11px;color:var(--accent2);margin-bottom:8px;font-family:monospace;}
+.theme-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+.theme-sentiment{font-size:10px;margin-top:8px;letter-spacing:0.08em;}
+
+/* SENTIMENT THERMOMETER */
+.thermo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.thermo-item{background:var(--surface);border:1px solid var(--border);padding:14px;}
+.thermo-name{font-size:11px;font-weight:700;margin-bottom:8px;}
+.thermo-bar{height:4px;background:var(--border);margin-bottom:4px;}
+.thermo-fill{height:100%;}
+.thermo-score{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;}
+
+/* MINI CHARTS */
+.chart-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:640px){.chart-2col{grid-template-columns:1fr;}}
+.mini-chart-box{background:var(--surface);border:1px solid var(--border);padding:16px;}
+.mini-chart-title{font-size:12px;font-weight:700;margin-bottom:12px;color:var(--text);}
+.bar-chart{display:flex;align-items:flex-end;gap:3px;height:60px;}
+.mc-bar{flex:1;min-width:6px;border-radius:0;}
+.mc-bar.pos{background:var(--green);opacity:0.8;}
+.mc-bar.neg{background:var(--red);opacity:0.8;}
+.mc-bar.neu{background:var(--accent);opacity:0.6;}
+
+/* INSIGHTS */
+.insight-row{display:grid;grid-template-columns:auto 1fr;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.insight-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.insight-idx{font-size:36px;font-weight:900;color:var(--border);line-height:1;}
+.insight-content{}
+.insight-title{font-size:14px;font-weight:700;margin-bottom:6px;}
+.insight-body{font-size:12px;color:var(--muted);line-height:1.7;}
+
+/* FOOTER */
+.report-footer{padding:16px 0;text-align:center;font-size:10px;color:var(--muted);letter-spacing:0.08em;border-top:1px solid var(--border);}
+
+/* PRINT */
+@media print{
+  @page{size:A4;margin:12mm;}
+  body{background:#fff!important;color:#111!important;font-size:10px;}
+  .masthead,.signal-box,.theme-card,.hot-table th,.sum-card,.mini-chart-box{background:#fff!important;border-color:#ddd!important;}
+  .text,.signal-title,.stock-name,.theme-name{color:#111!important;}
+  .muted,.sum-note,.hot-titles,.theme-desc,.insight-body{color:#666!important;}
+  .section-label{color:#666!important;border-color:#ddd!important;}
+  .masthead-title,.masthead-title .hl,.signal-box::before{color:#111!important;}
+  .signal-box::before{background:#f5a623!important;}
+  section{break-inside:avoid;}
+  .chart-2col,.theme-grid{grid-template-columns:1fr 1fr;}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .summary-grid{grid-template-columns:repeat(3,1fr);}
+  .theme-grid{grid-template-columns:1fr;}
+  .hot-table .hot-titles{display:none;}
+}
+@media(max-width:480px){
+  .summary-grid{grid-template-columns:repeat(2,1fr);}
+  .masthead-inner,.container{padding:0 14px;}
+  .hot-table th:nth-child(4),.hot-table td:nth-child(4){display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-top">
+      <span class="vol">종토방 위클리 · Vol.04</span>
+      <span class="date">2026.05.11 – 05.17</span>
+    </div>
+    <div class="masthead-title">전력·AI 급락,<br><span class="hl">SpaceX</span> 관련주 과열</div>
+    <div class="masthead-sub">Naver 종목토론방 게시글·조회수 빅데이터 기반 바이사이드 센티먼트 분석</div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<section>
+<div class="container">
+  <div class="section-label">이번 주 종토방 요약</div>
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="sum-label">1위 종목</div>
+      <div class="sum-val neu">커버드콜</div>
+      <div class="sum-note">KODEX 200타겟위클리 77K 조회</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">최다 게시글</div>
+      <div class="sum-val" style="font-size:18px;">80건</div>
+      <div class="sum-note">다수 종목 한도 도달</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">핫 테마①</div>
+      <div class="sum-val" style="font-size:16px;">SpaceX IPO</div>
+      <div class="sum-note">아주IB·미래에셋 급등</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">핫 테마②</div>
+      <div class="sum-val" style="font-size:16px;">전력주 급락</div>
+      <div class="sum-note">LS ELECTRIC·대한전선·일진전기</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">전반 센티먼트</div>
+      <div class="sum-val dn">혼조 약세</div>
+      <div class="sum-note">공포·기대 혼재</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">총 TOP20 조회수</div>
+      <div class="sum-val" style="font-size:18px;">676K+</div>
+      <div class="sum-note">직전주 대비 추정 유사</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- HOT TABLE -->
+<section>
+<div class="container">
+  <div class="section-label">종토방 HOT 20 — 이번 주 게시글·조회수 기준 (2026.05.17 10:15 기준)</div>
+  <table class="hot-table">
+    <tr>
+      <th>순위</th>
+      <th>종목명</th>
+      <th>조회수</th>
+      <th>대표 게시글</th>
+      <th>센티먼트</th>
+    </tr>
+    <tr>
+      <td><span class="rank-num top">1</span></td>
+      <td><div class="stock-name">KODEX 200타겟위클리커버드콜</div><div class="stock-code">498400</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:77px;"></div><span class="views-num">77,264</span></div></td>
+      <td class="hot-titles">분배금 지급일정 문의 / 커버드콜 시총 1위 이유 / 5월 분배금 세금 0원</td>
+      <td><span class="sentiment-pill pill-neut">배당수요</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num top">2</span></td>
+      <td><div class="stock-name">TIGER 미국S&P500</div><div class="stock-code">360750</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:60px;"></div><span class="views-num">59,565</span></div></td>
+      <td class="hot-titles">장투 현재 점검 / 2천만원 추가 투자? / 수익률 20% 달성 / 안전빵 선택</td>
+      <td><span class="sentiment-pill pill-bull">장기강세</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num top">3</span></td>
+      <td><div class="stock-name">TIGER 반도체TOP10</div><div class="stock-code">396500</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:49px;"></div><span class="views-num">49,125</span></div></td>
+      <td class="hot-titles">조정인가? / 지금 매수 가능? / 10만원 목표 / 2분기 실적 기대</td>
+      <td><span class="sentiment-pill pill-neut">관망혼조</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num top">4</span></td>
+      <td><div class="stock-name">KODEX 미국나스닥100</div><div class="stock-code">379810</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:41px;"></div><span class="views-num">41,148</span></div></td>
+      <td class="hot-titles">7년 장투 경험담 / 나스닥 40년 수익률 / 고점 매수 공포 극복 / 연금계좌 활용</td>
+      <td><span class="sentiment-pill pill-bull">장기강세</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">5</span></td>
+      <td><div class="stock-name">TIGER 리츠부동산인프라</div><div class="stock-code">329200</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:41px;"></div><span class="views-num">40,946</span></div></td>
+      <td class="hot-titles">왜 떨어지는지 모르는 개미들 / 역사적 저점구간 / 금리 인하 불가 우려</td>
+      <td><span class="sentiment-pill pill-bear">하락우려</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">6</span></td>
+      <td><div class="stock-name">LS ELECTRIC</div><div class="stock-code">010120</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:39px;"></div><span class="views-num">38,810</span></div></td>
+      <td class="hot-titles">평단 23.5 / 전력주 소외감 / 국민연금 비중 확대 / 안티들아 실적 봐봐</td>
+      <td><span class="sentiment-pill pill-bear">급락공포</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">7</span></td>
+      <td><div class="stock-name">대한전선</div><div class="stock-code">001440</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:35px;"></div><span class="views-num">34,510</span></div></td>
+      <td class="hot-titles">외인·기금 동반 매수 / 950만주 신규 상장 / 월욜 78000원 기대 / 10만 목표</td>
+      <td><span class="sentiment-pill pill-bull">기대감</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">8</span></td>
+      <td><div class="stock-name">KODEX 200</div><div class="stock-code">069500</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:34px;"></div><span class="views-num">34,349</span></div></td>
+      <td class="hot-titles">오늘 왜 빠짐? / 폭락에도 매수 / 이제부터 오후 반등 없다</td>
+      <td><span class="sentiment-pill pill-bear">하락우려</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">9</span></td>
+      <td><div class="stock-name">KODEX AI전력핵심설비</div><div class="stock-code">487240</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:32px;"></div><span class="views-num">31,926</span></div></td>
+      <td class="hot-titles">60층 주주 / ETF 하루 8% 급락 / 이게 조정이냐? / 기관·외인 매수</td>
+      <td><span class="sentiment-pill pill-bear">급락충격</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">10</span></td>
+      <td><div class="stock-name">휴림로봇</div><div class="stock-code">090710</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:32px;"></div><span class="views-num">31,905</span></div></td>
+      <td class="hot-titles">외인 345만주 매수 / 최대주주 변경? / 거래량 폭주 의미 / 반도체 대체론</td>
+      <td><span class="sentiment-pill pill-bull">급등기대</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">11</span></td>
+      <td><div class="stock-name">아주IB투자</div><div class="stock-code">027360</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:32px;"></div><span class="views-num">31,808</span></div></td>
+      <td class="hot-titles">SpaceX 6/12 상장 확정 / 국민성장펀드 서류 / 5연상 미리 축하</td>
+      <td><span class="sentiment-pill pill-bull">SpaceX 테마</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">12</span></td>
+      <td><div class="stock-name">제주반도체</div><div class="stock-code">080220</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:32px;"></div><span class="views-num">31,609</span></div></td>
+      <td class="hot-titles">현 1600% 수익 / 4월 수출 실적 호조 / 한미반도체 실적 참고</td>
+      <td><span class="sentiment-pill pill-bull">수익실현</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">13</span></td>
+      <td><div class="stock-name">삼성SDI</div><div class="stock-code">006400</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:31px;"></div><span class="views-num">31,220</span></div></td>
+      <td class="hot-titles">외인 코스피 폭매도에도 SDI 담아 / 우리사주 6/13 236만주 해제 / 삼성 로봇 시너지</td>
+      <td><span class="sentiment-pill pill-bull">외인주목</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">14</span></td>
+      <td><div class="stock-name">LG씨엔에스</div><div class="stock-code">064400</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:30px;"></div><span class="views-num">30,254</span></div></td>
+      <td class="hot-titles">나스닥 반도체 폭락 충격 / Anthropic 투자 부각 / 피지컬AI 테마</td>
+      <td><span class="sentiment-pill pill-neut">관망</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">15</span></td>
+      <td><div class="stock-name">미래에셋증권</div><div class="stock-code">006800</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:30px;"></div><span class="views-num">29,934</span></div></td>
+      <td class="hot-titles">스페이스X 천문학적 수익 기대 / 3쩜상 예상 / 주주환원 강화 기대</td>
+      <td><span class="sentiment-pill pill-bull">SpaceX 수혜</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">16</span></td>
+      <td><div class="stock-name">현대무벡스</div><div class="stock-code">319400</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:30px;"></div><span class="views-num">29,509</span></div></td>
+      <td class="hot-titles">현대차 미국행 / 실적발표 5/18 / 트럼프-시 회담 갭하락 우려</td>
+      <td><span class="sentiment-pill pill-neut">혼조</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">17</span></td>
+      <td><div class="stock-name">삼성전기</div><div class="stock-code">009150</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:29px;"></div><span class="views-num">28,985</span></div></td>
+      <td class="hot-titles">분기매출 사상 첫 3조 돌파 / 반도체 대장주 등극 / 인텔·마이크론 폭락 여파</td>
+      <td><span class="sentiment-pill pill-bull">실적강세</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">18</span></td>
+      <td><div class="stock-name">우리기술</div><div class="stock-code">032820</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:28px;"></div><span class="views-num">28,001</span></div></td>
+      <td class="hot-titles">공시 내용 해석 논란 / 전환사채 50만주 / 1분기 실적 확인</td>
+      <td><span class="sentiment-pill pill-neut">공시주목</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">19</span></td>
+      <td><div class="stock-name">일진전기</div><div class="stock-code">103590</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:28px;"></div><span class="views-num">27,911</span></div></td>
+      <td class="hot-titles">노조파업 리스크 / 전력주 급락 이유 / 외국인 대량 매도 충격</td>
+      <td><span class="sentiment-pill pill-bear">급락우려</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">20</span></td>
+      <td><div class="stock-name">KBI메탈</div><div class="stock-code">024840</div></td>
+      <td><div style="display:flex;align-items:center;gap:6px;"><div class="posts-bar" style="width:28px;"></div><span class="views-num">27,705</span></div></td>
+      <td class="hot-titles">2만원 목표 / 교보 예상 연매출 280억 / 전사채 294만주 대기</td>
+      <td><span class="sentiment-pill pill-neut">기대관망</span></td>
+    </tr>
+  </table>
+</div>
+</section>
+
+<!-- SIGNAL -->
+<section>
+<div class="container">
+  <div class="signal-box">
+    <div class="signal-title">전력·AI 인프라 급락, SpaceX 테마 과열 —<br>외인 수급 분기점에서 개인은 '물타기' vs '익절' 갈림길</div>
+    <div class="signal-body">
+      이번 주 종토방의 핵심 키워드는 <strong>전력주 급락 충격</strong>과 <strong>SpaceX IPO 과열 기대</strong>의 극명한 대비다.
+      <br><br>
+      LS ELECTRIC, KODEX AI전력핵심설비(-8% 하루), 일진전기 등 전력·AI 인프라 관련주가 외국인 대량 매도에 무너지면서 개인 투자자들 사이에 "60층", "마이너스 2500만원" 등 공포 게시글이 속출했다. 반면 실적 펀더멘탈을 신뢰하는 "저점 매수" 의견도 팽팽히 맞서며 혼조 심리를 형성했다.
+      <br><br>
+      반면 아주IB투자와 미래에셋증권은 SpaceX 6월 12일 IPO 소식으로 폭발적 관심을 받았다. "5연상" 기대, "천문학적 수익" 등 과열 게시글이 넘쳐났으나, 실제 연결고리가 불명확한 테마주 특성상 변동성 리스크가 극히 높다.
+      <br><br>
+      <strong>ETF 수요</strong>는 여전히 견고하다. TIGER S&P500과 나스닥100은 "장투·연금계좌" 수요가 꾸준하며, 단기 조정을 매수 기회로 삼는 개인의 저가 매수 심리가 확인된다. 커버드콜 ETF의 5월 분배금 이슈가 TOP1을 차지한 것은 안정적 인컴 수요가 시장 불확실성 속에서도 강력함을 보여준다.
+    </div>
+    <div class="signal-gauge">
+      <span class="gauge-label">BEAR</span>
+      <div class="gauge-track"><div class="gauge-fill" style="width:42%;background:linear-gradient(90deg,var(--green),var(--red));"></div></div>
+      <span class="gauge-label">BULL</span>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-top:6px;">종합 센티먼트 지수 42/100 — 약세 우세, 테마 과열 혼재</div>
+  </div>
+</div>
+</section>
+
+<!-- THEME CLUSTERS -->
+<section>
+<div class="container">
+  <div class="section-label">주제별 테마 클러스터 분석</div>
+  <div class="theme-grid">
+    <div class="theme-card bear">
+      <div class="theme-name">🔴 전력·AI 인프라 급락 충격</div>
+      <div class="theme-stocks">LS ELECTRIC · KODEX AI전력핵심설비 · 일진전기 · 대한전선</div>
+      <div class="theme-desc">외국인 대량 매도로 하루 -8%까지 급락. "이게 조정이냐, 추세 전환이냐"가 최대 논란. 노조파업(일진전기), 미중 회담 실망 등 악재 중첩. 그러나 실적 펀더멘탈과 수주잔고는 여전히 견고해 저점 매수 의견도 팽팽.</div>
+      <div class="theme-sentiment">전반 센티먼트: <span class="dn">◼ BEARISH (공포 우세)</span></div>
+    </div>
+    <div class="theme-card bull">
+      <div class="theme-name">🟢 SpaceX IPO 수혜 테마</div>
+      <div class="theme-stocks">아주IB투자 · 미래에셋증권</div>
+      <div class="theme-desc">SpaceX 6월 12일 Nasdaq 상장 소식으로 관련주 급등. "5연상 예약", "천문학적 수익" 기대감 최고조. 그러나 직접 연결고리가 모호한 테마주 특성상 공시 확인 없이 급등 시 고위험. 미래에셋의 실제 SpaceX 포지션 규모 불명확.</div>
+      <div class="theme-sentiment">전반 센티먼트: <span class="up">◼ BULLISH (과열 주의)</span></div>
+    </div>
+    <div class="theme-card bull">
+      <div class="theme-name">🟢 미국 ETF 장기 매수 심리</div>
+      <div class="theme-stocks">TIGER S&P500 · KODEX 나스닥100 · TIGER 반도체TOP10</div>
+      <div class="theme-desc">조정을 "적립식 기회"로 보는 개인의 장기 투자 심리 견고. "7년 장투", "30년 대계 나스닥", "연금계좌 활용" 등 시간적 분산 전략 논의 활발. S&P500 YTD +8.2% 성과가 신뢰를 뒷받침.</div>
+      <div class="theme-sentiment">전반 센티먼트: <span class="up">◼ BULLISH (안정적)</span></div>
+    </div>
+    <div class="theme-card neut">
+      <div class="theme-name">🟡 배당·분배금 인컴 수요</div>
+      <div class="theme-stocks">KODEX 200타겟위클리커버드콜 · TIGER 리츠부동산인프라</div>
+      <div class="theme-desc">시장 변동성 속 안정적 인컴 추구 수요 1위. 5월 분배금 지급 타이밍과 세금 이슈(5월 분배금 세금 0원) 논의 활발. 리츠는 금리 인하 기대 소멸로 하락 우려가 공존하나 "역사적 저점" 주장과 팽팽.</div>
+      <div class="theme-sentiment">전반 센티먼트: <span class="neu">◼ MIXED (인컴 강세, 리츠 우려)</span></div>
+    </div>
+    <div class="theme-card bull">
+      <div class="theme-name">🟢 반도체 중소형 실적주</div>
+      <div class="theme-stocks">삼성전기 · 삼성SDI · 제주반도체 · 휴림로봇</div>
+      <div class="theme-desc">삼성전기 분기매출 사상 첫 3조 돌파로 강세. 제주반도체 4월 영업이익 500억, 1600% 수익 사례 화제. 삼성SDI는 외인 매수 지속 확인. 휴림로봇 외인 345만주 매수와 최대주주 변경 루머로 단기 급등.</div>
+      <div class="theme-sentiment">전반 센티먼트: <span class="up">◼ BULLISH (실적 기반)</span></div>
+    </div>
+    <div class="theme-card neut">
+      <div class="theme-name">🟡 LG씨엔에스·로봇·AI SW</div>
+      <div class="theme-stocks">LG씨엔에스 · 현대무벡스 · 우리기술</div>
+      <div class="theme-desc">Anthropic 투자 부각(LG씨엔에스), 피지컬AI 테마, 현대차 미국 공장 연계(현대무벡스) 등 성장 스토리 존재. 그러나 나스닥 폭락 여파와 미중 회담 실망이 월요일 갭하락 우려로 이어짐.</div>
+      <div class="theme-sentiment">전반 센티먼트: <span class="neu">◼ MIXED (기대와 불안 공존)</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SENTIMENT THERMOMETER -->
+<section>
+<div class="container">
+  <div class="section-label">종목별 센티먼트 온도계 (0=공포 / 100=탐욕)</div>
+  <div class="thermo-grid">
+    <div class="thermo-item">
+      <div class="thermo-name">TIGER S&P500</div>
+      <div class="thermo-bar"><div class="thermo-fill" style="width:78%;background:var(--green);"></div></div>
+      <div class="thermo-score"><span>78</span><span class="up">장기 강세</span></div>
+    </div>
+    <div class="thermo-item">
+      <div class="thermo-name">아주IB (SpaceX)</div>
+      <div class="thermo-bar"><div class="thermo-fill" style="width:85%;background:var(--accent);"></div></div>
+      <div class="thermo-score"><span>85</span><span class="neu">과열 주의</span></div>
+    </div>
+    <div class="thermo-item">
+      <div class="thermo-name">삼성전기</div>
+      <div class="thermo-bar"><div class="thermo-fill" style="width:72%;background:var(--green);"></div></div>
+      <div class="thermo-score"><span>72</span><span class="up">실적 강세</span></div>
+    </div>
+    <div class="thermo-item">
+      <div class="thermo-name">LS ELECTRIC</div>
+      <div class="thermo-bar"><div class="thermo-fill" style="width:28%;background:var(--red);"></div></div>
+      <div class="thermo-score"><span>28</span><span class="dn">급락 공포</span></div>
+    </div>
+    <div class="thermo-item">
+      <div class="thermo-name">KODEX AI전력</div>
+      <div class="thermo-bar"><div class="thermo-fill" style="width:22%;background:var(--red);"></div></div>
+      <div class="thermo-score"><span>22</span><span class="dn">충격 저점</span></div>
+    </div>
+    <div class="thermo-item">
+      <div class="thermo-name">TIGER 반도체TOP10</div>
+      <div class="thermo-bar"><div class="thermo-fill" style="width:50%;background:var(--accent);"></div></div>
+      <div class="thermo-score"><span>50</span><span class="neu">중립 관망</span></div>
+    </div>
+    <div class="thermo-item">
+      <div class="thermo-name">TIGER 리츠인프라</div>
+      <div class="thermo-bar"><div class="thermo-fill" style="width:32%;background:var(--red);"></div></div>
+      <div class="thermo-score"><span>32</span><span class="dn">금리 우려</span></div>
+    </div>
+    <div class="thermo-item">
+      <div class="thermo-name">삼성SDI</div>
+      <div class="thermo-bar"><div class="thermo-fill" style="width:62%;background:var(--green);"></div></div>
+      <div class="thermo-score"><span>62</span><span class="up">외인 매수</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MINI CHARTS -->
+<section>
+<div class="container">
+  <div class="section-label">섹터별 조회수 분포 & 센티먼트 극성</div>
+  <div class="chart-2col">
+    <div class="mini-chart-box">
+      <div class="mini-chart-title">테마별 조회수 비중 (TOP20 합산)</div>
+      <div class="bar-chart">
+        <div class="mc-bar neu" style="height:100%" title="배당·ETF 인컴 ~118K"></div>
+        <div class="mc-bar pos" style="height:75%" title="미국 ETF 장투 ~100K"></div>
+        <div class="mc-bar pos" style="height:58%" title="SpaceX 테마 ~62K"></div>
+        <div class="mc-bar neg" style="height:55%" title="전력·AI 인프라 ~98K"></div>
+        <div class="mc-bar pos" style="height:45%" title="반도체 중소형 ~88K"></div>
+        <div class="mc-bar neu" style="height:30%" title="AI SW·로봇 ~58K"></div>
+      </div>
+      <p style="font-size:10px;color:var(--muted);margin-top:8px;">배당·ETF 인컴 / 미국ETF / SpaceX / 전력주 / 반도체 / AI SW</p>
+    </div>
+    <div class="mini-chart-box">
+      <div class="mini-chart-title">센티먼트 극성 분포 (TOP20 종목)</div>
+      <div class="bar-chart">
+        <div class="mc-bar pos" style="height:100%" title="강세 9개"></div>
+        <div class="mc-bar neu" style="height:66%" title="혼조 6개"></div>
+        <div class="mc-bar neg" style="height:55%" title="약세 5개"></div>
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:var(--muted);display:flex;gap:16px;">
+        <span><span class="up">■</span> 강세 9종</span>
+        <span><span class="neu">■</span> 혼조 6종</span>
+        <span><span class="dn">■</span> 약세 5종</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- INSIGHTS -->
+<section>
+<div class="container">
+  <div class="section-label">종토방 바이사이드 인사이트</div>
+  <div class="insight-row">
+    <div class="insight-idx">01</div>
+    <div class="insight-content">
+      <div class="insight-title">전력주 급락은 "외인 수급 이탈"이지 펀더멘탈 붕괴가 아니다</div>
+      <div class="insight-body">LS ELECTRIC, 일진전기, KODEX AI전력핵심설비의 급락은 미중 회담 실망과 글로벌 채권 수익률 급등에 따른 외국인 리스크오프에 기인한다. AI 전력 인프라 수요 내러티브는 훼손되지 않았으며, 수주잔고와 1분기 실적은 견고하다. 종토방 내 "저점 매수" 의견이 "손절" 의견을 상회한다는 점은 개인 투자자들이 급락을 단기 이벤트로 판단하고 있음을 시사한다.</div>
+    </div>
+  </div>
+  <div class="insight-row">
+    <div class="insight-idx">02</div>
+    <div class="insight-content">
+      <div class="insight-title">SpaceX 테마주 — 과열 경보, 공시 없이 추격 매수 금지</div>
+      <div class="insight-body">아주IB투자, 미래에셋증권의 SpaceX 연관 급등은 IPO 수혜 기대감이 선반영된 것이다. 그러나 실제 지분 규모, 수익 귀속 방식이 공식 확인되지 않은 상태다. 종토방에서 "5연상 예약" 등 과도한 낙관론이 넘치는 시점은 역설적으로 고점 위험 구간이다. 6월 S-1 공개 후 실제 수혜 구조를 확인한 뒤 진입하는 것이 원칙적 접근이다.</div>
+    </div>
+  </div>
+  <div class="insight-row">
+    <div class="insight-idx">03</div>
+    <div class="insight-content">
+      <div class="insight-title">커버드콜 ETF 1위 — 불안정한 시장에서 인컴 수요가 성장한다</div>
+      <div class="insight-body">KODEX 200타겟위클리커버드콜이 조회수 TOP1을 기록한 건 단순 배당 관심이 아니다. 채권 수익률 급등과 주식 변동성 확대 속에서 "옵션 프리미엄으로 안정적 현금흐름을 만든다"는 전략적 수요가 커지고 있다. 5월 분배금 세금 혜택 이슈까지 맞물려 개인 투자자의 세금 최적화 관심도 증가 중이다.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="report-footer">
+  <div class="container">
+    종토방 위클리 Vol.04 · 2026.05.11–05.17 · Naver 종목토론방 빅데이터 분석 기반<br>
+    크롤링 시각: 2026.05.17 10:15 · 본 리포트는 투자 권유가 아닙니다.<br>
+    <a href="https://minkeun00-creator.github.io/weekly-report/" style="color:var(--muted);">minkeun00-creator.github.io/weekly-report</a>
+  </div>
+</div>
+
+</body>
+</html>

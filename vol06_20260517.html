@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reddit × X 위클리 센티먼트 리포트 Vol.06 | 2026.05.11–05.17</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #111010;
+  --paper: #f4f1ea;
+  --accent: #c0392b;
+  --accent2: #1a4f8a;
+  --muted: #6b6460;
+  --border: #d8d3c8;
+  --card: #fffdf8;
+  --highlight: #fff8e7;
+  --green: #0d6b4f;
+  --red: #c0392b;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+  --sans: 'Noto Sans KR', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.7;}
+
+/* MASTHEAD */
+.masthead{border-top:4px solid var(--ink);border-bottom:1px solid var(--ink);padding:24px 0 20px;margin-bottom:0;background:var(--paper);}
+.masthead-inner{max-width:1100px;margin:0 auto;padding:0 24px;}
+.masthead-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.masthead-meta .vol{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.masthead-meta .date{font-family:var(--mono);font-size:11px;color:var(--muted);}
+.masthead-title{font-family:var(--serif);font-size:clamp(28px,5vw,52px);line-height:1.08;letter-spacing:-0.02em;margin-bottom:6px;}
+.masthead-title em{font-style:italic;color:var(--accent);}
+.masthead-sub{font-family:var(--sans);font-size:12px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;border-top:1px solid var(--border);padding-top:10px;margin-top:10px;}
+
+/* LAYOUT */
+.container{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+/* SECTION LABEL */
+.section-label{font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:20px;}
+
+section{padding:32px 0;border-bottom:1px solid var(--border);}
+
+/* MARKET TICKER */
+.market-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:24px;}
+.market-cell{background:var(--card);padding:16px 18px;}
+.market-cell .label{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.market-cell .value{font-family:var(--serif);font-size:20px;line-height:1.1;}
+.market-cell .change{font-family:var(--mono);font-size:11px;margin-top:3px;}
+.up{color:var(--green);}
+.dn{color:var(--red);}
+
+/* NEWS FLOW */
+.news-list{list-style:none;}
+.news-list li{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:12px 0;border-bottom:1px dotted var(--border);}
+.news-list li:last-child{border-bottom:none;}
+.news-num{font-family:var(--mono);font-size:11px;color:var(--muted);padding-top:2px;}
+.news-text{font-size:13.5px;line-height:1.6;}
+.news-text strong{font-weight:700;}
+.news-tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:1px 6px;margin-right:6px;vertical-align:middle;}
+
+/* REDDIT CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.reddit-card{background:var(--card);border:1px solid var(--border);padding:20px;position:relative;overflow:hidden;}
+.reddit-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.card-sub{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);font-weight:500;}
+.card-sentiment{margin-left:auto;font-family:var(--mono);font-size:10px;padding:2px 8px;border:1px solid currentColor;}
+.sentiment-bull{color:var(--green);}
+.sentiment-bear{color:var(--red);}
+.sentiment-neut{color:var(--muted);}
+.card-title{font-family:var(--serif);font-size:16px;line-height:1.35;margin-bottom:10px;}
+.card-body{font-size:13px;color:#333;line-height:1.65;}
+.card-quote{font-family:var(--mono);font-size:11.5px;border-left:2px solid var(--border);padding-left:10px;margin:10px 0;color:var(--muted);font-style:italic;}
+.card-tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;border:1px solid var(--border);padding:2px 7px;color:var(--muted);}
+
+/* X CARDS */
+.x-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.x-card{background:var(--card);border:1px solid var(--border);padding:20px;}
+.x-card-header{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:10px;}
+.x-handle{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--accent2);}
+.x-badge{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+.x-tweet{font-size:13.5px;line-height:1.65;color:#222;}
+.x-tweet em{font-style:normal;font-weight:700;color:var(--accent);}
+.x-meta{margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--muted);}
+
+/* COMPARISON TABLE */
+.compare-table{width:100%;border-collapse:collapse;}
+.compare-table th{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;text-align:left;padding:8px 12px;background:var(--ink);color:var(--paper);}
+.compare-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top;}
+.compare-table tr:nth-child(even) td{background:#f9f6ef;}
+.compare-table tr:last-child td{border-bottom:none;}
+
+/* TICKER TABLE */
+.ticker-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;}
+.ticker-table th{text-align:left;padding:6px 10px;border-bottom:2px solid var(--ink);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.ticker-table td{padding:7px 10px;border-bottom:1px dotted var(--border);}
+.ticker-table tr:last-child td{border-bottom:none;}
+.ticker-name{font-family:var(--sans);font-weight:500;}
+
+/* KEYWORDS */
+.keyword-cloud{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.kw{font-family:var(--serif);padding:4px 12px;border:1px solid var(--border);line-height:1;color:var(--ink);}
+.kw.lg{font-size:24px;}
+.kw.md{font-size:18px;}
+.kw.sm{font-size:13px;}
+.kw.xs{font-size:11px;color:var(--muted);}
+
+/* SIGNAL */
+.signal-box{border:2px solid var(--ink);padding:28px;background:var(--highlight);}
+.signal-header{font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.signal-title{font-family:var(--serif);font-size:clamp(20px,3vw,28px);line-height:1.2;margin-bottom:16px;}
+.signal-body{font-size:13.5px;line-height:1.7;color:#222;}
+.signal-meter{margin-top:20px;}
+.meter-label{font-family:var(--mono);font-size:10px;display:flex;justify-content:space-between;margin-bottom:6px;color:var(--muted);}
+.meter-bar{height:8px;background:var(--border);border-radius:0;}
+.meter-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--accent));}
+
+/* CHARTS PLACEHOLDER */
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:640px){.chart-row{grid-template-columns:1fr;}}
+.chart-box{border:1px solid var(--border);padding:20px;background:var(--card);}
+.chart-title{font-family:var(--serif);font-size:14px;margin-bottom:16px;}
+.mini-chart{display:flex;align-items:flex-end;gap:4px;height:80px;}
+.bar{flex:1;min-width:8px;background:var(--accent2);opacity:0.7;transition:opacity 0.2s;}
+.bar:hover{opacity:1;}
+.bar.neg{background:var(--red);}
+.bar.pos{background:var(--green);}
+
+/* INSIGHTS */
+.insight-block{margin-bottom:24px;padding-bottom:24px;border-bottom:1px dotted var(--border);}
+.insight-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.insight-n{font-family:var(--serif);font-size:48px;line-height:1;color:var(--border);float:left;margin-right:16px;margin-top:-6px;}
+.insight-title{font-family:var(--serif);font-size:17px;line-height:1.3;margin-bottom:8px;}
+.insight-body{font-size:13px;line-height:1.7;color:#333;}
+
+/* WATCHLIST */
+.watchlist-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.watch-item{border:1px solid var(--border);padding:16px;background:var(--card);}
+.watch-ticker{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;}
+.watch-name{font-family:var(--serif);font-size:15px;margin-bottom:6px;}
+.watch-reason{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* FOOTER */
+.report-footer{padding:20px 0;text-align:center;font-family:var(--mono);font-size:10px;color:var(--muted);border-top:2px solid var(--ink);}
+
+/* PRINT */
+@media print{
+  @page{size:A4;margin:12mm;}
+  body{font-size:10.5px;}
+  .masthead-title{font-size:28px;}
+  section{break-inside:avoid;page-break-inside:avoid;}
+  .cards-grid,.x-cards{grid-template-columns:1fr 1fr;}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .cards-grid,.x-cards,.watchlist-grid{grid-template-columns:1fr;}
+  .market-grid{grid-template-columns:repeat(2,1fr);}
+  .chart-row{grid-template-columns:1fr;}
+  .compare-table{font-size:12px;}
+}
+@media(max-width:480px){
+  .market-grid{grid-template-columns:repeat(2,1fr);}
+  .masthead-inner{padding:0 16px;}
+  .container{padding:0 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-meta">
+      <span class="vol">Reddit × X 위클리 센티먼트 리포트 · Vol.06</span>
+      <span class="date">2026.05.11 – 05.17</span>
+    </div>
+    <h1 class="masthead-title">채권 시장이<br>경고했다<em>.</em></h1>
+    <p class="masthead-sub">Buy-Side Sentiment Intelligence — Druckenmiller-Style Macro Lens · 매주 토요일 발행</p>
+  </div>
+</div>
+
+<!-- WSJ MARKET DATA -->
+<section>
+<div class="container">
+  <div class="section-label">WSJ Market Data — 2026.05.15 (금) 종가</div>
+  <div class="market-grid">
+    <div class="market-cell">
+      <div class="label">S&P 500</div>
+      <div class="value">7,408.50</div>
+      <div class="change dn">▼ 1.24% WoW +0.13%</div>
+    </div>
+    <div class="market-cell">
+      <div class="label">DJIA</div>
+      <div class="value">49,526</div>
+      <div class="change dn">▼ 1.07% YTD +3.0%</div>
+    </div>
+    <div class="market-cell">
+      <div class="label">Nasdaq Comp.</div>
+      <div class="value">26,225</div>
+      <div class="change dn">▼ 1.54% YTD +12.8%</div>
+    </div>
+    <div class="market-cell">
+      <div class="label">10Y 국채수익률</div>
+      <div class="value">4.595%</div>
+      <div class="change dn">▲ 최고 (1년여 만)</div>
+    </div>
+    <div class="market-cell">
+      <div class="label">30Y 국채수익률</div>
+      <div class="value">5.127%</div>
+      <div class="change dn">▲ 2007년 이후 최고</div>
+    </div>
+    <div class="market-cell">
+      <div class="label">WTI 원유</div>
+      <div class="value">$105.42</div>
+      <div class="change dn">▲ +4.2% (주간 +10.5%)</div>
+    </div>
+    <div class="market-cell">
+      <div class="label">금 (Comex)</div>
+      <div class="value">$4,555.80</div>
+      <div class="change dn">▼ 2.61% / YTD +5.3%</div>
+    </div>
+    <div class="market-cell">
+      <div class="label">달러/엔</div>
+      <div class="value">158.78</div>
+      <div class="change dn">엔화 약세 지속</div>
+    </div>
+    <div class="market-cell">
+      <div class="label">유로/달러</div>
+      <div class="value">1.1628</div>
+      <div class="change dn">YTD +1.0%</div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--muted);font-family:var(--mono);">※ 출처: WSJ 2026.05.16 토요일판 B6 Market Data. 주간 수익률은 전주 종가 대비.</p>
+</div>
+</section>
+
+<!-- NEWS FLOW -->
+<section>
+<div class="container">
+  <div class="section-label">이번 주 핵심 뉴스플로</div>
+  <ul class="news-list">
+    <li>
+      <span class="news-num">01</span>
+      <span class="news-text"><span class="news-tag">채권</span><strong>글로벌 채권 셀오프 격화.</strong> 이란 전쟁 장기화·에너지 가격 고공행진으로 인플레 우려 재연. 미국 10년물 4.595%, 30년물 5.127%로 치솟으며 주식 신고가 랠리 마감. 일본·영국 국채 동반 급락이 전이됐다.</span>
+    </li>
+    <li>
+      <span class="news-num">02</span>
+      <span class="news-text"><span class="news-tag">지정학</span><strong>트럼프–시진핑 베이징 정상회담 종료.</strong> 미중 "관계 리셋" 선언했으나 구체 성과 미흡. 보잉 200대 구매 합의(시장 기대치 500대 대비 실망), 대만 정책 현상 유지 확인. 호르무즈 해협 재개 압박 효과도 불확실.</span>
+    </li>
+    <li>
+      <span class="news-num">03</span>
+      <span class="news-text"><span class="news-tag">빅머니</span><strong>Berkshire Hathaway(Greg Abel CEO), 델타항공 재매입.</strong> 26억 달러 규모 신규 포지션. 메이시스 소규모 편입. Amazon·Domino's·Mastercard·Visa·UnitedHealth 전량 청산. Alphabet 추가 매수.</span>
+    </li>
+    <li>
+      <span class="news-num">04</span>
+      <span class="news-text"><span class="news-tag">AI/IPO</span><strong>Anthropic, $900B 밸류에이션으로 $30B+ 자금 조달.</strong> Greenoaks·Sequoia·Dragoneer·Altimeter 공동 주도. Q2 말 연환산 매출 $50B 목표. IPO 전 마지막 대형 라운드.</span>
+    </li>
+    <li>
+      <span class="news-num">05</span>
+      <span class="news-text"><span class="news-tag">AI/IPO</span><strong>SpaceX, 6월 12일 Nasdaq 상장 목표.</strong> 조달 목표 $80B+. 티커 "SPCX" 예정. Cerebras IPO는 첫날 +68% 급등 후 이틀째 -10% 조정.</span>
+    </li>
+    <li>
+      <span class="news-num">06</span>
+      <span class="news-text"><span class="news-tag">연준</span><strong>Kevin Warsh 연준 의장 상원 인준(54-45).</strong> Powell은 정식 취임 전까지 대행 유지. Warsh은 연준 대차대조표 축소 주장해왔으나 Barr 이사는 금융 안정 위협 우려 표명.</span>
+    </li>
+    <li>
+      <span class="news-num">07</span>
+      <span class="news-text"><span class="news-tag">기업</span><strong>Starbucks, 미국 기업직 300명 추가 감원.</strong> 시카고·애틀랜타·댈러스·버뱅크 지역사무소 폐쇄. 2028 회계연도까지 $2B 비용 절감 목표. AI 관련 헤드카운트 조정 트렌드 지속.</span>
+    </li>
+    <li>
+      <span class="news-num">08</span>
+      <span class="news-text"><span class="news-tag">규제</span><strong>뉴욕 제국주 5월 제조업 지수 19.6 (전월 11, 예상 7).</strong> 4년여 최고치. 에너지 가격 급등 속에서도 제조업 부문 탄력 이례적.</span>
+    </li>
+  </ul>
+</div>
+</section>
+
+<!-- REDDIT CARDS -->
+<section>
+<div class="container">
+  <div class="section-label">Reddit 커뮤니티 센티먼트 — r/wallstreetbets · r/investing · r/stocks · r/economics · r/options</div>
+  <div class="cards-grid">
+
+    <div class="reddit-card">
+      <div class="card-header">
+        <span class="card-sub">r/investing</span>
+        <span class="card-sentiment sentiment-bear">BEARISH</span>
+      </div>
+      <div class="card-title">채권 수익률 5%대 — 이제 주식은 답 없나?</div>
+      <div class="card-body">30년 국채가 5.127%를 돌파하자 r/investing에서는 "위험자산 대신 무위험 국채로 가야 한다"는 논의가 급증했다. 특히 주택 모기지와 연계된 소비자 압박을 우려하는 스레드가 상위를 점령.
+        <div class="card-quote">"Fed가 금리 인상 재개하면 2022년 재판. 30년물 5%는 신호탄이다."</div>
+        달러 강세·에너지 인플레가 맞물리며 소비자 체감 경기가 악화 중이라는 시각이 지배적. WSJ 조사에서도 70% 미국인이 트럼프 경제 정책에 불만족.
+      </div>
+      <div class="card-tags"><span class="tag">국채수익률</span><span class="tag">인플레</span><span class="tag">Fed</span></div>
+    </div>
+
+    <div class="reddit-card">
+      <div class="card-header">
+        <span class="card-sub">r/wallstreetbets</span>
+        <span class="card-sentiment sentiment-bull">BULLISH</span>
+      </div>
+      <div class="card-title">SpaceX IPO 6/12 — 역대 최대 공모 참전 전략</div>
+      <div class="card-body">SpaceX의 6월 12일 Nasdaq 상장 소식에 WSB가 들썩였다. 조달 목표 $80B+는 사상 최대 IPO가 될 수 있다는 점에서 "FOMO 참전"을 논하는 스레드가 수만 upvote를 받았다.
+        <div class="card-quote">"Musk가 Trial 중에도 Air Force One 탔다. 뭔가 빅딜이 있다."</div>
+        한편 복잡한 SPV 구조로 이미 투자한 개인 투자자들이 Anthropic의 "무효화" 경고에 패닉 상태. 2차 시장 리스크가 새로운 논란거리로 부상.
+      </div>
+      <div class="card-tags"><span class="tag">SpaceX</span><span class="tag">IPO</span><span class="tag">SPV리스크</span></div>
+    </div>
+
+    <div class="reddit-card">
+      <div class="card-header">
+        <span class="card-sub">r/stocks</span>
+        <span class="card-sentiment sentiment-bull">BULLISH</span>
+      </div>
+      <div class="card-title">Berkshire Abel 시대 — "가치투자의 부활"</div>
+      <div class="card-body">Greg Abel의 첫 분기 포트폴리오가 공개되자 r/stocks에서 "Buffett보다 공격적"이라는 평가가 쏟아졌다. 델타 $2.6B 재매입·Alphabet 4000만주 추가는 기술·항공 양면 베팅.
+        <div class="card-quote">"Visa·Mastercard 전량 매도는 의외. 핀테크보다 실물 자산 선호 시그널?"</div>
+        BRK.A는 YTD -4.1%로 S&P 500 대비 언더퍼폼 중이나, 장기 홀더들 사이에서는 "Abel 디스카운트 해소 기대" 매수 심리가 감지됨.
+      </div>
+      <div class="card-tags"><span class="tag">Berkshire</span><span class="tag">Abel</span><span class="tag">가치투자</span></div>
+    </div>
+
+    <div class="reddit-card">
+      <div class="card-header">
+        <span class="card-sub">r/geopolitics</span>
+        <span class="card-sentiment sentiment-bear">BEARISH</span>
+      </div>
+      <div class="card-title">호르무즈 해협 폐쇄 장기화 — 에너지 쇼크 시나리오</div>
+      <div class="card-body">WTI $105 돌파·주간 +10.5%에 r/geopolitics에서는 "호르무즈 재개 협상 실패가 글로벌 경기침체 트리거가 될 것"이라는 분석이 활발하다. 사우디·UAE의 이란 공습 참가 사실이 공개되며 지역 확전 우려도 고조.
+        <div class="card-quote">"아시아 제트유·경유 가격 2배. 항공·물류 수익성 붕괴 카운트다운."</div>
+        영국 30년물 국채수익률이 2008~09 금융위기 이후 최고치라는 사실도 공포 심리를 자극.
+      </div>
+      <div class="card-tags"><span class="tag">이란</span><span class="tag">호르무즈</span><span class="tag">에너지쇼크</span></div>
+    </div>
+
+    <div class="reddit-card">
+      <div class="card-header">
+        <span class="card-sub">r/options</span>
+        <span class="card-sentiment sentiment-neut">MIXED</span>
+      </div>
+      <div class="card-title">VIX 18.43 — 변동성 재확대, 방향성 미결</div>
+      <div class="card-body">금요일 VIX가 1.17포인트 급등해 18.43을 기록하자 r/options에서는 "단기 풋 헤지 vs 변동성 매도" 논쟁이 치열했다. S&P 500이 주간 신고가를 기록한 직후 급락한 패턴이 기술적 논란을 촉발.
+        <div class="card-quote">"신고가 후 -1.2%는 'Buy the dip' 신호인가, 분배(distribution) 시작인가."</div>
+        반도체 섹터 PHLX 지수는 월간 +25%로 과열 우려가 있으나, AI 수요 내러티브가 단기 조정을 흡수 중.
+      </div>
+      <div class="card-tags"><span class="tag">VIX</span><span class="tag">변동성</span><span class="tag">헤지전략</span></div>
+    </div>
+
+    <div class="reddit-card">
+      <div class="card-header">
+        <span class="card-sub">r/economics</span>
+        <span class="card-sentiment sentiment-bear">BEARISH</span>
+      </div>
+      <div class="card-title">중국 산업정책의 역습 — 미국 주도권 침식 현실화</div>
+      <div class="card-body">Rhodium Group의 "China's Industrial Policy of Everything" 보고서가 r/economics에서 바이럴됐다. 중국이 글로벌 수출 50% 이상을 점유하는 품목이 2016년 163개→2024년 315개로 급증.
+        <div class="card-quote">"무역 적자 줄여봐야 중국 콘텐츠가 공급망에 편재해 있어 의미 없다."</div>
+        트럼프-시 회담 결과가 기대 이하라는 평가 속에 "G-2 프레임"이 오히려 중국에 유리하다는 분석 확산.
+      </div>
+      <div class="card-tags"><span class="tag">중국</span><span class="tag">공급망</span><span class="tag">산업정책</span></div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- X CARDS -->
+<section>
+<div class="container">
+  <div class="section-label">X (구 Twitter) 인플루언서 센티먼트 — 고정 코어 3 + 주간 로테이션 3</div>
+  <div class="x-cards">
+
+    <div class="x-card">
+      <div class="x-card-header">
+        <span class="x-handle">@LynAldenContact</span>
+        <span class="x-badge">Core · Macro</span>
+      </div>
+      <div class="x-tweet">채권 수익률 급등은 <em>이란 전쟁發 에너지 인플레</em>와 일본·영국 국채 동반 셀오프의 합작품. Fed 금리 인하 기대는 완전히 소멸됐고, 오히려 인상 리스크가 재부상 중. 에너지 전환이 느린 경제일수록 충격이 크다.</div>
+      <div class="x-meta">주간 논조: BEARISH on Duration / BULLISH on Energy Assets</div>
+    </div>
+
+    <div class="x-card">
+      <div class="x-card-header">
+        <span class="x-handle">@biancoresearch</span>
+        <span class="x-badge">Core · Rates</span>
+      </div>
+      <div class="x-tweet">30년물 5.127%는 <em>역대급 경고 신호</em>. 2007년 이후 처음이며, 영국·일본까지 동반 급등한 건 "미국만의 문제"가 아님을 시사. Warsh 취임 후 연준이 QT를 가속하면 유동성 압박이 증폭될 것.</div>
+      <div class="x-meta">주간 논조: BEARISH on Risk Assets / HAWKISH Fed Risk 경고</div>
+    </div>
+
+    <div class="x-card">
+      <div class="x-card-header">
+        <span class="x-handle">@SoberLook</span>
+        <span class="x-badge">Core · Data</span>
+      </div>
+      <div class="x-tweet">뉴욕 제조업 지수 19.6 vs 예상 7 — <em>극단적인 서프라이즈</em>. 에너지 가격 급등 속에서도 제조업이 버티는 건 AI 인프라 투자와 방산 수주 때문. 그러나 소비자 실질 임금은 이미 잠식 중.</div>
+      <div class="x-meta">주간 논조: MIXED / 제조업 내성 vs 소비자 취약성 이분화</div>
+    </div>
+
+    <div class="x-card">
+      <div class="x-card-header">
+        <span class="x-handle">@Nouriel</span>
+        <span class="x-badge">Rotation · Tail Risk</span>
+      </div>
+      <div class="x-tweet">미중 정상회담 = <em>얄팍한 포토세션</em>. 호르무즈 재개 합의 없음, 대만 양보 없음, AI 칩 수출 완화 없음. 트럼프가 "G-2" 프레임을 인정한 순간 중국은 이미 전략적 승리. 경기침체 확률 계속 상향.</div>
+      <div class="x-meta">주간 논조: BEARISH / 지정학 리스크 구조화 경고</div>
+    </div>
+
+    <div class="x-card">
+      <div class="x-card-header">
+        <span class="x-handle">@PeterZeihan</span>
+        <span class="x-badge">Rotation · Supply Chain</span>
+      </div>
+      <div class="x-tweet">호르무즈 봉쇄가 보여주는 건 <em>글로벌 공급망 취약성</em>의 극단. 미국 셰일 덕분에 미국은 상대적으로 보호됐지만, 아시아 동맹국들의 에너지 안보 위기는 미국의 군사·외교 부담으로 돌아온다.</div>
+      <div class="x-meta">주간 논조: BEARISH on Asian Markets / BULLISH on US Energy Independence</div>
+    </div>
+
+    <div class="x-card">
+      <div class="x-card-header">
+        <span class="x-handle">@Mark_Minervini</span>
+        <span class="x-badge">Rotation · Momentum</span>
+      </div>
+      <div class="x-tweet">S&P 신고가 직후 -1.24% 하락은 <em>분배 패턴의 고전</em>. 반도체 섹터 -4.02%로 과열 모멘텀 해소 중. AI 내러티브 살아있으나 채권 수익률 급등이 밸류에이션 압박. 포지션 크기 줄이고 고품질 종목만 유지 권고.</div>
+      <div class="x-meta">주간 논조: CAUTIOUS / 위험 관리 우선, 리더십 종목 재확인</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section>
+<div class="container">
+  <div class="section-label">Reddit vs X 센티먼트 비교</div>
+  <table class="compare-table">
+    <tr>
+      <th>이슈</th>
+      <th>Reddit 반응</th>
+      <th>X 인플루언서</th>
+      <th>종합 판단</th>
+    </tr>
+    <tr>
+      <td><strong>채권 수익률 급등</strong></td>
+      <td>공포 확산, 주식 대비 채권 선호 논의</td>
+      <td>구조적 위험 경고, Warsh QT 가속 우려</td>
+      <td class="dn">🔴 BEARISH</td>
+    </tr>
+    <tr>
+      <td><strong>SpaceX/Anthropic IPO</strong></td>
+      <td>FOMO 극대화, SPV 리스크 혼재</td>
+      <td>AI 인프라 수요 지속 긍정론</td>
+      <td class="up">🟢 BULLISH</td>
+    </tr>
+    <tr>
+      <td><strong>미중 정상회담</strong></td>
+      <td>구체 성과 없음에 실망, 지정학 불안</td>
+      <td>전략적으로 중국 우위 판단</td>
+      <td class="dn">🔴 BEARISH</td>
+    </tr>
+    <tr>
+      <td><strong>에너지/WTI $105</strong></td>
+      <td>인플레 재연 공포, 항공·물류 타격</td>
+      <td>에너지 자산 강세 지속 전망</td>
+      <td class="dn">🟡 MIXED</td>
+    </tr>
+    <tr>
+      <td><strong>AI/반도체 섹터</strong></td>
+      <td>Cerebras IPO 열기, 과열 경계도 공존</td>
+      <td>채권 수익률 밸류에이션 압박 경고</td>
+      <td class="up">🟡 MIXED</td>
+    </tr>
+    <tr>
+      <td><strong>Berkshire 포트폴리오</strong></td>
+      <td>Abel 가치투자 부활 기대</td>
+      <td>실물+기술 병행 베팅 긍정 평가</td>
+      <td class="up">🟢 BULLISH</td>
+    </tr>
+  </table>
+</div>
+</section>
+
+<!-- TICKER TABLE -->
+<section>
+<div class="container">
+  <div class="section-label">주요 티커 퍼포먼스 (주간)</div>
+  <table class="ticker-table">
+    <tr>
+      <th>티커</th><th>종목</th><th>종가</th><th>주간</th><th>YTD</th><th>센티먼트 키워드</th>
+    </tr>
+    <tr><td>NVDA</td><td class="ticker-name">NVIDIA</td><td>$225.32</td><td class="dn">-1.54%</td><td class="up">+20.8%</td><td>AI 수요 내러티브 vs 밸류에이션 부담</td></tr>
+    <tr><td>CRWD</td><td class="ticker-name">CrowdStrike</td><td>$594.08</td><td class="up">+2.4%</td><td class="up">+26.7%</td><td>사이버보안 방어주 선호</td></tr>
+    <tr><td>AAPL</td><td class="ticker-name">Apple</td><td>$300.23</td><td class="up">+0.7%</td><td class="up">+10.4%</td><td>BRK 포지션 유지, 안전자산 선호</td></tr>
+    <tr><td>DAL</td><td class="ticker-name">Delta Air Lines</td><td>$70.23</td><td class="dn">-1.3%</td><td class="up">+1.2%</td><td>BRK Abel 재매입 주목, 유가 부담</td></tr>
+    <tr><td>BRK.B</td><td class="ticker-name">Berkshire B</td><td>$482.70</td><td class="dn">-1.4%</td><td class="dn">-4.1%</td><td>Abel 할인 해소 기대 매수</td></tr>
+    <tr><td>XLE</td><td class="ticker-name">Energy Select ETF</td><td>$59.44</td><td class="up">+6.75%</td><td class="up">+32.9%</td><td>WTI $105 수혜, 유일 상승 섹터</td></tr>
+    <tr><td>TLT</td><td class="ticker-name">iSh 20+Y Treasury</td><td>$83.66</td><td class="dn">-2.8% YTD</td><td class="dn">-4.0%</td><td>채권 셀오프, 듀레이션 리스크 최대</td></tr>
+    <tr><td>CBRS</td><td class="ticker-name">Cerebras Systems</td><td>$279.72</td><td class="dn">-10%</td><td>N/A</td><td>IPO +68% 후 차익 매물, 밸류 논란</td></tr>
+  </table>
+</div>
+</section>
+
+<!-- KEYWORDS -->
+<section>
+<div class="container">
+  <div class="section-label">주간 키워드 빈도 분석</div>
+  <div class="keyword-cloud">
+    <span class="kw lg">국채수익률</span>
+    <span class="kw lg">호르무즈</span>
+    <span class="kw md">SpaceX IPO</span>
+    <span class="kw md">이란전쟁</span>
+    <span class="kw md">Anthropic</span>
+    <span class="kw sm">Abel</span>
+    <span class="kw sm">인플레</span>
+    <span class="kw sm">Cerebras</span>
+    <span class="kw sm">미중정상회담</span>
+    <span class="kw sm">VIX</span>
+    <span class="kw xs">Warsh</span>
+    <span class="kw xs">에너지쇼크</span>
+    <span class="kw xs">SPV리스크</span>
+    <span class="kw xs">반도체</span>
+    <span class="kw xs">달러강세</span>
+    <span class="kw xs">QT</span>
+  </div>
+</div>
+</section>
+
+<!-- SIGNAL -->
+<section>
+<div class="container">
+  <div class="signal-box">
+    <div class="signal-header">Weekly Buy-Side Signal</div>
+    <div class="signal-title">"채권이 경고하고, 에너지가 확인한다 —<br>위험자산 비중 축소, 실물 자산 헤지 강화"</div>
+    <div class="signal-body">
+      이번 주 가장 중요한 시장 신호는 <strong>채권 수익률의 구조적 급등</strong>이다. 10년물 4.595%, 30년물 5.127%는 단순 이란 전쟁 공포가 아니라 일본·영국 국채의 동반 셀오프라는 글로벌 현상과 맞물려 있다. 이는 "미국 예외주의" 내러티브가 균열을 보이는 신호다.
+      <br><br>
+      동시에 WTI $105 돌파와 주간 +10.5%는 호르무즈 봉쇄 장기화를 시장이 기정사실화하기 시작했음을 보여준다. 아시아 에너지 수요국의 실질 GDP 충격, 유럽 제트유 6주치 재고 위기, 미국 소비자 유류비 급증($4.50/gal)은 2분기 소비지표를 압박할 것이다.
+      <br><br>
+      S&P 500 신고가 직후 -1.24% 급락은 Minervini 방식으로 보면 고전적인 "분배 패턴"이다. 반도체 섹터의 월간 +25%는 단기 과열 신호를 내재하고 있으며, Warsh 취임 후 QT 가속화 리스크가 밸류에이션 재조정 트리거가 될 수 있다.
+      <br><br>
+      <strong>전술적 포지셔닝:</strong> 에너지(XLE) 비중 유지/확대, 듀레이션 리스크 최소화(TLT 회피), AI/반도체 포지션 크기 리스크 관리. SpaceX IPO는 직상장 후 SPV 복잡성 해소 확인 후 진입 권고.
+    </div>
+    <div class="signal-meter">
+      <div class="meter-label"><span>BEAR</span><span>전반적 센티먼트 지수: 38/100</span><span>BULL</span></div>
+      <div class="meter-bar"><div class="meter-fill" style="width:38%;"></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MINI CHARTS -->
+<section>
+<div class="container">
+  <div class="section-label">주간 섹터 퍼포먼스 개요</div>
+  <div class="chart-row">
+    <div class="chart-box">
+      <div class="chart-title">S&P 500 섹터 주간 수익률</div>
+      <div class="mini-chart">
+        <div class="bar pos" style="height:100%" title="에너지 +6.75%"></div>
+        <div class="bar pos" style="height:19%" title="IT +1.19%"></div>
+        <div class="bar pos" style="height:19%" title="헬스케어 +1.0%"></div>
+        <div class="bar pos" style="height:19%" title="필수소비재 +1.25%"></div>
+        <div class="bar neg" style="height:13%" title="금융 -0.31%"></div>
+        <div class="bar neg" style="height:17%" title="커뮤니케이션 -0.84%"></div>
+        <div class="bar neg" style="height:17%" title="산업재 -1.15%"></div>
+        <div class="bar neg" style="height:31%" title="재량소비 -3.07%"></div>
+        <div class="bar neg" style="height:30%" title="부동산 -2.59%"></div>
+        <div class="bar neg" style="height:27%" title="유틸리티 -2.05%"></div>
+        <div class="bar neg" style="height:31%" title="소재 -2.28%"></div>
+      </div>
+      <p style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:8px;">에너지 유일 강세 / 재량소비·소재 최대 낙폭</p>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">주요 자산 주간 등락 (상위/하위)</div>
+      <div class="mini-chart">
+        <div class="bar pos" style="height:100%" title="WTI 원유 +10.48%"></div>
+        <div class="bar pos" style="height:83%" title="천연가스 +7.36%"></div>
+        <div class="bar pos" style="height:63%" title="WSJ달러인덱스 +1.27%"></div>
+        <div class="bar neg" style="height:26%" title="은 -4.02%"></div>
+        <div class="bar neg" style="height:33%" title="금 -3.49%"></div>
+        <div class="bar neg" style="height:26%" title="Russell 2000 -2.37%"></div>
+        <div class="bar neg" style="height:22%" title="NIKKEI -2.08%"></div>
+        <div class="bar neg" style="height:18%" title="영국파운드 -2.24%"></div>
+      </div>
+      <p style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:8px;">에너지·달러 강세 / 귀금속·소형주 약세</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- INSIGHTS -->
+<section>
+<div class="container">
+  <div class="section-label">Buy-Side Insights — Druckenmiller-Style</div>
+
+  <div class="insight-block">
+    <span class="insight-n">01</span>
+    <div class="insight-title">채권 수익률은 주식을 이긴다 — 듀레이션 리스크가 최대 변수</div>
+    <div class="insight-body">30년물 5.127%는 2007년 이후 처음이다. 드러켄밀러식 관점에서 이 수준의 수익률은 주식 리스크 프리미엄을 급격히 압축한다. S&P 500 PER 22x에서 무위험 실질 수익률이 5%를 넘으면 자산 배분 논리가 근본적으로 바뀐다. 단기 "Buy the Dip" 전략보다 듀레이션 리스크 헤지가 우선이다.</div>
+  </div>
+
+  <div class="insight-block">
+    <span class="insight-n">02</span>
+    <div class="insight-title">에너지 섹터는 유일한 실질 헤지 — WTI $105의 구조적 함의</div>
+    <div class="insight-body">호르무즈 봉쇄가 장기화되면 배럴당 $120 시나리오도 배제할 수 없다. XLE의 주간 +6.75%는 인플레 헤지로서 에너지의 역할을 재확인했다. 미국 셰일 프로듀서(EOG, COP, DVN)는 에너지 가격 급등의 직접 수혜를 받는 반면, 제조·항공·물류 섹터는 원가 압박이 마진을 잠식한다.</div>
+  </div>
+
+  <div class="insight-block">
+    <span class="insight-n">03</span>
+    <div class="insight-title">SpaceX IPO — 역대 최대 공모의 시장 수요 흡수 효과 주목</div>
+    <div class="insight-body">조달 목표 $80B+는 단순 IPO가 아니라 유동성 이벤트다. 시장에서 대규모 현금이 SpaceX로 이동하면 기존 AI·기술주에서 일시적 수급 공백이 발생할 수 있다. Cerebras가 IPO 후 -10% 조정한 패턴을 참고할 때, SpaceX 직후 주변 AI 종목의 단기 조정 가능성을 헤지 차원에서 고려해야 한다.</div>
+  </div>
+
+  <div class="insight-block">
+    <span class="insight-n">04</span>
+    <div class="insight-title">Warsh Fed — QT 가속과 유동성 충격 시나리오</div>
+    <div class="insight-body">Warsh는 Fed 대차대조표 축소를 강력히 지지해왔다. Barr 이사는 "금융 안정 위협"을 경고했으나 소수의견이다. Warsh 취임 후 QT 가속화는 단기 유동성 충격으로 이어질 수 있으며, 특히 달러 수요 급증→신흥시장 압박→글로벌 위험자산 동반 조정의 전염 경로를 주시해야 한다.</div>
+  </div>
+
+</div>
+</section>
+
+<!-- WATCHLIST -->
+<section>
+<div class="container">
+  <div class="section-label">다음 주 모니터링 워치리스트</div>
+  <div class="watchlist-grid">
+    <div class="watch-item">
+      <div class="watch-ticker">SPCX (예정)</div>
+      <div class="watch-name">SpaceX</div>
+      <div class="watch-reason">6/12 IPO 전 S-1 서류 공개 임박. 밸류에이션·xAI 통합 구조 확인 필요. 시장 유동성 흡수 효과 주시.</div>
+    </div>
+    <div class="watch-item">
+      <div class="watch-ticker">TLT / IEF</div>
+      <div class="watch-name">미국 장기 국채 ETF</div>
+      <div class="watch-reason">Warsh 취임 후 QT 발언 강도 모니터링. 30년물 5.2% 돌파 시 주식 밸류에이션 재조정 트리거.</div>
+    </div>
+    <div class="watch-item">
+      <div class="watch-ticker">XLE / COP</div>
+      <div class="watch-name">에너지 섹터</div>
+      <div class="watch-reason">호르무즈 협상 재개 vs 장기화 시나리오. WTI $110 테스트 여부. 미국 셰일 프로듀서 수혜 지속.</div>
+    </div>
+    <div class="watch-item">
+      <div class="watch-ticker">NVDA</div>
+      <div class="watch-name">NVIDIA</div>
+      <div class="watch-reason">5/28 실적 발표(분기 데이터센터 매출 $73B 예상). 채권 수익률 급등 속 AI 멀티플 유지 여부가 핵심.</div>
+    </div>
+    <div class="watch-item">
+      <div class="watch-ticker">DAL</div>
+      <div class="watch-name">Delta Air Lines</div>
+      <div class="watch-reason">BRK Abel 재매입 $2.6B. 유가 $105 부담 vs 프리미엄 여행 수요 강세. 단기 헤드라인 주시.</div>
+    </div>
+    <div class="watch-item">
+      <div class="watch-ticker">USD/JPY</div>
+      <div class="watch-name">달러/엔 158대</div>
+      <div class="watch-reason">일본 30년물 국채 급등. 158-160 레인지에서 BOJ 개입 경계. 엔 캐리 트레이드 청산 리스크 모니터.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="report-footer">
+  <div class="container">
+    Reddit × X 위클리 센티먼트 리포트 Vol.06 · 2026.05.11–05.17 · Buy-Side Intelligence<br>
+    ※ 본 리포트는 소셜미디어 센티먼트 분석 및 WSJ 공개 데이터 기반이며, 투자 권유가 아닙니다.<br>
+    <a href="https://minkeun00-creator.github.io/weekly-report/" style="color:var(--muted);">minkeun00-creator.github.io/weekly-report</a>
+  </div>
+</div>
+
+</body>
+</html>
