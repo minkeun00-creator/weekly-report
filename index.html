@@ -3,243 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>위클리 리포트 아카이브 | minkeun00</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<title>바이사이드 위클리 — 아카이브</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0a0b0e;
-  --surface:#13151b;
-  --surface2:#1a1d25;
-  --text:#e2e0da;
-  --muted:#6b6a66;
-  --border:#252730;
-  --accent-g:#f5a623;
-  --accent-d:#4fc3f7;
-  --green:#4caf82;
-  --red:#e05a5a;
-  --sans:'Noto Sans KR',sans-serif;
-  --serif:'DM Serif Display',Georgia,serif;
-  --mono:'DM Mono','Courier New',monospace;
+:root {
+  --ink: #111010; --paper: #f4f1ea; --accent: #b5201e;
+  --gold: #c8922a; --rule: #c9c3b5; --muted: #6b6560;
+  --dark: #0e0f13; --teal: #00d4a1;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; line-height: 1.65; }
 
-/* HEADER */
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:36px 0 28px;}
-.header-inner{max-width:1000px;margin:0 auto;padding:0 24px;}
-.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-.site-id{font-family:var(--mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
-.site-id span{color:var(--accent-g);}
-.header-title{font-family:var(--serif);font-size:clamp(28px,5vw,48px);line-height:1.1;margin-bottom:8px;}
-.header-desc{font-size:12px;color:var(--muted);line-height:1.6;max-width:560px;}
+.masthead { border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 1rem 2rem; text-align: center; }
+.masthead-meta { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin-bottom: .3rem; }
+.masthead h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1; }
+.masthead-sub { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-top: .3rem; }
 
-.container{max-width:1000px;margin:0 auto;padding:0 24px;}
+.wrapper { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+.section-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; border-bottom: 2px solid var(--ink); padding-bottom: .4rem; }
 
-/* SECTION HEADERS */
-.archive-section{padding:36px 0;}
-.archive-section+.archive-section{border-top:1px solid var(--border);}
-.section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:24px;}
-.section-title{font-family:var(--serif);font-size:20px;}
-.section-badge{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border:1px solid var(--border);color:var(--muted);}
+.archive-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
 
-/* CARDS GRID */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.vol-card { border: 1.5px solid var(--rule); padding: 1.1rem 1.3rem; text-decoration: none; color: var(--ink); display: block; transition: border-color .2s, background .2s; }
+.vol-card:hover { border-color: var(--ink); background: #ede9e0; }
+.vol-card.new-issue { border: 2px solid var(--ink); background: var(--ink); color: var(--paper); }
+.vol-card.new-issue:hover { background: #222; }
+.vol-card.dark-card { border: 2px solid var(--rule); background: var(--dark); color: #e8e6e0; }
+.vol-card.dark-card:hover { border-color: var(--teal); }
+.vol-card.dark-card.new-issue { border: 2px solid var(--teal); }
 
-/* REPORT CARD */
-.report-card{background:var(--surface);border:1px solid var(--border);padding:20px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;}
-.report-card:hover{border-color:var(--accent-g);background:var(--surface2);}
-.report-card.global:hover{border-color:var(--accent-g);}
-.report-card.domestic:hover{border-color:var(--accent-d);}
-.card-meta{display:flex;justify-content:space-between;align-items:center;}
-.card-vol{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
-.card-vol.global{color:var(--accent-g);}
-.card-vol.domestic{color:var(--accent-d);}
-.card-date{font-family:var(--mono);font-size:10px;color:var(--muted);}
-.card-title{font-family:var(--serif);font-size:17px;line-height:1.3;}
-.card-summary{font-size:12px;color:var(--muted);line-height:1.6;}
-.card-tags{display:flex;flex-wrap:wrap;gap:6px;}
-.ctag{font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;border:1px solid var(--border);padding:1px 6px;color:var(--muted);}
-.new-badge{font-family:var(--mono);font-size:9px;background:var(--accent-g);color:#000;padding:1px 6px;font-weight:700;letter-spacing:0.08em;}
+.vc-series { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .3rem; }
+.vc-vol { font-family: 'DM Serif Display', serif; font-size: 1.5rem; line-height: 1.1; margin-bottom: .25rem; }
+.vc-date { font-family: 'DM Mono', monospace; font-size: 9px; opacity: .6; margin-bottom: .5rem; }
+.vc-desc { font-size: 12px; line-height: 1.55; opacity: .8; }
+.new-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .12em; padding: .1rem .35rem; margin-left: .4rem; vertical-align: middle; }
+.vol-card.new-issue .new-badge { background: var(--gold); color: var(--ink); }
+.vol-card.dark-card.new-issue .new-badge { background: var(--teal); color: var(--dark); }
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:20px 0;text-align:center;}
-footer p{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.08em;}
+.footer { border-top: 1px solid var(--rule); padding: .8rem 2rem; text-align: center; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
 
-@media(max-width:600px){
-  .cards{grid-template-columns:1fr;}
-  .header-inner{padding:0 16px;}
-  .container{padding:0 16px;}
+@media (max-width: 600px) {
+  .archive-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="header-top">
-      <div class="site-id">minkeun00 · <span>Weekly Report Archive</span></div>
-    </div>
-    <h1 class="header-title">위클리 리포트<br>아카이브</h1>
-    <p class="header-desc">소셜미디어 센티먼트 × WSJ 마켓 데이터 × 네이버 종토방 빅데이터를 결합한 바이사이드 위클리 인텔리전스. 매주 토요일 발행.</p>
-  </div>
-</header>
-
-<main>
-
-<!-- GLOBAL SERIES -->
-<div class="archive-section">
-<div class="container">
-  <div class="section-header">
-    <span class="section-title">Reddit × X 위클리 센티먼트</span>
-    <span class="section-badge">Global Series</span>
-  </div>
-  <div class="cards">
-
-    <a href="vol06_20260517.html" class="report-card global">
-      <div class="card-meta">
-        <span class="card-vol global">Vol.06 <span class="new-badge">NEW</span></span>
-        <span class="card-date">2026.05.11–05.17</span>
-      </div>
-      <div class="card-title">채권 시장이 경고했다</div>
-      <div class="card-summary">10년 국채 4.595%·30년 5.127% 급등. 이란 전쟁 장기화, 트럼프-시진핑 실망, SpaceX IPO 6/12 확정, Anthropic $900B.</div>
-      <div class="card-tags">
-        <span class="ctag">채권수익률</span><span class="ctag">호르무즈</span><span class="ctag">SpaceX IPO</span><span class="ctag">Anthropic</span>
-      </div>
-    </a>
-
-    <a href="vol05_20260411.html" class="report-card global">
-      <div class="card-meta">
-        <span class="card-vol global">Vol.05</span>
-        <span class="card-date">2026.04.07–04.11</span>
-      </div>
-      <div class="card-title">관세 충격파, 반등의 기술</div>
-      <div class="card-summary">트럼프 관세 90일 유예 발표로 S&P 9% 단일 최대 상승. 중국 보복관세 125%. 금 $3,200 돌파.</div>
-      <div class="card-tags">
-        <span class="ctag">관세전쟁</span><span class="ctag">반등랠리</span><span class="ctag">금</span>
-      </div>
-    </a>
-
-    <a href="vol04_20260404.html" class="report-card global">
-      <div class="card-meta">
-        <span class="card-vol global">Vol.04</span>
-        <span class="card-date">2026.03.31–04.04</span>
-      </div>
-      <div class="card-title">해방의 날, 시장의 공포</div>
-      <div class="card-summary">트럼프 상호관세 발표. S&P 500 이틀 -10%. VIX 45 돌파. 나스닥 기술적 베어마켓 진입.</div>
-      <div class="card-tags">
-        <span class="ctag">관세쇼크</span><span class="ctag">VIX급등</span><span class="ctag">베어마켓</span>
-      </div>
-    </a>
-
-    <a href="vol03_20260321.html" class="report-card global">
-      <div class="card-meta">
-        <span class="card-vol global">Vol.03</span>
-        <span class="card-date">2026.03.17–03.21</span>
-      </div>
-      <div class="card-title">Fed 동결, 스태그플레이션 공포</div>
-      <div class="card-summary">FOMC 금리 동결. 점도표 2회 인하 유지. 스태그플레이션 우려 속 소비자 심리 급락.</div>
-      <div class="card-tags">
-        <span class="ctag">FOMC</span><span class="ctag">스태그플레이션</span><span class="ctag">달러</span>
-      </div>
-    </a>
-
-    <a href="vol02_20260307.html" class="report-card global">
-      <div class="card-meta">
-        <span class="card-vol global">Vol.02</span>
-        <span class="card-date">2026.03.03–03.07</span>
-      </div>
-      <div class="card-title">AI 패권, 유럽 방산 부상</div>
-      <div class="card-summary">DeepSeek 영향 지속. 유럽 방산주 급등. 트럼프 우크라이나 발언으로 지정학 변수 부각.</div>
-      <div class="card-tags">
-        <span class="ctag">AI패권</span><span class="ctag">유럽방산</span><span class="ctag">지정학</span>
-      </div>
-    </a>
-
-    <a href="vol01_20260221.html" class="report-card global">
-      <div class="card-meta">
-        <span class="card-vol global">Vol.01</span>
-        <span class="card-date">2026.02.17–02.21</span>
-      </div>
-      <div class="card-title">나스닥 고점 경고, 금 신고가</div>
-      <div class="card-summary">Nasdaq 과열 우려 속 금 사상 최고가 경신. AI 인프라 투자 지속 vs 밸류에이션 부담 논쟁.</div>
-      <div class="card-tags">
-        <span class="ctag">나스닥과열</span><span class="ctag">금신고가</span><span class="ctag">AI인프라</span>
-      </div>
-    </a>
-
-  </div>
-</div>
+<div class="masthead">
+  <div class="masthead-meta">아카이브 &nbsp;|&nbsp; 2026</div>
+  <h1>BUY-SIDE WEEKLY</h1>
+  <div class="masthead-sub">바이사이드 위클리 &nbsp;&bull;&nbsp; 전체 발행 목록</div>
 </div>
 
-<!-- DOMESTIC SERIES -->
-<div class="archive-section">
-<div class="container">
-  <div class="section-header">
-    <span class="section-title">종토방 위클리</span>
-    <span class="section-badge">Domestic Series</span>
+<div class="wrapper">
+
+  <!-- 글로벌 시리즈 -->
+  <div class="section-title">&#9632; 글로벌 시리즈 — WSJ · Reddit · X 합성</div>
+  <div class="archive-grid">
+    <a class="vol-card new-issue" href="vol06_20260524.html">
+      <div class="vc-series" style="color:var(--gold);">Global Series</div>
+      <div class="vc-vol">Vol.06 <span class="new-badge">NEW</span></div>
+      <div class="vc-date">2026.05.24</div>
+      <div class="vc-desc">Warsh 연준의장 취임·금리인상 시나리오 / SpaceX IPO D-21 / 양자컴퓨팅 $9B / 이란 협상 분기점 / S&P 8주 연속 상승</div>
+    </a>
+    <a class="vol-card" href="vol05_20260517.html">
+      <div class="vc-series" style="color:var(--muted);">Global Series</div>
+      <div class="vc-vol">Vol.05</div>
+      <div class="vc-date">2026.05.17</div>
+      <div class="vc-desc">이란전 본격화·유가 급등 / 관세 90일 유예 리레이팅 / AI칩 수출제한 완화 / 달러 약세 심화</div>
+    </a>
+    <a class="vol-card" href="vol04_20260510.html">
+      <div class="vc-series" style="color:var(--muted);">Global Series</div>
+      <div class="vc-vol">Vol.04</div>
+      <div class="vc-date">2026.05.10</div>
+      <div class="vc-desc">미-중 무역협상 전격 합의 / 나스닥 조정 후 반등 / 빅테크 어닝 시즌 서프라이즈</div>
+    </a>
+    <a class="vol-card" href="vol03_20260503.html">
+      <div class="vc-series" style="color:var(--muted);">Global Series</div>
+      <div class="vc-vol">Vol.03</div>
+      <div class="vc-date">2026.05.03</div>
+      <div class="vc-desc">관세 전쟁 최고조 / 달러 인덱스 3년 최저 / 금 사상 최고가 경신</div>
+    </a>
+    <a class="vol-card" href="vol02_20260426.html">
+      <div class="vc-series" style="color:var(--muted);">Global Series</div>
+      <div class="vc-vol">Vol.02</div>
+      <div class="vc-date">2026.04.26</div>
+      <div class="vc-desc">연준 동결 결정 / 기술주 실적 혼조 / 유럽 NATO 방위비 합의</div>
+    </a>
+    <a class="vol-card" href="vol01_20260419.html">
+      <div class="vc-series" style="color:var(--muted);">Global Series</div>
+      <div class="vc-vol">Vol.01</div>
+      <div class="vc-date">2026.04.19</div>
+      <div class="vc-desc">창간호 / 관세 쇼크 후 시장 재편 / 이란 위기 초기 / AI 인프라 붐</div>
+    </a>
   </div>
-  <div class="cards">
 
-    <a href="kospi_jongtoban_vol04_20260517.html" class="report-card domestic">
-      <div class="card-meta">
-        <span class="card-vol domestic">Vol.04 <span class="new-badge" style="background:var(--accent-d);">NEW</span></span>
-        <span class="card-date">2026.05.11–05.17</span>
-      </div>
-      <div class="card-title">전력·AI 급락, SpaceX 관련주 과열</div>
-      <div class="card-summary">LS ELECTRIC·KODEX AI전력핵심설비 하루 -8%. 아주IB·미래에셋 SpaceX 테마 폭등. 삼성전기 분기매출 3조 돌파.</div>
-      <div class="card-tags">
-        <span class="ctag">전력주급락</span><span class="ctag">SpaceX테마</span><span class="ctag">삼성전기</span>
-      </div>
+  <!-- 종토방 시리즈 -->
+  <div class="section-title">&#9632; 종토방 시리즈 — 네이버 국내 종목토론방 분석</div>
+  <div class="archive-grid">
+    <a class="vol-card dark-card new-issue" href="kospi_jongtoban_vol04_20260524.html">
+      <div class="vc-series" style="color:var(--teal);">종토방 Series</div>
+      <div class="vc-vol">Vol.04 <span class="new-badge">NEW</span></div>
+      <div class="vc-date">2026.05.24</div>
+      <div class="vc-desc">반도체 초과열 / 한화오션 캐나다 잠수함 / 디앤디파마텍 LO 5/26 / LS ELECTRIC AI전력 / 커버드콜ETF 1위</div>
     </a>
-
-    <a href="kospi_jongtoban_vol03_20260411.html" class="report-card domestic">
-      <div class="card-meta">
-        <span class="card-vol domestic">Vol.03</span>
-        <span class="card-date">2026.04.07–04.11</span>
-      </div>
-      <div class="card-title">관세 쇼크, 반도체 저점 모색</div>
-      <div class="card-summary">삼성전자·SK하이닉스 급락 후 저가 매수 유입. 방산주 강세. 환율 1,480원 돌파 공포.</div>
-      <div class="card-tags">
-        <span class="ctag">반도체저점</span><span class="ctag">방산강세</span><span class="ctag">환율</span>
-      </div>
+    <a class="vol-card dark-card" href="kospi_jongtoban_vol03_20260517.html">
+      <div class="vc-series" style="color:#7a7d8a;">종토방 Series</div>
+      <div class="vc-vol">Vol.03</div>
+      <div class="vc-date">2026.05.17</div>
+      <div class="vc-desc">K-방산 최강 / 이차전지 반등 탐색 / 조선·원전 쌍끌이 / SK 앤트로픽 수혜</div>
     </a>
-
-    <a href="kospi_jongtoban_vol02_20260321.html" class="report-card domestic">
-      <div class="card-meta">
-        <span class="card-vol domestic">Vol.02</span>
-        <span class="card-date">2026.03.17–03.21</span>
-      </div>
-      <div class="card-title">AI 전력주 독주, 코스피 박스권</div>
-      <div class="card-summary">LS ELECTRIC·일진전기·대한전선 전력 인프라 테마 주도. 코스피 2500 지지선 공방.</div>
-      <div class="card-tags">
-        <span class="ctag">전력인프라</span><span class="ctag">AI테마</span><span class="ctag">코스피박스권</span>
-      </div>
+    <a class="vol-card dark-card" href="kospi_jongtoban_vol02_20260510.html">
+      <div class="vc-series" style="color:#7a7d8a;">종토방 Series</div>
+      <div class="vc-vol">Vol.02</div>
+      <div class="vc-date">2026.05.10</div>
+      <div class="vc-desc">코스피 반등 기대 / AI반도체 밸류체인 주목 / 유통·소비재 약세</div>
     </a>
-
-    <a href="kospi_jongtoban_vol01_20260307.html" class="report-card domestic">
-      <div class="card-meta">
-        <span class="card-vol domestic">Vol.01</span>
-        <span class="card-date">2026.03.03–03.07</span>
-      </div>
-      <div class="card-title">반도체 바닥론 vs 추가 하락 공방</div>
-      <div class="card-summary">삼성전자 외인 순매수 전환 기대. HBM 수요 회복 기대감 vs 실적 불확실성 공존.</div>
-      <div class="card-tags">
-        <span class="ctag">삼성전자</span><span class="ctag">HBM</span><span class="ctag">반도체바닥</span>
-      </div>
+    <a class="vol-card dark-card" href="kospi_jongtoban_vol01_20260503.html">
+      <div class="vc-series" style="color:#7a7d8a;">종토방 Series</div>
+      <div class="vc-vol">Vol.01</div>
+      <div class="vc-date">2026.05.03</div>
+      <div class="vc-desc">창간호 / 관세 쇼크 후 개인 투매 vs 장기투자 논쟁 / 이차전지 저가매수</div>
     </a>
-
   </div>
+
 </div>
+
+<div class="footer">
+  바이사이드 위클리 &nbsp;|&nbsp; 매주 토요일 발행 &nbsp;|&nbsp; 투자 참고용, 투자일임 아님
 </div>
-
-</main>
-
-<footer>
-  <div class="container">
-    <p>© 2026 minkeun00 · Weekly Report Archive · 투자 권유 목적 아님</p>
-    <p style="margin-top:4px;">매주 토요일 발행 · Telegram · KakaoTalk 오픈채팅 배포</p>
-  </div>
-</footer>
 
 </body>
 </html>

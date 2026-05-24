@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>종토방 위클리 Vol.04 | 2026.05.24</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0f13;
+  --surface: #16181f;
+  --surface2: #1e2029;
+  --border: #2a2d38;
+  --text: #e8e6e0;
+  --muted: #7a7d8a;
+  --accent: #00d4a1;
+  --accent2: #f5a623;
+  --danger: #ff4d4d;
+  --info: #4da6ff;
+  --up: #00c27a;
+  --dn: #ff4d4d;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 13.5px; line-height: 1.65; }
+
+/* MASTHEAD */
+.masthead { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+.masthead-left {}
+.brand { font-size: clamp(1.2rem, 4vw, 1.9rem); font-weight: 900; letter-spacing: -.02em; color: var(--text); }
+.brand span { color: var(--accent); }
+.meta { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; margin-top: .15rem; }
+.vol-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; border: 1px solid var(--accent); color: var(--accent); padding: .25rem .7rem; }
+
+/* SUMMARY BAR */
+.summary-bar { background: var(--surface2); border-bottom: 1px solid var(--border); padding: .5rem 2rem; display: flex; gap: 2rem; overflow-x: auto; white-space: nowrap; }
+.sum-item { font-family: 'DM Mono', monospace; font-size: 10.5px; display: flex; gap: .4rem; align-items: center; }
+.up { color: var(--up); }
+.dn { color: var(--dn); }
+.neu { color: var(--accent2); }
+
+/* WRAPPER */
+.wrapper { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.5rem; }
+.section-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.3rem 0 .9rem; }
+
+/* HOT TABLE */
+.hot-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.hot-table th { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: left; padding: .4rem .6rem; border-bottom: 1px solid var(--border); }
+.hot-table td { padding: .4rem .6rem; border-bottom: 1px solid var(--border); }
+.hot-table tr:last-child td { border-bottom: none; }
+.hot-table tr:hover td { background: var(--surface2); }
+.rank-num { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--accent2); }
+.rank-1 { color: var(--accent); font-size: 1em; }
+.sym { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+.titles-wrap { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .2rem; }
+.title-chip { font-size: 10.5px; background: var(--border); padding: .1rem .45rem; border-radius: 0; color: var(--text); opacity: .85; }
+.hot-bar { height: 5px; background: var(--border); border-radius: 0; overflow: hidden; margin-top: .3rem; }
+.hot-bar-fill { height: 100%; background: var(--accent); }
+
+/* SIGNAL */
+.signal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
+.signal-card { background: var(--surface); border: 1px solid var(--border); padding: .9rem 1rem; }
+.signal-card.bull { border-left: 3px solid var(--up); }
+.signal-card.bear { border-left: 3px solid var(--dn); }
+.signal-card.neutral { border-left: 3px solid var(--accent2); }
+.sc-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
+.sc-title { font-size: 13px; font-weight: 700; margin-bottom: .35rem; line-height: 1.3; }
+.sc-body { font-size: 12px; color: #b0aead; line-height: 1.55; }
+
+/* THEME CLUSTER */
+.theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.theme-card { background: var(--surface); border: 1px solid var(--border); padding: 1rem; }
+.theme-name { font-size: 14px; font-weight: 700; margin-bottom: .35rem; color: var(--text); }
+.theme-stocks { display: flex; flex-wrap: wrap; gap: .4rem; margin: .4rem 0; }
+.ts { font-family: 'DM Mono', monospace; font-size: 10px; background: var(--surface2); border: 1px solid var(--border); padding: .1rem .45rem; color: var(--accent); }
+.theme-desc { font-size: 12px; color: #b0aead; line-height: 1.5; }
+.theme-heat { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--accent2); margin-top: .4rem; }
+
+/* 심리 온도계 */
+.thermo-wrap { display: grid; grid-template-columns: repeat(5, 1fr); gap: .7rem; }
+.thermo-item { background: var(--surface); border: 1px solid var(--border); padding: .7rem .8rem; text-align: center; }
+.thermo-title { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; margin-bottom: .4rem; }
+.thermo-val { font-size: 1.6rem; line-height: 1; font-weight: 900; }
+.thermo-label { font-size: 10.5px; color: var(--muted); margin-top: .2rem; }
+.thermo-hot { color: var(--danger); }
+.thermo-warm { color: var(--accent2); }
+.thermo-cool { color: var(--up); }
+.thermo-cold { color: var(--info); }
+.thermo-neutral { color: var(--text); }
+
+/* 차트 */
+.chart-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: .5rem; align-items: flex-end; height: 60px; margin-bottom: .3rem; }
+.cbar { background: var(--accent); opacity: .6; border-top: 2px solid var(--accent); }
+
+/* INSIGHT */
+.insight { background: var(--surface2); border: 1px solid var(--accent); padding: 1.2rem 1.4rem; margin: .8rem 0; }
+.insight h3 { font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: .7rem; }
+.insight p { font-size: 12.5px; line-height: 1.65; color: #ccc9c4; margin-bottom: .5rem; }
+.insight ul { font-size: 12.5px; line-height: 1.65; color: #ccc9c4; padding-left: 1.1rem; }
+.insight li { margin-bottom: .25rem; }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--border); padding: .8rem 2rem; display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  .signal-grid { grid-template-columns: 1fr; }
+  .theme-grid { grid-template-columns: 1fr; }
+  .thermo-wrap { grid-template-columns: repeat(3, 1fr); }
+  .summary-bar { gap: 1.2rem; }
+}
+@media (max-width: 480px) {
+  .thermo-wrap { grid-template-columns: repeat(2, 1fr); }
+  .wrapper { padding: 1rem .9rem; }
+}
+
+/* PRINT — dark to light override */
+@media print {
+  @page { size: A4; margin: 12mm; }
+  :root {
+    --bg: #ffffff; --surface: #f5f5f5; --surface2: #ececec;
+    --border: #cccccc; --text: #111111; --muted: #666666;
+    --accent: #007a5e; --accent2: #b07a10; --danger: #c00;
+    --info: #0055aa; --up: #1a7a40; --dn: #c00;
+  }
+  body { background: white; color: black; }
+  .signal-card, .theme-card, .thermo-item, .insight { background: #f0f0f0; }
+  .insight { border-color: #007a5e; }
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .signal-card, .theme-card, .hot-table tr { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-left">
+    <div class="brand">종토방 <span>위클리</span></div>
+    <div class="meta">Naver 종목토론방 TOP20 분석 &nbsp;|&nbsp; 2026.05.24 (주간)</div>
+  </div>
+  <div class="vol-tag">VOL.04</div>
+</div>
+
+<!-- SUMMARY BAR -->
+<div class="summary-bar">
+  <div class="sum-item">KOSPI <span class="up">▲ 4.73% (주간)</span></div>
+  <div class="sum-item">반도체 <span class="up">🔥 최강 테마</span></div>
+  <div class="sum-item">커버드콜ETF <span class="up">🥇 관심 1위</span></div>
+  <div class="sum-item">이차전지 <span class="neu">↔ 회복 탐색</span></div>
+  <div class="sum-item">방산·조선 <span class="up">▲ 재부각</span></div>
+  <div class="sum-item">바이오 <span class="dn">⚠️ 이벤트 집중</span></div>
+</div>
+
+<div class="wrapper">
+
+<!-- 요약 -->
+<div class="section-label">&#9632; 이주의 종토방 요약</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:.5rem 0 1rem;">
+  <div style="background:var(--surface);border:1px solid var(--border);padding:.9rem 1rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.3rem;">참여 열기</div>
+    <div style="font-size:1.5rem;font-weight:900;color:var(--accent);">TOP20</div>
+    <div style="font-size:11.5px;color:#b0aead;margin-top:.2rem;">80개 게시글·5만+ 조회 종목 다수. 커버드콜ETF 유일하게 61개로 소규모이나 조회 1위.</div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);padding:.9rem 1rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">지배적 심리</div>
+    <div style="font-size:1.5rem;font-weight:900;color:var(--accent2);">낙관↑</div>
+    <div style="font-size:11.5px;color:#b0aead;margin-top:.2rem;">SK·삼성SDI·반도체주 "드디어 왔다" 무드. 다만 일부 고평가 경계감 공존.</div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);padding:.9rem 1rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">이벤트 집중</div>
+    <div style="font-size:1.5rem;font-weight:900;color:var(--danger);">5/26</div>
+    <div style="font-size:11.5px;color:#b0aead;margin-top:.2rem;">디앤디파마텍 LO 발표, 제주반도체 거래정지 해제 등 소재주 이벤트 집중.</div>
+  </div>
+</div>
+
+<!-- HOT 테이블 -->
+<div class="divider"></div>
+<div class="section-label">&#9632; HOT 종목 TOP20 (이번주 조회수·게시글 기준)</div>
+<table class="hot-table">
+  <thead><tr>
+    <th>#</th><th>종목명</th><th>코드</th><th>조회수</th><th>주요 관심 키워드</th><th>열기</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="rank-num rank-1">01</span></td>
+      <td><strong>KODEX 200타겟위클리커버드콜</strong></td>
+      <td><span class="sym">498400</span></td>
+      <td>59,526</td>
+      <td><div class="titles-wrap"><span class="title-chip">분배금수령</span><span class="title-chip">장기보유후기</span><span class="title-chip">7억→21억</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:100%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">02</span></td>
+      <td><strong>TIGER 미국S&P500</strong></td>
+      <td><span class="sym">360750</span></td>
+      <td>52,335</td>
+      <td><div class="titles-wrap"><span class="title-chip">ISA한도</span><span class="title-chip">환율영향</span><span class="title-chip">장기투자</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:88%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">03</span></td>
+      <td><strong>디앤디파마텍</strong></td>
+      <td><span class="sym">347850</span></td>
+      <td>51,163</td>
+      <td><div class="titles-wrap"><span class="title-chip">LO발표D-2</span><span class="title-chip">Pvalue논쟁</span><span class="title-chip">dd01</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:86%;background:var(--danger)"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">04</span></td>
+      <td><strong>대한광통신</strong></td>
+      <td><span class="sym">010170</span></td>
+      <td>44,437</td>
+      <td><div class="titles-wrap"><span class="title-chip">대주주매도공시</span><span class="title-chip">AI광케이블</span><span class="title-chip">찬반격론</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:75%;background:var(--accent2)"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">05</span></td>
+      <td><strong>TIGER 리츠부동산인프라</strong></td>
+      <td><span class="sym">329200</span></td>
+      <td>41,981</td>
+      <td><div class="titles-wrap"><span class="title-chip">10만주장투</span><span class="title-chip">배당9.5%</span><span class="title-chip">금리인상우려</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:71%;background:var(--info)"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">06</span></td>
+      <td><strong>SK</strong></td>
+      <td><span class="sym">034730</span></td>
+      <td>41,625</td>
+      <td><div class="titles-wrap"><span class="title-chip">눈물의5년</span><span class="title-chip">앤트로픽</span><span class="title-chip">키옥시아</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:70%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">07</span></td>
+      <td><strong>LG전자</strong></td>
+      <td><span class="sym">066570</span></td>
+      <td>40,132</td>
+      <td><div class="titles-wrap"><span class="title-chip">퀄컴연동</span><span class="title-chip">로봇AI</span><span class="title-chip">28만원돌파</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:67%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">08</span></td>
+      <td><strong>삼성SDI</strong></td>
+      <td><span class="sym">006400</span></td>
+      <td>39,540</td>
+      <td><div class="titles-wrap"><span class="title-chip">이재용·정의선동맹</span><span class="title-chip">북미전기차</span><span class="title-chip">장기보유</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:66%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">09</span></td>
+      <td><strong>제주반도체</strong></td>
+      <td><span class="sym">080220</span></td>
+      <td>38,897</td>
+      <td><div class="titles-wrap"><span class="title-chip">거래정지해제</span><span class="title-chip">LPDDR</span><span class="title-chip">퀄컴급등연동</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:65%;background:var(--danger)"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">10</span></td>
+      <td><strong>파두</strong></td>
+      <td><span class="sym">440110</span></td>
+      <td>34,667</td>
+      <td><div class="titles-wrap"><span class="title-chip">2분기매출급증</span><span class="title-chip">SSD공급계약</span><span class="title-chip">외국인목표50만</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:58%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">11</span></td>
+      <td>KBI메탈</td><td><span class="sym">024840</span></td><td>34,002</td>
+      <td><div class="titles-wrap"><span class="title-chip">전환사채</span><span class="title-chip">공매도</span><span class="title-chip">투경</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:57%;background:var(--accent2)"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">12</span></td>
+      <td>삼성전기</td><td><span class="sym">009150</span></td><td>33,158</td>
+      <td><div class="titles-wrap"><span class="title-chip">170만원목표</span><span class="title-chip">거품주의</span><span class="title-chip">MLCC</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:56%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">13</span></td>
+      <td>메지온</td><td><span class="sym">140410</span></td><td>32,978</td>
+      <td><div class="titles-wrap"><span class="title-chip">CB콜옵션행사</span><span class="title-chip">환기탈피</span><span class="title-chip">FUEL-2임상</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:55%;background:var(--danger)"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">14</span></td>
+      <td>주성엔지니어링</td><td><span class="sym">036930</span></td><td>32,521</td>
+      <td><div class="titles-wrap"><span class="title-chip">머스크173조</span><span class="title-chip">ALG기술</span><span class="title-chip">그래핀신소재</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:55%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">15</span></td>
+      <td>LS ELECTRIC</td><td><span class="sym">010120</span></td><td>32,427</td>
+      <td><div class="titles-wrap"><span class="title-chip">AI특수전력기기</span><span class="title-chip">초고압변압기</span><span class="title-chip">목표가상향</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:54%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">16</span></td>
+      <td>한화오션</td><td><span class="sym">042660</span></td><td>31,443</td>
+      <td><div class="titles-wrap"><span class="title-chip">캐나다잠수함</span><span class="title-chip">안창호함입항</span><span class="title-chip">AI선박수주</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:53%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">17</span></td>
+      <td>LG씨엔에스</td><td><span class="sym">064400</span></td><td>30,533</td>
+      <td><div class="titles-wrap"><span class="title-chip">AI로봇</span><span class="title-chip">자사주소각</span><span class="title-chip">통신주파수경매</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:51%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">18</span></td>
+      <td>에코프로비엠</td><td><span class="sym">247540</span></td><td>29,846</td>
+      <td><div class="titles-wrap"><span class="title-chip">국민참여펀드완판</span><span class="title-chip">이노베이션수주</span><span class="title-chip">고평가논쟁</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:50%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">19</span></td>
+      <td>두산에너빌리티</td><td><span class="sym">034020</span></td><td>29,396</td>
+      <td><div class="titles-wrap"><span class="title-chip">폴란드원전</span><span class="title-chip">SMR</span><span class="title-chip">이란종전수혜</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:49%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-num">20</span></td>
+      <td>현대무벡스</td><td><span class="sym">319400</span></td><td>29,359</td>
+      <td><div class="titles-wrap"><span class="title-chip">KRX300편입</span><span class="title-chip">아틀라스로봇</span><span class="title-chip">10만원목표</span></div></td>
+      <td><div class="hot-bar"><div class="hot-bar-fill" style="width:49%"></div></div></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 시그널 -->
+<div class="divider"></div>
+<div class="section-label">&#9632; 테마별 시그널</div>
+<div class="signal-grid">
+  <div class="signal-card bull">
+    <div class="sc-label">🚀 강세 시그널</div>
+    <div class="sc-title">반도체·AI인프라 슈퍼사이클</div>
+    <div class="sc-body">퀄컴·미디어텍 급등 연동. 제주반도체 거래정지 해제 기대, 주성엔지 ALG 기술 주목, 파두 2분기 매출 급증 공시. "이제 시작일 뿐" 무드 압도. 머스크 173조 반도체 공장 투자 루머도 가세.</div>
+  </div>
+  <div class="signal-card bull">
+    <div class="sc-label">🚢 강세 시그널</div>
+    <div class="sc-title">방산·조선 — 캐나다 잠수함 모멘텀</div>
+    <div class="sc-body">한화오션 안창호함 캐나다 기지 입항. 캐나다 잠수함 수주 기대감 폭발. 이란전 종전 시나리오에서 방산 수혜 재부각. 외국인·기관 쌍끌이 매수 포착 게시글 다수.</div>
+  </div>
+  <div class="signal-card bull">
+    <div class="sc-label">⚡ 강세 시그널</div>
+    <div class="sc-title">전력기기·에너지 인프라 — AI 수요</div>
+    <div class="sc-body">LS ELECTRIC AI 특수 전력기기 목표가 상향. 두산에너빌리티 SMR+폴란드 원전. 이란 종전 수혜 + AI데이터센터 전력 수요 이중 모멘텀. "장기 성장 스토리 시작".</div>
+  </div>
+  <div class="signal-card neutral">
+    <div class="sc-label">↔ 중립 시그널</div>
+    <div class="sc-title">이차전지 — 회복 vs 고평가 논쟁</div>
+    <div class="sc-body">삼성SDI 이재용·정의선 배터리 동맹 기대. 에코프로비엠 국민참여펀드 완판 긍정적. 그러나 "영업이익 1500억에 시총 20조" 고평가 경계 글 동시 급증. 눌림목 관찰 필요.</div>
+  </div>
+  <div class="signal-card bear">
+    <div class="sc-label">⚠️ 경계 시그널</div>
+    <div class="sc-title">바이오 — 5/26 LO 발표 이벤트 리스크</div>
+    <div class="sc-body">디앤디파마텍 LO 발표 D-2. P value, 통계적 유의성 논쟁 격화. "하루종일 치열할 것" 전망. 메지온 CB 콜옵션 행사·환기탈피 이슈. 이벤트 전후 변동성 극대화 예상.</div>
+  </div>
+  <div class="signal-card neutral">
+    <div class="sc-label">💰 중립 시그널</div>
+    <div class="sc-title">ETF 배당족 — 커버드콜·리츠 인기</div>
+    <div class="sc-body">KODEX 위클리커버드콜 조회 1위. "1년 7억→21억" 성공기 게시글 화제. TIGER 리츠 배당 9.5% 관심. 단, "금리 인상하면 난리날 듯" 경계감도 포착. 이자율 민감도 주의.</div>
+  </div>
+</div>
+
+<!-- 테마 클러스터 -->
+<div class="divider"></div>
+<div class="section-label">&#9632; 이주의 테마 클러스터</div>
+<div class="theme-grid">
+  <div class="theme-card">
+    <div class="theme-name">🔥 AI 반도체 생태계</div>
+    <div class="theme-stocks">
+      <span class="ts">제주반도체</span><span class="ts">주성엔지니어링</span><span class="ts">파두</span><span class="ts">삼성전기</span>
+    </div>
+    <div class="theme-desc">퀄컴·미디어텍 미국 급등이 국내 LPDDR·MLCC·SSD 컨트롤러 밸류체인으로 직결. 머스크 반도체 공장 투자 루머와 함께 종토방 최다 게시글. 5/26 거래정지 해제 이벤트도 주목.</div>
+    <div class="theme-heat">🌡️ 열기: ★★★★★ &nbsp;|&nbsp; 방향: 상승</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-name">🚢 방산·조선 방위산업</div>
+    <div class="theme-stocks">
+      <span class="ts">한화오션</span><span class="ts">두산에너빌리티</span><span class="ts">LG씨엔에스</span>
+    </div>
+    <div class="theme-desc">캐나다 잠수함 수주 기대, 이란전 종전 후 방산 리오프닝 수혜 기대 공존. 두산에너빌리티는 폴란드 원전+SMR 이중 모멘텀. "이란 종전 대장주" 표현 등장.</div>
+    <div class="theme-heat">🌡️ 열기: ★★★★☆ &nbsp;|&nbsp; 방향: 상승</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-name">⚡ 전력인프라·에너지</div>
+    <div class="theme-stocks">
+      <span class="ts">LS ELECTRIC</span><span class="ts">대한광통신</span><span class="ts">현대무벡스</span>
+    </div>
+    <div class="theme-desc">AI 데이터센터 전력 수요 + K-전력기기 수출. 대한광통신 대주주 매도 논란에도 AI 광케이블 기대감 유지. 현대무벡스 로봇·물류 자동화 atle라스 25,000대 연관성 논쟁.</div>
+    <div class="theme-heat">🌡️ 열기: ★★★★☆ &nbsp;|&nbsp; 방향: 중립→상승</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-name">🔋 이차전지·소재</div>
+    <div class="theme-stocks">
+      <span class="ts">삼성SDI</span><span class="ts">에코프로비엠</span><span class="ts">KBI메탈</span>
+    </div>
+    <div class="theme-desc">삼성SDI 이재용·정의선 배터리 동맹이 주가 촉매. 에코프로비엠 국민참여펀드 완판. KBI메탈 전환사채·공매도 이슈. 섹터 전반 "다시 오르나" 기대감과 고평가 경계 공존.</div>
+    <div class="theme-heat">🌡️ 열기: ★★★☆☆ &nbsp;|&nbsp; 방향: 횡보→탐색</div>
+  </div>
+</div>
+
+<!-- 심리 온도계 -->
+<div class="divider"></div>
+<div class="section-label">&#9632; 종토방 심리 온도계</div>
+<div class="thermo-wrap">
+  <div class="thermo-item">
+    <div class="thermo-title">반도체</div>
+    <div class="thermo-val thermo-hot">98°</div>
+    <div class="thermo-label">초과열</div>
+  </div>
+  <div class="thermo-item">
+    <div class="thermo-title">방산·조선</div>
+    <div class="thermo-val thermo-warm">82°</div>
+    <div class="thermo-label">과열</div>
+  </div>
+  <div class="thermo-item">
+    <div class="thermo-title">ETF배당</div>
+    <div class="thermo-val thermo-warm">75°</div>
+    <div class="thermo-label">온열</div>
+  </div>
+  <div class="thermo-item">
+    <div class="thermo-title">이차전지</div>
+    <div class="thermo-val thermo-neutral">55°</div>
+    <div class="thermo-label">중립</div>
+  </div>
+  <div class="thermo-item">
+    <div class="thermo-title">바이오</div>
+    <div class="thermo-val thermo-hot">88°</div>
+    <div class="thermo-label">이벤트</div>
+  </div>
+</div>
+
+<!-- 차트 프록시 -->
+<div class="divider"></div>
+<div class="section-label">&#9632; TOP5 종목 조회수 비교</div>
+<div style="background:var(--surface);border:1px solid var(--border);padding:1rem;margin:.5rem 0;">
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;align-items:flex-end;height:70px;margin-bottom:.4rem;">
+    <div style="background:var(--accent);opacity:.85;height:100%;"></div>
+    <div style="background:var(--accent);opacity:.7;height:88%;"></div>
+    <div style="background:var(--danger);opacity:.8;height:86%;"></div>
+    <div style="background:var(--accent2);opacity:.8;height:75%;"></div>
+    <div style="background:var(--info);opacity:.7;height:71%;"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;text-align:center;">
+    <div style="font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);">KODEX커버드콜<br><span style="color:var(--accent);">59,526</span></div>
+    <div style="font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);">TIGER S&P<br><span style="color:var(--accent);">52,335</span></div>
+    <div style="font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);">디앤디파마텍<br><span style="color:var(--danger);">51,163</span></div>
+    <div style="font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);">대한광통신<br><span style="color:var(--accent2);">44,437</span></div>
+    <div style="font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);">TIGER리츠<br><span style="color:var(--info);">41,981</span></div>
+  </div>
+</div>
+
+<!-- 인사이트 -->
+<div class="divider"></div>
+<div class="section-label">&#9632; 종토방 인사이트</div>
+<div class="insight">
+  <h3>📡 이번 주 종토방이 말하는 것: "기다린 자들의 시간이 왔다"</h3>
+  <p>이번 주 종토방 전반의 분위기는 <strong>"오래 기다린 종목들이 드디어 움직이기 시작했다"</strong>는 확신과 흥분이 지배적이었다. SK의 "눈물의 5년", 삼성SDI의 "드디어" 댓글, 커버드콜 ETF의 "1년 7억→21억" 성공 후기가 감정적 촉매 역할을 했다.</p>
+  <p><strong>핵심 발견 3가지:</strong></p>
+  <ul>
+    <li><strong>미국 반도체 서프라이즈 → 국내 밸류체인 24시간 내 연동:</strong> 퀄컴 +12%, 미디어텍 급등이 제주반도체·주성엔지니어링·파두 종토방을 즉시 달궜다. 글로벌-국내 반도체 상관관계가 더욱 빠르고 강해졌다.</li>
+    <li><strong>이벤트 앞 바이오 변동성 극대화 구조:</strong> 디앤디파마텍 LO 발표(5/26)를 앞두고 "반드시 오른다" vs "P value 불충분" 논쟁이 극단화. 이진법 이벤트 앞 양방향 포지션 형성 중.</li>
+    <li><strong>고평가 경계감이 싹트는 중:</strong> 삼성전기 "영업이익 2조에 시총 100조" 문제 제기, 에코프로비엠 "영업이익 1500억에 시총 20조" 비판 — 섹터 과열 경보 작동 시작.</li>
+  </ul>
+  <p style="margin-top:.5rem;"><strong>바이사이드 판단:</strong> 반도체·방산·전력인프라 모멘텀 종목은 추세 추종 유효. 단, 이벤트 앞 바이오는 포지션 크기 제한 필요. ETF 배당주는 금리 인상 리스크 모니터링 필수.</p>
+</div>
+
+</div><!-- /wrapper -->
+
+<div class="footer">
+  <span>종토방 위클리 Vol.04 &nbsp;|&nbsp; 2026.05.24 &nbsp;|&nbsp; 네이버 종목토론방 TOP20 분석</span>
+  <span>투자 참고용 &nbsp;|&nbsp; 투자일임 아님</span>
+</div>
+
+</body>
+</html>
