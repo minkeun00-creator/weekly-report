@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reddit × X 위클리 센티먼트 리포트 — Vol.08 (2026.06.20)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111010; --paper:#f4f1ea; --card:#fbf9f3; --accent:#c8382a;
+    --green:#1d7a4c; --muted:#6b6560; --border:#d8d2c4; --soft:#efe9dc;
+    --blue:#1a4f8a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans KR',sans-serif; line-height:1.6;
+    -webkit-font-smoothing:antialiased; padding:0 0 60px;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 22px;}
+  .mono{font-family:'DM Mono',monospace;}
+  .serif{font-family:'DM Serif Display',serif;}
+
+  /* MASTHEAD */
+  .masthead{border-bottom:3px double var(--ink); padding:34px 0 18px; margin-bottom:6px;}
+  .mh-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;}
+  .mh-kicker{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--accent); text-transform:uppercase;}
+  .mh-vol{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1px; color:var(--muted); text-align:right;}
+  .mh-title{font-family:'DM Serif Display',serif; font-size:clamp(30px,6vw,52px); line-height:1.04; margin:14px 0 6px; letter-spacing:-0.5px;}
+  .mh-sub{font-size:14px; color:var(--muted); max-width:640px;}
+  .mh-byline{font-family:'DM Mono',monospace; font-size:11px; color:var(--ink); margin-top:14px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;}
+
+  /* SENTIMENT BADGE */
+  .gauge{display:flex; align-items:center; gap:18px; background:var(--ink); color:var(--paper); border-radius:6px; padding:18px 22px; margin:22px 0 4px; flex-wrap:wrap;}
+  .gauge-score{font-family:'DM Serif Display',serif; font-size:46px; line-height:1;}
+  .gauge-score small{font-size:18px; color:#bbb4a6;}
+  .gauge-mid{flex:1; min-width:200px;}
+  .gauge-label{font-family:'DM Mono',monospace; font-size:12px; letter-spacing:1px; color:#e8a04a; text-transform:uppercase;}
+  .gauge-desc{font-size:13px; color:#d8d2c4; margin-top:4px;}
+  .gauge-bar{height:7px; background:#2a2722; border-radius:4px; overflow:hidden; margin-top:10px;}
+  .gauge-fill{height:100%; background:linear-gradient(90deg,#e8a04a,#c8382a); width:73%;}
+
+  /* SECTION HEADERS */
+  .sh{display:flex; align-items:baseline; gap:12px; margin:42px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--ink);}
+  .sh-num{font-family:'DM Mono',monospace; font-size:12px; color:var(--accent);}
+  .sh-title{font-family:'DM Serif Display',serif; font-size:24px;}
+  .sh-en{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; color:var(--muted); margin-left:auto; text-transform:uppercase;}
+
+  /* MARKET GRID */
+  .mkt-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+  .mkt-cell{background:var(--card); border:1px solid var(--border); border-radius:5px; padding:13px 14px;}
+  .mkt-name{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.5px; color:var(--muted); text-transform:uppercase;}
+  .mkt-val{font-family:'DM Serif Display',serif; font-size:23px; margin:5px 0 2px;}
+  .mkt-chg{font-family:'DM Mono',monospace; font-size:12px; font-weight:500;}
+  .up{color:var(--green);} .down{color:var(--accent);}
+  .mkt-ytd{font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); margin-top:3px;}
+
+  .note{font-size:12px; color:var(--muted); margin-top:10px; padding:10px 14px; background:var(--soft); border-left:3px solid var(--accent); border-radius:0 4px 4px 0;}
+  .src-tag{display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.5px; color:#fff; background:var(--accent); padding:1px 6px; border-radius:2px; vertical-align:middle;}
+
+  table{width:100%; border-collapse:collapse; font-size:13px; margin-top:6px;}
+  .scroll{overflow-x:auto;}
+  th{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--muted); text-align:left; padding:8px 10px; border-bottom:2px solid var(--ink);}
+  td{padding:9px 10px; border-bottom:1px solid var(--border);}
+  td.r,th.r{text-align:right;}
+  tr:hover td{background:var(--soft);}
+
+  /* NEWSFLOW */
+  .news{display:flex; flex-direction:column; gap:0;}
+  .news-item{display:flex; gap:16px; padding:15px 0; border-bottom:1px solid var(--border);}
+  .news-tag{flex-shrink:0; width:92px; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.5px; color:var(--accent); text-transform:uppercase; padding-top:2px;}
+  .news-body h4{font-size:15px; font-weight:700; margin-bottom:4px;}
+  .news-body p{font-size:13px; color:#403c36;}
+
+  /* CARDS */
+  .cards{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:6px; padding:16px 17px;}
+  .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:9px;}
+  .card-sub{font-family:'DM Mono',monospace; font-size:13px; font-weight:500;}
+  .pill{font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.5px; padding:2px 8px; border-radius:10px; text-transform:uppercase;}
+  .pill-bull{background:#dff0e6; color:var(--green);}
+  .pill-bear{background:#f8e0dd; color:var(--accent);}
+  .pill-neut{background:#ece6d8; color:var(--muted);}
+  .card p{font-size:12.5px; color:#403c36; margin-bottom:7px;}
+  .quote{font-size:12px; font-style:italic; color:#5a554d; border-left:2px solid var(--border); padding-left:10px; margin:8px 0;}
+  .card-meta{font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); margin-top:8px;}
+
+  .xcard .card-sub::before{content:"𝕏  "; font-style:normal;}
+
+  /* COMPARE */
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden;}
+  .comp-col{padding:18px 20px;}
+  .comp-col:first-child{background:#f3ede0; border-right:1px solid var(--border);}
+  .comp-h{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;}
+  .comp-col ul{list-style:none;}
+  .comp-col li{font-size:12.5px; padding:5px 0 5px 16px; position:relative; color:#403c36;}
+  .comp-col li::before{content:"▸"; position:absolute; left:0; color:var(--accent);}
+
+  /* KEYWORDS */
+  .kw{display:flex; flex-wrap:wrap; gap:9px;}
+  .kw span{font-family:'DM Mono',monospace; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:6px 14px; font-size:12px;}
+  .kw .hot{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .kw .warm{background:#f3ddd9; border-color:#e0b8b0; color:var(--accent);}
+
+  /* SIGNALS */
+  .sig{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  .sig-box{border:1px solid var(--border); border-radius:6px; padding:15px; background:var(--card);}
+  .sig-box.buy{border-top:3px solid var(--green);}
+  .sig-box.watch{border-top:3px solid #c99a2e;}
+  .sig-box.avoid{border-top:3px solid var(--accent);}
+  .sig-label{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;}
+  .sig-box.buy .sig-label{color:var(--green);}
+  .sig-box.watch .sig-label{color:#a8791a;}
+  .sig-box.avoid .sig-label{color:var(--accent);}
+  .sig-box ul{list-style:none; font-size:12.5px;}
+  .sig-box li{padding:4px 0; border-bottom:1px dashed var(--border);}
+  .sig-box li:last-child{border:none;}
+
+  /* CHART */
+  .chart-wrap{background:var(--card); border:1px solid var(--border); border-radius:6px; padding:18px;}
+  .bar-row{display:flex; align-items:center; gap:12px; margin:9px 0; font-size:12.5px;}
+  .bar-name{width:140px; flex-shrink:0; font-family:'DM Mono',monospace; font-size:11px;}
+  .bar-track{flex:1; background:var(--soft); border-radius:3px; height:20px; position:relative; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:3px; display:flex; align-items:center; justify-content:flex-end; padding-right:7px; font-family:'DM Mono',monospace; font-size:10px; color:#fff;}
+  .bar-val{width:62px; text-align:right; font-family:'DM Mono',monospace; font-size:11px;}
+
+  /* INSIGHT */
+  .insight{background:var(--ink); color:var(--paper); border-radius:8px; padding:26px 28px;}
+  .insight h3{font-family:'DM Serif Display',serif; font-size:22px; margin-bottom:14px; color:var(--paper);}
+  .insight p{font-size:13.5px; color:#d8d2c4; margin-bottom:12px; line-height:1.7;}
+  .insight strong{color:#e8a04a;}
+  .insight .dm-cite{font-family:'DM Mono',monospace; font-size:11px; color:#bbb4a6; border-top:1px solid #2a2722; padding-top:12px; margin-top:6px;}
+
+  /* WATCHLIST */
+  .watch-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+  .watch-item{display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:13px 15px;}
+  .watch-day{font-family:'DM Mono',monospace; font-size:10px; color:#fff; background:var(--blue); border-radius:3px; padding:3px 7px; flex-shrink:0;}
+  .watch-item p{font-size:12.5px;}
+  .watch-item strong{font-size:13px;}
+
+  footer{margin-top:46px; padding-top:18px; border-top:2px solid var(--ink); font-family:'DM Mono',monospace; font-size:10.5px; color:var(--muted); line-height:1.9;}
+  .disclaimer{font-size:11px; color:var(--muted); background:var(--soft); border-radius:5px; padding:13px 16px; margin-top:18px; line-height:1.6;}
+
+  @media (max-width:768px){
+    .mkt-grid{grid-template-columns:repeat(2,1fr);}
+    .cards{grid-template-columns:1fr;}
+    .compare{grid-template-columns:1fr;}
+    .comp-col:first-child{border-right:none; border-bottom:1px solid var(--border);}
+    .sig{grid-template-columns:1fr;}
+    .watch-grid{grid-template-columns:1fr;}
+    .bar-name{width:96px;}
+  }
+  @media (max-width:480px){
+    .mkt-grid{grid-template-columns:1fr 1fr;}
+    .mh-title{font-size:30px;}
+    .news-item{flex-direction:column; gap:4px;}
+    .news-tag{width:auto;}
+  }
+  @media print{
+    @page{size:A4; margin:12mm 10mm 14mm;}
+    body{background:#fff; font-size:10.5px; padding:0;}
+    .gauge,.insight{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .scroll{overflow:visible;}
+    .sh{page-break-after:avoid;}
+    .card,.news-item,.sig-box,.watch-item,.chart-wrap,.compare,.insight,.gauge{page-break-inside:avoid;}
+    .mkt-grid{grid-template-columns:repeat(4,1fr);}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══ MASTHEAD ══ -->
+  <header class="masthead">
+    <div class="mh-top">
+      <div class="mh-kicker">Buy-Side Weekly · Global Edition</div>
+      <div class="mh-vol">VOL.08 &nbsp;|&nbsp; 2026.06.20 (SAT)<br>REDDIT × X SENTIMENT</div>
+    </div>
+    <h1 class="mh-title">반도체가 끌고, 매파가 누른 주(週)</h1>
+    <p class="mh-sub">필라델피아 반도체지수 주간 폭등·KOSPI 세계 1위 질주 속에, 워시 신임 연준의장의 첫 점도표는 '연내 금리 인상' 신호를 보냈다. 위험선호와 매파 긴장이 한 화면에 공존한 한 주.</p>
+    <div class="mh-byline">
+      <span>리서치 헤드 — 드러켄밀러 하우스 출신 베테랑</span>
+      <span>SOCIAL SENTIMENT × WSJ MARKET DATA</span>
+    </div>
+  </header>
+
+  <!-- SENTIMENT GAUGE -->
+  <div class="gauge">
+    <div class="gauge-score">73<small>/100</small></div>
+    <div class="gauge-mid">
+      <div class="gauge-label">Risk-On, Hawkish Undertow</div>
+      <div class="gauge-desc">반도체 주도 위험선호는 여전히 강하나, 매파 연준·달러 1년 고점·이란 협상 취소가 상단을 누르는 '과열 경계형 강세'. 전주 68 → 금주 73 (+5).</div>
+      <div class="gauge-bar"><div class="gauge-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ══ 1. WSJ MARKET ══ -->
+  <div class="sh"><span class="sh-num">01</span><span class="sh-title">WSJ 마켓 데이터</span><span class="sh-en">Thu Jun 18 Close · B6</span></div>
+  <div class="mkt-grid">
+    <div class="mkt-cell"><div class="mkt-name">S&P 500</div><div class="mkt-val">7,500.58</div><div class="mkt-chg up">▲ 1.08%</div><div class="mkt-ytd">YTD +9.6%</div></div>
+    <div class="mkt-cell"><div class="mkt-name">Nasdaq Comp</div><div class="mkt-val">26,517.93</div><div class="mkt-chg up">▲ 1.91%</div><div class="mkt-ytd">YTD +14.1%</div></div>
+    <div class="mkt-cell"><div class="mkt-name">Dow Jones</div><div class="mkt-val">51,564.70</div><div class="mkt-chg up">▲ 0.14%</div><div class="mkt-ytd">YTD +7.3%</div></div>
+    <div class="mkt-cell"><div class="mkt-name">Russell 2000</div><div class="mkt-val">2,979.77</div><div class="mkt-chg up">▲ 2.12%</div><div class="mkt-ytd">소형주 동반</div></div>
+    <div class="mkt-cell" style="border-color:var(--accent);"><div class="mkt-name" style="color:var(--accent);">PHLX 반도체 ★</div><div class="mkt-val">14,341.78</div><div class="mkt-chg up">▲ 6.42%</div><div class="mkt-ytd">YTD +102.5%</div></div>
+    <div class="mkt-cell"><div class="mkt-name">10Y 美국채</div><div class="mkt-val">4.450%</div><div class="mkt-chg">금리 상승</div><div class="mkt-ytd">매파 dot plot</div></div>
+    <div class="mkt-cell"><div class="mkt-name">WTI 원유</div><div class="mkt-val">$76.60</div><div class="mkt-chg down">▼ 0.25%</div><div class="mkt-ytd">주간 -9.8%</div></div>
+    <div class="mkt-cell"><div class="mkt-name">금 (Gold)</div><div class="mkt-val">$4,224</div><div class="mkt-chg down">▼ 3.09%</div><div class="mkt-ytd">위험선호 회귀</div></div>
+  </div>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>주간 베스트/워스트 (Track the Markets)</th><th class="r">주간 등락</th><th>코멘트</th></tr></thead>
+    <tbody>
+      <tr><td>KOSPI Composite 🇰🇷</td><td class="r up">+11.43%</td><td>전 세계 추적지수 중 <strong>주간 1위</strong> · YTD +114.8%</td></tr>
+      <tr><td>Nikkei 225 🇯🇵</td><td class="r up">+7.92%</td><td>아시아 AI·반도체 동반 랠리</td></tr>
+      <tr><td>S&P Info Tech</td><td class="r up">+3.06%</td><td>섹터 주간 최강 (XLK +3.04% 목)</td></tr>
+      <tr><td>Nasdaq-100</td><td class="r up">+2.60%</td><td>메가캡·반도체 견인</td></tr>
+      <tr><td>Nymex Crude</td><td class="r down">-9.75%</td><td>호르무즈 MOU·종전 베팅에 급락</td></tr>
+      <tr><td>S&P Energy</td><td class="r down">-6.57%</td><td>유가 동반 약세 (ULSD -8.14%)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><span class="src-tag">WSJ 자동추출</span> &nbsp;美 증시는 <strong>6/19(금) 준틴스(Juneteenth) 휴장</strong>으로, 본 표의 美 종가는 <strong>6/18(목) 마감</strong> 기준이다. 아시아(KOSPI·Nikkei)는 6/19(금) 종가 반영. 연준 FF 목표 3.50–3.75% 동결, 19명 중 9명이 연내 ≥1회 <strong>인상</strong> 전망(매파 점도표). 달러지수(DXY) 1년 고점 ~101.1, EUR 1.1472 · JPY 161.31 · KRW 1,527.12. 예측시장(Polymarket): 2026년 금리 인하 0회 확률 80%.</div>
+
+  <!-- ══ 2. NEWSFLOW ══ -->
+  <div class="sh"><span class="sh-num">02</span><span class="sh-title">뉴스 플로우</span><span class="sh-en">WSJ Front · Heard on the Street</span></div>
+  <div class="news">
+    <div class="news-item">
+      <div class="news-tag">AI Capex</div>
+      <div class="news-body">
+        <h4>구글, '엔비디아 플레이북' 따라 TPU 금융보증 — Anthropic向 레이크 마리너 $3.2B 보증</h4>
+        <p>하이퍼스케일러 2026년 설비투자 합계 ~$7,600억으로 추정. 다만 'Heard on the Street'는 5개 하이퍼스케일러의 잉여현금흐름(FCF)이 감가상각 시차로 2026년 약 -91% 급감(~$160억)할 수 있다며 '실적의 황금기' 이면의 현금소진을 경고. Baseten($130억 추론 스타트업) 등 인프라 머니 집중.</p>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-tag">Capital</div>
+      <div class="news-body">
+        <h4>제인스트리트, AI 투자로 선회 — Q1 2026 순익 $103억·$200억 사모 포트폴리오(Anthropic 지분 포함)</h4>
+        <p>트레이딩 하우스의 자본이 비상장 AI 밸류체인으로 이동. 사모 AI 익스포저가 공모시장 멀티플을 끌어올리는 순환 구조가 강화되는 중.</p>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-tag">Geopolitics</div>
+      <div class="news-body">
+        <h4>美–이란 60일 휴전 MOU 서명 → 호르무즈 재개·제재 완화…그러나 6/19 회담 취소로 재긴장</h4>
+        <p>브렌트유 3월 고점 $118 → ~$78로 후퇴. 금요일 美–이란 예정 협상 취소 소식에 위험자산 차익실현, 아시아 증시 상단 무거워짐. 레바논發 이스라엘–헤즈볼라 충돌도 재점화 후 재휴전.</p>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-tag">Fed</div>
+      <div class="news-body">
+        <h4>워시 신임 의장 첫 기자회견 — "1996 vs 1999" AI 붐 진단, 점도표는 매파</h4>
+        <p>금리 동결하면서도 '인하 0회·인상 가능' 경로 제시. 달러 1년 고점, 금 -3% 약세, 기술주 강세라는 '매파 속 위험선호' 조합. 인플레 4.2%가 완화 편향 제거의 명분.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3. REDDIT ══ -->
+  <div class="sh"><span class="sh-num">03</span><span class="sh-title">Reddit 커뮤니티 심리</span><span class="sh-en">5 Communities · Web-Scraped</span></div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-head"><span class="card-sub">r/wallstreetbets</span><span class="pill pill-bull">Euphoric</span></div>
+      <p>6월 초 $1.4T 증발했던 반도체가 며칠 만에 재차 폭등. "buy the dip"이 정설로 굳어지는 분위기. TSMC를 "반도체의 호르무즈 해협"이라 부른 밈 게시물 화제, Dell AI 서버 붐 글은 리딧 센티먼트 85점.</p>
+      <div class="quote">"메모리는 마이크론, 칩 로열티는 엔비디아, 박스는 델, 웨이퍼는 TSMC — 한 사이클에 다 먹는다."</div>
+      <div class="card-meta">키워드: SOXX · HBM · DCA · S&P100 9주 연속 상승</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-sub">r/investing</span><span class="pill pill-neut">Split</span></div>
+      <p>AI 설비투자 지속가능성 논쟁이 격화. FCF 급감·밸류에이션 우려 vs. "추세는 추세" FOMO. 광범위 지수 적립식(DCA)으로 타협하는 중도파 다수.</p>
+      <div class="card-meta">키워드: capex 회의론 · FCF · 분할매수</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-sub">r/stocks</span><span class="pill pill-bull">Bullish</span></div>
+      <p>메모리 슈퍼사이클(MU·HBM4E)과 반도체 모멘텀이 단연 화두. SK하이닉스 차세대 HBM 샘플 출하 뉴스가 글로벌 메모리 랠리에 기름.</p>
+      <div class="card-meta">키워드: 메모리 · HBM4E · 모멘텀</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-sub">r/economics</span><span class="pill pill-bear">Cautious</span></div>
+      <p>연준의 매파 전환·인플레 4.2%·금리 경로 상향에 우려. "2026 인하 없음"이 컨센서스화. 고금리 장기화가 성장주 멀티플을 제약할 수 있다는 경계론.</p>
+      <div class="card-meta">키워드: 매파 dot plot · no cuts · 4.2% CPI</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-sub">r/geopolitics</span><span class="pill pill-neut">Watching</span></div>
+      <p>호르무즈·이란 MOU·공급망이 핵심. 휴전 기대에 유가 급락했으나 6/19 회담 취소로 '평화의 내구성'에 의문. 꼬리리스크 재가격화 경계.</p>
+      <div class="card-meta">키워드: 호르무즈 · 이란 MOU · 유가</div>
+    </div>
+    <div class="card" style="background:#f3ede0;">
+      <div class="card-head"><span class="card-sub" style="color:var(--accent);">⟫ 종합 톤</span><span class="pill pill-bull">Risk-On</span></div>
+      <p>반도체 광기가 전 커뮤니티를 관통. 단, 매크로(연준·금리)·지정학(이란) 두 축에서 경계 신호가 동시 점등. <strong>"강세 베팅 + 헤지 병행"</strong>이 리딧 합의.</p>
+      <div class="card-meta">불 : 곰 ≈ 3 : 2</div>
+    </div>
+  </div>
+
+  <!-- ══ 4. X INFLUENCER ══ -->
+  <div class="sh"><span class="sh-num">04</span><span class="sh-title">X 인플루언서 시그널</span><span class="sh-en">3 Core + 3 Rotating</span></div>
+  <div class="cards">
+    <div class="card xcard">
+      <div class="card-head"><span class="card-sub">Lyn Alden</span><span class="pill pill-neut">Macro</span></div>
+      <p>달러 1년 고점·유동성·재정 우위 프레임. "강달러 국면에서 비미국·실물 자산의 상대 매력을 점검하라"는 매크로 톤. 고정 코어.</p>
+      <div class="card-meta">매크로 · 유동성 · 달러</div>
+    </div>
+    <div class="card xcard">
+      <div class="card-head"><span class="card-sub">Bianco Research</span><span class="pill pill-bear">Hawkish</span></div>
+      <p>점도표 매파 전환·10년물 4.45%를 채권 관점에서 해부. "인하 0회 베팅이 커브를 재가격화 중" — 듀레이션 리스크 강조. 고정 코어.</p>
+      <div class="card-meta">금리 · 채권 · dot plot</div>
+    </div>
+    <div class="card xcard">
+      <div class="card-head"><span class="card-sub">SoberLook</span><span class="pill pill-neut">Credit</span></div>
+      <p>하이퍼스케일러 FCF 급감·크레딧 스프레드를 차트로 추적. AI 설비투자의 현금흐름 함의에 주목. 고정 코어.</p>
+      <div class="card-meta">크레딧 · 매크로 차트</div>
+    </div>
+    <div class="card xcard">
+      <div class="card-head"><span class="card-sub">Nouriel Roubini</span><span class="pill pill-bear">Tail-Risk</span></div>
+      <p>이란 휴전의 취약성·호르무즈 꼬리리스크를 경고. "협상 취소 한 줄에 유가가 출렁이는 구조"를 지정학 리스크로 지목. 로테이션.</p>
+      <div class="card-meta">지정학 · 꼬리리스크</div>
+    </div>
+    <div class="card xcard">
+      <div class="card-head"><span class="card-sub">Peter Zeihan</span><span class="pill pill-neut">Supply</span></div>
+      <p>호르무즈 봉쇄 시나리오와 LNG·원유 공급망 충격을 정량화. "재개 MOU가 공급 차질 프리미엄을 빠르게 빼고 있다"는 분석. 로테이션.</p>
+      <div class="card-meta">공급망 · 에너지</div>
+    </div>
+    <div class="card xcard">
+      <div class="card-head"><span class="card-sub">Mark Minervini</span><span class="pill pill-bull">Momentum</span></div>
+      <p>반도체·기술주 모멘텀 셋업이 "교과서적 추세 지속" 국면이라 진단. 다만 과열 신호 시 분할 익절 룰을 강조. 로테이션.</p>
+      <div class="card-meta">모멘텀 · 기술적 셋업</div>
+    </div>
+  </div>
+
+  <!-- ══ 5. COMPARE ══ -->
+  <div class="sh"><span class="sh-num">05</span><span class="sh-title">Reddit vs X — 시각의 차이</span><span class="sh-en">Crowd vs Analyst</span></div>
+  <div class="compare">
+    <div class="comp-col">
+      <div class="comp-h">Reddit (크라우드)</div>
+      <ul>
+        <li>반도체 "buy the dip" 광기 — 변동성을 매수 기회로 해석</li>
+        <li>밈·서사 중심 (TSMC=호르무즈, Dell AI붐)</li>
+        <li>적립식(DCA)으로 우상향 베팅</li>
+        <li>지정학은 '뉴스 트리거'로 단기 소비</li>
+      </ul>
+    </div>
+    <div class="comp-col">
+      <div class="comp-h">X (애널리스트)</div>
+      <ul>
+        <li>매파 연준·FCF 급감 등 구조적 리스크에 무게</li>
+        <li>데이터·차트 기반 (점도표·크레딧 스프레드)</li>
+        <li>강달러·듀레이션 리스크를 핵심 변수로</li>
+        <li>지정학을 꼬리리스크로 상시 헤지 대상화</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">크라우드는 '추세 추종', 애널리스트는 '리스크 점검'. 두 진영 모두 <strong>반도체 강세 자체엔 이견이 없으나</strong>, 연준·유가라는 외생 변수의 가격 반영도에서 갈린다. 이 간극이 좁혀지지 않는 한 상승은 '경계 동반형'이다.</div>
+
+  <!-- ══ 6. TICKER TABLE ══ -->
+  <div class="sh"><span class="sh-num">06</span><span class="sh-title">관심 티커 — 이중 센티먼트</span><span class="sh-en">Reddit Buzz × Price</span></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>티커</th><th>테마</th><th class="r">소셜 버즈</th><th class="r">방향</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td><strong>NVDA</strong></td><td>AI GPU</td><td class="r">최상</td><td class="r up">▲</td><td>반등 주도 · 연초 $3.5T 터치</td></tr>
+      <tr><td><strong>TSM</strong></td><td>파운드리</td><td class="r">최상</td><td class="r up">▲</td><td>"피켓 트레이드" · 밈 화제</td></tr>
+      <tr><td><strong>MU</strong></td><td>메모리/HBM</td><td class="r">높음</td><td class="r up">▲</td><td>AI PC DRAM 2~4배 수요</td></tr>
+      <tr><td><strong>AVGO</strong></td><td>AI 칩</td><td class="r">높음</td><td class="r up">▲</td><td>6월 변동성 후 회복</td></tr>
+      <tr><td><strong>DELL</strong></td><td>AI 서버</td><td class="r">상승</td><td class="r up">▲</td><td>리딧 85점 · AI 수주 급증</td></tr>
+      <tr><td><strong>XLE</strong></td><td>에너지</td><td class="r">하락</td><td class="r down">▼</td><td>유가 급락에 섹터 주간 약세</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note" style="border-color:var(--muted);">※ 소셜 버즈는 커뮤니티 언급 빈도·강도의 정성 평가이며, 가격/방향은 6/18 목 종가 및 주간 흐름 기준. 매수·매도 권유가 아님.</div>
+
+  <!-- ══ 7. KEYWORDS ══ -->
+  <div class="sh"><span class="sh-num">07</span><span class="sh-title">위클리 키워드 클라우드</span><span class="sh-en">Frequency-Weighted</span></div>
+  <div class="kw">
+    <span class="hot">반도체 슈퍼사이클</span>
+    <span class="hot">KOSPI 세계 1위</span>
+    <span class="hot">매파 점도표</span>
+    <span class="warm">호르무즈 MOU</span>
+    <span class="warm">달러 1년 고점</span>
+    <span class="warm">유가 -9.8%</span>
+    <span>HBM4E</span>
+    <span>AI capex $760B</span>
+    <span>FCF 급감</span>
+    <span>buy the dip</span>
+    <span>워시 첫 회견</span>
+    <span>인하 0회</span>
+    <span>제인스트리트 AI</span>
+    <span>준틴스 휴장</span>
+  </div>
+
+  <!-- ══ 8. SIGNALS ══ -->
+  <div class="sh"><span class="sh-num">08</span><span class="sh-title">시그널 보드</span><span class="sh-en">Sentiment-Derived</span></div>
+  <div class="sig">
+    <div class="sig-box buy">
+      <div class="sig-label">▲ 강세 시그널</div>
+      <ul>
+        <li>반도체·메모리 모멘텀 (양 진영 합의)</li>
+        <li>아시아 AI 랠리 낙수효과</li>
+        <li>소형주(R2K) 동반 = 폭 확대</li>
+        <li>유가 급락 → 인플레 완화 기대</li>
+      </ul>
+    </div>
+    <div class="sig-box watch">
+      <div class="sig-label">◆ 관망 시그널</div>
+      <ul>
+        <li>매파 점도표 vs 위험선호 충돌</li>
+        <li>하이퍼스케일러 FCF 시차</li>
+        <li>이란 협상 취소 = 변동성 잠복</li>
+        <li>밸류에이션 고평가 논쟁</li>
+      </ul>
+    </div>
+    <div class="sig-box avoid">
+      <div class="sig-label">▼ 경계 시그널</div>
+      <ul>
+        <li>달러 1년 고점 = 신흥국·원자재 압박</li>
+        <li>10년물 4.45% 듀레이션 리스크</li>
+        <li>에너지 섹터 추세 약세</li>
+        <li>'no cuts 2026' 고금리 장기화</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ 9. CHART ══ -->
+  <div class="sh"><span class="sh-num">09</span><span class="sh-title">주간 퍼포먼스 차트</span><span class="sh-en">Track the Markets · Weekly %</span></div>
+  <div class="chart-wrap">
+    <div class="bar-row"><span class="bar-name">KOSPI 🇰🇷</span><span class="bar-track"><span class="bar-fill" style="width:100%;background:var(--green);">+11.43%</span></span><span class="bar-val up">+11.43</span></div>
+    <div class="bar-row"><span class="bar-name">Nikkei 225</span><span class="bar-track"><span class="bar-fill" style="width:69%;background:#2e8f5e;">+7.92%</span></span><span class="bar-val up">+7.92</span></div>
+    <div class="bar-row"><span class="bar-name">S&P Info Tech</span><span class="bar-track"><span class="bar-fill" style="width:27%;background:#46a072;">+3.06%</span></span><span class="bar-val up">+3.06</span></div>
+    <div class="bar-row"><span class="bar-name">Nasdaq-100</span><span class="bar-track"><span class="bar-fill" style="width:23%;background:#46a072;">+2.60%</span></span><span class="bar-val up">+2.60</span></div>
+    <div class="bar-row"><span class="bar-name">S&P Energy</span><span class="bar-track"><span class="bar-fill" style="width:57%;background:var(--accent);margin-left:auto;">-6.57%</span></span><span class="bar-val down">-6.57</span></div>
+    <div class="bar-row"><span class="bar-name">Nymex Crude</span><span class="bar-track"><span class="bar-fill" style="width:85%;background:#a8302430;color:var(--accent);background:var(--accent);">-9.75%</span></span><span class="bar-val down">-9.75</span></div>
+  </div>
+
+  <!-- ══ 10. INSIGHT ══ -->
+  <div class="sh"><span class="sh-num">10</span><span class="sh-title">바이사이드 인사이트</span><span class="sh-en">Research Head's Note</span></div>
+  <div class="insight">
+    <h3>"칩은 사라, 그러나 헤지를 벗지 마라"</h3>
+    <p>이번 주의 본질은 <strong>두 개의 진실이 동시에 참</strong>이라는 점이다. 하나는 반도체 슈퍼사이클이 실적·수주·메모리 가격 모든 축에서 가속 중이라는 것(PHLX +102.5% YTD, KOSPI 세계 1위). 다른 하나는 워시 연준이 '인하 0회·인상 가능'을 명문화하며 <strong>달러를 1년 고점으로, 실질금리를 위로</strong> 밀어올렸다는 것이다.</p>
+    <p>드러켄밀러가 늘 강조했듯, 유동성이 방향을 정하고 내러티브가 속도를 정한다. 지금 내러티브(AI)는 압도적이지만, 유동성의 한계비용(매파 연준·강달러)이 처음으로 상방을 누르기 시작했다. 5개 하이퍼스케일러의 <strong>FCF가 2026년 -91% 급감</strong>할 수 있다는 'Heard on the Street'의 경고는, 설비투자 서사가 언젠가는 현금흐름으로 검증받아야 함을 상기시킨다.</p>
+    <p>운용 관점의 결론: 반도체 코어 익스포저는 유지하되, <strong>강달러 수혜·에너지 약세·듀레이션 단기화</strong>로 포트의 다른 다리를 보강하라. 6/19 美–이란 회담 취소가 보여줬듯, 유가·지정학은 한 줄 헤드라인에 재가격화된다. '추세 추종'과 '꼬리 헤지'는 양자택일이 아니라 동시 보유의 문제다.</p>
+    <div class="dm-cite">⟢ Citation note — Stanley Druckenmiller(@drucken, 게시 빈도 낮음): 최근 X에서 "강달러·고금리 국면의 집중 투자는 종목보다 매크로 레짐 판단이 먼저"라는 취지의 코멘트. 본 리포트의 '레짐 우선' 프레임과 정합적.</div>
+  </div>
+
+  <!-- ══ 11. WATCHLIST ══ -->
+  <div class="sh"><span class="sh-num">11</span><span class="sh-title">다음 주 워치리스트</span><span class="sh-en">Jun 22 – Jun 26</span></div>
+  <div class="watch-grid">
+    <div class="watch-item"><span class="watch-day">MON</span><p><strong>美 증시 정상화</strong><br>준틴스 휴장 후 첫 거래일. 반도체 모멘텀 연속성 체크.</p></div>
+    <div class="watch-item"><span class="watch-day">TUE</span><p><strong>이란 협상 재개 여부</strong><br>취소된 美–이란 회담의 재일정. 유가·DXY 변동성 트리거.</p></div>
+    <div class="watch-item"><span class="watch-day">WED</span><p><strong>연준 위원 발언</strong><br>워시 점도표 후속 코멘트. 'no cut' 강도 재확인.</p></div>
+    <div class="watch-item"><span class="watch-day">THU</span><p><strong>메모리·HBM 뉴스플로우</strong><br>SK하이닉스·마이크론 HBM4E 수주 관련 모멘텀.</p></div>
+    <div class="watch-item"><span class="watch-day">FRI</span><p><strong>5월 PCE 물가</strong><br>4.2% 인플레 경로 확인. 매파 점도표의 정당성 검증.</p></div>
+    <div class="watch-item"><span class="watch-day">★</span><p><strong>달러지수(DXY) 101.1선</strong><br>1년 고점 돌파 시 신흥국·원자재 추가 압박.</p></div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>고지</strong> — 본 리포트는 Reddit·X 소셜 미디어 심리와 WSJ 마켓 데이터를 종합한 <em>정보 제공용</em> 자료이며, 특정 종목의 매수·매도를 권유하지 않습니다. 소셜 센티먼트는 정성적 추정치이고, 시장 데이터는 6/18(목) WSJ B6 종가 및 주간 추적치 기준입니다. 투자 판단과 그 결과의 책임은 투자자 본인에게 있습니다.
+  </div>
+
+  <footer>
+    BUY-SIDE WEEKLY SENTIMENT REPORT · GLOBAL EDITION VOL.08<br>
+    발행일 2026.06.20 (SAT) · 데이터: WSJ B6 (Thu Jun 18) × Reddit × X<br>
+    배포: Telegram · KakaoTalk · minkeun00-creator.github.io/weekly-report<br>
+    리서치 헤드 — 드러켄밀러 하우스 출신 베테랑 · © 2026 Buy-Side Weekly
+  </footer>
+
+</div>
+</body>
+</html>

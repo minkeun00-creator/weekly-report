@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>종토방 위클리 — Vol.06 (2026.06.20)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0f13; --panel:#161821; --panel2:#1c1f2a; --text:#e8e6e0;
+    --muted:#8b8882; --line:#2a2c38; --accent:#e8a04a; --green:#3dd68c;
+    --red:#ff6b6b; --blue:#5b9bd5; --purple:#a78bdb;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Noto Sans KR',sans-serif; line-height:1.65;
+    -webkit-font-smoothing:antialiased; padding:0 0 60px;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 22px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* MASTHEAD */
+  .masthead{padding:34px 0 20px; border-bottom:1px solid var(--line); margin-bottom:6px;}
+  .mh-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;}
+  .mh-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--accent); text-transform:uppercase;}
+  .mh-vol{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1px; color:var(--muted); text-align:right;}
+  .mh-title{font-weight:900; font-size:clamp(26px,5.5vw,44px); line-height:1.12; margin:16px 0 8px; letter-spacing:-0.5px;}
+  .mh-title em{color:var(--accent); font-style:normal;}
+  .mh-sub{font-size:13.5px; color:var(--muted); max-width:680px;}
+  .mh-byline{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text); margin-top:14px; padding-top:12px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;}
+
+  /* KPI STRIP */
+  .kpi{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:22px 0 4px;}
+  .kpi-cell{background:var(--panel); border:1px solid var(--line); border-radius:7px; padding:14px 15px;}
+  .kpi-name{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.5px; color:var(--muted); text-transform:uppercase;}
+  .kpi-val{font-weight:900; font-size:22px; margin:5px 0 2px;}
+  .kpi-chg{font-family:'JetBrains Mono',monospace; font-size:12px;}
+  .up{color:var(--green);} .down{color:var(--red);}
+  .kpi-sub{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); margin-top:3px;}
+
+  /* SECTION HEADER */
+  .sh{display:flex; align-items:baseline; gap:12px; margin:40px 0 16px; padding-bottom:9px; border-bottom:1px solid var(--accent);}
+  .sh-num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent);}
+  .sh-title{font-weight:900; font-size:21px;}
+  .sh-en{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:1px; color:var(--muted); margin-left:auto; text-transform:uppercase;}
+
+  /* SUMMARY */
+  .summary{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 7px 7px 0; padding:18px 20px; font-size:13.5px; color:#d4d2cc; line-height:1.8;}
+  .summary strong{color:var(--accent);}
+
+  /* HOT TABLE */
+  .scroll{overflow-x:auto;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--muted); text-align:left; padding:9px 10px; border-bottom:1px solid var(--accent); background:var(--panel);}
+  td{padding:9px 10px; border-bottom:1px solid var(--line);}
+  td.r,th.r{text-align:right;}
+  td.c,th.c{text-align:center;}
+  tbody tr:hover td{background:var(--panel2);}
+  .rank{font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent);}
+  .code{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);}
+  .nm{font-weight:700;}
+  .tg{font-family:'JetBrains Mono',monospace; font-size:9px; padding:1px 6px; border-radius:3px; white-space:nowrap;}
+  .tg-bull{background:#16341f; color:var(--green);}
+  .tg-bear{background:#3a1c1c; color:var(--red);}
+  .tg-neut{background:#2a2c38; color:var(--muted);}
+  .tg-hot{background:#3a2c12; color:var(--accent);}
+
+  /* SIGNAL */
+  .sig{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  .sig-box{border:1px solid var(--line); border-radius:7px; padding:15px; background:var(--panel);}
+  .sig-box.buy{border-top:3px solid var(--green);}
+  .sig-box.watch{border-top:3px solid var(--accent);}
+  .sig-box.avoid{border-top:3px solid var(--red);}
+  .sig-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;}
+  .sig-box.buy .sig-label{color:var(--green);}
+  .sig-box.watch .sig-label{color:var(--accent);}
+  .sig-box.avoid .sig-label{color:var(--red);}
+  .sig-box ul{list-style:none; font-size:12.5px;}
+  .sig-box li{padding:5px 0; border-bottom:1px dashed var(--line); color:#cfccc6;}
+  .sig-box li:last-child{border:none;}
+  .sig-box b{color:var(--text);}
+
+  /* THEME CLUSTERS */
+  .clusters{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  .cl{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px 18px;}
+  .cl-head{display:flex; align-items:center; gap:9px; margin-bottom:10px;}
+  .cl-ico{width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0;}
+  .cl-name{font-weight:900; font-size:15px;}
+  .cl-heat{font-family:'JetBrains Mono',monospace; font-size:9px; margin-left:auto; padding:2px 7px; border-radius:10px;}
+  .heat-hi{background:#3a2c12; color:var(--accent);}
+  .heat-md{background:#2a2c38; color:var(--blue);}
+  .cl-stocks{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--green); margin-bottom:8px; line-height:1.7;}
+  .cl p{font-size:12.5px; color:#cfccc6;}
+
+  /* THERMOMETER */
+  .thermo{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:20px;}
+  .th-row{display:flex; align-items:center; gap:14px; margin:12px 0;}
+  .th-name{width:130px; flex-shrink:0; font-size:12.5px; font-weight:700;}
+  .th-track{flex:1; height:22px; background:var(--panel2); border-radius:11px; overflow:hidden; position:relative;}
+  .th-fill{height:100%; border-radius:11px; display:flex; align-items:center; justify-content:flex-end; padding-right:9px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:#0e0f13;}
+  .th-val{width:46px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:12px;}
+
+  /* CHART */
+  .chart-wrap{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:18px;}
+  .bar-row{display:flex; align-items:center; gap:12px; margin:8px 0; font-size:12px;}
+  .bar-name{width:170px; flex-shrink:0; font-family:'JetBrains Mono',monospace; font-size:10.5px;}
+  .bar-track{flex:1; background:var(--panel2); border-radius:3px; height:19px; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:3px; display:flex; align-items:center; justify-content:flex-end; padding-right:7px; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:#0e0f13; font-weight:700;}
+  .bar-val{width:54px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);}
+
+  /* INSIGHT */
+  .insight{background:linear-gradient(160deg,#1a1c26,#13141b); border:1px solid var(--line); border-radius:9px; padding:26px 28px;}
+  .insight h3{font-weight:900; font-size:20px; margin-bottom:14px; color:var(--accent);}
+  .insight p{font-size:13.5px; color:#cfccc6; margin-bottom:12px; line-height:1.8;}
+  .insight strong{color:var(--accent);}
+  .insight .link{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--green); border-top:1px solid var(--line); padding-top:13px; margin-top:6px; display:block;}
+
+  .disclaimer{font-size:11px; color:var(--muted); background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:13px 16px; margin-top:18px; line-height:1.6;}
+  footer{margin-top:42px; padding-top:18px; border-top:1px solid var(--line); font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--muted); line-height:1.9;}
+
+  @media (max-width:768px){
+    .kpi{grid-template-columns:repeat(2,1fr);}
+    .sig{grid-template-columns:1fr;}
+    .clusters{grid-template-columns:1fr;}
+    .th-name{width:96px;}
+    .bar-name{width:120px;}
+  }
+  @media (max-width:480px){
+    .mh-title{font-size:26px;}
+    .kpi-val{font-size:19px;}
+  }
+  @media print{
+    @page{size:A4; margin:12mm 10mm 14mm;}
+    :root{--bg:#fff; --panel:#f7f5f0; --panel2:#efece5; --text:#161616; --muted:#666; --line:#ddd; --accent:#b8801f; --green:#1d7a4c;}
+    body{background:#fff; color:#161616; font-size:10.5px; padding:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .summary,.kpi-cell,.sig-box,.cl,.thermo,.chart-wrap,.insight,.th-fill,.bar-fill,.tg{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .scroll{overflow:visible;}
+    .sh{page-break-after:avoid;}
+    .kpi-cell,.sig-box,.cl,.thermo,.chart-wrap,.insight,.summary,tr{page-break-inside:avoid;}
+    .kpi{grid-template-columns:repeat(4,1fr);}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══ MASTHEAD ══ -->
+  <header class="masthead">
+    <div class="mh-top">
+      <div class="mh-kicker">종토방 위클리 · 국내 에디션</div>
+      <div class="mh-vol">VOL.06 &nbsp;|&nbsp; 2026.06.20 (SAT)<br>NAVER 종목토론방</div>
+    </div>
+    <h1 class="mh-title">코스피 9,000 광기, <em>코스닥은 소외</em> — 그리고 배당 ETF로 몰린 개미</h1>
+    <p class="mh-sub">조회순 Top 20을 관통한 키워드는 셋이다. ① 월배당·커버드콜 ETF로의 'FOMO 적립', ② 반도체·전력·조선 테마 순환매, ③ 코스피 사상 최고치(장중 9,385) 뒤 금요일 차익실현. 코스닥은 1,000선이 무너졌다.</p>
+    <div class="mh-byline">
+      <span>리서치 헤드 — 드러켄밀러 하우스 출신 베테랑</span>
+      <span>NAVER 종토방 크롤러 · 조회순 TOP 20</span>
+    </div>
+  </header>
+
+  <!-- KPI -->
+  <div class="kpi">
+    <div class="kpi-cell"><div class="kpi-name">KOSPI</div><div class="kpi-val">9,052.42</div><div class="kpi-chg up">주간 +9.0%</div><div class="kpi-sub">장중 ATH 9,385 · YTD +114.8%</div></div>
+    <div class="kpi-cell"><div class="kpi-name">KOSDAQ</div><div class="kpi-val">966.59</div><div class="kpi-chg down">금 -3.43%</div><div class="kpi-sub">1,000선 붕괴 · YTD +11.5%</div></div>
+    <div class="kpi-cell"><div class="kpi-name">원/달러</div><div class="kpi-val">1,528</div><div class="kpi-chg up">원화 강보합</div><div class="kpi-sub">금 -0.7% · 주간 1,533→1,528</div></div>
+    <div class="kpi-cell"><div class="kpi-name">수급</div><div class="kpi-val">외국인</div><div class="kpi-chg up">순매수 지속</div><div class="kpi-sub">대형주 쏠림 · 기관 ETF 매도</div></div>
+  </div>
+
+  <!-- ══ 1. SUMMARY ══ -->
+  <div class="sh"><span class="sh-num">01</span><span class="sh-title">한 주 요약</span><span class="sh-en">Weekly Digest</span></div>
+  <div class="summary">
+    코스피가 사상 처음 <strong>9,000을 돌파</strong>하고 장중 9,385까지 치솟았으나, 금요일 美–이란 협상 취소 소식에 차익실현이 나오며 9,052로 마감(-0.13%). 반면 <strong>코스닥은 1,000선이 무너지며 금요일 -3.43%</strong>, 연초 대비 격차가 100%p를 넘는 극단적 양극화가 고착됐다. 종토방 조회순 상위는 ① <strong>KODEX·TIGER 커버드콜/배당 ETF</strong>(1·20위)로의 '월배당 FOMO', ② <strong>미국 지수 ETF 적립식</strong>(S&P500·나스닥100, 3·6위), ③ <strong>반도체·소부장</strong>(제주반도체·HPSP), ④ <strong>전력·전선 인프라</strong>(LS ELECTRIC·대한광통신·가온전선·두산에너빌리티), ⑤ <strong>지주·통신 NAV 재평가</strong>(SK스퀘어·SK·SKT·삼성생명), ⑥ <strong>바이오 신고가</strong>(디앤디파마텍)로 압축된다. SpaceX 편입·상장 기대가 통신·생명·나스닥100 토론방을 동시에 달궜다.
+  </div>
+
+  <!-- ══ 2. HOT 종목 ══ -->
+  <div class="sh"><span class="sh-num">02</span><span class="sh-title">HOT 종목 — 조회순 TOP 20</span><span class="sh-en">By View Count · 80 posts/stock</span></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th class="c">#</th><th>종목</th><th class="r">게시글</th><th class="r">조회수</th><th>심리 태그</th></tr></thead>
+    <tbody>
+      <tr><td class="rank">1</td><td><span class="nm">KODEX 200타겟위클리커버드콜</span> <span class="code">498400</span></td><td class="r">77</td><td class="r">66,351</td><td><span class="tg tg-hot">배당FOMO</span> <span class="tg tg-neut">분배율추종</span></td></tr>
+      <tr><td class="rank">2</td><td><span class="nm">디앤디파마텍</span> <span class="code">347850</span></td><td class="r">80</td><td class="r">45,919</td><td><span class="tg tg-bull">신고가</span> <span class="tg tg-hot">LO결과대기</span></td></tr>
+      <tr><td class="rank">3</td><td><span class="nm">TIGER 미국S&P500</span> <span class="code">360750</span></td><td class="r">32</td><td class="r">42,180</td><td><span class="tg tg-bull">적립식</span> <span class="tg tg-neut">장기보유</span></td></tr>
+      <tr><td class="rank">4</td><td><span class="nm">SK스퀘어</span> <span class="code">402340</span></td><td class="r">80</td><td class="r">41,799</td><td><span class="tg tg-bull">하이닉스NAV</span> <span class="tg tg-hot">갈아타기</span></td></tr>
+      <tr><td class="rank">5</td><td><span class="nm">제주반도체</span> <span class="code">080220</span></td><td class="r">79</td><td class="r">36,874</td><td><span class="tg tg-bull">LPDDR급등</span> <span class="tg tg-hot">수출모멘텀</span></td></tr>
+      <tr><td class="rank">6</td><td><span class="nm">KODEX 미국나스닥100</span> <span class="code">379810</span></td><td class="r">38</td><td class="r">35,074</td><td><span class="tg tg-bull">적립식</span> <span class="tg tg-neut">SpaceX편입설</span></td></tr>
+      <tr><td class="rank">7</td><td><span class="nm">현대모비스</span> <span class="code">012330</span></td><td class="r">80</td><td class="r">34,911</td><td><span class="tg tg-hot">로봇테마</span> <span class="tg tg-neut">보스턴D인수설</span></td></tr>
+      <tr><td class="rank">8</td><td><span class="nm">KODEX 200</span> <span class="code">069500</span></td><td class="r">53</td><td class="r">34,820</td><td><span class="tg tg-bull">코어대형주</span> <span class="tg tg-neut">연금적립</span></td></tr>
+      <tr><td class="rank">9</td><td><span class="nm">대한광통신</span> <span class="code">010170</span></td><td class="r">80</td><td class="r">34,637</td><td><span class="tg tg-neut">M&A기대</span> <span class="tg tg-bear">변동성</span></td></tr>
+      <tr><td class="rank">10</td><td><span class="nm">SK텔레콤</span> <span class="code">017670</span></td><td class="r">80</td><td class="r">32,235</td><td><span class="tg tg-neut">SpaceX</span> <span class="tg tg-bear">고평가논란</span></td></tr>
+      <tr><td class="rank">11</td><td><span class="nm">LS ELECTRIC</span> <span class="code">010120</span></td><td class="r">80</td><td class="r">31,174</td><td><span class="tg tg-bull">전력수주</span> <span class="tg tg-bear">단기과열</span></td></tr>
+      <tr><td class="rank">12</td><td><span class="nm">HPSP</span> <span class="code">403870</span></td><td class="r">80</td><td class="r">29,781</td><td><span class="tg tg-bull">소부장</span> <span class="tg tg-bear">물린주주</span></td></tr>
+      <tr><td class="rank">13</td><td><span class="nm">한화오션</span> <span class="code">042660</span></td><td class="r">80</td><td class="r">29,550</td><td><span class="tg tg-hot">전투함수주기대</span> <span class="tg tg-bull">조선</span></td></tr>
+      <tr><td class="rank">14</td><td><span class="nm">맥쿼리인프라</span> <span class="code">088980</span></td><td class="r">80</td><td class="r">29,233</td><td><span class="tg tg-bear">배당컷우려</span> <span class="tg tg-bear">공매도</span></td></tr>
+      <tr><td class="rank">15</td><td><span class="nm">삼성생명</span> <span class="code">032830</span></td><td class="r">80</td><td class="r">28,192</td><td><span class="tg tg-bull">삼전지분NAV</span> <span class="tg tg-neut">특별배당</span></td></tr>
+      <tr><td class="rank">16</td><td><span class="nm">TIGER 반도체TOP10</span> <span class="code">396500</span></td><td class="r">79</td><td class="r">28,133</td><td><span class="tg tg-bear">상대약세</span> <span class="tg tg-neut">갈아타기</span></td></tr>
+      <tr><td class="rank">17</td><td><span class="nm">SK</span> <span class="code">034730</span></td><td class="r">80</td><td class="r">27,804</td><td><span class="tg tg-bull">지주NAV</span> <span class="tg tg-neut">외인기관쌍끌이</span></td></tr>
+      <tr><td class="rank">18</td><td><span class="nm">가온전선</span> <span class="code">000500</span></td><td class="r">80</td><td class="r">26,822</td><td><span class="tg tg-hot">무증기대</span> <span class="tg tg-bear">환상금물</span></td></tr>
+      <tr><td class="rank">19</td><td><span class="nm">두산에너빌리티</span> <span class="code">034020</span></td><td class="r">80</td><td class="r">26,797</td><td><span class="tg tg-bull">원전</span> <span class="tg tg-bear">호르무즈악재</span></td></tr>
+      <tr><td class="rank">20</td><td><span class="nm">TIGER 배당커버드콜액티브</span> <span class="code">472150</span></td><td class="r">35</td><td class="r">26,689</td><td><span class="tg tg-hot">배당FOMO</span> <span class="tg tg-bear">원금녹음우려</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- ══ 3. SIGNAL ══ -->
+  <div class="sh"><span class="sh-num">03</span><span class="sh-title">이번 주 시그널 · 알림</span><span class="sh-en">Crowd Behaviour Signals</span></div>
+  <div class="sig">
+    <div class="sig-box buy">
+      <div class="sig-label">▲ 매수 쏠림</div>
+      <ul>
+        <li><b>월배당 ETF FOMO</b> — 커버드콜 분배율 추종 매수</li>
+        <li><b>미국지수 적립식</b> — "적금 대신 S&P/나스닥"</li>
+        <li><b>반도체 수출 모멘텀</b> — 제주반도체 LPDDR</li>
+        <li><b>지주·생명 NAV</b> — SK스퀘어·삼성생명 자산재평가</li>
+      </ul>
+    </div>
+    <div class="sig-box watch">
+      <div class="sig-label">◆ 관망·테마</div>
+      <ul>
+        <li><b>SpaceX 편입·상장</b> 기대 (나스닥100·SKT·삼성생명)</li>
+        <li><b>로봇 테마</b> — 현대모비스 보스턴D 인수설</li>
+        <li><b>전투함 수주</b> — 한화오션 트럼프 발주 기대</li>
+        <li><b>무상증자</b> — 가온전선 권리락 기대 vs 환상 경계</li>
+      </ul>
+    </div>
+    <div class="sig-box avoid">
+      <div class="sig-label">▼ 경계·매도</div>
+      <ul>
+        <li><b>코스닥 1,000선 붕괴</b> — 양극화 심화</li>
+        <li><b>커버드콜 '원금 녹음'</b> 우려 댓글 급증</li>
+        <li><b>맥쿼리인프라</b> 배당컷·공매도 진행 언급</li>
+        <li><b>호르무즈 재봉쇄</b> 악재 (두산E·한화오션·대한광통신)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ 4. THEME CLUSTERS ══ -->
+  <div class="sh"><span class="sh-num">04</span><span class="sh-title">테마 클러스터</span><span class="sh-en">Sentiment Grouping</span></div>
+  <div class="clusters">
+    <div class="cl">
+      <div class="cl-head"><div class="cl-ico" style="background:#3a2c12;">💸</div><div class="cl-name">배당·커버드콜 ETF</div><div class="cl-heat heat-hi">과열</div></div>
+      <div class="cl-stocks">498400 KODEX200타겟위클리커버드콜 · 472150 TIGER배당커버드콜액티브</div>
+      <p>조회 1위·20위를 동시 점령. "월배당 분배율 TOP", "다들 타이거로 옮기세요" 식 추종 매수가 주류이나, "원금이 녹는다", "배당락으로 결국 제자리" 같은 회의 댓글도 동반 급증. 전형적 <strong>분배율 FOMO</strong>.</p>
+    </div>
+    <div class="cl">
+      <div class="cl-head"><div class="cl-ico" style="background:#16341f;">🇺🇸</div><div class="cl-name">미국 지수 적립식</div><div class="cl-heat heat-md">견조</div></div>
+      <div class="cl-stocks">360750 TIGER미국S&P500 · 379810 KODEX미국나스닥100</div>
+      <p>"적금 대신 이거", "10년 뒤엔" 등 <strong>장기 적립 서사</strong>가 지배적. 기관 매도에도 개인 매집 지속. 나스닥100 토론방에선 SpaceX 편입 기대가 화제.</p>
+    </div>
+    <div class="cl">
+      <div class="cl-head"><div class="cl-ico" style="background:#2a2c38;">🔌</div><div class="cl-name">전력·전선 인프라</div><div class="cl-heat heat-hi">순환매</div></div>
+      <div class="cl-stocks">010120 LS ELECTRIC · 010170 대한광통신 · 000500 가온전선 · 034020 두산에너빌리티</div>
+      <p>AI 전력수요 서사로 묶인 4종목. "6조 수주", 무상증자·M&A 기대가 매수 동력이나, 종목별 변동성·물림 호소도 많음. 두산E는 원전 기대 vs 호르무즈 악재가 충돌.</p>
+    </div>
+    <div class="cl">
+      <div class="cl-head"><div class="cl-ico" style="background:#1c2e3a;">🧠</div><div class="cl-name">반도체·소부장</div><div class="cl-heat heat-hi">강세</div></div>
+      <div class="cl-stocks">080220 제주반도체 · 403870 HPSP · 396500 TIGER반도체TOP10</div>
+      <p>"DRAM 가격 천장 돌파", "LPDDR 급등", 수출 데이터 기반 강세론. 제주반도체는 시총 갭(한미 40조 vs 제주 3조) 메우기 기대. 반면 TIGER반도체TOP10은 상대약세 불만.</p>
+    </div>
+    <div class="cl">
+      <div class="cl-head"><div class="cl-ico" style="background:#2a1c3a;">🏛️</div><div class="cl-name">지주·통신 NAV 재평가</div><div class="cl-heat heat-hi">테마</div></div>
+      <div class="cl-stocks">402340 SK스퀘어 · 034730 SK · 017670 SKT · 032830 삼성생명</div>
+      <p>"하이닉스에서 SK스퀘어로 갈아타길 잘했다", "삼전 지분으로 오른다" 등 <strong>자산가치 할인 메우기</strong> 내러티브. SpaceX 지분·특별배당 기대가 공통 촉매.</p>
+    </div>
+    <div class="cl">
+      <div class="cl-head"><div class="cl-ico" style="background:#16341f;">🧬</div><div class="cl-name">바이오 · 조선</div><div class="cl-heat heat-md">개별</div></div>
+      <div class="cl-stocks">347850 디앤디파마텍 · 042660 한화오션</div>
+      <p>디앤디파마텍은 상장 후 신고가, "제2의 알테오젠" 기대 속 <strong>LO 결과 대기</strong>가 핵심 변수(공매도 견딜지 주목). 한화오션은 트럼프 전투함 발주 기대로 조선 대표주 부상.</p>
+    </div>
+  </div>
+
+  <!-- ══ 5. 심리 온도계 ══ -->
+  <div class="sh"><span class="sh-num">05</span><span class="sh-title">심리 온도계</span><span class="sh-en">Sentiment Heatmap</span></div>
+  <div class="thermo">
+    <div class="th-row"><span class="th-name">배당/커버드콜</span><span class="th-track"><span class="th-fill" style="width:92%;background:var(--accent);">FOMO 92</span></span><span class="th-val up">92</span></div>
+    <div class="th-row"><span class="th-name">미국지수 ETF</span><span class="th-track"><span class="th-fill" style="width:80%;background:var(--green);">적립 80</span></span><span class="th-val up">80</span></div>
+    <div class="th-row"><span class="th-name">반도체·소부장</span><span class="th-track"><span class="th-fill" style="width:78%;background:var(--green);">강세 78</span></span><span class="th-val up">78</span></div>
+    <div class="th-row"><span class="th-name">전력·인프라</span><span class="th-track"><span class="th-fill" style="width:72%;background:var(--blue);">순환 72</span></span><span class="th-val">72</span></div>
+    <div class="th-row"><span class="th-name">지주·통신 NAV</span><span class="th-track"><span class="th-fill" style="width:68%;background:var(--blue);">테마 68</span></span><span class="th-val">68</span></div>
+    <div class="th-row"><span class="th-name">코스닥 일반</span><span class="th-track"><span class="th-fill" style="width:34%;background:var(--red);">소외 34</span></span><span class="th-val down">34</span></div>
+    <div class="th-row"><span class="th-name">인프라 배당(맥쿼리)</span><span class="th-track"><span class="th-fill" style="width:28%;background:var(--red);">회의 28</span></span><span class="th-val down">28</span></div>
+  </div>
+
+  <!-- ══ 6. 차트 ══ -->
+  <div class="sh"><span class="sh-num">06</span><span class="sh-title">조회수 분포 차트</span><span class="sh-en">Top 10 Views</span></div>
+  <div class="chart-wrap">
+    <div class="bar-row"><span class="bar-name">498400 커버드콜</span><span class="bar-track"><span class="bar-fill" style="width:100%;background:var(--accent);">66,351</span></span><span class="bar-val">66.4K</span></div>
+    <div class="bar-row"><span class="bar-name">347850 디앤디파마텍</span><span class="bar-track"><span class="bar-fill" style="width:69%;background:var(--green);">45,919</span></span><span class="bar-val">45.9K</span></div>
+    <div class="bar-row"><span class="bar-name">360750 TIGER S&P500</span><span class="bar-track"><span class="bar-fill" style="width:64%;background:var(--green);">42,180</span></span><span class="bar-val">42.2K</span></div>
+    <div class="bar-row"><span class="bar-name">402340 SK스퀘어</span><span class="bar-track"><span class="bar-fill" style="width:63%;background:var(--green);">41,799</span></span><span class="bar-val">41.8K</span></div>
+    <div class="bar-row"><span class="bar-name">080220 제주반도체</span><span class="bar-track"><span class="bar-fill" style="width:56%;background:var(--blue);">36,874</span></span><span class="bar-val">36.9K</span></div>
+    <div class="bar-row"><span class="bar-name">379810 KODEX 나스닥</span><span class="bar-track"><span class="bar-fill" style="width:53%;background:var(--blue);">35,074</span></span><span class="bar-val">35.1K</span></div>
+    <div class="bar-row"><span class="bar-name">012330 현대모비스</span><span class="bar-track"><span class="bar-fill" style="width:53%;background:var(--blue);">34,911</span></span><span class="bar-val">34.9K</span></div>
+    <div class="bar-row"><span class="bar-name">069500 KODEX 200</span><span class="bar-track"><span class="bar-fill" style="width:52%;background:var(--blue);">34,820</span></span><span class="bar-val">34.8K</span></div>
+    <div class="bar-row"><span class="bar-name">010170 대한광통신</span><span class="bar-track"><span class="bar-fill" style="width:52%;background:var(--purple);">34,637</span></span><span class="bar-val">34.6K</span></div>
+    <div class="bar-row"><span class="bar-name">017670 SK텔레콤</span><span class="bar-track"><span class="bar-fill" style="width:49%;background:var(--purple);">32,235</span></span><span class="bar-val">32.2K</span></div>
+  </div>
+
+  <!-- ══ 7. INSIGHT ══ -->
+  <div class="sh"><span class="sh-num">07</span><span class="sh-title">바이사이드 인사이트</span><span class="sh-en">Research Head's Note · 글로벌 연동</span></div>
+  <div class="insight">
+    <h3>"지수는 사상 최고, 그러나 개미의 돈은 '배당'과 '미국'으로 샌다"</h3>
+    <p>코스피 9,000 돌파의 주인공은 <strong>외국인·기관의 대형주 쏠림</strong>(반도체·HBM)이다. 정작 종토방 개미의 관심은 두 갈래로 새고 있다 — 하나는 <strong>월배당 커버드콜 ETF</strong>(조회 1위), 다른 하나는 <strong>미국 지수 적립식</strong>(3·6위). 지수는 최고치인데 개인은 '국장 직접투자' 대신 인컴과 미국으로 우회하는, 역설적 신뢰 구조다.</p>
+    <p>글로벌 에디션(Vol.08)과 연결하면 그림이 또렷해진다. 美 필라델피아 반도체지수가 주간 폭등하고 KOSPI가 <strong>전 세계 추적지수 주간 1위(+11.43%)</strong>를 차지한 것은 동일한 메모리·HBM 슈퍼사이클의 두 얼굴이다. 다만 워시 연준의 매파 점도표·달러 1년 고점은 원화·코스닥 같은 <strong>고베타·소외 자산</strong>에 먼저 부담으로 작용한다. 금요일 코스닥 -3.43%, 코스닥 YTD +11.5% vs 코스피 +114.8%의 격차가 그 증거다.</p>
+    <p>운용 시사점: 커버드콜 ETF의 '분배율'은 토털리턴이 아니다. 기초지수가 횡보·하락하면 분배금은 결국 원금에서 나온다는 점을 종토방도 이미 감지하고 있다(원금 녹음 우려 댓글 급증). <strong>대형주 모멘텀은 존중하되, 인컴 상품은 토털리턴 관점에서 재점검</strong>하고, 호르무즈·이란發 변동성에 노출된 에너지·조선·원전 테마는 헤드라인 리스크를 가격에 반영하라.</p>
+    <span class="link">⟢ 연동: 글로벌 Vol.08 — "반도체가 끌고, 매파가 누른 주" · 동일 슈퍼사이클의 한·미 양면 분석</span>
+  </div>
+
+  <div class="disclaimer">
+    <strong>고지</strong> — 본 리포트는 네이버 종목토론방 조회·게시 데이터(조회순 Top 20, 종목당 80건 크롤링)를 정량·정성 분석한 <em>정보 제공용</em> 자료이며, 특정 종목의 매수·매도를 권유하지 않습니다. 게시글 심리는 일반 투자자의 의견으로 사실과 다를 수 있고, 지수·환율 수치는 6/19(금) 종가 기준입니다. 투자 판단과 그 결과의 책임은 투자자 본인에게 있습니다.
+  </div>
+
+  <footer>
+    종토방 위클리 · 국내 에디션 VOL.06<br>
+    발행일 2026.06.20 (SAT) · 데이터: NAVER 종목토론방 크롤러 (2026.06.21 수집)<br>
+    배포: Telegram · KakaoTalk · minkeun00-creator.github.io/weekly-report<br>
+    리서치 헤드 — 드러켄밀러 하우스 출신 베테랑 · © 2026 Buy-Side Weekly
+  </footer>
+
+</div>
+</body>
+</html>

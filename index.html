@@ -3,115 +3,205 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>바이사이드 위클리 — 아카이브</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+<title>Buy-Side Weekly — 리포트 아카이브</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0e0f13;--bg2:#13141a;--bg3:#1a1b24;--text:#e8e6e0;--muted:#7a7880;--accent:#f5c842;--accent2:#e85d3a;--border:#252630;--gold:#c8920a;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;line-height:1.7;min-height:100vh;}
-.container{max-width:900px;margin:0 auto;padding:40px 20px;}
-.masthead{text-align:center;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--border);}
-.brand{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--muted);margin-bottom:16px;text-transform:uppercase;}
-.title{font-family:'DM Serif Display',serif;font-size:48px;color:var(--text);}
-.title span{color:var(--accent);}
-.tagline{font-size:12px;color:var(--muted);margin-top:12px;}
-.series{margin-bottom:40px;}
-.series-title{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:18px;text-decoration:none;color:var(--text);display:block;transition:border-color 0.2s;}
-.card:hover{border-color:var(--accent);}
-.card.latest{border-color:var(--accent);background:var(--bg3);}
-.card-vol{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--accent);}
-.card-date{font-size:11px;color:var(--muted);margin:4px 0 8px;font-family:'DM Mono',monospace;}
-.card-title{font-size:13px;font-weight:700;margin-bottom:6px;}
-.card-desc{font-size:11px;color:var(--muted);line-height:1.6;}
-.new-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;margin-left:8px;letter-spacing:1px;}
-.footer{text-align:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+  :root{
+    --ink:#111010; --paper:#f4f1ea; --card:#fbf9f3; --accent:#c8382a;
+    --muted:#6b6560; --border:#d8d2c4; --soft:#efe9dc; --gold:#e8a04a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--paper); color:var(--ink); font-family:'Noto Sans KR',sans-serif; -webkit-font-smoothing:antialiased; padding-bottom:60px;}
+
+  .header{border-bottom:3px double var(--ink); background:var(--paper);}
+  .header-inner{max-width:1040px; margin:0 auto; padding:36px 24px 26px;}
+  .header-brand{font-family:'DM Serif Display',serif; font-size:clamp(34px,6vw,54px); line-height:1;}
+  .header-brand span{color:var(--accent);}
+  .header-sub{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1.5px; color:var(--muted); margin-top:10px; text-transform:uppercase;}
+  .header-desc{font-size:13.5px; color:#403c36; margin-top:12px; max-width:680px; line-height:1.7;}
+
+  .container{max-width:1040px; margin:0 auto; padding:0 24px;}
+
+  .series-section{margin-top:44px;}
+  .series-title{font-family:'DM Serif Display',serif; font-size:22px; padding-bottom:10px; border-bottom:2px solid var(--ink); margin-bottom:20px; display:flex; align-items:baseline; gap:10px;}
+  .series-title .tag-en{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; color:var(--muted); margin-left:auto; text-transform:uppercase;}
+
+  .archive-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .archive-card{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:18px 19px; text-decoration:none; color:var(--ink); transition:border-color .15s, transform .15s; display:flex; flex-direction:column;}
+  .archive-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .archive-card.latest{border-left:3px solid var(--accent);}
+  .vol-num{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1px; color:var(--muted);}
+  .card-title{font-weight:700; font-size:15.5px; line-height:1.4; margin:8px 0 6px;}
+  .card-date{font-family:'DM Mono',monospace; font-size:11px; color:var(--muted);}
+  .card-tags{display:flex; gap:6px; margin:10px 0 8px; flex-wrap:wrap;}
+  .tag{font-family:'DM Mono',monospace; font-size:9px; padding:2px 7px; letter-spacing:0.5px; border-radius:2px;}
+  .t-global{background:#111010; color:#f4f1ea;}
+  .t-domestic{background:#0e0f13; color:var(--gold);}
+  .t-new{background:var(--accent); color:#fff;}
+  .card-themes{font-size:12px; color:var(--muted); line-height:1.6; flex:1;}
+  .read-link{margin-top:12px; font-family:'DM Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:0.5px;}
+
+  /* DARK CARDS (종토방) */
+  .archive-card.dark{background:#141519; border-color:#2a2c33; color:#e8e6e0;}
+  .archive-card.dark .card-date, .archive-card.dark .card-themes{color:#8b8882;}
+  .archive-card.dark:hover{border-color:var(--gold);}
+  .archive-card.dark.latest{border-left:3px solid var(--gold);}
+  .archive-card.dark .card-title{color:#e8e6e0;}
+  .archive-card.dark .vol-num{color:#6b6560;}
+  .archive-card.dark .read-link{color:var(--gold);}
+
+  .footer{max-width:1040px; margin:50px auto 0; padding:22px 24px 0; border-top:2px solid var(--ink); font-family:'DM Mono',monospace; font-size:10.5px; color:var(--muted); line-height:1.9;}
+
+  @media (max-width:860px){ .archive-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:540px){ .archive-grid{grid-template-columns:1fr;} .header-brand{font-size:34px;} }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="masthead">
-    <div class="brand">Buy-Side Weekly Intelligence</div>
-    <div class="title">바이사이드 <span>위클리</span></div>
-    <div class="tagline">Druckenmiller-style 글로벌 + 국내 센티먼트 주간 리포트 · 매주 토요일 발행</div>
-  </div>
 
-  <div class="series">
-    <div class="series-title">🌐 글로벌 리포트 — Reddit × X 위클리 센티먼트</div>
-    <div class="card-grid">
-      <a class="card latest" href="vol07_20260531.html">
-        <div class="card-vol">Vol.07 <span class="new-badge">NEW</span></div>
-        <div class="card-date">2026.05.31</div>
-        <div class="card-title">이란 휴전 기대 · 유가 -19% · DJIA 51,000 신고가</div>
-        <div class="card-desc">AI 서버체인 re-rating, 신용카드 연체 13%, Blue Origin 폭발, ECB 금리 인상 가능성, 호르무즈 다크세일링</div>
-      </a>
-      <a class="card" href="vol06_20260524.html">
-        <div class="card-vol">Vol.06</div>
-        <div class="card-date">2026.05.24</div>
-        <div class="card-title">코스피 8,000 돌파 · AI 캐펙스 사이클 가속</div>
-        <div class="card-desc">SK하이닉스 HBM 장기계약, 미·이란 1차 협상, 유가 하락 초기</div>
-      </a>
-      <a class="card" href="vol05_20260517.html">
-        <div class="card-vol">Vol.05</div>
-        <div class="card-date">2026.05.17</div>
-        <div class="card-title">관세 협상 타협 · 반도체 슈퍼사이클 지속</div>
-        <div class="card-desc">미·중 관세 유예 90일, NVIDIA GTC 후폭풍, 에너지 섹터 분화</div>
-      </a>
-      <a class="card" href="vol04_20260510.html">
-        <div class="card-vol">Vol.04</div>
-        <div class="card-date">2026.05.10</div>
-        <div class="card-title">호르무즈 봉쇄 완화 시도 · Fed 동결 확인</div>
-        <div class="card-desc">미 해군 작전 성과, Q1 빅테크 실적 서프라이즈, 금 $4,200 돌파</div>
-      </a>
-      <a class="card" href="vol03_20260503.html">
-        <div class="card-vol">Vol.03</div>
-        <div class="card-date">2026.05.03</div>
-        <div class="card-title">유가 $110 고점 · 에너지 섹터 과열 경계</div>
-        <div class="card-desc">이란 Bandar Abbas 정밀 타격, OPEC+ 긴급회의, 달러 강세 반전</div>
-      </a>
-      <a class="card" href="vol02_20260426.html">
-        <div class="card-vol">Vol.02</div>
-        <div class="card-date">2026.04.26</div>
-        <div class="card-title">전쟁 2개월 · 방산·에너지 랠리 정점</div>
-        <div class="card-desc">UAE 아랍에미리트 공습 참전, 이스라엘 연합 확대, 방산주 200% 급등</div>
-      </a>
-    </div>
-  </div>
-
-  <div class="series">
-    <div class="series-title">🇰🇷 국내 리포트 — 종토방 위클리</div>
-    <div class="card-grid">
-      <a class="card latest" href="kospi_jongtoban_vol05_20260531.html">
-        <div class="card-vol">Vol.05 <span class="new-badge">NEW</span></div>
-        <div class="card-date">2026.05.31</div>
-        <div class="card-title">코스피 8,476p 신고가 · AI 쏠림 극단화</div>
-        <div class="card-desc">대한광통신·주성엔지니어링 엔비디아 연결 열기, 디앤디파마텍 LO계약 기대, LS ELECTRIC 공시 오류, 커버드콜 ETF 인컴 수요</div>
-      </a>
-      <a class="card" href="kospi_jongtoban_vol04_20260524.html">
-        <div class="card-vol">Vol.04</div>
-        <div class="card-date">2026.05.24</div>
-        <div class="card-title">코스피 8,000선 돌파 · 방산·조선 주도</div>
-        <div class="card-desc">한화오션 LNG선 수주, 현대로템 유럽 방산 수출, 이차전지 반등 시도</div>
-      </a>
-      <a class="card" href="kospi_jongtoban_vol03_20260517.html">
-        <div class="card-vol">Vol.03</div>
-        <div class="card-date">2026.05.17</div>
-        <div class="card-title">외국인 대거 귀환 · 코스피 7,800 돌파</div>
-        <div class="card-desc">삼성전자 3만전자 돌파, SK하이닉스 HBM 공급 확대, 바이오 섹터 차별화</div>
-      </a>
-      <a class="card" href="kospi_jongtoban_vol02_20260510.html">
-        <div class="card-vol">Vol.02</div>
-        <div class="card-date">2026.05.10</div>
-        <div class="card-title">전력·에너지 인프라 테마 급부상</div>
-        <div class="card-desc">LS ELECTRIC·HD현대일렉 강세, LNG 선박 수주 소식, 원전 테마 재부상</div>
-      </a>
-    </div>
-  </div>
-
-  <div class="footer">
-    minkeun00-creator.github.io/weekly-report · 매주 토요일 갱신 · 투자 권유 아님
+<div class="header">
+  <div class="header-inner">
+    <div class="header-brand">Buy-Side<span> Weekly</span></div>
+    <div class="header-sub">Report Archive · minkeun00-creator.github.io/weekly-report</div>
+    <div class="header-desc">매주 토요일 발행. WSJ 마켓 데이터 × Reddit 소셜 심리 × X 인플루언서 포지셔닝 × 네이버 종토방 분석. 드러켄밀러 하우스 스타일 바이사이드 인텔리전스.</div>
   </div>
 </div>
+
+<div class="container">
+
+  <!-- ░░ GLOBAL SERIES ░░ -->
+  <div class="series-section">
+    <div class="series-title">🌐 글로벌 시리즈 — Reddit × X 위클리 센티먼트 <span class="tag-en">Light Theme</span></div>
+    <div class="archive-grid">
+
+      <a class="archive-card latest" href="vol08_20260620.html">
+        <div class="vol-num">VOL.08</div>
+        <div class="card-title">반도체가 끌고, 매파가 누른 주</div>
+        <div class="card-date">2026.06.20</div>
+        <div class="card-tags"><span class="tag t-global">GLOBAL</span><span class="tag t-new">LATEST</span></div>
+        <div class="card-themes">PHLX 반도체 주간 폭등 · KOSPI 세계 1위(+11.43%) · 워시 연준 매파 점도표 · 美–이란 호르무즈 MOU · 유가 -9.8% · 달러 1년 고점 · 준틴스 휴장.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card" href="vol07_20260531.html">
+        <div class="vol-num">VOL.07</div>
+        <div class="card-title">AI 설비투자 슈퍼사이클 점검</div>
+        <div class="card-date">2026.05.31</div>
+        <div class="card-tags"><span class="tag t-global">GLOBAL</span></div>
+        <div class="card-themes">하이퍼스케일러 capex 가속 · 반도체 모멘텀 · 연준 정책 전환 관망 · 지정학 변동성 속 위험선호 점검.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card" href="vol06_20260510.html">
+        <div class="vol-num">VOL.06</div>
+        <div class="card-title">Apple–Intel 파운드리 딜 · 고용 호조</div>
+        <div class="card-date">2026.05.10</div>
+        <div class="card-tags"><span class="tag t-global">GLOBAL</span></div>
+        <div class="card-themes">애플–인텔 파운드리 협력 · 4월 고용 호조 · 이란전 지정학 리스크 · AI 기업 IPO 준비 · Cautious Bull 68.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card" href="vol05_20260502.html">
+        <div class="vol-num">VOL.05</div>
+        <div class="card-title">이란전 종전 베팅 · 유가 변곡점</div>
+        <div class="card-date">2026.05.02</div>
+        <div class="card-tags"><span class="tag t-global">GLOBAL</span></div>
+        <div class="card-themes">이란 휴전 기대 형성 · 유가 변동성 · 위험자산 반등 · 연준 인하 경로 논쟁.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card" href="vol04_20260405.html">
+        <div class="vol-num">VOL.04</div>
+        <div class="card-title">이란전 5주차, 시장의 종전 베팅</div>
+        <div class="card-date">2026.04.05</div>
+        <div class="card-tags"><span class="tag t-global">GLOBAL</span></div>
+        <div class="card-themes">WTI $111.54 급등 · S&P +3.36% 주간 반등 · 3월 고용 +178K 서프라이즈 · 스태그플레이션 꼬리리스크 · 방산·에너지 롱.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card" href="vol02_20260321.html">
+        <div class="vol-num">VOL.02</div>
+        <div class="card-title">중동 긴장 · 원자재 강세 전환</div>
+        <div class="card-date">2026.03.21</div>
+        <div class="card-tags"><span class="tag t-global">GLOBAL</span></div>
+        <div class="card-themes">지정학 프리미엄 부상 · 원유·금 강세 · 안전자산 선호 · 연준 스탠스 관망.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ░░ DOMESTIC SERIES ░░ -->
+  <div class="series-section">
+    <div class="series-title">🇰🇷 국내 시리즈 — 종토방 위클리 센티먼트 <span class="tag-en">Dark Theme</span></div>
+    <div class="archive-grid">
+
+      <a class="archive-card dark latest" href="kospi_jongtoban_vol06_20260620.html">
+        <div class="vol-num">VOL.06</div>
+        <div class="card-title">코스피 9,000 광기, 코스닥은 소외</div>
+        <div class="card-date">2026.06.20</div>
+        <div class="card-tags"><span class="tag t-domestic">종토방</span><span class="tag t-new">LATEST</span></div>
+        <div class="card-themes">월배당·커버드콜 ETF FOMO · 미국지수 적립식 · 반도체·전력·조선 순환매 · SK스퀘어 NAV · 디앤디파마텍 신고가 · 코스닥 1,000선 붕괴.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card dark" href="kospi_jongtoban_vol05_20260531.html">
+        <div class="vol-num">VOL.05</div>
+        <div class="card-title">반도체 재반등 · 외인 순매수 전환</div>
+        <div class="card-date">2026.05.31</div>
+        <div class="card-tags"><span class="tag t-domestic">종토방</span></div>
+        <div class="card-themes">메모리 슈퍼사이클 기대 · 외국인 수급 개선 · ETF 적립 지속 · 전력 인프라 테마 연장.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card dark" href="kospi_jongtoban_vol04_20260510.html">
+        <div class="vol-num">VOL.04</div>
+        <div class="card-title">전력 인프라 슈퍼사이클 · 반도체 FOMO</div>
+        <div class="card-date">2026.05.10</div>
+        <div class="card-tags"><span class="tag t-domestic">종토방</span></div>
+        <div class="card-themes">LS ELECTRIC·대한전선·대한광통신 전력 테마 강세 · 주성엔지니어링 투경해제 기대 · 에코프로비엠 신고가 도전 · ETF FOMO 과열 · Broad Bullish 72.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card dark" href="kospi_jongtoban_vol03_20260411.html">
+        <div class="vol-num">VOL.03</div>
+        <div class="card-title">이란 전쟁 공포 · 방산·에너지 급부상</div>
+        <div class="card-date">2026.04.11</div>
+        <div class="card-tags"><span class="tag t-domestic">종토방</span></div>
+        <div class="card-themes">이란 개전 충격으로 공포 게시글 폭증 · 방산·에너지 ETF 자금 이동 · 개인 공황 매도 후 기관 저점 매수.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card dark" href="kospi_jongtoban_vol02_20260321.html">
+        <div class="vol-num">VOL.02</div>
+        <div class="card-title">2차전지 반등 기대 · 반도체 외인 매수</div>
+        <div class="card-date">2026.03.21</div>
+        <div class="card-tags"><span class="tag t-domestic">종토방</span></div>
+        <div class="card-themes">에코프로 계열 재반등 기대감 확산 · 삼성전자·SK하이닉스 외인 순매수 전환 · 코스닥 소형주 변동성 확대.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+      <a class="archive-card dark" href="kospi_jongtoban_vol01_20260314.html">
+        <div class="vol-num">VOL.01</div>
+        <div class="card-title">창간호 · 네이버 종토방 분석 방법론</div>
+        <div class="card-date">2026.03.14</div>
+        <div class="card-tags"><span class="tag t-domestic">종토방</span></div>
+        <div class="card-themes">종토방 위클리 국내 시리즈 첫 발행 · 게시글 수·조회수 기반 센티먼트 정량화 방법론 확립.</div>
+        <div class="read-link">→ 리포트 읽기</div>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  BUY-SIDE WEEKLY SENTIMENT REPORT · ARCHIVE INDEX<br>
+  매주 토요일 발행 · 글로벌(Reddit × X) + 국내(종토방) 듀얼 시리즈<br>
+  배포: Telegram · KakaoTalk · GitHub Pages · 리서치 헤드 — 드러켄밀러 하우스 출신 베테랑<br>
+  ※ 본 아카이브의 모든 리포트는 정보 제공용이며 투자 권유가 아닙니다. © 2026 Buy-Side Weekly
+</div>
+
 </body>
 </html>
