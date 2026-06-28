@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>종토방 위클리 · KOSPI 심리 리포트 Vol.07</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0f13; --panel:#16181f; --panel2:#1c1f28; --text:#e8e6e0; --muted:#8b8f9a;
+  --line:rgba(232,230,224,.12); --red:#ff5a52; --blue:#5aa0ff; --gold:#e8b94a; --green:#46d18a;
+  --hot:#ff7a45;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Noto Sans KR',system-ui,sans-serif;
+  line-height:1.6; font-size:clamp(14px,1.6vw,16px);
+  padding:clamp(16px,4vw,44px);
+}
+.wrap{max-width:980px;margin:0 auto}
+.mono{font-family:'DM Mono',monospace}
+.up{color:var(--green)} .down{color:var(--red)} .blue{color:var(--blue)}
+
+/* masthead */
+.masthead{border-top:4px solid var(--hot);padding:16px 0 14px;margin-bottom:8px;border-bottom:1px solid var(--line)}
+.mh-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.title{font-weight:900;font-size:clamp(28px,7vw,56px);line-height:1;letter-spacing:-.02em;margin:10px 0 6px}
+.title .ac{color:var(--hot)}
+.subtitle{font-size:clamp(12px,2vw,14px);color:var(--muted)}
+
+/* market strip */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.strip .cell{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.strip .lbl{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.04em}
+.strip .val{font-weight:900;font-size:clamp(22px,4vw,30px);line-height:1.1;margin:3px 0}
+.strip .chg{font-family:'DM Mono',monospace;font-size:13px;font-weight:500}
+.strip .sub{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:4px}
+
+section{margin:30px 0}
+h2{font-weight:900;font-size:clamp(19px,3.2vw,27px);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+h2:before{content:"";width:6px;height:22px;background:var(--hot);display:inline-block;border-radius:2px}
+.en{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);font-weight:400;letter-spacing:.04em}
+.lead{color:var(--muted);font-size:14px;margin:8px 0 16px}
+
+/* summary */
+.summary{background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:8px;padding:clamp(16px,3vw,24px)}
+.summary .big{font-weight:900;font-size:clamp(17px,2.6vw,22px);line-height:1.4;margin-bottom:12px}
+.summary .big b{color:var(--hot)}
+.summary p{font-size:14px;color:#cfcdc6;margin:8px 0}
+.metrics{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.metric{background:rgba(255,122,69,.1);border:1px solid rgba(255,122,69,.3);border-radius:20px;padding:5px 13px;font-family:'DM Mono',monospace;font-size:12px}
+
+/* hot table */
+.hot{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.hot table{border-collapse:collapse;width:100%;min-width:600px}
+.hot th{background:#0a0b0e;color:var(--muted);text-align:left;padding:10px 12px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.03em;position:sticky;top:0}
+.hot td{padding:10px 12px;border-top:1px solid var(--line);font-size:13.5px;vertical-align:top}
+.hot .rk{font-family:'DM Mono',monospace;font-weight:700;color:var(--hot);width:34px}
+.hot .nm{font-weight:700;white-space:nowrap}
+.hot .cd{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
+.hot .views{font-family:'DM Mono',monospace;text-align:right;white-space:nowrap}
+.hot .top-quote{color:#bdbbb4;font-size:12.5px}
+.hot tr:nth-child(-n+4) .nm{color:var(--gold)}
+
+/* signals */
+.sig{display:grid;gap:10px}
+.sig-card{display:grid;grid-template-columns:88px 1fr;gap:14px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--hot);border-radius:6px;padding:12px 14px}
+.sig-t{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;color:var(--hot);letter-spacing:.02em;align-self:center}
+.sig-x{font-size:13.5px}
+
+/* theme clusters */
+.clusters{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.cluster{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:15px 16px}
+.cluster .ch{font-weight:900;font-size:15px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.cluster .dot{width:9px;height:9px;border-radius:50%}
+.cluster .ctags{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin:4px 0 8px}
+.cluster .cbody{font-size:13px;color:#cfcdc6;line-height:1.55}
+.cluster .heat{font-family:'DM Mono',monospace;font-size:10.5px;margin-top:8px;padding-top:7px;border-top:1px dotted var(--line);color:var(--muted)}
+
+/* thermometer */
+.thermo{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px}
+.gauge{height:26px;border-radius:13px;background:linear-gradient(90deg,#ff3b30 0%,#ff7a45 38%,#e8b94a 60%,#46d18a 100%);position:relative;margin:18px 0 8px}
+.needle{position:absolute;top:-7px;width:4px;height:40px;background:#fff;border-radius:2px;box-shadow:0 0 0 2px var(--bg)}
+.glabels{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
+.thermo .read{font-weight:900;font-size:18px;margin-top:14px}
+.thermo .read b{color:var(--hot)}
+.tbreak{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.tcol{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:12px}
+.tcol h4{font-size:13px;margin-bottom:6px;font-weight:700}
+.tcol .fear{color:var(--red)} .tcol .greed{color:var(--green)}
+.tcol ul{list-style:none;font-size:12.5px;color:#cfcdc6}
+.tcol li{padding:3px 0}
+.tcol li:before{content:"› ";color:var(--muted)}
+
+/* chart */
+.bars{display:grid;gap:9px;font-family:'DM Mono',monospace;font-size:12px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px}
+.bar-row{display:grid;grid-template-columns:108px 1fr 60px;gap:10px;align-items:center}
+.bar-track{height:18px;background:rgba(232,230,224,.07);position:relative;border-radius:3px}
+.bar-fill{height:100%;border-radius:3px}
+.bar-fill.pos{background:var(--green)} .bar-fill.neg{background:var(--red)}
+.bar-val{text-align:right}
+.cap{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--muted);text-align:center;margin-top:6px}
+
+/* insight */
+.insight{background:#08090c;border:1px solid var(--line);border-radius:8px;padding:clamp(18px,3vw,28px)}
+.insight h2:before{background:var(--gold)}
+.insight p{font-size:14px;line-height:1.7;margin:12px 0;color:#d6d4cd}
+.insight .dk{font-weight:900;font-size:clamp(15px,2.3vw,19px);line-height:1.45;border-left:3px solid var(--gold);padding-left:16px;margin:18px 0;color:#f0e7d0}
+.insight b{color:var(--gold)}
+
+footer{margin-top:38px;border-top:1px solid var(--line);padding-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);line-height:1.7}
+.disc{font-size:10.5px;margin-top:8px}
+
+@media(max-width:768px){
+  .strip{grid-template-columns:1fr}
+  .clusters{grid-template-columns:1fr}
+  .sig-card{grid-template-columns:1fr;gap:4px}
+  .tbreak{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:88px 1fr 52px;gap:7px}
+}
+@media print{
+  @page{size:A4;margin:12mm}
+  :root{--bg:#fff;--panel:#fff;--panel2:#f4f4f0;--text:#141414;--muted:#555;--line:rgba(0,0,0,.18)}
+  body{background:#fff;color:#141414;padding:0;font-size:10.5px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .summary,.insight{background:#f6f5f1!important;color:#141414}
+  .insight{background:#f0efe9!important}
+  .insight p,.summary p{color:#333}
+  .hot th{background:#222!important;color:#fff!important}
+  section,.hot,.cluster,.sig-card,.thermo,.insight,.summary,.bars{page-break-inside:avoid}
+  .gauge,.bar-fill,.strip .cell{print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mh-top">
+    <span>종토방 위클리 · KOSPI 심리 리포트</span>
+    <span>Vol.07</span>
+    <span>2026 · 06 · 27 (SAT)</span>
+  </div>
+  <div class="title">종토방 <span class="ac">심리</span> 리포트</div>
+  <div class="subtitle">네이버 종목토론방 TOP 20 · 게시글·조회수 기반 리테일 심리 합성 — <span class="mono">한국투자증권 스타일 리서치 헤드 데스크</span></div>
+</header>
+
+<!-- MARKET STRIP -->
+<div class="strip">
+  <div class="cell">
+    <div class="lbl">KOSPI · 6/26(금) 종가</div>
+    <div class="val">8,411.21</div>
+    <div class="chg down">▼ 519.09 (-5.81%)</div>
+    <div class="sub">전일 8,930.30(+5.42%) → '검은 금요일'</div>
+  </div>
+  <div class="cell">
+    <div class="lbl">KOSDAQ · 6/26(금) 종가</div>
+    <div class="val">851.37</div>
+    <div class="chg down">▼ 36.44 (-4.10%)</div>
+    <div class="sub">전일 887.81 · 반대매매·유동성 고갈</div>
+  </div>
+  <div class="cell">
+    <div class="lbl">원/달러 · 6/26(금)</div>
+    <div class="val">1,535.6</div>
+    <div class="chg up">▼ 7.1원</div>
+    <div class="sub">당국 스무딩 유입 · 1,540원대 고착</div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<section>
+  <h2>주간 요약 <span class="en">Weekly Recap</span></h2>
+  <div class="summary">
+    <div class="big">"지수가 아니라 <b>단일종목 베타</b>로 거래된 한 주 — 목요일 +5.42% 폭등, 금요일 -5.81% 폭락, 한 주에 <b>두 번 매매중단</b>."</div>
+    <p>마이크론 깜짝 실적에 삼성전자·SK하이닉스가 급등하며 목요일 코스피는 8,930까지 치솟아 <b>SK하이닉스가 시총 1위 재탈환</b>. 그러나 금요일 미국 기술주 쇼크에 SK하이닉스 -8%대, 외국인·기관 무차별 매도로 코스피는 <b>'검은 금요일'(-5.81%, 8,411)</b>을 맞아 사이드카·서킷브레이커 발동.</p>
+    <p>코스닥은 '천스닥의 덫' 속 유동성 고갈과 <b>반대매매(빚투 청산)</b>로 851선까지 추락. 종토방은 환호("시총 1위", "월요일 100만")와 패닉("검은 월요일", "안녕히계세요 여러분")이 공존하는 <b>극단적 양극화</b>.</p>
+    <div class="metrics">
+      <span class="metric">한 주 2회 매매중단</span>
+      <span class="metric">SK하이닉스 시총1위 재탈환</span>
+      <span class="metric">코스피 9,000 터치 후 급락</span>
+      <span class="metric">반대매매 급증</span>
+      <span class="metric">월요일 1,000조 반도체 회의 대기</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOT TABLE -->
+<section>
+  <h2>HOT 종목 테이블 <span class="en">Naver 종토방 TOP 20 · 조회수 순</span></h2>
+  <p class="lead">상위 4종목이 <b style="color:var(--gold)">인컴/지수 ETF</b> — 변동성 장에서 개인의 '회피처'와 '직투'가 동시에 1위권을 점령. 5위부터는 SK그룹·반도체·조선·바이오 테마가 점거.</p>
+  <div class="hot">
+    <table>
+      <thead><tr><th>#</th><th>종목</th><th class="views">게시글 / 조회수</th><th>대표 게시글 (종토방)</th></tr></thead>
+      <tbody>
+        <tr><td class="rk">1</td><td><div class="nm">TIGER 배당커버드콜액티브</div><div class="cd">472150 · ETF</div></td><td class="views">56 / 43,546</td><td class="top-quote">"분배금 공시(580원)" · "배당락일" · "하방이 뚫려있는 느낌"</td></tr>
+        <tr><td class="rk">2</td><td><div class="nm">TIGER 미국S&amp;P500</div><div class="cd">360750 · ETF</div></td><td class="views">46 / 39,731</td><td class="top-quote">"환율 때문에 떨어지지가 않네" · "적립식은?" · "한 십 년"</td></tr>
+        <tr><td class="rk">3</td><td><div class="nm">KODEX 미국나스닥100</div><div class="cd">379810 · ETF</div></td><td class="views">47 / 36,213</td><td class="top-quote">"나스닥은 신앙입니다" · "지금 사도 안 늦었나요?" · "거래정지?"</td></tr>
+        <tr><td class="rk">4</td><td><div class="nm">KODEX 200타겟위클리커버드콜</div><div class="cd">498400 · ETF</div></td><td class="views">44 / 32,768</td><td class="top-quote">"7월분배금" · "1만을 향하는 고민" · "다시 봐도 배부릅니다"</td></tr>
+        <tr><td class="rk">5</td><td><div class="nm">SK</div><div class="cd">034730 · 지주</div></td><td class="views">80 / 31,720</td><td class="top-quote">"SK·하이닉스 증설이 지주값 바꾼다" · "최태원 파기환송심" · "액침냉각 찰떡"</td></tr>
+        <tr><td class="rk">6</td><td><div class="nm">삼성전기</div><div class="cd">009150</div></td><td class="views">80 / 30,315</td><td class="top-quote">"JP모간 피셜" · "외국인 1.9조 담은 종목" · "美 MLCC ETF 편입"</td></tr>
+        <tr><td class="rk">7</td><td><div class="nm">가온전선</div><div class="cd">000500</div></td><td class="views">80 / 29,487</td><td class="top-quote">"화요일까지 무증(무상증자)" · "K-스틸법 2.0 발의" · "권리락 이후"</td></tr>
+        <tr><td class="rk">8</td><td><div class="nm">로킷헬스케어</div><div class="cd">376900 · 바이오</div></td><td class="views">80 / 27,438</td><td class="top-quote">"RKAM 미국 차트 릴리즈" · "CNN 비즈니스에도 ROKIT" · "SEC 통과?"</td></tr>
+        <tr><td class="rk">9</td><td><div class="nm">디앤디파마텍</div><div class="cd">347850 · 바이오</div></td><td class="views">80 / 26,840</td><td class="top-quote">"美 NBI 지수 사상 첫 6,500" · "2차 CB 리픽싱" · "SOLAR 2026 발표"</td></tr>
+        <tr><td class="rk">10</td><td><div class="nm">LG이노텍</div><div class="cd">011070</div></td><td class="views">80 / 26,424</td><td class="top-quote">"애플보다 먼저 봐야 할 AI 기판" · "월요일 100만 이상" · "2분기 실적 공시"</td></tr>
+        <tr><td class="rk">11</td><td><div class="nm">LG씨엔에스</div><div class="cd">064400</div></td><td class="views">80 / 25,619</td><td class="top-quote">"6/29 대통령 대국민 보고회" · "협업 500조 투자" · "8월 MSCI 편입"</td></tr>
+        <tr><td class="rk">12</td><td><div class="nm">한화오션</div><div class="cd">042660 · 조선</div></td><td class="views">79 / 25,243</td><td class="top-quote">"트럼프 조선부활법" · "캐나다 잠수함 수주 가능성 99%" · "영국대사 힌트"</td></tr>
+        <tr><td class="rk">13</td><td><div class="nm">KODEX 200</div><div class="cd">069500 · ETF</div></td><td class="views">80 / 24,955</td><td class="top-quote">"코스피 9000 가야 본전" · "넘 일찍 담았네" · "또 겁들 먹네"</td></tr>
+        <tr><td class="rk">14</td><td><div class="nm">SK스퀘어</div><div class="cd">402340</div></td><td class="views">80 / 24,900</td><td class="top-quote">"마이크론 15배면 하이닉스 18배" · "ADR 상장 이슈" · "합병 이슈"</td></tr>
+        <tr><td class="rk">15</td><td><div class="nm">LS ELECTRIC</div><div class="cd">010120 · 전력</div></td><td class="views">80 / 24,685</td><td class="top-quote">"전력·로봇 중" · "월요일 국장 반등" · "음의 복리"</td></tr>
+        <tr><td class="rk">16</td><td><div class="nm">SK이터닉스</div><div class="cd">475150 · 신재생</div></td><td class="views">79 / 22,881</td><td class="top-quote">"SK 광주 신재생 투자" · "6/30 최태원 광주" · "블룸에너지 급락"</td></tr>
+        <tr><td class="rk">17</td><td><div class="nm">메지온</div><div class="cd">140410 · 바이오</div></td><td class="views">80 / 22,444</td><td class="top-quote">"2026 BIO USA 현황" · "ADPKD 매각 전략" · "승부는 하반기"</td></tr>
+        <tr><td class="rk">18</td><td><div class="nm">맥쿼리인프라</div><div class="cd">088980 · 인프라</div></td><td class="views">80 / 22,411</td><td class="top-quote">"반기배당 380→350?" · "분배금으로 꼬시고 주가로 손해" · "내일까지 매입"</td></tr>
+        <tr><td class="rk">19</td><td><div class="nm">HPSP</div><div class="cd">403870 · 반도체</div></td><td class="views">80 / 22,223</td><td class="top-quote">"크레센도 직접경영의 의미" · "오늘 상승은 의미가 있음"</td></tr>
+        <tr><td class="rk">20</td><td><div class="nm">SK텔레콤</div><div class="cd">017670</div></td><td class="views">80 / 22,203</td><td class="top-quote">"AI 프리미엄 타고 재평가" · "美 정부, 앤스로픽 수출통제" · "목표가 400만원"</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SIGNALS -->
+<section>
+  <h2>시그널 <span class="en">Buy-Side Read</span></h2>
+  <div class="sig">
+    <div class="sig-card"><div class="sig-t">집중도</div><div class="sig-x">시총 상위 4종목(삼성전자·SK하이닉스·삼성전자우·SK스퀘어) 비중 ~50%. 지수 = 메모리 2종목 레버리지. 종토방 SK그룹 4종목(SK·스퀘어·텔레콤·이터닉스) 동시 상위권이 그 거울.</div></div>
+    <div class="sig-card"><div class="sig-t">인컴 회피</div><div class="sig-x">변동성 폭발에 커버드콜·배당 ETF(1·4위)·맥쿼리(18위)로 자금 회피. "분배금"·"배당락" 문의 폭증 = 방향성 포기, 캐리 집착.</div></div>
+    <div class="sig-card"><div class="sig-t">환율 고착</div><div class="sig-x">원/달러 1,535원대에 "환율 때문에 안 떨어진다"가 미국지수 ETF(2·3위) 핵심 정서. 환헤지 부재 직투의 양날.</div></div>
+    <div class="sig-card"><div class="sig-t">테마 추격</div><div class="sig-x">조선(한화오션·수주), 바이오 미국상장(로킷·디앤디·NBI 신고가), AI기판/전력(LG이노텍·LS·가온) — 지수 패닉 속에서도 개별 모멘텀 추격 지속.</div></div>
+    <div class="sig-card"><div class="sig-t">레버리지</div><div class="sig-x">금요일 낙폭 확대의 진원은 반대매매. '빚투' 디레버리징 국면 = 추가 변동성의 연료. 월요일 강제청산 잔여 물량 주시.</div></div>
+  </div>
+</section>
+
+<!-- THEME CLUSTERS -->
+<section>
+  <h2>테마 클러스터 <span class="en">Theme Map</span></h2>
+  <div class="clusters">
+    <div class="cluster">
+      <div class="ch"><span class="dot" style="background:var(--hot)"></span>메모리 슈퍼사이클 · SK그룹</div>
+      <div class="ctags mono">SK · SK스퀘어 · SK텔레콤 · SK이터닉스 · HPSP · 삼성전기</div>
+      <div class="cbody">마이크론 깜짝실적 → SK하이닉스 시총1위 재탈환. "마이크론 15배면 하이닉스 18배" 로직, SK스퀘어 ADR 상장설·합병 기대. 최태원 이혼 파기환송심, SK텔레콤 AI 프리미엄(목표가 400만원), 광주 신재생(이터닉스).</div>
+      <div class="heat">HEAT ●●●●● 최상위 · 환호+공포 공존</div>
+    </div>
+    <div class="cluster">
+      <div class="ch"><span class="dot" style="background:var(--gold)"></span>인컴 / 커버드콜 ETF</div>
+      <div class="ctags mono">TIGER 배당커버드콜 · KODEX 200타겟위클리 · 맥쿼리인프라</div>
+      <div class="cbody">분배금(580원)·배당락 문의 폭증. 변동성 회피처로 인컴 집착. 맥쿼리 반기배당 380→350 우려가 옥에 티. "분배금으로 꼬시고 주가로 손해" 회의론도 병존.</div>
+      <div class="heat">HEAT ●●●●○ 방어 심리</div>
+    </div>
+    <div class="cluster">
+      <div class="ch"><span class="dot" style="background:var(--blue)"></span>미국지수 직투 + 환율</div>
+      <div class="ctags mono">TIGER S&amp;P500 · KODEX 나스닥100 · KODEX 200</div>
+      <div class="cbody">"나스닥은 신앙", 적립식 vs 한방 논쟁. 원/달러 1,535원 고착에 "환율 때문에 안 떨어진다". 코스피 9,000 본전 논쟁("9000 가야 본전").</div>
+      <div class="heat">HEAT ●●●●○ 직투 + 환율 정서</div>
+    </div>
+    <div class="cluster">
+      <div class="ch"><span class="dot" style="background:var(--green)"></span>조선 · 방산</div>
+      <div class="ctags mono">한화오션</div>
+      <div class="cbody">트럼프 조선부활법, 캐나다 잠수함 수주 기대("99%"), 영국대사 힌트. "일감 텅텅" 회의론과 "가즈아" 환호 양립. 美 발 호재 추격.</div>
+      <div class="heat">HEAT ●●●○○ 모멘텀 추격</div>
+    </div>
+    <div class="cluster">
+      <div class="ch"><span class="dot" style="background:#c77dff"></span>바이오 모멘텀</div>
+      <div class="ctags mono">로킷헬스케어 · 디앤디파마텍 · 메지온</div>
+      <div class="cbody">로킷아메리카 RKAM 미국상장/SEC 기대, 美 NBI 지수 사상 첫 6,500 신고가, 디앤디 2차 CB 리픽싱·임상, 메지온 ADPKD 매각전략. "미국 바이오 폭등" 동조 기대.</div>
+      <div class="heat">HEAT ●●●○○ 美 상장·임상 테마</div>
+    </div>
+    <div class="cluster">
+      <div class="ch"><span class="dot" style="background:#5ad1c7"></span>전력 · AI기판 · 인프라</div>
+      <div class="ctags mono">LG이노텍 · LG씨엔에스 · LS ELECTRIC · 가온전선</div>
+      <div class="cbody">AI 기판(애플 공급), 6/29 대통령 보고회·500조 투자·MSCI 편입 기대(LG CNS), 전력·로봇(LS), 가온전선 무상증자 권리락·K-스틸법 2.0. 정책+AI 인프라 결합.</div>
+      <div class="heat">HEAT ●●●○○ 정책·인프라 기대</div>
+    </div>
+  </div>
+</section>
+
+<!-- SENTIMENT THERMOMETER -->
+<section>
+  <h2>심리 온도계 <span class="en">Sentiment Gauge</span></h2>
+  <div class="thermo">
+    <div class="gauge"><div class="needle" style="left:24%"></div></div>
+    <div class="glabels"><span>극단적 공포</span><span>공포</span><span>중립</span><span>탐욕</span></div>
+    <div class="read">종합 판독: <b>공포 우세 · 양극화</b> — 패닉성 투매와 테마 추격이 동시 발생하는 후기사이클 변동성 국면.</div>
+    <div class="tbreak">
+      <div class="tcol">
+        <h4 class="fear">공포 신호 (우세)</h4>
+        <ul>
+          <li>"월요일 대폭락", "검은 월요일", "코스피 사망 ㅅㄱ"</li>
+          <li>"안녕히계세요 여러분", "나락가다 매도하니 오름"</li>
+          <li>반대매매·빚투 청산 ("물린 분들 필독")</li>
+          <li>코스닥 천스닥의 덫 (851선)</li>
+          <li>맥쿼리 "분배금으로 꼬시고 주가로 손해"</li>
+        </ul>
+      </div>
+      <div class="tcol">
+        <h4 class="greed">탐욕 신호 (개별)</h4>
+        <ul>
+          <li>SK하이닉스 시총1위·SK스퀘어 ADR 기대</li>
+          <li>"월요일 100만 이상"(LG이노텍), 목표가 400만(SKT)</li>
+          <li>한화오션 "수주 가즈아", 바이오 美 상장</li>
+          <li>커버드콜 "다시 봐도 배부릅니다"</li>
+          <li>"나스닥은 신앙" 적립식 신념</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHART -->
+<section>
+  <h2>차트 — 이번 주 KOSPI 일간 궤적 <span class="en">Intraweek Swing</span></h2>
+  <div class="bars">
+    <div class="bar-row"><span>목 6/25</span><div class="bar-track"><div class="bar-fill pos" style="width:72%"></div></div><span class="bar-val up">+5.42%</span></div>
+    <div class="bar-row"><span>금 6/26</span><div class="bar-track"><div class="bar-fill neg" style="width:77%"></div></div><span class="bar-val down">-5.81%</span></div>
+    <div class="bar-row"><span>KOSDAQ 목</span><div class="bar-track"><div class="bar-fill neg" style="width:31%"></div></div><span class="bar-val down">-2.36%</span></div>
+    <div class="bar-row"><span>KOSDAQ 금</span><div class="bar-track"><div class="bar-fill neg" style="width:54%"></div></div><span class="bar-val down">-4.10%</span></div>
+    <div class="cap">목요일 마이크론發 +5.42% 폭등 → 금요일 美 기술주 쇼크 -5.81% 폭락. 코스닥은 양일 연속 하락(반대매매). 한 주 2회 매매중단.</div>
+  </div>
+</section>
+
+<!-- INSIGHT -->
+<section class="insight">
+  <h2>인사이트 <span class="en">Research Head's Desk</span></h2>
+  <p>이번 주 코스피는 '지수'가 아니라 <b>'단일종목 베타'</b>로 거래됐다. 목요일 +5.42% 폭등도, 금요일 -5.81% 폭락도 결국 삼성전자·SK하이닉스 두 종목의 진폭이었다. 시총 상위 4종목 비중이 절반에 달하는 시장에서, 지수는 사실상 <b>메모리 레버리지</b>다. 종토방의 "검은 월요일" 공포는 이 집중도의 거울일 뿐이다.</p>
+  <p>종토방 심리는 둘로 갈라졌다 — (a) 변동성 회피: 커버드콜·배당 ETF·맥쿼리로의 인컴 도피, (b) 변동성 추격: SK스퀘어 ADR·합병, 한화오션 수주, 바이오 미국상장. 방어와 추격이 동시에 1위권을 점령하는 것이 <b>후기사이클 양극화</b>의 전형이다.</p>
+  <p class="dk">"금요일 낙폭을 키운 건 반대매매다. 지금은 레버리지 디레버리징 국면 — 강제청산이 끝나기 전까지 바닥은 신뢰하기 어렵다. 월요일(6/29) 이재명 정부의 1,000조 반도체·AI 투자 회의가 단기 변곡점."</p>
+  <p>정리하면 — 한국 지수의 1차 변수는 <b>미국 메모리(마이크론) 실적</b>, 2차는 <b>매파 Fed(Warsh·9월 인상)</b>, 3차는 <b>환율 1,535원</b>이다. 종토방은 이 세 변수를 모두 "월요일"이라는 한 단어로 압축하고 있다. 데스크의 자세: <b>지수가 아니라 메모리 사이클의 질을 보고, 레버리지 청산이 만든 변동성을 기회로 분할 접근하되, 집중도 리스크에 사이징을 맞춘다.</b></p>
+</section>
+
+<footer>
+  종토방 위클리 · KOSPI 심리 리포트 Vol.07 · 2026-06-27<br>
+  데이터: 네이버 종목토론방 크롤링(2026-06-28 11:48, TOP 20 / 200제목) · KOSPI·KOSDAQ·원달러 종가(2026-06-26, 뉴시스·한국경제·포인트경제) · 글로벌 매크로는 글로벌 Vol.09 참조<br>
+  배포: Telegram · KakaoTalk 오픈채팅 · 아카이브 minkeun00-creator.github.io/weekly-report/
+  <div class="disc">본 리포트는 종목토론방 심리 합성 및 시장 데이터 정리 목적이며, 특정 종목의 매수·매도 권유가 아닙니다. 게시글 인용은 리테일 심리 측정용이며 사실확인된 정보가 아닙니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</div>
+</footer>
+
+</div>
+</body>
+</html>

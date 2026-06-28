@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>바이사이드 위클리 센티먼트 리포트 · 글로벌 Vol.09</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#111010; --paper:#f4f1ea; --accent:#8b2e2e; --green:#1f6f4a; --red:#b03a2e;
+  --line:rgba(17,16,16,.16); --muted:#5a554d; --card:#fbf9f3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:'Noto Sans KR',system-ui,sans-serif;
+  line-height:1.65; font-size:clamp(14px,1.6vw,16px);
+  padding:clamp(16px,4vw,48px);
+}
+.wrap{max-width:980px;margin:0 auto}
+.serif{font-family:'DM Serif Display',serif}
+.mono{font-family:'DM Mono',monospace;letter-spacing:-.01em}
+.up{color:var(--green)} .down{color:var(--red)}
+
+/* masthead */
+.masthead{border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:14px 0 12px;margin-bottom:6px}
+.mh-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.title{font-family:'DM Serif Display',serif;font-size:clamp(30px,7vw,58px);line-height:.98;margin:8px 0 4px}
+.subtitle{font-size:clamp(13px,2vw,15px);color:var(--muted)}
+.kicker{display:inline-block;background:var(--ink);color:var(--paper);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;padding:3px 9px;text-transform:uppercase;margin-bottom:10px}
+
+/* tape */
+.tape{border:1px solid var(--line);background:var(--card);margin:18px 0;overflow-x:auto}
+.tape table{border-collapse:collapse;width:100%;min-width:560px;font-family:'DM Mono',monospace;font-size:12.5px}
+.tape th{background:var(--ink);color:var(--paper);text-align:left;padding:7px 10px;font-weight:500;font-size:11px;letter-spacing:.03em}
+.tape td{padding:7px 10px;border-bottom:1px solid var(--line)}
+.tape tr:last-child td{border-bottom:none}
+.tape .name{font-family:'Noto Sans KR';font-weight:700}
+.tape td.num{text-align:right}
+
+section{margin:34px 0}
+h2{font-family:'DM Serif Display',serif;font-size:clamp(20px,3.4vw,30px);margin-bottom:4px;padding-bottom:8px;border-bottom:2px solid var(--ink);display:flex;align-items:baseline;gap:10px}
+h2 .en{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;font-weight:400}
+.lead{color:var(--muted);font-size:14px;margin:10px 0 16px}
+
+/* news flow */
+.flow{display:grid;gap:12px}
+.flow-item{display:grid;grid-template-columns:54px 1fr;gap:14px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.flow-num{font-family:'DM Serif Display',serif;font-size:26px;color:var(--accent);line-height:1}
+.flow-h{font-weight:700;margin-bottom:2px}
+.flow-b{font-size:13.5px;color:var(--muted)}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{border:1px solid var(--line);background:var(--card);padding:15px 16px;border-radius:2px}
+.card .tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--accent);text-transform:uppercase;font-weight:500}
+.card .src{font-weight:700;margin:3px 0 6px;font-size:15px}
+.card .q{font-size:13.5px;line-height:1.55}
+.card .meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px;border-top:1px dotted var(--line);padding-top:6px}
+.score{display:inline-block;font-family:'DM Mono',monospace;font-size:11px;padding:1px 7px;border-radius:10px;border:1px solid var(--line)}
+.score.bull{background:rgba(31,111,74,.12);color:var(--green);border-color:rgba(31,111,74,.3)}
+.score.bear{background:rgba(176,58,46,.1);color:var(--red);border-color:rgba(176,58,46,.3)}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--ink)}
+.compare>div{padding:16px 18px}
+.compare .col-r{background:#efe9da;border-left:1px solid var(--ink)}
+.compare h3{font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:6px}
+.compare ul{list-style:none;font-size:13px}
+.compare li{padding:5px 0;border-bottom:1px dotted var(--line)}
+.compare li:before{content:"▸ ";color:var(--accent)}
+
+/* keywords */
+.cloud{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.kw{font-family:'DM Mono',monospace;border:1px solid var(--line);padding:4px 11px;border-radius:20px;font-size:13px;background:var(--card)}
+.kw.hot{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:500}
+.kw.big{font-size:16px;font-weight:500}
+
+/* signals */
+.sig{display:grid;gap:10px}
+.sig-row{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:start;border-left:3px solid var(--accent);padding:8px 0 8px 14px;background:linear-gradient(90deg,rgba(139,46,46,.05),transparent)}
+.sig-label{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.02em}
+.sig-txt{font-size:13.5px}
+
+/* chart */
+.bars{display:grid;gap:9px;font-family:'DM Mono',monospace;font-size:12px}
+.bar-row{display:grid;grid-template-columns:118px 1fr 64px;gap:10px;align-items:center}
+.bar-track{height:18px;background:rgba(17,16,16,.06);position:relative;border-radius:2px}
+.bar-fill{height:100%;border-radius:2px}
+.bar-fill.pos{background:var(--green)} .bar-fill.neg{background:var(--red)}
+.bar-val{text-align:right}
+.axis{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:center;margin-top:4px}
+
+/* insight */
+.insight{background:var(--ink);color:var(--paper);padding:clamp(18px,3vw,28px);border-radius:2px}
+.insight h2{color:var(--paper);border-color:rgba(244,241,234,.3)}
+.insight h2 .en{color:rgba(244,241,234,.55)}
+.insight p{margin:12px 0;font-size:14px;line-height:1.7}
+.insight .dk{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(16px,2.4vw,21px);line-height:1.45;border-left:3px solid var(--accent);padding-left:16px;margin:18px 0;color:#f0e7d8}
+.insight strong{color:#e9c9a3}
+
+/* watchlist */
+.watch{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.watch-item{border:1px solid var(--line);padding:11px 13px;background:var(--card);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.watch-item .w-name{font-weight:700;font-size:14px}
+.watch-item .w-note{font-size:11.5px;color:var(--muted);font-family:'DM Mono',monospace}
+.watch-item .w-flag{font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.w-flag.own{background:rgba(31,111,74,.14);color:var(--green)}
+.w-flag.fade{background:rgba(176,58,46,.12);color:var(--red)}
+.w-flag.watch{background:rgba(17,16,16,.08);color:var(--ink)}
+
+footer{margin-top:40px;border-top:1px solid var(--ink);padding-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);line-height:1.7}
+.disc{font-size:10.5px;color:var(--muted);margin-top:8px}
+
+@media(max-width:768px){
+  .cards,.watch{grid-template-columns:1fr}
+  .compare{grid-template-columns:1fr}
+  .compare .col-r{border-left:none;border-top:1px solid var(--ink)}
+  .sig-row{grid-template-columns:1fr;gap:4px}
+  .flow-item{grid-template-columns:38px 1fr;gap:10px}
+  .bar-row{grid-template-columns:96px 1fr 54px;gap:7px}
+}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff;padding:0;font-size:10.5px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  section,.tape,.card,.compare,.insight,.flow-item,.watch-item,.sig-row{page-break-inside:avoid}
+  .insight{background:var(--ink)!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mh-top">
+    <span>Buy-Side Weekly Sentiment Report</span>
+    <span>Global Edition · Vol.09</span>
+    <span>2026 · 06 · 27 (SAT)</span>
+  </div>
+  <div class="title serif">바이사이드 위클리<br>센티먼트 리포트</div>
+  <div class="subtitle">소셜 미디어 시장 심리 합성 · Reddit × X · 글로벌 매크로 &amp; 미국 증시 — <span class="mono">한국투자증권 스타일 리서치 헤드 데스크</span></div>
+</header>
+
+<!-- WSJ MARKET TAPE -->
+<section>
+  <span class="kicker">WSJ Market · 종가 기준</span>
+  <div class="tape">
+    <table>
+      <thead>
+        <tr><th>지수 / 자산</th><th class="num">종가</th><th class="num">일간</th><th class="num">YTD</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">S&amp;P 500</td><td class="num">7,357.49</td><td class="num down">-0.01%</td><td class="num up">+7.5%</td></tr>
+        <tr><td class="name">Nasdaq Composite</td><td class="num">25,358.60</td><td class="num down">-0.46%</td><td class="num up">+9.1%</td></tr>
+        <tr><td class="name">Dow Jones</td><td class="num">51,920.62</td><td class="num up">+0.14%</td><td class="num up">+8.0%</td></tr>
+        <tr><td class="name">Russell 2000</td><td class="num">3,007.86</td><td class="num up">+0.71%</td><td class="num up">+21.2%</td></tr>
+        <tr><td class="name">PHLX 반도체</td><td class="num">13,940.87</td><td class="num up">+3.59%</td><td class="num up">+96.8%</td></tr>
+        <tr><td class="name">WTI 원유</td><td class="num">$71.92</td><td class="num up">+2.25%</td><td class="num up">+25.3%</td></tr>
+        <tr><td class="name">금 (Gold)</td><td class="num">$4,030.50</td><td class="num up">+1.01%</td><td class="num down">-6.8%</td></tr>
+        <tr><td class="name">美 10년물</td><td class="num">4.391%</td><td class="num">+2/32</td><td class="num">—</td></tr>
+        <tr><td class="name">EUR / USD</td><td class="num">1.1370</td><td class="num">—</td><td class="num up">+3.3%</td></tr>
+        <tr><td class="name">USD / JPY</td><td class="num">161.80</td><td class="num">—</td><td class="num">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="disc"><span class="mono">Source: WSJ B6/B5 (2026-06-26 발행, 6/25 목요일 종가). 6/26 금요일 美 세션 및 아시아 급락은 본 표에 미반영 — 본문 참조.</span></p>
+</section>
+
+<!-- NEWS FLOW -->
+<section>
+  <h2>뉴스 플로우 <span class="en">News Flow · This Week</span></h2>
+  <p class="lead">이번 주를 관통한 한 줄: <strong>"메모리 슈퍼사이클이 메인스트림이 된 주, 그리고 매파 Fed가 4.1% PCE를 만난 주."</strong></p>
+  <div class="flow">
+    <div class="flow-item"><div class="flow-num">01</div><div><div class="flow-h">마이크론 깜짝 실적 → AI 메모리 슈퍼사이클 전면화</div><div class="flow-b">DRAM·NAND 가격 12개월간 4배 폭등. 마이크론 분기 GM 80%+ 가이던스, "타이트한 수급 2027년 이후까지" 발언. NAND 부족은 2028년까지. MU +15.7%($1,255), 샌디스크 +21.97%, AMAT +13.4%, 테라다인 +10.5%.</div></div></div>
+    <div class="flow-item"><div class="flow-num">02</div><div><div class="flow-h">Apple, Mac·iPad 가격 15~25% 인상 → 주가 -6.1%</div><div class="flow-b">메모리·스토리지 칩 원가 급등에 "불가피". MacBook Air +$200, iPad Pro +$200. iPhone은 동결했으나 추가 인상 시사. MS도 Xbox 인상. JPMorgan은 "시장이 원가 영향 과대 반영" 진단. 시총 -$2,630억.</div></div></div>
+    <div class="flow-item"><div class="flow-num">03</div><div><div class="flow-h">5월 PCE 4.1%(3년 최고) · 코어 3.4% → Warsh 매파 Fed</div><div class="flow-b">신임 의장 Warsh 체제 첫 점도표(6/17): 18명 중 9명이 연내 인상 전망, 2026년 인하 삭제, 연말 중간값 3.8%. 2026 PCE 전망 2.7%→3.6% 상향. 시장은 9월 인상 가격반영.</div></div></div>
+    <div class="flow-item"><div class="flow-num">04</div><div><div class="flow-h">유가, 전쟁前 수준으로 라운드트립 — 호르무즈 재개</div><div class="flow-b">WTI $71.92, 이란戰 직전 $67 수준 근접. 60일 재개 합의로 해협 정상화. 이란은 연 $400억 통행료 추진·싱가포르 선적선 드론 공격. 에너지 디스인플레이션 = 인플레 피크 신호 가능성.</div></div></div>
+    <div class="flow-item"><div class="flow-num">05</div><div><div class="flow-h">Wendy's 밈스톡 부활 — Reddit WSB + 넬슨 펠츠</div><div class="flow-b">수요일 +26%, 개인투자자 숏스퀴즈. 펠츠/Trian 바이아웃설. 목요일 -6.7% 되돌림. "후기사이클 투기"의 전형 — GME/AMC보다 짧은 squeeze 관측.</div></div></div>
+    <div class="flow-item"><div class="flow-num">06</div><div><div class="flow-h">Anthropic, 알리바바 "사상 최대 디스틸레이션 공격" 고발</div><div class="flow-b">2.5만 개 가짜 계정으로 Claude 능력 추출 주장. BABA -4.7%. 美 정부의 AI 수출통제(Mythos/Fable 라인 접근 제한) 흐름과 맞물림.</div></div></div>
+    <div class="flow-item"><div class="flow-num">07</div><div><div class="flow-h">SpaceX 史上 최대 IPO · OpenAI·Anthropic IPO 대기 / 크립토는 약세</div><div class="flow-b">IPO 현금 부유층 부동산 수요 자극. 반면 Strategy(MSTR) 2년 최저 -9%, 비트코인 관련주 동반 약세. M&amp;A: VW가 에버런스(51%) Bain에 $84억, 머크KGaA가 Bio-Techne $113억 인수.</div></div></div>
+  </div>
+</section>
+
+<!-- REDDIT CARDS -->
+<section>
+  <h2>Reddit 심리 <span class="en">r/wallstreetbets · r/investing · r/stocks · r/economics · r/geopolitics</span></h2>
+  <p class="lead">개미 심리의 무게중심이 밈(Wendy's)에서 메모리(MU·SNDK)로 이동. "복권"에서 "슈퍼사이클"로의 서사 전환이 이번 주 핵심.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="tag">r/wallstreetbets · MU</div>
+      <div class="src">Micron — 서사의 중심 이동</div>
+      <div class="q">금요일 베어 36 → 월요일 불 68로 심리 급반전. 깜짝 실적 후 WEN을 제치고 멘션 1위. 로빈후드 거래량이 엔비디아의 2배 수준으로 폭증. "메모리는 이제 전략 자산"이라는 멘트가 리테일 신조로 자리.</div>
+      <div class="meta">SENTIMENT <span class="score bull">68 / 100 BULL</span> · 멘션 ▲ NVDA 대비 2x</div>
+    </div>
+    <div class="card">
+      <div class="tag">r/wallstreetbets · SNDK</div>
+      <div class="src">SanDisk — 콜옵션 거품 경보</div>
+      <div class="q">대표 스레드 제목이 "Sandisk (SNDK) $1000 ITM". 심리 82~85의 극단적 강세, 수직 차트 + 콜옵션 froth로 "blow-off top" 경고 동시 확산. YTD +592%. 데이터센터 매출 +645% YoY가 펀더멘털 명분.</div>
+      <div class="meta">SENTIMENT <span class="score bull">82–85 / 100</span> · "$1000 ITM" 스레드 도배</div>
+    </div>
+    <div class="card">
+      <div class="tag">r/wallstreetbets · WEN</div>
+      <div class="src">Wendy's — "Save Wendy's" 밈</div>
+      <div class="q">u/ElegantCombination43: "We need to save Wendy's before it's too late. 망하면 우리 다 실직한다." 펠츠 바이아웃·CFO 교체가 촉매로 호명. 다만 2023년 대비 -66%, 반등은 연초 손실 회복 수준.</div>
+      <div class="meta">SENTIMENT <span class="score bull">밈 과열</span> · 단명 우려(GME/AMC 대비 짧음)</div>
+    </div>
+    <div class="card">
+      <div class="tag">r/economics · r/geopolitics</div>
+      <div class="src">매크로 — 스태그플레이션 공포</div>
+      <div class="q">PCE 3년 최고 + Fed 인하 삭제에 "스태그플레이션" 키워드 급증. 지정학 보드는 호르무즈 재개·이란 통행료·베네수엘라 7.5 강진(더블릿)으로 꼬리위험 토론. 유가 하락만이 유일한 위안.</div>
+      <div class="meta">SENTIMENT <span class="score bear">방어적 / 매크로 우려</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- X CARDS -->
+<section>
+  <h2>X 인플루언서 <span class="en">Fixed core 3 + Issue-linked 3</span></h2>
+  <p class="lead">고정 3인(매크로 앵커) + 이번 주 이슈 연동 3인. 리테일의 "메모리 신앙"과 달리, 기관 매크로 계정은 <strong>인플레 지속·매파 Fed·집중도 리스크</strong>에 무게.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="tag">@LynAldenContact · 고정</div>
+      <div class="src">Lyn Alden</div>
+      <div class="q">"재정 우위(fiscal dominance) + 에너지發 인플레가 PCE 4.1%로 확인. 구조적 인플레 국면에선 실물·현금흐름 자산이 듀레이션을 이긴다." 메모리 강세를 '명목 인플레 헤지'로 재해석.</div>
+      <div class="meta">테마 · 구조적 인플레 / 실물자산</div>
+    </div>
+    <div class="card">
+      <div class="tag">@biancoresearch · 고정</div>
+      <div class="src">Bianco Research (Jim Bianco)</div>
+      <div class="q">"Warsh의 Fed는 성장보다 물가안정을 택했다 — '인하'가 아니라 '인상'이 베이스라인. 9월 인상 옵션이 살아있는 한 듀레이션 롱은 잘못된 쪽." 점도표 매파 전환을 시장의 핵심 변곡으로 강조.</div>
+      <div class="meta">테마 · Fed 매파 / 금리·국채</div>
+    </div>
+    <div class="card">
+      <div class="tag">@SoberLook · 고정</div>
+      <div class="src">SoberLook</div>
+      <div class="q">차트 데스크: PCE 상승의 '폭(breadth)' 확대, 메모리 현물가격 곡선, 달러지수. "인플레가 에너지에서 광범위 품목으로 번지는지가 9월 인상 여부의 갈림길."</div>
+      <div class="meta">테마 · 매크로 데이터 / 인플레 breadth</div>
+    </div>
+    <div class="card">
+      <div class="tag">@Nouriel · 이슈 연동(지정학·꼬리리스크)</div>
+      <div class="src">Nouriel Roubini</div>
+      <div class="q">"호르무즈 재개는 디스인플레 호재지만, 한국 '검은 금요일'(-5.81%)은 집중된 메모리 레버리지가 끊길 때의 청산 위험을 예고. 스태그플레이션 + 자산 집중 = 꼬리위험."</div>
+      <div class="meta">테마 · 지정학 / 청산·꼬리위험</div>
+    </div>
+    <div class="card">
+      <div class="tag">@markminervini · 이슈 연동(모멘텀·기술적)</div>
+      <div class="src">Mark Minervini</div>
+      <div class="q">"MU·SNDK 패러볼릭은 추세가 진짜라는 증거이자 동시에 후반부라는 증거. blow-off 구간에선 리스크 관리가 전부 — 추격이 아니라 손절선." 메모리 셋업의 '말기 강세' 경계.</div>
+      <div class="meta">테마 · 모멘텀 / blow-off top 경계</div>
+    </div>
+    <div class="card">
+      <div class="tag">이슈 연동(어닝시즌 애널)</div>
+      <div class="src">반도체 어닝 데스크</div>
+      <div class="q">마이크론 HBM·DRAM 가격 코멘터리가 그룹 전체 톤 결정. 퀄컴 +12%(AH, Meta·MS 백킹 AI 추론칩). "수급 타이트 2027년+" 가이던스가 WDC·SNDK 동조 랠리의 명분."</div>
+      <div class="meta">테마 · 어닝 / HBM·DRAM 가격</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section>
+  <h2>비교 — 개미 vs 기관 <span class="en">Retail (Reddit) vs Macro (X)</span></h2>
+  <div class="compare">
+    <div class="col-l">
+      <h3>Reddit — "신앙으로서의 메모리"</h3>
+      <ul>
+        <li>MU·SNDK·WDC = 슈퍼사이클 베팅, "$1000 ITM" 콜옵션</li>
+        <li>밈 잔존(Wendy's)·블랙베리(피지컬 AI) 추격</li>
+        <li>"메모리는 전략 자산" — 가격은 부차적</li>
+        <li>변동성을 '추가 매수 기회'로 해석</li>
+        <li>위험: 후기사이클 froth, 단명 squeeze</li>
+      </ul>
+    </div>
+    <div class="col-r">
+      <h3>X — "매크로 레짐 전환"</h3>
+      <ul>
+        <li>PCE 4.1% + Warsh 매파 = 멀티플 압박 레짐</li>
+        <li>듀레이션 롱 경계, 금리민감 섹터 약세</li>
+        <li>유가 하락만이 디스인플레 유일 호재</li>
+        <li>한국 -5.81% = 집중도 청산 경고</li>
+        <li>위험: 스태그플레이션 + 자산 집중</li>
+      </ul>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:14px">두 진영의 교집합은 <strong>"메모리 펀더멘털은 진짜"</strong>. 분기점은 <strong>"주가가 이미 2~3년치 가격결정력을 선반영했는가"</strong>. 본 데스크는 후자에 무게.</p>
+</section>
+
+<!-- TICKER TABLE -->
+<section>
+  <h2>티커 테이블 — 단일종목 무버 <span class="en">Single-Name Movers · 6/25</span></h2>
+  <div class="tape">
+    <table>
+      <thead><tr><th>티커</th><th class="num">종가</th><th class="num">일간</th><th>드라이버</th></tr></thead>
+      <tbody>
+        <tr><td class="name">SNDK · 샌디스크</td><td class="num">$2,335</td><td class="num up">+21.97%</td><td>NAND 부족·콜옵션 froth</td></tr>
+        <tr><td class="name">TECH · Bio-Techne</td><td class="num">$70.70</td><td class="num up">+20.1%</td><td>머크KGaA $113억 인수</td></tr>
+        <tr><td class="name">BB · 블랙베리</td><td class="num">$10.34</td><td class="num up">+19.95%</td><td>FY27 가이던스 상향·피지컬 AI</td></tr>
+        <tr><td class="name">MU · 마이크론</td><td class="num">$1,255</td><td class="num up">+15.7%</td><td>깜짝 실적·GM 80%+</td></tr>
+        <tr><td class="name">AMAT · 어플라이드</td><td class="num">$668.00</td><td class="num up">+13.4%</td><td>메모리 capex 수혜</td></tr>
+        <tr><td class="name">TER · 테라다인</td><td class="num">$471.96</td><td class="num up">+10.5%</td><td>반도체 테스트</td></tr>
+        <tr><td class="name">WEN · 웬디스</td><td class="num">—</td><td class="num down">-6.7%</td><td>밈 되돌림(전일 +26%)</td></tr>
+        <tr><td class="name">AAPL · 애플</td><td class="num">$275.15</td><td class="num down">-6.1%</td><td>메모리 원가→가격인상</td></tr>
+        <tr><td class="name">BABA · 알리바바</td><td class="num">$95.07</td><td class="num down">-4.7%</td><td>Anthropic 디스틸레이션 고발</td></tr>
+        <tr><td class="name">MSTR · 스트래티지</td><td class="num">$85.33</td><td class="num down">-9.0%</td><td>크립토 약세·2년 최저</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- KEYWORDS -->
+<section>
+  <h2>키워드 클라우드 <span class="en">Signal Cloud</span></h2>
+  <div class="cloud">
+    <span class="kw hot big">메모리 슈퍼사이클</span>
+    <span class="kw hot big">PCE 4.1%</span>
+    <span class="kw hot">Micron</span>
+    <span class="kw hot">매파 Fed · Warsh</span>
+    <span class="kw big">DRAM / NAND</span>
+    <span class="kw">HBM</span>
+    <span class="kw">NAND 2028 부족</span>
+    <span class="kw">$1000 ITM</span>
+    <span class="kw hot">호르무즈 재개</span>
+    <span class="kw">유가 라운드트립</span>
+    <span class="kw">9월 인상</span>
+    <span class="kw">Apple 가격인상</span>
+    <span class="kw big">검은 금요일(韓)</span>
+    <span class="kw">SK하이닉스 시총1위</span>
+    <span class="kw">Wendy's 밈</span>
+    <span class="kw">blow-off top</span>
+    <span class="kw">스태그플레이션</span>
+    <span class="kw">집중도 리스크</span>
+  </div>
+</section>
+
+<!-- SIGNALS -->
+<section>
+  <h2>시그널 <span class="en">Buy-Side Signals</span></h2>
+  <div class="sig">
+    <div class="sig-row"><div class="sig-label">PRICING POWER</div><div class="sig-txt">메모리는 공급 주도 가격결정력(GM 80%+, 2028년까지 부족) — 마진의 질이 다르다. 단, 주가가 사이클을 선반영했는지가 관건.</div></div>
+    <div class="sig-row"><div class="sig-label">RATE REGIME</div><div class="sig-txt">PCE 4.1% + 2026 인하 삭제 + 9월 인상 옵션 = 멀티플 압박 레짐. 듀레이션·금리민감(REIT·유틸) 역풍, 금융주 우위.</div></div>
+    <div class="sig-row"><div class="sig-label">DISINFLATION</div><div class="sig-txt">유가 전쟁前 회귀(WTI $72→$67 시도)는 시장이 덜 반영한 디스인플레 신호. 호르무즈 정상화 시 Q3 인플레 피크 → Fed 명분.</div></div>
+    <div class="sig-row"><div class="sig-label">CONCENTRATION</div><div class="sig-txt">PHLX 반도체 YTD +96.8%, 한국 코스피 메모리 2종목 의존. 리더십이 끊기면 가장 집중된 지수가 가장 격하게 청산(韓 -5.81% 선례).</div></div>
+    <div class="sig-row"><div class="sig-label">LATE-CYCLE</div><div class="sig-txt">밈 부활(Wendy's) + 콜옵션 froth(SNDK "$1000 ITM")는 후기사이클 투기 신호. 추격이 아니라 포지션 사이징.</div></div>
+  </div>
+</section>
+
+<!-- CHART -->
+<section>
+  <h2>차트 — 주간 무버 맵 <span class="en">Performance Map · 6/25 일간</span></h2>
+  <div class="bars">
+    <div class="bar-row"><span>샌디스크</span><div class="bar-track"><div class="bar-fill pos" style="width:88%"></div></div><span class="bar-val up">+22.0%</span></div>
+    <div class="bar-row"><span>Bio-Techne</span><div class="bar-track"><div class="bar-fill pos" style="width:80%"></div></div><span class="bar-val up">+20.1%</span></div>
+    <div class="bar-row"><span>블랙베리</span><div class="bar-track"><div class="bar-fill pos" style="width:80%"></div></div><span class="bar-val up">+19.95%</span></div>
+    <div class="bar-row"><span>마이크론</span><div class="bar-track"><div class="bar-fill pos" style="width:63%"></div></div><span class="bar-val up">+15.7%</span></div>
+    <div class="bar-row"><span>PHLX 반도체</span><div class="bar-track"><div class="bar-fill pos" style="width:15%"></div></div><span class="bar-val up">+3.59%</span></div>
+    <div class="bar-row"><span>S&amp;P 500</span><div class="bar-track"><div class="bar-fill neg" style="width:2%"></div></div><span class="bar-val down">-0.01%</span></div>
+    <div class="bar-row"><span>Nasdaq</span><div class="bar-track"><div class="bar-fill neg" style="width:6%"></div></div><span class="bar-val down">-0.46%</span></div>
+    <div class="bar-row"><span>알리바바</span><div class="bar-track"><div class="bar-fill neg" style="width:19%"></div></div><span class="bar-val down">-4.7%</span></div>
+    <div class="bar-row"><span>애플</span><div class="bar-track"><div class="bar-fill neg" style="width:25%"></div></div><span class="bar-val down">-6.1%</span></div>
+    <div class="bar-row"><span>스트래티지</span><div class="bar-track"><div class="bar-fill neg" style="width:36%"></div></div><span class="bar-val down">-9.0%</span></div>
+  </div>
+  <div class="axis">반도체·메모리 상방 집중 ↔ 애플·크립토·중국 ADR 하방 — 자본이 '가격결정력'으로 회전</div>
+</section>
+
+<!-- INSIGHT -->
+<section class="insight">
+  <h2>인사이트 <span class="en">Research Head's Desk</span></h2>
+  <p>테이프가 둘로 갈라지고 있다. 한쪽엔 <strong>공급 주도 가격결정력</strong>을 쥔 메모리·반도체, 다른 한쪽엔 <strong>금리에 민감한 모든 것</strong>. 마이크론의 GM 80%+와 "2027년 이후까지 타이트" 가이던스는 2017–18 이후 가장 깨끗한 pricing-power 스토리다. 그러나 샌디스크 YTD +592%, "$1000 ITM" 콜옵션 도배는 교과서적 후기사이클 도취다. <strong>현금흐름 복리기는 보유하고, 복권은 페이드한다.</strong></p>
+  <p>진짜 매크로 변곡은 Warsh의 Fed가 PCE 4.1% 앞에서 <strong>성장이 아니라 물가안정</strong>을 택한 것이다. 이 레짐에선 스윙 변수가 실적이 아니라 멀티플 압축이다. 듀레이션 롱은 틀린 쪽에 서 있다.</p>
+  <p class="dk">"유가의 전쟁前 회귀는 아무도 가격에 넣지 않은 가장 중요한 디스인플레 신호다. 호르무즈가 정상화되면 에너지發 인플레 임펄스는 Q3에 소멸한다 — Brent $67을 보라."</p>
+  <p>한국의 '검은 금요일'(-5.81%)은 카나리아다. 단일종목 메모리 리더십(SK하이닉스·마이크론)이 꺾이는 순간, 가장 집중된 지수가 가장 격하게 풀린다. 미국 반도체 집중도(PHLX YTD +96.8%)도 같은 취약성을 안고 있다. <strong>드러켄밀러의 교훈 — 가장 큰 움직임은 변곡점에서 나온다. 메모리의 가격결정력은 진짜다. 질문은 주가가 그 2~3년치를 이미 앞당겨 반영했느냐다. 추세는 존중하되, 반전에 맞춰 사이징하라.</strong></p>
+</section>
+
+<!-- WATCHLIST -->
+<section>
+  <h2>워치리스트 <span class="en">Watchlist · Next Week</span></h2>
+  <div class="watch">
+    <div class="watch-item"><div><div class="w-name">MU · 마이크론</div><div class="w-note">HBM/DRAM 가격, 메모리 벨웨더</div></div><span class="w-flag own">OWN — 퀄리티</span></div>
+    <div class="watch-item"><div><div class="w-name">SNDK / WDC</div><div class="w-note">"$1000 ITM" froth, blow-off 경계</div></div><span class="w-flag fade">FADE / TRIM</span></div>
+    <div class="watch-item"><div><div class="w-name">Brent $67</div><div class="w-note">디스인플레 텔(호르무즈)</div></div><span class="w-flag watch">WATCH</span></div>
+    <div class="watch-item"><div><div class="w-name">美 10년물 4.40%</div><div class="w-note">매파 Fed·9월 인상 확률</div></div><span class="w-flag watch">WATCH</span></div>
+    <div class="watch-item"><div><div class="w-name">SK하이닉스·삼성전자</div><div class="w-note">한국 메모리 리더십·집중도</div></div><span class="w-flag watch">WATCH</span></div>
+    <div class="watch-item"><div><div class="w-name">AAPL · 애플</div><div class="w-note">메모리 원가 마진 압박</div></div><span class="w-flag fade">CAUTION</span></div>
+    <div class="watch-item"><div><div class="w-name">NVDA · 엔비디아</div><div class="w-note">연말 시총 1위 확률 72%(Polymarket)</div></div><span class="w-flag watch">WATCH</span></div>
+    <div class="watch-item"><div><div class="w-name">9월 FOMC (9/16)</div><div class="w-note">인상 여부 — 핵심 변곡</div></div><span class="w-flag watch">EVENT</span></div>
+  </div>
+</section>
+
+<footer>
+  바이사이드 위클리 센티먼트 리포트 · 글로벌 Vol.09 · 2026-06-27<br>
+  데이터: WSJ B6/B5(6/25 종가) · Reddit(r/wallstreetbets, r/investing, r/stocks, r/economics, r/geopolitics) · X(Lyn Alden, Bianco Research, SoberLook + 이슈연동 3) · CNBC/CBS(PCE) · FOMC SEP(6/17)<br>
+  배포: Telegram · KakaoTalk 오픈채팅 · 아카이브 minkeun00-creator.github.io/weekly-report/
+  <div class="disc">본 리포트는 소셜 미디어 심리 합성 및 시장 데이터 정리 목적이며, 특정 종목의 매수·매도 권유가 아닙니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</div>
+</footer>
+
+</div>
+</body>
+</html>
