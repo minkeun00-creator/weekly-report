@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>종토방 위클리 Vol.08 — 2026.08.08</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0f13; --panel:#15171d; --panel2:#1a1d24; --text:#e8e6e0; --dim:#8a8d96;
+    --line:#262a33; --green:#30c870; --green-dim:rgba(48,200,112,.12);
+    --red:#e84040; --red-dim:rgba(232,64,64,.12);
+    --amber:#e8a030; --amber-dim:rgba(232,160,48,.12);
+    --blue:#4aa3e8; --blue-dim:rgba(74,163,232,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;line-height:1.6;padding:0 0 60px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px;}
+  .mono{font-family:'DM Mono',monospace;}
+  .up{color:var(--green);} .dn{color:var(--red);} .am{color:var(--amber);}
+
+  /* MASTHEAD */
+  .mh{padding:34px 0 20px;border-bottom:2px solid var(--line);}
+  .mh-eye{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--green);}
+  .mh-title{font-size:clamp(28px,5.6vw,44px);font-weight:900;line-height:1.15;margin:12px 0 8px;}
+  .mh-sub{font-size:13.5px;color:var(--dim);max-width:660px;}
+  .mh-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);}
+
+  /* SUMMARY */
+  .sum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0;}
+  .sum-card{background:var(--panel);border:1px solid var(--line);padding:14px;}
+  .sum-k{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--dim);text-transform:uppercase;}
+  .sum-v{font-size:21px;font-weight:900;margin:4px 0 3px;}
+  .sum-d{font-size:11.5px;color:var(--dim);}
+
+  /* SECTION HEAD */
+  .sh{display:flex;align-items:center;gap:10px;margin:36px 0 14px;flex-wrap:wrap;}
+  .sh-num{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--green);}
+  .sh-title{font-size:19px;font-weight:900;}
+  .badge{font-family:'DM Mono',monospace;font-size:10px;padding:2px 9px;border:1px solid;margin-left:auto;}
+  .bd-r{color:var(--red);border-color:rgba(232,64,64,.4);background:var(--red-dim);}
+  .bd-g{color:var(--green);border-color:rgba(48,200,112,.4);background:var(--green-dim);}
+  .bd-a{color:var(--amber);border-color:rgba(232,160,48,.4);background:var(--amber-dim);}
+
+  /* HOT TABLE */
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:720px;}
+  th{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--dim);text-align:left;padding:10px;border-bottom:1px solid var(--line);background:var(--panel);text-transform:uppercase;}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tr:nth-child(even) td{background:var(--panel);}
+  .rk{font-family:'DM Mono',monospace;color:var(--dim);}
+  .nm{font-weight:700;}
+  .cd{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);}
+  .num{font-family:'DM Mono',monospace;font-size:11.5px;}
+  .pill{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;padding:1px 8px;border:1px solid;white-space:nowrap;}
+  .p-g{color:var(--green);border-color:rgba(48,200,112,.4);background:var(--green-dim);}
+  .p-r{color:var(--red);border-color:rgba(232,64,64,.4);background:var(--red-dim);}
+  .p-a{color:var(--amber);border-color:rgba(232,160,48,.4);background:var(--amber-dim);}
+  .p-b{color:var(--blue);border-color:rgba(74,163,232,.4);background:var(--blue-dim);}
+  .ttl{font-size:11.5px;color:var(--dim);}
+
+  /* SIGNAL */
+  .sig-box{background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--line);padding:20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+  .sig-score{font-size:54px;font-weight:900;line-height:1;color:var(--amber);}
+  .sig-meta{flex:1;min-width:240px;}
+  .sig-lab{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--dim);}
+  .sig-t{font-size:16px;font-weight:900;margin:3px 0 8px;}
+  .sig-bar{height:8px;background:#22252d;position:relative;}
+  .sig-fill{height:100%;width:47%;background:linear-gradient(90deg,var(--red),var(--amber),var(--green));}
+  .sig-scale{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);margin-top:4px;}
+  .sig-note{font-size:12px;color:var(--dim);margin-top:8px;}
+
+  /* CLUSTER */
+  .cluster-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .cluster-card{background:var(--panel);border:1px solid var(--line);padding:15px;}
+  .cluster-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+  .cluster-name{font-weight:900;font-size:14.5px;display:flex;gap:7px;align-items:center;}
+  .cluster-heat{font-family:'DM Mono',monospace;font-size:9.5px;padding:2px 8px;border:1px solid;}
+  .cluster-stocks{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px;}
+  .cs{font-size:11px;padding:2px 9px;border:1px solid var(--line);background:var(--panel2);color:var(--text);}
+  .cs.hot{border-color:rgba(232,64,64,.5);color:#ffb0b0;}
+  .cluster-note{font-size:12px;color:var(--dim);}
+
+  /* THERMO */
+  .th-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  .th-cell{background:var(--panel);border:1px solid var(--line);padding:14px;}
+  .th-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .th-word{font-weight:900;font-size:14px;}
+  .th-score{font-family:'DM Mono',monospace;font-size:10.5px;padding:1px 8px;}
+  .th-bar-bg{height:10px;background:#22252d;margin:6px 0;}
+  .th-bar{height:100%;}
+  .th-desc{font-size:11.5px;color:var(--dim);}
+  .th-sample{font-size:11px;color:#6d707a;margin-top:6px;font-style:italic;}
+
+  /* CHART */
+  .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .chart-card{background:var(--panel);border:1px solid var(--line);padding:15px;}
+  .chart-t{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--dim);margin-bottom:10px;}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .bar-l{font-size:11px;min-width:120px;color:var(--text);}
+  .bar-bg{flex:1;height:13px;background:#22252d;}
+  .bar-f{height:100%;}
+  .bar-v{font-family:'DM Mono',monospace;font-size:10.5px;min-width:58px;text-align:right;color:var(--dim);}
+
+  /* INSIGHT */
+  .ins-item{display:flex;gap:14px;padding:15px 0;border-bottom:1px solid var(--line);}
+  .ins-num{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--green);min-width:32px;}
+  .ins-body{font-size:13px;}
+  .ins-body b{font-weight:900;}
+
+  footer{margin-top:40px;padding-top:16px;border-top:2px solid var(--line);font-size:11px;color:var(--dim);}
+
+  @media (max-width:768px){
+    .sum-grid{grid-template-columns:1fr 1fr;}
+    .cluster-grid,.th-grid,.chart-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:480px){
+    .wrap{padding:0 13px;}
+    .sig-score{font-size:42px;}
+  }
+  @media print{
+    @page{size:A4;margin:12mm;}
+    :root{--bg:#ffffff;--panel:#f6f6f4;--panel2:#efefec;--text:#111;--dim:#555;--line:#ccc;}
+    body{padding:0;font-size:10.5px;print-color-adjust:exact;-webkit-print-color-adjust:exact;}
+    .sum-card,.cluster-card,.th-cell,.chart-card,.ins-item,.sig-box,.tbl-wrap{page-break-inside:avoid;break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- MASTHEAD -->
+<header class="mh">
+  <div class="mh-eye">종토방 위클리 · NAVER 종목토론실 심리 리포트</div>
+  <h1 class="mh-title">-22% 폐허 위의 반등 베팅<br>ISA 쇼크와 외국인 엑소더스</h1>
+  <p class="mh-sub">KOSPI 7월 -22%(2008년 이후 최악의 달) · 목요일 하루 -4.58% · 외국인 이틀간 약 5조 순매도. 그런데 종토방 TOP20의 절반이 "월요일 상한가"를 외치고 있다. 공포의 잔해와 미국발 신고가 사이 — 개인의 심리는 지금 '항복'이 아니라 '역발상 베팅' 모드다.</p>
+  <div class="mh-meta">
+    <span>VOL.08 · 2026.08.08 (SAT) · 크롤링 2026.08.09 10:20</span>
+    <span>KOSPI 6,258.77 (-0.60%) · KOSDAQ 798.81 (-0.36%) · 원/달러 약 1,423원</span>
+  </div>
+</header>
+
+<!-- 00 SUMMARY -->
+<div class="sum-grid">
+  <div class="sum-card"><div class="sum-k">주간 총 조회수</div><div class="sum-v">611,228</div><div class="sum-d">TOP20 합산 · 게시글 1,491건</div></div>
+  <div class="sum-card"><div class="sum-k">1위 종목</div><div class="sum-v">TIGER 미국S&amp;P500</div><div class="sum-d">47,647뷰 — ISA 세제개편 성토장化</div></div>
+  <div class="sum-card"><div class="sum-k">최다 테마</div><div class="sum-v dn">美지수 ETF ×5</div><div class="sum-d">179,593뷰(29%) — 개편안 분노 결집</div></div>
+  <div class="sum-card"><div class="sum-k">바이오 화력</div><div class="sum-v am">5종목 동반</div><div class="sum-d">160,026뷰 — 이벤트 대기 매집</div></div>
+</div>
+
+<!-- 01 HOT TABLE -->
+<div class="sh"><span class="sh-num">01 / HOT 20</span><span class="sh-title">이번 주 종토방 HOT 20</span><span class="badge bd-r">ISA 분노 결집</span></div>
+<div class="tbl-wrap">
+<table>
+  <tr><th>#</th><th>종목</th><th>게시글</th><th>조회수</th><th>심리</th><th>대표 게시글 톤</th></tr>
+  <tr><td class="rk">1</td><td><span class="nm">TIGER 미국S&amp;P500</span> <span class="cd">360750</span></td><td class="num">58</td><td class="num">47,647</td><td><span class="pill p-a">제도 분노</span></td><td class="ttl">"세제개편이고 뭐고" · "ISA 조정 개정ㅋㅋ" — 적립식 유지 속 제도 성토</td></tr>
+  <tr><td class="rk">2</td><td><span class="nm">알테오젠</span> <span class="cd">196170</span></td><td class="num">80</td><td class="num">44,152</td><td><span class="pill p-g">강세</span></td><td class="ttl">무상증자 평단 정리 · "할로자임 또 선 넘네" · SC LO 계약 진화 분석</td></tr>
+  <tr><td class="rk">3</td><td><span class="nm">KODEX 미국나스닥100</span> <span class="cd">379810</span></td><td class="num">54</td><td class="num">39,150</td><td><span class="pill p-a">제도 분노</span></td><td class="ttl">"ISA 철퇴 기사 봤졔?" · "명심해라 미장은 신이다" — 대안법 공유 활발</td></tr>
+  <tr><td class="rk">4</td><td><span class="nm">에이비엘바이오</span> <span class="cd">298380</span></td><td class="num">80</td><td class="num">33,241</td><td><span class="pill p-g">강세</span></td><td class="ttl">컴퍼스 발표 · ABL001 ORR 데이터 해석전 · "목표가 100만원"</td></tr>
+  <tr><td class="rk">5</td><td><span class="nm">KODEX 200타겟위클리커버드콜</span> <span class="cd">498400</span></td><td class="num">45</td><td class="num">32,781</td><td><span class="pill p-a">혼조</span></td><td class="ttl">"노후자금 2억 분할매수" vs "24층 3천 손실" — 분배금 논쟁 지속</td></tr>
+  <tr><td class="rk">6</td><td><span class="nm">KODEX 미국S&amp;P500</span> <span class="cd">379800</span></td><td class="num">76</td><td class="num">32,092</td><td><span class="pill p-a">제도 분노</span></td><td class="ttl">"미국은 신고가인데 얘는 왜" — 환율 하락 + ISA 개편 이중 성토</td></tr>
+  <tr><td class="rk">7</td><td><span class="nm">코미팜</span> <span class="cd">041960</span></td><td class="num">80</td><td class="num">30,847</td><td><span class="pill p-g">과열</span></td><td class="ttl">"미국도 백신 신청" · 8/11 WOAH·FAO 회의 — 주말 호재 대망론</td></tr>
+  <tr><td class="rk">8</td><td><span class="nm">한화솔루션</span> <span class="cd">009830</span></td><td class="num">80</td><td class="num">30,706</td><td><span class="pill p-g">강세</span></td><td class="ttl">"미국 태양광 급등" · REC실리콘 재평가 — 단, 5,300만주 추가상장 경계</td></tr>
+  <tr><td class="rk">9</td><td><span class="nm">대한광통신</span> <span class="cd">010170</span></td><td class="num">80</td><td class="num">29,832</td><td><span class="pill p-g">과열</span></td><td class="ttl">"광섬유 쇼티지 가속화" · 대박공시 대망론 — 확인 안 된 기대 다수</td></tr>
+  <tr><td class="rk">10</td><td><span class="nm">메지온</span> <span class="cd">140410</span></td><td class="num">80</td><td class="num">29,106</td><td><span class="pill p-a">혼조</span></td><td class="ttl">유럽병원 승인 공지 · 임원 장내매수 vs 환기해제·CB 불안 공존</td></tr>
+  <tr><td class="rk">11</td><td><span class="nm">두산에너빌리티</span> <span class="cd">034020</span></td><td class="num">80</td><td class="num">28,544</td><td><span class="pill p-g">강세</span></td><td class="ttl">오클로·뉴스케일 급등 연동 · 사우디 원전 수주 전망 · 주기기 선발주 법제화</td></tr>
+  <tr><td class="rk">12</td><td><span class="nm">TIGER 배당커버드콜액티브</span> <span class="cd">472150</span></td><td class="num">59</td><td class="num">27,923</td><td><span class="pill p-a">혼조</span></td><td class="ttl">특별배당 논쟁 — "끝나면 별볼일 없나" · "신용 3억 박으면" 위험 발언도</td></tr>
+  <tr><td class="rk">13</td><td><span class="nm">삼성SDI</span> <span class="cd">006400</span></td><td class="num">80</td><td class="num">27,703</td><td><span class="pill p-g">강세</span></td><td class="ttl">"트럼프 갑자기 배터리에 호의적" — 美 $2B+ 배터리·광물 지원 발표 연동</td></tr>
+  <tr><td class="rk">14</td><td><span class="nm">한화오션</span> <span class="cd">042660</span></td><td class="num">80</td><td class="num">27,405</td><td><span class="pill p-g">강세</span></td><td class="ttl">VLCC 17척 수주 분석 · 필리 조선소 · 야간선물 상한가 근접 목격담</td></tr>
+  <tr><td class="rk">15</td><td><span class="nm">한국항공우주</span> <span class="cd">047810</span></td><td class="num">80</td><td class="num">27,269</td><td><span class="pill p-b">수급 추적</span></td><td class="ttl">"기타법인은 알고 있다" — 연일 매집 수급 해석 + KF-21 무장창 스텔스</td></tr>
+  <tr><td class="rk">16</td><td><span class="nm">제주반도체</span> <span class="cd">080220</span></td><td class="num">80</td><td class="num">25,506</td><td><span class="pill p-g">강세</span></td><td class="ttl">2Q 실적 프리뷰(AI 분석글) · 컨콜 재공지 · "영업익 1000억이면 대박"</td></tr>
+  <tr><td class="rk">17</td><td><span class="nm">LG전자</span> <span class="cd">066570</span></td><td class="num">80</td><td class="num">25,423</td><td><span class="pill p-a">기대 과열</span></td><td class="ttl">"엔비디아 로봇 위탁생산 계약" 풍문 — 미확인 루머 기반 상한가 베팅</td></tr>
+  <tr><td class="rk">18</td><td><span class="nm">금호타이어</span> <span class="cd">073240</span></td><td class="num">79</td><td class="num">25,044</td><td><span class="pill p-b">수급 추적</span></td><td class="ttl">채권단 잔여물량 정리 분석 — 오버행 해소 국면의 단기 트레이딩 판</td></tr>
+  <tr><td class="rk">19</td><td><span class="nm">POSCO홀딩스</span> <span class="cd">005490</span></td><td class="num">80</td><td class="num">24,177</td><td><span class="pill p-g">강세</span></td><td class="ttl">자회사 지분 매각 → 투자재원 · "새벽 ADR +3%" — 월요일 상한가 합창</td></tr>
+  <tr><td class="rk">20</td><td><span class="nm">펩트론</span> <span class="cd">087010</span></td><td class="num">80</td><td class="num">22,680</td><td><span class="pill p-g">강세</span></td><td class="ttl">8/7 FAQ 정리 · 2공장 확대 해석 · "미국장 바이오 초강세" 연동 기대</td></tr>
+</table>
+</div>
+
+<!-- 02 SIGNAL -->
+<div class="sh"><span class="sh-num">02 / SIGNAL</span><span class="sh-title">개인 심리 온도계</span></div>
+<div class="sig-box">
+  <div class="sig-score">47°</div>
+  <div class="sig-meta">
+    <div class="sig-lab">JONGTOBAN SENTIMENT / 100</div>
+    <div class="sig-t">Contrarian Bid — 항복 대신 역발상, 분노는 시장이 아닌 제도로</div>
+    <div class="sig-bar"><div class="sig-fill"></div></div>
+    <div class="sig-scale"><span>0 공포</span><span>50</span><span>100 탐욕</span></div>
+    <div class="sig-note">지수 -22% 달을 통과했는데 종토방 어조는 의외로 공격적. 하락 분노가 '외인 매도'와 'ISA 개편'으로 향하고, 개별 종목엔 "월요일 상한가" 기대가 광범위. 전형적인 낙폭과대 반등 베팅 국면 — 단, 미확인 루머 의존도가 높아졌다.</div>
+  </div>
+</div>
+
+<!-- 03 CLUSTER -->
+<div class="sh"><span class="sh-num">03 / THEME</span><span class="sh-title">테마 클러스터</span><span class="badge bd-a">6개 클러스터</span></div>
+<div class="cluster-grid">
+  <div class="cluster-card">
+    <div class="cluster-head"><div class="cluster-name">🏛️ ISA 세제개편 쇼크</div><span class="cluster-heat" style="color:var(--red);border-color:rgba(232,64,64,.4);background:var(--red-dim);">POLICY RAGE</span></div>
+    <div class="cluster-stocks"><span class="cs hot">TIGER 미국S&amp;P500</span><span class="cs hot">KODEX 미국나스닥100</span><span class="cs hot">KODEX 미국S&amp;P500</span></div>
+    <div class="cluster-note">8/3 발표된 '생산적금융 ISA'가 해외지수 ETF를 비과세 대상에서 제외 → 3개 게시판 118,889뷰가 성토장으로. "만기 9999년 설정" 등 우회법 공유까지. 정부는 반발에 전면 재검토 착수 — 결론이 나오기 전까지 국내상장 미국 ETF 수급의 최대 변수.</div>
+  </div>
+  <div class="cluster-card">
+    <div class="cluster-head"><div class="cluster-name">💰 커버드콜 인컴</div><span class="cluster-heat" style="color:var(--amber);border-color:rgba(232,160,48,.4);background:var(--amber-dim);">DIVIDED</span></div>
+    <div class="cluster-stocks"><span class="cs">KODEX 200타겟위클리커버드콜</span><span class="cs">TIGER 배당커버드콜액티브</span></div>
+    <div class="cluster-note">"노후자금 2억 분할매수" 같은 은퇴자금 유입과 "24층 3천 손실" 하소연이 공존. 특별배당 지속성·옵션수익 과세 이슈로 논쟁 격화. "신용대출 3억" 류의 레버리지 발언은 위험 신호 — 인컴 상품의 투기화 조짐.</div>
+  </div>
+  <div class="cluster-card">
+    <div class="cluster-head"><div class="cluster-name">🧬 바이오 이벤트 대기</div><span class="cluster-heat" style="color:var(--red);border-color:rgba(232,64,64,.4);background:var(--red-dim);">EVENT FEVER</span></div>
+    <div class="cluster-stocks"><span class="cs hot">알테오젠</span><span class="cs hot">에이비엘바이오</span><span class="cs hot">코미팜</span><span class="cs">메지온</span><span class="cs">펩트론</span></div>
+    <div class="cluster-note">TOP20 중 5종목·160,026뷰(26%). 알테오젠 무증+할로자임 신경전, ABL바이오 컴퍼스 데이터, 코미팜 8/11 국제회의, 메지온 유럽 승인, 펩트론 2공장 — 전부 '날짜 박힌 이벤트' 대기 매집. 미국장 바이오 강세가 기름을 부었다. 이벤트 불발 시 변동성 최대 구간.</div>
+  </div>
+  <div class="cluster-card">
+    <div class="cluster-head"><div class="cluster-name">🇺🇸 트럼프 정책 수혜</div><span class="cluster-heat" style="color:var(--green);border-color:rgba(48,200,112,.4);background:var(--green-dim);">POLICY LONG</span></div>
+    <div class="cluster-stocks"><span class="cs">삼성SDI</span><span class="cs">한화솔루션</span></div>
+    <div class="cluster-note">미 행정부의 $2B+ 배터리·핵심광물 지원(WSJ 확인)에 "트럼프가 배터리에 호의적?"이라는 놀람 반응. 태양광·에너지주 미국 급등이 한화솔루션으로 직결. 탈중국 공급망 재편의 한국 수혜 서사가 종토방에서 처음으로 주류화.</div>
+  </div>
+  <div class="cluster-card">
+    <div class="cluster-head"><div class="cluster-name">⚛️ 원전·방산·조선</div><span class="cluster-heat" style="color:var(--green);border-color:rgba(48,200,112,.4);background:var(--green-dim);">STEADY BULL</span></div>
+    <div class="cluster-stocks"><span class="cs">두산에너빌리티</span><span class="cs">한국항공우주</span><span class="cs">한화오션</span></div>
+    <div class="cluster-note">오클로·뉴스케일 미국 원전주 급등 → 두산에너 월요일 기대. KAI는 '기타법인 연속 매집' 수급 추리가 중심. 한화오션 VLCC 17척 분석글 등 — 급락장에서도 흔들리지 않은 구조적 강세 3대장. 중동 3국 방위조약 등 지정학 재편도 우호적.</div>
+  </div>
+  <div class="cluster-card">
+    <div class="cluster-head"><div class="cluster-name">📡 개별 모멘텀·루머</div><span class="cluster-heat" style="color:var(--amber);border-color:rgba(232,160,48,.4);background:var(--amber-dim);">RUMOR RISK</span></div>
+    <div class="cluster-stocks"><span class="cs hot">LG전자</span><span class="cs hot">대한광통신</span><span class="cs">제주반도체</span><span class="cs">금호타이어</span><span class="cs">POSCO홀딩스</span></div>
+    <div class="cluster-note">LG전자 '엔비디아 로봇 위탁생산' 풍문, 대한광통신 '대박공시 임박설' 등 미확인 정보 의존 베팅 증가. POSCO는 지분매각+ADR 상승으로, 금호타이어는 채권단 오버행 해소로 각자 상한가 대망. 급락장 이후 특유의 한탕 심리 — 팩트체크 없는 추격은 금물.</div>
+  </div>
+</div>
+
+<!-- 04 THERMO -->
+<div class="sh"><span class="sh-num">04 / KEYWORD</span><span class="sh-title">감정 키워드 온도계</span></div>
+<div class="th-grid">
+  <div class="th-cell">
+    <div class="th-head"><span class="th-word">월요일 상한가</span><span class="th-score p-g">★★★★☆</span></div>
+    <div class="th-bar-bg"><div class="th-bar" style="width:82%;background:var(--green);"></div></div>
+    <div class="th-desc">POSCO·펩트론·LG전자·한화오션·두산에너 등 최소 6개 게시판에서 동시 출현. 금요일 미국 신고가 → 월요일 갭업 기대가 집단화.</div>
+    <div class="th-sample">"월요일 쩜상 확정 축하합니다" / "월요일 상한가 확실시~~~"</div>
+  </div>
+  <div class="th-cell">
+    <div class="th-head"><span class="th-word">외인 매도</span><span class="th-score p-r">★★★★★</span></div>
+    <div class="th-bar-bg"><div class="th-bar" style="width:92%;background:var(--red);"></div></div>
+    <div class="th-desc">목 3.84조·금 8,600억+ 순매도의 직격. "외인이 다 팔면 그때 담는다"는 학습된 역발상과 "코스피 전체 외인매도세" 우려가 병존.</div>
+    <div class="th-sample">"코스피 전체 외인매도세가 강한 이 상황에서" / "외인 지분 제로네요"</div>
+  </div>
+  <div class="th-cell">
+    <div class="th-head"><span class="th-word">ISA / 세제개편</span><span class="th-score p-r">★★★★★</span></div>
+    <div class="th-bar-bg"><div class="th-bar" style="width:95%;background:var(--red);"></div></div>
+    <div class="th-desc">이번 주 최다 빈출 정책 키워드. ETF 게시판 3곳이 사실상 청원 게시판化. 분노가 매도보다 '제도 우회'로 향하는 점이 특징.</div>
+    <div class="th-sample">"ISA 철퇴 기사 봤졔?ㅋ" / "New ISA 대안법 의견 달아주세요 ㅠ"</div>
+  </div>
+  <div class="th-cell">
+    <div class="th-head"><span class="th-word">달러 하락</span><span class="th-score p-a">★★★☆☆</span></div>
+    <div class="th-bar-bg"><div class="th-bar" style="width:58%;background:var(--amber);"></div></div>
+    <div class="th-desc">원/달러 1,420원대 진입(6월 1,520원대 대비 급락). 환노출 미국 ETF 보유자의 "미국은 신고가인데 내 계좌는 왜" 괴리 성토 확산.</div>
+    <div class="th-sample">"달러는 얼마까지 수직하강할까" / "S&amp;P500은 신고가 근처인데 얘는…"</div>
+  </div>
+</div>
+
+<!-- 05 CHART -->
+<div class="sh"><span class="sh-num">05 / CHART</span><span class="sh-title">미니 차트 보드</span></div>
+<div class="chart-grid">
+  <div class="chart-card">
+    <div class="chart-t">테마별 조회수 점유율 (TOP20 합산 611,228뷰)</div>
+    <div class="bar-row"><span class="bar-l">美지수 ETF·인컴 ×5</span><div class="bar-bg"><div class="bar-f" style="width:100%;background:var(--amber);"></div></div><span class="bar-v">179,593</span></div>
+    <div class="bar-row"><span class="bar-l">바이오 ×5</span><div class="bar-bg"><div class="bar-f" style="width:89%;background:var(--red);"></div></div><span class="bar-v">160,026</span></div>
+    <div class="bar-row"><span class="bar-l">원전·방산·조선 ×3</span><div class="bar-bg"><div class="bar-f" style="width:46%;background:var(--green);"></div></div><span class="bar-v">83,218</span></div>
+    <div class="bar-row"><span class="bar-l">정책수혜(배터리·태양광)</span><div class="bar-bg"><div class="bar-f" style="width:33%;background:var(--green);"></div></div><span class="bar-v">58,409</span></div>
+    <div class="bar-row"><span class="bar-l">개별 모멘텀 ×5</span><div class="bar-bg"><div class="bar-f" style="width:72%;background:var(--blue);"></div></div><span class="bar-v">129,982</span></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-t">이번 주 KOSPI 일별 궤적 (%)</div>
+    <div class="bar-row"><span class="bar-l">수 8/5 (합의 기대)</span><div class="bar-bg"><div class="bar-f" style="width:82%;background:var(--green);"></div></div><span class="bar-v up">+3.76</span></div>
+    <div class="bar-row"><span class="bar-l">목 8/6 (외인 3.8조 매도)</span><div class="bar-bg"><div class="bar-f" style="width:100%;background:var(--red);"></div></div><span class="bar-v dn">-4.58</span></div>
+    <div class="bar-row"><span class="bar-l">금 8/7 (반등 실패)</span><div class="bar-bg"><div class="bar-f" style="width:14%;background:var(--red);"></div></div><span class="bar-v dn">-0.60</span></div>
+    <div class="bar-row"><span class="bar-l">주간 합산</span><div class="bar-bg"><div class="bar-f" style="width:90%;background:var(--red);"></div></div><span class="bar-v dn">약 -5.3</span></div>
+    <div style="font-size:11px;color:var(--dim);margin-top:8px;">하루 ±4~5%가 일상화된 변동성 체제. 7월 -22%의 여진 속 급반등·급반락 반복.</div>
+  </div>
+</div>
+
+<!-- 06 INSIGHT -->
+<div class="sh"><span class="sh-num">06 / INSIGHT</span><span class="sh-title">바이사이드 인사이트</span></div>
+<div class="ins-item"><div class="ins-num">01</div><div class="ins-body"><b>개인은 항복하지 않았다 — 분노의 방향이 바뀌었을 뿐.</b> -22% 달을 통과한 게시판 톤이 '손절'이 아니라 '외인 탓 + 제도 탓 + 반등 베팅'이다. 개인 순매수(금요일 4,428억)와 일치하는 심리. 바닥 신호로는 미완 — 진짜 바닥은 보통 "월요일 상한가"가 사라진 뒤에 온다.</div></div>
+<div class="ins-item"><div class="ins-num">02</div><div class="ins-body"><b>ISA 재검토 결론이 8월 국내 수급의 히든 카드.</b> 해외 ETF 제외안이 철회되면 국내상장 미국 ETF로의 적립식 자금이 재가속, 유지되면 해외직투 이탈 가속. TOP20 조회수 1·3·6위가 전부 이 이슈라는 건 개인 자금의 민감도가 정점이라는 뜻이다.</div></div>
+<div class="ins-item"><div class="ins-num">03</div><div class="ins-body"><b>바이오 5종목 동반 랭크인은 '날짜 매매'의 집단화.</b> 8/11 코미팜 회의, 컴퍼스 데이터 후속, 무증 신주 상장 등 캘린더 이벤트에 베팅이 몰려 있다. 미국 바이오 초강세가 명분을 제공 — 단, 이벤트 드리븐 특성상 재료 소멸일의 되돌림 폭도 함께 커진다.</div></div>
+<div class="ins-item"><div class="ins-num">04</div><div class="ins-body"><b>글로벌판과의 교차 확인: 한국 수혜 서사의 실체가 있다.</b> 트럼프 배터리 지원($2B+)→삼성SDI, 미국 태양광 급등→한화솔루션, SK하이닉스 $38B 증설→반도체 소부장, 미국 원전주 급등→두산에너. 이번 주 종토방 기대의 상당수는 WSJ 지면에서 실제로 확인되는 재료다. 문제는 가격이 아니라 '외인 수급 복귀 시점'.</div></div>
+<div class="ins-item"><div class="ins-num">05</div><div class="ins-body"><b>경계 리스트: 루머 의존 + 레버리지 발언.</b> LG전자 로봇 위탁생산설·대한광통신 공시 임박설은 미확인 풍문이고, 커버드콜 게시판의 "신용 3억" 류 발언은 급락장 직후 전형적 위험 신호다. 낙폭과대 반등에 올라타더라도 확인된 재료(수주·공시·데이터)가 있는 쪽으로 제한할 것.</div></div>
+
+<footer>
+  종토방 위클리 Vol.08 · 2026.08.08 · 데이터: 네이버 종목토론실 크롤링(2026.08.09 10:20, TOP20 조회수 기준) + KRX·서울환시 웹 확인<br>
+  바이사이드 위클리 센티먼트 리포트 · 본 리포트는 커뮤니티 심리 분석이며 투자 권유가 아닙니다.
+</footer>
+
+</div>
+</body>
+</html>
