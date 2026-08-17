@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reddit × X 위클리 센티먼트 리포트 — Vol.11 (2026.08.15)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#111010; --paper:#f4f1ea; --card:#fbf9f3; --accent:#c8382a;
+    --green:#1d7a4c; --muted:#6b6560; --border:#d8d2c4; --soft:#efe9dc;
+    --blue:#1a4f8a; --amber:#b06010;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans KR',sans-serif; line-height:1.6;
+    -webkit-font-smoothing:antialiased; padding:0 0 60px;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 22px;}
+  .mono{font-family:'DM Mono',monospace;}
+  .serif{font-family:'DM Serif Display',serif;}
+
+  /* MASTHEAD */
+  .masthead{border-bottom:3px double var(--ink); padding:34px 0 18px; margin-bottom:6px;}
+  .mh-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;}
+  .mh-kicker{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--accent); text-transform:uppercase;}
+  .mh-vol{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1px; color:var(--muted); text-align:right;}
+  .mh-title{font-family:'DM Serif Display',serif; font-size:clamp(30px,6vw,52px); line-height:1.04; margin:14px 0 6px; letter-spacing:-0.5px;}
+  .mh-sub{font-size:14px; color:var(--muted); max-width:680px;}
+  .mh-byline{font-family:'DM Mono',monospace; font-size:11px; color:var(--ink); margin-top:14px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;}
+
+  /* SENTIMENT GAUGE */
+  .gauge{display:flex; align-items:center; gap:18px; background:var(--ink); color:var(--paper); padding:18px 22px; margin:22px 0; flex-wrap:wrap;}
+  .gauge-score{font-family:'DM Serif Display',serif; font-size:56px; line-height:1;}
+  .gauge-meta{flex:1; min-width:220px;}
+  .gauge-label{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; color:#e8a030;}
+  .gauge-desc{font-size:13px; color:rgba(244,241,234,.82); margin-top:4px;}
+  .gauge-bar{width:100%; height:6px; background:rgba(244,241,234,.18); margin-top:10px; position:relative;}
+  .gauge-fill{position:absolute; left:0; top:0; height:100%; width:66%; background:linear-gradient(90deg,#1d7a4c,#e8a030);}
+
+  /* SECTION HEADS */
+  .sec{margin:44px 0 18px; border-top:2px solid var(--ink); padding-top:10px; display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px;}
+  .sec-title{font-family:'DM Serif Display',serif; font-size:26px;}
+  .sec-eng{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase;}
+
+  /* MARKET TABLE */
+  .mtable{width:100%; border-collapse:collapse; font-size:13px;}
+  .mtable th{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); text-align:left; padding:8px 10px; border-bottom:2px solid var(--ink);}
+  .mtable td{padding:9px 10px; border-bottom:1px solid var(--border);}
+  .mtable tr:nth-child(even){background:var(--card);}
+  .num{font-family:'DM Mono',monospace;}
+  .up{color:var(--green); font-weight:700;}
+  .dn{color:var(--accent); font-weight:700;}
+  .flat{color:var(--muted); font-weight:700;}
+  .tnote{font-size:11px; color:var(--muted); margin-top:8px;}
+
+  /* NEWS FLOW */
+  .news{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .news-item{background:var(--card); border:1px solid var(--border); border-left:3px solid var(--ink); padding:14px 16px;}
+  .news-item.hot{border-left-color:var(--accent);}
+  .news-tag{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; color:var(--accent); text-transform:uppercase;}
+  .news-h{font-weight:700; font-size:14px; margin:4px 0 4px; line-height:1.45;}
+  .news-b{font-size:12.5px; color:#3d3a35;}
+
+  /* CARDS (Reddit / X) */
+  .cards{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .card{background:var(--card); border:1px solid var(--border); padding:16px 18px;}
+  .card-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
+  .card-src{font-family:'DM Mono',monospace; font-size:12px; font-weight:500;}
+  .badge{font-family:'DM Mono',monospace; font-size:10px; padding:2px 8px; letter-spacing:1px;}
+  .b-bull{background:#dcefe4; color:var(--green);}
+  .b-bear{background:#f6dbd7; color:var(--accent);}
+  .b-mix{background:#efe6d2; color:var(--amber);}
+  .card-title{font-weight:700; font-size:14.5px; line-height:1.45; margin-bottom:6px;}
+  .card-body{font-size:13px; color:#3d3a35;}
+  .card-quote{font-size:12px; font-style:italic; color:var(--muted); border-left:2px solid var(--border); padding-left:10px; margin-top:8px;}
+
+  /* COMPARE */
+  .vs{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--ink);}
+  .vs-col{padding:18px;}
+  .vs-col:first-child{border-right:1px solid var(--ink); background:var(--card);}
+  .vs-h{font-family:'DM Serif Display',serif; font-size:19px; margin-bottom:8px;}
+  .vs-li{font-size:13px; padding:6px 0; border-bottom:1px dashed var(--border);}
+  .vs-li:last-child{border-bottom:none;}
+
+  /* TICKER TABLE */
+  .ticker-sent{font-family:'DM Mono',monospace; font-size:11px;}
+
+  /* KEYWORDS */
+  .kw-wrap{display:flex; flex-wrap:wrap; gap:8px;}
+  .kw{font-family:'DM Mono',monospace; font-size:12px; padding:6px 12px; background:var(--card); border:1px solid var(--border);}
+  .kw.k1{font-size:16px; font-weight:700; border-color:var(--ink); background:var(--ink); color:var(--paper);}
+  .kw.k2{font-size:14px; font-weight:500; border-color:var(--accent); color:var(--accent);}
+
+  /* SIGNALS */
+  .sig-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .sig{border-top:3px solid var(--ink); background:var(--card); padding:14px 16px;}
+  .sig.bull{border-top-color:var(--green);}
+  .sig.bear{border-top-color:var(--accent);}
+  .sig.watch{border-top-color:var(--amber);}
+  .sig-h{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; margin-bottom:8px;}
+  .sig.bull .sig-h{color:var(--green);}
+  .sig.bear .sig-h{color:var(--accent);}
+  .sig.watch .sig-h{color:var(--amber);}
+  .sig li{font-size:12.5px; margin-left:16px; margin-bottom:6px;}
+
+  /* CHARTS */
+  .chart-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .chart-box{background:var(--card); border:1px solid var(--border); padding:16px;}
+  .chart-t{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1px; color:var(--muted); margin-bottom:10px; text-transform:uppercase;}
+  .chart-wrap{position:relative; height:240px;}
+
+  /* INSIGHTS */
+  .ins{display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--border);}
+  .ins:last-child{border-bottom:none;}
+  .ins-n{font-family:'DM Serif Display',serif; font-size:30px; color:var(--accent); line-height:1; min-width:44px;}
+  .ins-title{font-weight:700; font-size:15px; margin-bottom:5px; line-height:1.5;}
+  .ins-body{font-size:13px; color:#3d3a35;}
+  .itag{font-family:'DM Mono',monospace; font-size:10px; padding:2px 7px; margin-right:6px; vertical-align:2px;}
+  .it-b{background:#dcefe4; color:var(--green);}
+  .it-r{background:#f6dbd7; color:var(--accent);}
+  .it-a{background:#efe6d2; color:var(--amber);}
+
+  /* WATCHLIST */
+  .watch-tbl{width:100%; border-collapse:collapse; font-size:13px;}
+  .watch-tbl th{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; color:var(--muted); text-align:left; padding:8px 10px; border-bottom:2px solid var(--ink); text-transform:uppercase;}
+  .watch-tbl td{padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:top;}
+
+  /* FOOTER */
+  .footer{margin-top:50px; border-top:3px double var(--ink); padding-top:16px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;}
+  .fl{font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); line-height:1.8;}
+  .fr{font-size:11px; color:var(--muted); max-width:420px;}
+
+  @media (max-width:768px){
+    .news,.cards,.chart-grid,.sig-grid{grid-template-columns:1fr;}
+    .vs{grid-template-columns:1fr;}
+    .vs-col:first-child{border-right:none; border-bottom:1px solid var(--ink);}
+    .mtable{display:block; overflow-x:auto; white-space:nowrap;}
+    .watch-tbl{display:block; overflow-x:auto;}
+  }
+  @media (max-width:480px){
+    .wrap{padding:0 14px;}
+    .gauge-score{font-size:44px;}
+  }
+  @media print{
+    @page{size:A4; margin:12mm;}
+    body{padding:0; font-size:10.5px; print-color-adjust:exact; -webkit-print-color-adjust:exact;}
+    .masthead,.gauge,.sec,.news-item,.card,.vs,.sig,.chart-box,.ins,.footer{page-break-inside:avoid;}
+    .chart-wrap{height:190px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="mh-top">
+    <div class="mh-kicker">Buy-Side Weekly Sentiment Report · Global Edition</div>
+    <div class="mh-vol">VOL.11 · 2026.08.15 (SAT)<br>WEEK OF AUG 10–14, 2026</div>
+  </div>
+  <div class="mh-title">인상 공포의 소멸, 소비의 균열 —<br>기록은 갈라진 바닥 위에 서 있다</div>
+  <div class="mh-sub">CPI·PPI 동반 냉각으로 9월 인상 확률이 34%까지 붕괴하며 S&amp;P 500은 목요일 7,798.99 사상 최고 종가를 찍었다. 그러나 금요일, 소매판매 -0.6%와 미시간 소비심리 51이 랠리의 발밑을 때렸다. 러셀2000까지 신고가로 폭이 넓어진 강세장과, AVGO 신용 하향·Jane Street $15B 손실이 드러낸 AI 파이낸싱의 첫 균열이 같은 주에 공존한다.</div>
+  <div class="mh-byline">
+    <span>바이사이드 하우스 · 리서치 헤드 데스크</span>
+    <span>Source: WSJ(B6) · Reddit × X · CME FedWatch</span>
+  </div>
+</div>
+
+<!-- GAUGE -->
+<div class="gauge">
+  <div class="gauge-score">66</div>
+  <div class="gauge-meta">
+    <div class="gauge-label">SENTIMENT SCORE · FRAGILE RECORDS</div>
+    <div class="gauge-desc">전주 70 → 66. 신고가·브레드스 확장에도 소비 데이터 충격과 AI 크레딧 균열이 낙관의 순도를 깎았다. 탐욕 구간 유지, 그러나 방향은 하향.</div>
+    <div class="gauge-bar"><div class="gauge-fill"></div></div>
+  </div>
+</div>
+
+<!-- WSJ MARKET DATA -->
+<div class="sec"><div class="sec-title">WSJ 마켓 스코어보드</div><div class="sec-eng">Closing Bell · Fri Aug 14, 2026</div></div>
+<table class="mtable">
+  <tr><th>지수/자산</th><th>종가</th><th>금요일</th><th>주간</th><th>코멘트</th></tr>
+  <tr><td><b>S&amp;P 500</b></td><td class="num">7,785.76</td><td class="num dn">-0.17%</td><td class="num up">+0.4%</td><td>3주 연속 상승 · 목 사상최고 종가 7,798.99, 장중 7,816.70</td></tr>
+  <tr><td><b>Dow Jones</b></td><td class="num">53,732.41</td><td class="num dn">-0.20%</td><td class="num dn">-0.6%</td><td>소비 균열에 유일한 주간 마이너스</td></tr>
+  <tr><td><b>Nasdaq</b></td><td class="num">26,729.16</td><td class="num dn">-0.28%</td><td class="num up">+0.1%</td><td>AMAT·AVGO 급락에 상승분 반납</td></tr>
+  <tr><td><b>Russell 2000</b></td><td class="num">3,068.42</td><td class="num up">+0.51%</td><td class="num up">신고가</td><td>4일 연속 상승 · 미드캡400도 신고가 — 브레드스 확장</td></tr>
+  <tr><td><b>美 10Y 금리</b></td><td class="num">4.695%</td><td class="num flat">고점권</td><td class="num flat">—</td><td>인상 베팅 소멸에도 하락 거부 — 채권의 침묵 시위</td></tr>
+  <tr><td><b>WTI 원유</b></td><td class="num">$82.40</td><td class="num up">+$1.15</td><td class="num up">주간 +5%대</td><td>호르무즈 통항 마비 · 봉쇄 "무기한 유지" 발언</td></tr>
+  <tr><td><b>금</b></td><td class="num">$4,380.40</td><td class="num up">+$16.80</td><td class="num up">강세</td><td>실질금리 부담에도 지정학 프리미엄 유지</td></tr>
+  <tr><td><b>VIX</b></td><td class="num">14.25</td><td class="num dn">-2.60%</td><td class="num flat">저변동</td><td>신고가 랠리 속 안일한 헤지 수요</td></tr>
+  <tr><td><b>EUR / JPY</b></td><td class="num">$1.1573 / 159.30</td><td class="num flat">—</td><td class="num flat">—</td><td>달러인덱스 99.57, 약보합</td></tr>
+  <tr><td><b>KOSPI</b></td><td class="num">6,977.94</td><td class="num up">+2.42%</td><td class="num up">+11.5%</td><td>7주 하락 종식, 5월 이후 최대 주간 상승 — 국내판 별도 분석</td></tr>
+</table>
+<div class="tnote">※ 미국 종가는 WSJ Weekend(B6) Market Data 기준. 7월 CPI +0.1% MoM(YoY 3.4%), PPI 0.0% MoM(YoY 4.7%←5.5%) — CME FedWatch 기준 9월 인상 확률 약 34%, 동결 약 66%.</div>
+
+<!-- NEWS FLOW -->
+<div class="sec"><div class="sec-title">뉴스 플로우</div><div class="sec-eng">What Moved The Tape</div></div>
+<div class="news">
+  <div class="news-item hot">
+    <div class="news-tag">Macro · Fed</div>
+    <div class="news-h">CPI 3.4%·PPI 4.7%로 동반 둔화 — 9월 인상 확률 1주 만에 반토막</div>
+    <div class="news-b">7월 CPI가 전월비 +0.1%로 예상 부합, PPI는 보합(예상 +0.2%)으로 나오며 인상 확률이 ~35%로 급락. 다만 클리블랜드 연은 나우캐스트는 PCE 3.7%를 가리키고, Warsh 연준 내부에선 Hammack 매파 소수의견과 트럼프의 Lisa Cook 사퇴 압박 서한까지 겹치며 독립성 논란 재점화.</div>
+  </div>
+  <div class="news-item hot">
+    <div class="news-tag">Macro · Consumer</div>
+    <div class="news-h">소매판매 -0.6% 쇼크 + 미시간 소비심리 51 — "소비자가 드디어 꺾인다"</div>
+    <div class="news-b">7월 소매판매가 예상(+0.2%)을 크게 밑돌았고 8월 소비심리는 55.2→51.0으로 급락, 기대 인플레는 4.3%로 상승. 디스인플레이션 랠리에 성장 문제가 새로 얹혔다 — 시장은 이제 두 가지를 동시에 프라이싱해야 한다.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">AI · Credit</div>
+    <div class="news-h">AI 파이낸싱 첫 균열 — AVGO $400 붕괴, Jane Street는 AI 펀드로 $15B 손실</div>
+    <div class="news-b">BofA가 브로드컴의 Apollo·Blackstone 합작 'AI XPV' 파이낸싱 플랫폼을 이유로 신용등급 하향, 주가 -5.5%. 전 OpenAI 연구원 Aschenbrenner의 Situational Awareness 헤지펀드에 $45B를 태운 Jane Street는 7월 한 달 $15B 손실. 컴퓨트의 '기관 인프라화'가 낳은 첫 크레딧 사이클 경고.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">AI · Capex</div>
+    <div class="news-h">엔비디아, OpenAI 오하이오 10GW 백스톱 $250B → $120B 미만으로 축소</div>
+    <div class="news-b">데이터센터 파이낸셜 개런티 규모를 절반 이하로 재설계 — 별도로 $500B 규모 AI 인프라 파이낸싱을 자산운용사들과 조성 중. 캐펙스는 계속되지만 리스크를 대차대조표 밖으로 밀어내는 국면 전환.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">Geopolitics</div>
+    <div class="news-h">이란전, 군사에서 경제전으로 — 호르무즈 통항 마비, WTI 주간 +5%대</div>
+    <div class="news-b">미국이 해상 봉쇄 "무기한 유지" 가능을 시사, 해협 인근 선박 2척 피격. 이란 원유 수출은 사실상 제로 수준. 7월 CPI가 온화했던 이유 중 하나(휘발유 하락)가 8월 데이터부터 뒤집힐 수 있는 구조.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">Semis · Policy</div>
+    <div class="news-h">"애플, 중국 메모리 사지 마라" — 메모리 슈퍼사이클에 정책 리스크 추가</div>
+    <div class="news-b">상무부가 CXMT·YMTC 등 중국산 메모리 채택 계획에 공개 반대. 공급 부족 속 가격 상승 압력 가중 — MU YTD +240%, SNDK +591%, SOX +75%의 랠리가 정책으로 한 번 더 지지받는 모양새.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">Flows · Index</div>
+    <div class="news-h">Reddit, 8/18 S&amp;P 500 편입 — 주간 +12.6%, $178.09</div>
+    <div class="news-b">AvalonBay 대체로 화요일 개장 전 편입. 패시브 바이가 개별주를 밀었지만 지수 전체를 들어올리진 못했다 — 유동성의 선별적 배분이 이번 사이클의 특징.</div>
+  </div>
+  <div class="news-item">
+    <div class="news-tag">13F · Deals</div>
+    <div class="news-h">버크셔, 알파벳 확대·주택건설 매수 / PayPal 매각 협상 / Anthropic $2T 가시권</div>
+    <div class="news-b">버크셔가 알파벳 지분을 늘리고 D.R. Horton·Lennar를 신규 편입, Constellation은 청산. PayPal은 Stripe·Advent 컨소시엄과 주당 $60.50 매각 협상. WSJ는 Anthropic IPO 시 시총 $2T 도달 가능성을 1면에 배치 — AI 자산 리레이팅의 다음 챕터.</div>
+  </div>
+</div>
+
+<!-- REDDIT CARDS -->
+<div class="sec"><div class="sec-title">Reddit 센티먼트</div><div class="sec-eng">r/wsb · r/stocks · r/investing · r/economics · r/geopolitics</div></div>
+<div class="cards">
+  <div class="card">
+    <div class="card-head"><span class="card-src">r/wallstreetbets</span><span class="badge b-mix">MIXED-GREED</span></div>
+    <div class="card-title">메모리 역발상 실패의 교훈 — MU 센티먼트 35 바닥에서 랠리</div>
+    <div class="card-body">일요일(8/9) MU 센티먼트가 35까지 급락하며 약세 스레드가 도배됐지만, 주중 메모리는 랠리로 응답. 이후 판은 Citrini발 "메모리 매도·옵티컬 매수" 로테이션 논쟁으로 이동 — 한국 레버리지 ETF 사실상 소멸에 따른 LP 환매 플로우가 매도 근거로 거론되는 수준까지 정교해졌다.</div>
+    <div class="card-quote">"MU IV crush this week did more work than the stock ripping ever did" — 옵션 프리미엄 붕괴 성토 스레드</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">r/stocks</span><span class="badge b-mix">MIXED</span></div>
+    <div class="card-title">RDDT 편입 트레이드 vs AMAT·AVGO 실망 — 반도체 내부 차별화</div>
+    <div class="card-body">Reddit S&amp;P 편입(+12.6%)을 둘러싼 프런트런 논쟁이 주 후반을 지배. 동시에 AMAT(-5.1%)와 AVGO(-5.5%)가 호실적·증설 계획에도 급락하며 "기대치가 실적을 이겼다"는 피로 담론 확산. Cisco도 호실적에 하락 — 눈높이 자체가 리스크가 된 구간.</div>
+    <div class="card-quote">"Good earnings, stock down 5%. The bar is the bubble."</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">r/investing</span><span class="badge b-bull">CAUTIOUS-BULL</span></div>
+    <div class="card-title">버핏 13F 해부 — 알파벳 확대·주택주 신규에 "금리 정점 베팅" 해석</div>
+    <div class="card-body">버크셔의 알파벳 추가 매수와 D.R. Horton·Lennar 신규 편입을 "AI는 인정, 금리는 정점"의 이중 신호로 읽는 스레드가 상위권. 반면 S&amp;P 500 선행 PER 20배를 두고 "버핏이 사는 건 지수가 아니라 종목"이라는 반론도 팽팽.</div>
+    <div class="card-quote">"He's not buying the market. He's buying what the market forgot."</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">r/economics</span><span class="badge b-bear">BEARISH</span></div>
+    <div class="card-title">소비심리 51의 해부 — "K자 경제의 아랫줄이 끊어지고 있다"</div>
+    <div class="card-body">소매판매 -0.6%와 소비심리 51을 놓고 저소득 소비 붕괴 vs 자산가 소비 건재의 이중 구조 토론 집중. 기대 인플레 4.3%(전쟁 전 3.4%)가 임금 협상에 전이되면 연준의 '동결' 여유가 사라진다는 매파적 결론이 의외로 다수.</div>
+    <div class="card-quote">"Records for portfolios, recession for paychecks."</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">r/geopolitics</span><span class="badge b-bear">RISK-OFF</span></div>
+    <div class="card-title">호르무즈 봉쇄 지속 + NATO 라트비아 드론 격추 — 두 개의 전선</div>
+    <div class="card-body">이란 봉쇄의 "무기한 유지" 발언과 선박 피격으로 에너지 안보 스레드 급증. 동시에 NATO의 라트비아 상공 드론 격추와 러시아 전자전 확산이 유럽 방공 리스크를 재점화 — 북극항로로 우회하는 중국 화물선 뉴스가 공급망 재편 토론의 새 축으로 등장.</div>
+    <div class="card-quote">"The strait is closed, the Arctic is open. Trade maps are being redrawn in real time."</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">r/options</span><span class="badge b-mix">LOW-VOL GREED</span></div>
+    <div class="card-title">VIX 14 콤플렉스 — 신고가에서 헤지를 사는 사람이 없다</div>
+    <div class="card-body">VIX 14.25, 스큐 평탄화 속에 0DTE 콜 매수 편중 재개. 소비 데이터 쇼크에도 변동성이 눌려 있는 것을 "여름 유동성 함정"으로 보는 경고 스레드와, 9월 FOMC 전까지 감마 롱을 깔자는 실전파가 공존.</div>
+    <div class="card-quote">"Cheapest insurance of the year, and nobody's buying."</div>
+  </div>
+</div>
+
+<!-- X CARDS -->
+<div class="sec"><div class="sec-title">X 인플루언서 포지셔닝</div><div class="sec-eng">Core 3 + Weekly Rotation 3</div></div>
+<div class="cards">
+  <div class="card">
+    <div class="card-head"><span class="card-src">Lyn Alden · 고정</span><span class="badge b-mix">STRUCTURAL</span></div>
+    <div class="card-title">"재정 지배의 증상" — 적자가 시장을 떠받치고, AI 수익성이 다음 관문</div>
+    <div class="card-body">재정적자+연준 대차대조표 재확장이 유동성의 실체라는 프레임 유지. AI에 대해선 "수요는 왔다, 그러나 수익은 아직 질문"이라며 하이퍼스케일러 불확실성과 반도체 인프라를 분리해서 보라는 입장 — 이번 주 AVGO 크레딧 이슈가 정확히 그 질문이다.</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">Bianco Research · 고정</span><span class="badge b-bear">RATES-HAWK</span></div>
+    <div class="card-title">채권이 안 믿는다 — 인상 베팅 소멸에도 10Y 4.7% 고점 사수</div>
+    <div class="card-body">CPI·PPI 냉각으로 주식은 신고가를 갔지만 10Y는 4.695%로 주 고점 부근 마감. 국채 공급·유가·기대 인플레 4.3%의 조합이 "동결은 인하가 아니다"라는 메시지를 반복 — 금리의 하방 경직이 밸류에이션 20배의 최대 적이라는 관점.</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">SoberLook · 고정</span><span class="badge b-bear">DATA-BEAR</span></div>
+    <div class="card-title">차트가 말하는 소비 균열 — 소매 -0.6%, 심리 51, 저소득 연체율</div>
+    <div class="card-body">소매판매 컨트롤 그룹 둔화와 심리지수 급락, 신용카드 연체의 하위소득 편중을 연결한 시각화가 확산 축. "고용이 이미 마이너스(-23K)인데 소비까지 꺾이면 남는 건 자산효과뿐"이라는 냉정한 요약.</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">Peter Zeihan · 로테이션</span><span class="badge b-bear">GEO-SUPPLY</span></div>
+    <div class="card-title">해협은 닫히고 북극이 열린다 — 물류 지도의 강제 재편</div>
+    <div class="card-body">호르무즈 봉쇄 장기화와 중국 Sea Legend의 북극항로 정기 화물 개시를 하나의 서사로 묶는 주간. 수에즈·호르무즈 리스크가 운임·보험료를 구조적으로 올리고, 러시아 통제 북극항로 의존은 새로운 지정학 인질극이라는 경고.</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">kole_finance · 로테이션</span><span class="badge b-bull">MOMENTUM</span></div>
+    <div class="card-title">브레드스가 진짜다 — 러셀·미드캡 동반 신고가에 로테이션 롱</div>
+    <div class="card-body">메가캡 피로(AVGO·AMAT) 속 러셀2000 4연속 상승·신고가를 "건강한 손바뀜"으로 규정. 금리 인상 공포 소멸 구간의 스몰캡·금융·에너지 상대강도 트레이드와, 8/18 RDDT 편입 이벤트 플로우를 단기 플레이북으로 제시.</div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="card-src">Nouriel Roubini · 로테이션</span><span class="badge b-bear">TAIL-RISK</span></div>
+    <div class="card-title">스태그플레이션 꼬리 — 유가 +5%, 기대인플레 4.3%, 소비 -0.6%의 삼중주</div>
+    <div class="card-body">"성장은 식고 인플레 기대는 오르는데 지수는 신고가"라는 부조화를 1970년대식 정책 딜레마의 전조로 규정. 호르무즈발 에너지 쇼크가 8~9월 물가에 반영되는 순간 '동결 랠리'의 전제가 무너진다는 시나리오 유지.</div>
+  </div>
+</div>
+
+<!-- COMPARE -->
+<div class="sec"><div class="sec-title">Reddit vs X — 온도차</div><div class="sec-eng">Retail Crowd vs Macro Desk</div></div>
+<div class="vs">
+  <div class="vs-col">
+    <div class="vs-h">Reddit — "기록을 사되, 이유는 각자 다르다"</div>
+    <div class="vs-li">① 메모리 역발상 실패 학습 → 추세 순응으로 회귀</div>
+    <div class="vs-li">② RDDT 편입·스몰캡 신고가 등 이벤트/브레드스 플레이 선호</div>
+    <div class="vs-li">③ 소비 데이터는 "남의 일" — 포트폴리오와 월급의 분리 인식</div>
+    <div class="vs-li">④ VIX 14에서도 헤지 무관심, 0DTE 콜 편중 재개</div>
+  </div>
+  <div class="vs-col">
+    <div class="vs-h">X 매크로 데스크 — "신고가의 전제 조건을 의심하라"</div>
+    <div class="vs-li">① 채권의 하방 경직(10Y 4.7%)이 20배 밸류에이션과 충돌</div>
+    <div class="vs-li">② AI 캐펙스의 부외화·크레딧화 — AVGO·Jane Street는 시작</div>
+    <div class="vs-li">③ 유가·기대인플레가 8~9월 데이터를 다시 매파로 밀 위험</div>
+    <div class="vs-li">④ 소비 균열은 구조(K자) — 자산효과 의존 경제의 취약성</div>
+  </div>
+</div>
+
+<!-- TICKER TABLE -->
+<div class="sec"><div class="sec-title">소셜 티커 보드</div><div class="sec-eng">Most Discussed · Week of Aug 10–14</div></div>
+<table class="mtable">
+  <tr><th>티커</th><th>금요일 종가</th><th>주간/모멘텀</th><th>소셜 센티먼트</th><th>핵심 서사</th></tr>
+  <tr><td><b>NVDA</b></td><td class="num">$220대</td><td class="num flat">숨고르기</td><td class="ticker-sent">🔥 HIGH · MIXED</td><td>OpenAI 백스톱 $120B 미만 축소 + $500B 인프라 파이낸싱 조성</td></tr>
+  <tr><td><b>AVGO</b></td><td class="num">$400 하회</td><td class="num dn">-5.5%</td><td class="ticker-sent">🔥 HIGH · BEAR</td><td>BofA 신용 하향 — AI XPV 파이낸싱 플랫폼 리스크 부각</td></tr>
+  <tr><td><b>AMAT</b></td><td class="num">급락</td><td class="num dn">-5.1%</td><td class="ticker-sent">HIGH · BEAR</td><td>증설 가이던스도 못 넘은 눈높이 — 장비주 피로 신호</td></tr>
+  <tr><td><b>MU</b></td><td class="num">$971.66</td><td class="num up">YTD +240%</td><td class="ticker-sent">🔥 HIGH · BULL</td><td>센티먼트 35 바닥 찍고 랠리 — 역발상 숏 소각</td></tr>
+  <tr><td><b>SNDK</b></td><td class="num">—</td><td class="num up">YTD +591%</td><td class="ticker-sent">MID · BULL</td><td>잉여현금 주주환원 발표 — 메모리 슈퍼사이클 대장 유지</td></tr>
+  <tr><td><b>RDDT</b></td><td class="num">$178.09</td><td class="num up">+12.6%</td><td class="ticker-sent">🔥 HIGH · GREED</td><td>8/18 S&amp;P 500 편입(AVB 대체) — 패시브 이벤트 플로우</td></tr>
+  <tr><td><b>MSTR</b></td><td class="num">—</td><td class="num flat">혼조</td><td class="ticker-sent">HIGH · MIXED</td><td>주말 WSB 언급 1위권 — 비트코인 프록시 변동성 재점화</td></tr>
+  <tr><td><b>PLTR</b></td><td class="num">—</td><td class="num up">강세</td><td class="ticker-sent">MID · BULL</td><td>실적 후 모멘텀 지속 — AI 소프트웨어 생존자 프리미엄</td></tr>
+  <tr><td><b>PYPL</b></td><td class="num">$53 부근</td><td class="num up">딜 프리미엄</td><td class="ticker-sent">MID · EVENT</td><td>Stripe·Advent $60.50 매각 협상 — 차익거래 스레드 급증</td></tr>
+</table>
+
+<!-- KEYWORDS -->
+<div class="sec"><div class="sec-title">주간 키워드 클라우드</div><div class="sec-eng">Language Of The Week</div></div>
+<div class="kw-wrap">
+  <span class="kw k1">#인상공포소멸</span>
+  <span class="kw k1">#소비균열</span>
+  <span class="kw k2">#AI크레딧사이클</span>
+  <span class="kw k2">#메모리vs옵티컬</span>
+  <span class="kw k2">#호르무즈봉쇄</span>
+  <span class="kw">#브레드스확장</span>
+  <span class="kw">#RDDT편입</span>
+  <span class="kw">#JaneStreet15B</span>
+  <span class="kw">#버핏13F</span>
+  <span class="kw">#기대인플레4.3</span>
+  <span class="kw">#VIX14</span>
+  <span class="kw">#Anthropic2T</span>
+</div>
+
+<!-- SIGNALS -->
+<div class="sec"><div class="sec-title">시그널 보드</div><div class="sec-eng">Bull / Bear / Watch</div></div>
+<div class="sig-grid">
+  <div class="sig bull">
+    <div class="sig-h">▲ BULLISH</div>
+    <ul>
+      <li>9월 인상 확률 34%로 붕괴 — '동결 랠리'의 연료 유지</li>
+      <li>러셀2000·미드캡400 동반 신고가 — 메가캡 의존 탈피</li>
+      <li>버크셔의 알파벳 확대·주택주 신규 — 스마트머니의 금리 정점 베팅</li>
+      <li>Q2 어닝 시즌 마무리 국면, 가이던스 상향 비율 역사적 고점권</li>
+    </ul>
+  </div>
+  <div class="sig bear">
+    <div class="sig-h">▼ BEARISH</div>
+    <ul>
+      <li>소매판매 -0.6%·소비심리 51 — 고용(-23K)에 이어 소비까지 균열</li>
+      <li>AVGO 신용 하향·Jane Street $15B — AI 파이낸싱 크레딧 균열 개시</li>
+      <li>10Y 4.695% 고점 사수 — 금리가 20배 PER을 정면 부정</li>
+      <li>WTI +5%·기대인플레 4.3% — 8월 물가부터 매파 반격 리스크</li>
+    </ul>
+  </div>
+  <div class="sig watch">
+    <div class="sig-h">◆ WATCH</div>
+    <ul>
+      <li>8/18(화) RDDT S&amp;P 편입 · HD 실적 — 소비 균열의 첫 검증</li>
+      <li>8/19 LOW·TGT / 8/20 WMT — 리테일 어닝 위크</li>
+      <li>잭슨홀(8월 말) — Warsh 연준의 첫 공식 프레임워크 발언</li>
+      <li>호르무즈 유가 전이 — 8월 CPI 나우캐스트 급변 여부</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<div class="sec"><div class="sec-title">차트</div><div class="sec-eng">Visual Check</div></div>
+<div class="chart-grid">
+  <div class="chart-box">
+    <div class="chart-t">주간 성과 — 브레드스 확장의 실체 (%)</div>
+    <div class="chart-wrap"><canvas id="c1"></canvas></div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-t">CME 9월 인상 확률 추이 (%)</div>
+    <div class="chart-wrap"><canvas id="c2"></canvas></div>
+  </div>
+</div>
+
+<!-- INSIGHTS -->
+<div class="sec"><div class="sec-title">리서치 헤드 인사이트</div><div class="sec-eng">5 Calls From The Desk</div></div>
+<div>
+  <div class="ins">
+    <div class="ins-n">01</div>
+    <div>
+      <div class="ins-title"><span class="itag it-a">체제 판단</span>'인상 공포 소멸'은 랠리의 연료이자 천장 — 동결은 인하가 아니다</div>
+      <div class="ins-body">이번 랠리의 전제는 단 하나, "연준이 안 올린다"다. CPI·PPI 냉각이 그 전제를 살렸지만 10Y 4.695%의 하방 경직은 채권시장이 인하까지는 전혀 계산하지 않음을 보여준다. 유가 +5%와 기대인플레 4.3%가 8월 데이터에 반영되는 순간 이 전제는 재검증된다. 신고가 추격보다 9월 FOMC 전 이벤트 리스크 대비 감마 확보가 리스크·리워드 우위.</div>
+    </div>
+  </div>
+  <div class="ins">
+    <div class="ins-n">02</div>
+    <div>
+      <div class="ins-title"><span class="itag it-r">신규 리스크</span>AI 크레딧 사이클 개막 — AVGO·Jane Street는 개별 사건이 아니라 카테고리</div>
+      <div class="ins-body">엔비디아의 백스톱 축소($250B→$120B 미만), 브로드컴의 부외 파이낸싱 플랫폼 신용 하향, Jane Street의 AI 펀드 $15B 손실은 모두 같은 문장의 다른 절이다: AI 캐펙스가 자기자본에서 크레딧·구조화로 넘어갔다. 다음 어닝 시즌부터는 EPS가 아니라 파이낸싱 조건(금리·보증·리스구조)이 반도체 멀티플을 결정하는 변수로 승격된다.</div>
+    </div>
+  </div>
+  <div class="ins">
+    <div class="ins-n">03</div>
+    <div>
+      <div class="ins-title"><span class="itag it-b">포지셔닝</span>브레드스 확장은 진짜 — 그러나 '금리 동결 베팅'의 레버리지 버전임을 잊지 말 것</div>
+      <div class="ins-body">러셀2000·미드캡400 동반 신고가는 이번 사이클 처음 보는 건강한 신호이며, 버핏의 주택건설주 신규 편입과 같은 방향이다. 다만 스몰캡 랠리는 본질적으로 금리 민감 트레이드 — 인상 확률이 34%에서 되돌아오면 가장 먼저 되돌려진다. 스몰캡 롱은 유지하되 9월 FOMC를 스탑 기준으로 삼는 조건부 포지션으로 규정.</div>
+    </div>
+  </div>
+  <div class="ins">
+    <div class="ins-n">04</div>
+    <div>
+      <div class="ins-title"><span class="itag it-a">크로스체크</span>메모리 vs 옵티컬 로테이션 논쟁 — 한국 수급이 글로벌 논거가 된 첫 주</div>
+      <div class="ins-body">WSB의 메모리 매도 논거에 "한국 레버리지 ETF 소멸→LP 환매 플로우"가 등장했다. 글로벌 리테일이 한국 수급 구조를 실시간 변수로 읽기 시작한 것. MU 센티먼트 35 바닥 랠리가 보여주듯 역발상 숏은 소각됐고, 논쟁의 실익은 옵티컬(광통신)로의 분산 — 국내판 대한광통신 조회 급증과 정확히 교차하는 신호다(국내 리포트 참조).</div>
+    </div>
+  </div>
+  <div class="ins">
+    <div class="ins-n">05</div>
+    <div>
+      <div class="ins-title"><span class="itag it-r">종합 판단</span>66/100 "Fragile Records" — 포트폴리오의 신기록, 월급의 침체</div>
+      <div class="ins-body">지수는 사상 최고, 소비심리는 51. 이 괴리는 자산효과가 소비를 지탱하는 K자 구조의 말기적 특징이다. 리테일(Reddit)은 기록을 사고 매크로 데스크(X)는 전제를 의심한다 — 역사적으로 이 온도차가 벌어질 때 시장은 몇 주 더 오르고, 그 다음 데이터 한 방에 되돌린다. 추격 매수 금지, 8/18~20 리테일 어닝이 소비 균열의 진위를 가리는 첫 법정.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WATCHLIST -->
+<div class="sec"><div class="sec-title">다음 주 워치리스트</div><div class="sec-eng">Week of Aug 17–21</div></div>
+<table class="watch-tbl">
+  <tr><th>일정</th><th>이벤트</th><th>관전 포인트</th></tr>
+  <tr><td class="num">8/18 (화)</td><td>RDDT S&amp;P 500 편입 · Home Depot 실적</td><td>패시브 플로우 소화 여부 · 주택/소비의 첫 실적 검증</td></tr>
+  <tr><td class="num">8/19 (수)</td><td>Lowe's · Target · TJX 실적</td><td>소매판매 -0.6%가 기업 가이던스로 확인되는지</td></tr>
+  <tr><td class="num">8/20 (목)</td><td>Walmart · BABA · ROST 실적</td><td>저가 채널 강세 = K자 구조 심화의 방증</td></tr>
+  <tr><td class="num">주중</td><td>호르무즈 통항 · 유가</td><td>WTI $85 돌파 시 8월 CPI 나우캐스트 재점화</td></tr>
+  <tr><td class="num">8월 말</td><td>잭슨홀 심포지엄</td><td>Warsh 의장 첫 프레임워크 — '동결 랠리' 전제의 공식 판정</td></tr>
+</table>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="fl">
+    by 바이사이드 하우스 애널리스트<br>
+    Reddit × X 위클리 센티먼트 리포트 Vol.11<br>
+    2026.08.15 · 매주 토요일 발간<br>
+    연동: 종토방 위클리 KOSPI 심리 리포트 Vol.09
+  </div>
+  <div class="fr">
+    본 리포트는 공개 데이터 기반 sentiment 분석이며 투자 권유가 아닙니다. 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다.
+  </div>
+</div>
+
+</div>
+
+<script>
+Chart.defaults.color = '#6b6560';
+Chart.defaults.borderColor = '#d8d2c4';
+Chart.defaults.font.family = "'DM Mono', monospace";
+
+new Chart(document.getElementById('c1').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['KOSPI', '러셀2000*', 'WTI', 'S&P 500', 'Nasdaq', 'Dow'],
+    datasets: [{
+      data: [11.5, 1.9, 5.1, 0.4, 0.1, -0.6],
+      backgroundColor: ['#1d7a4c','#1d7a4c','#b06010','#1a4f8a','#1a4f8a','#c8382a'],
+      borderRadius: 2
+    }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 10 }, callback: v => v + '%' }, grid: { color: '#e6e0d2' } },
+      y: { ticks: { font: { size: 11 }, color: '#111010' }, grid: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('c2').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: ['7월 말', '고용쇼크(8/7)', 'CPI(8/12)', 'PPI(8/13)', '주말(8/14)'],
+    datasets: [{
+      label: '9월 인상 확률',
+      data: [66, 44, 38, 34, 34],
+      borderColor: '#c8382a', backgroundColor: 'rgba(200,56,42,.08)',
+      fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#c8382a'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { min: 0, max: 80, ticks: { font: { size: 10 }, callback: v => v + '%' }, grid: { color: '#e6e0d2' } },
+      x: { ticks: { font: { size: 10 } }, grid: { display: false } }
+    }
+  }
+});
+</script>
+</body>
+</html>
