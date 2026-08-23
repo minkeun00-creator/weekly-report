@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>바이사이드 위클리 센티먼트 리포트 Vol.12 — 2026.08.23</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --ink:#111010; --paper:#f4f1ea; --card:#fbf9f4; --line:#d8d2c4;
+  --red:#b03a2e; --green:#0d6b4f; --amber:#7d5a0a; --blue:#1a4f8a; --purple:#4a3580;
+  --mut:#6b6558;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',sans-serif;line-height:1.65;font-size:15px}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 60px}
+.serif{font-family:'DM Serif Display',serif}
+.mono{font-family:'DM Mono',monospace}
+
+/* 마스트헤드 */
+.masthead{background:var(--ink);color:var(--paper);margin:0 -20px;padding:34px 24px 26px;text-align:center}
+.masthead .kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.35em;color:#c9c2b2;text-transform:uppercase}
+.masthead h1{font-family:'DM Serif Display',serif;font-size:clamp(30px,6vw,52px);letter-spacing:.01em;margin:10px 0 6px}
+.masthead .sub{font-size:13px;color:#c9c2b2}
+.masthead .vol{display:inline-block;margin-top:14px;border:1px solid #5a5548;padding:5px 16px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.15em}
+.score-band{background:#1d1c1a;color:var(--paper);margin:0 -20px;padding:14px 24px;display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:12px}
+.score-band b{color:#e8c15a}
+
+/* 섹션 공통 */
+section{margin-top:44px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:18px}
+.sec-head .no{font-family:'DM Mono',monospace;font-size:12px;color:var(--mut);letter-spacing:.2em}
+.sec-head h2{font-family:'DM Serif Display',serif;font-size:clamp(20px,3.4vw,28px);font-weight:400}
+.lede{font-size:14px;color:var(--mut);margin-bottom:16px}
+
+/* 마켓 그리드 */
+.mkt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.mkt{background:var(--card);padding:14px 12px}
+.mkt .l{font-size:11px;color:var(--mut);letter-spacing:.08em}
+.mkt .v{font-family:'DM Mono',monospace;font-size:clamp(15px,2.4vw,19px);font-weight:500;margin:3px 0 1px}
+.mkt .c{font-family:'DM Mono',monospace;font-size:12px}
+.up{color:var(--green)}.dn{color:var(--red)}.nt{color:var(--amber)}
+.mkt-note{font-size:12px;color:var(--mut);margin-top:8px}
+
+/* 뉴스플로우 */
+.news-item{display:grid;grid-template-columns:86px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.news-item:last-child{border-bottom:none}
+.news-item .tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;padding:3px 0;text-align:center;height:fit-content;border:1px solid var(--ink)}
+.tag.t-red{border-color:var(--red);color:var(--red)}
+.tag.t-green{border-color:var(--green);color:var(--green)}
+.tag.t-blue{border-color:var(--blue);color:var(--blue)}
+.tag.t-purple{border-color:var(--purple);color:var(--purple)}
+.tag.t-amber{border-color:var(--amber);color:var(--amber)}
+.news-item h3{font-size:15px;font-weight:700;margin-bottom:3px}
+.news-item p{font-size:13.5px;color:#3d3a33}
+
+/* 카드 */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);padding:18px}
+.card .src{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--mut);display:flex;justify-content:space-between;margin-bottom:8px}
+.card .mood{font-weight:700}
+.card h3{font-size:16px;margin-bottom:6px}
+.card p{font-size:13.5px;color:#3d3a33}
+.card .quote{margin-top:10px;padding:10px 12px;background:var(--paper);border-left:3px solid var(--ink);font-size:12.5px;font-style:italic;color:#4a463c}
+
+/* 비교 */
+.vs{display:grid;grid-template-columns:1fr 44px 1fr;align-items:stretch;gap:0;border:1px solid var(--line)}
+.vs .side{background:var(--card);padding:18px}
+.vs .mid{display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:20px;background:var(--ink);color:var(--paper)}
+.vs h4{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;margin-bottom:10px;color:var(--mut)}
+.vs ul{list-style:none}
+.vs li{font-size:13.5px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.vs li:last-child{border-bottom:none}
+
+/* 티커 테이블 */
+table{width:100%;border-collapse:collapse;background:var(--card)}
+th{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-align:left;padding:10px 10px;border-bottom:2px solid var(--ink);color:var(--mut)}
+td{padding:10px 10px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:top}
+td.mono{font-size:13px}
+.pill{display:inline-block;font-family:'DM Mono',monospace;font-size:10.5px;padding:2px 8px;border:1px solid}
+.pill.bull{color:var(--green);border-color:var(--green)}
+.pill.bear{color:var(--red);border-color:var(--red)}
+.pill.mix{color:var(--amber);border-color:var(--amber)}
+.tbl-scroll{overflow-x:auto}
+
+/* 키워드 */
+.kw-cloud{display:flex;flex-wrap:wrap;gap:10px}
+.kw{font-family:'DM Mono',monospace;border:1px solid var(--ink);padding:6px 14px;font-size:13px}
+.kw.k1{font-size:17px;font-weight:500;background:var(--ink);color:var(--paper)}
+.kw.k2{font-size:15px}
+.kw.k3{font-size:12px;color:var(--mut);border-color:var(--mut)}
+
+/* 시그널 */
+.sig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sig{border-top:4px solid;padding:14px;background:var(--card);border-left:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sig.bull{border-top-color:var(--green)}
+.sig.bear{border-top-color:var(--red)}
+.sig.watch{border-top-color:var(--amber)}
+.sig h4{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;margin-bottom:10px}
+.sig.bull h4{color:var(--green)}.sig.bear h4{color:var(--red)}.sig.watch h4{color:var(--amber)}
+.sig ul{list-style:none}
+.sig li{font-size:13px;padding:5px 0 5px 14px;position:relative}
+.sig li:before{content:"▸";position:absolute;left:0;font-size:11px}
+
+/* 차트 */
+.chart-box{background:var(--card);border:1px solid var(--line);padding:18px}
+.chart-box h4{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--mut);margin-bottom:12px}
+.chart-wrap{position:relative;height:260px}
+.charts-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* 인사이트 */
+.insight{background:var(--ink);color:var(--paper);padding:26px 24px;margin:0 -20px}
+.insight .sec-head{border-bottom-color:var(--paper)}
+.insight .sec-head h2{color:var(--paper)}
+.insight .sec-head .no{color:#9a927e}
+.insight ol{list-style:none;counter-reset:ins}
+.insight li{counter-increment:ins;padding:13px 0 13px 44px;position:relative;border-bottom:1px solid #35322c;font-size:14px;color:#dcd6c8}
+.insight li:last-child{border-bottom:none}
+.insight li:before{content:counter(ins,decimal-leading-zero);position:absolute;left:0;top:13px;font-family:'DM Mono',monospace;font-size:15px;color:#e8c15a}
+.insight b{color:var(--paper)}
+
+/* 워치리스트 */
+.watch-tbl td:first-child{font-family:'DM Mono',monospace;font-weight:500}
+
+footer{margin-top:50px;padding-top:18px;border-top:3px solid var(--ink);font-size:11.5px;color:var(--mut);text-align:center;line-height:1.9}
+
+@media(max-width:768px){
+  .mkt-grid{grid-template-columns:repeat(2,1fr)}
+  .cards{grid-template-columns:1fr}
+  .sig-grid{grid-template-columns:1fr}
+  .charts-2{grid-template-columns:1fr}
+  .vs{grid-template-columns:1fr}
+  .vs .mid{padding:8px}
+}
+@media(max-width:480px){
+  body{font-size:14px}
+  .news-item{grid-template-columns:70px 1fr;gap:10px}
+}
+@page{size:A4;margin:12mm}
+@media print{
+  body{background:#fff;font-size:10.5px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .wrap{max-width:100%;padding:0}
+  section,.card,.sig,.news-item,.chart-box,.insight,.vs,.mkt-grid,table,tr{page-break-inside:avoid}
+  .chart-wrap{height:200px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ 마스트헤드 ═══ -->
+<div class="masthead">
+  <div class="kicker">Buy-Side Weekly Sentiment Report</div>
+  <h1>바이사이드 위클리 센티먼트</h1>
+  <div class="sub">Reddit × X(Twitter) 소셜 센티먼트 합성 리서치 · Global Edition</div>
+  <div class="vol">VOL.12 · 2026.08.23 · 커버 기간 08.17 – 08.21</div>
+</div>
+<div class="score-band">
+  <span>주간 센티먼트 스코어 <b>60 / 100</b></span>
+  <span>전주 66 ▼6</span>
+  <span>레짐 태그 <b>"DEBASEMENT WEEK"</b></span>
+</div>
+
+<!-- ═══ 01 WSJ 마켓 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">01</span><h2>Market Snapshot — WSJ Weekend</h2></div>
+  <p class="lede">8월 21일(금) 종가 기준. 채권 발작 → 재무부 바이백 개입 → 하드애셋 폭등 → 금요일 주식 반등의 한 주. 3대 지수는 7월 말 이후 처음으로 주간 하락.</p>
+  <div class="mkt-grid">
+    <div class="mkt"><div class="l">S&P 500</div><div class="v">7,674.37</div><div class="c up">+0.43% 금 <span class="dn">/ 주간 −1.4%</span></div></div>
+    <div class="mkt"><div class="l">DOW JONES</div><div class="v">53,277.01</div><div class="c up">+0.98% 금 <span class="dn">/ 주간 −0.8%</span></div></div>
+    <div class="mkt"><div class="l">NASDAQ</div><div class="v">26,180.45</div><div class="c up">+0.43% 금 <span class="dn">/ 주간 −2.1%</span></div></div>
+    <div class="mkt"><div class="l">RUSSELL 2000</div><div class="v">3,017</div><div class="c up">+0.85% 금</div></div>
+    <div class="mkt"><div class="l">미 10Y 국채</div><div class="v">4.737%</div><div class="c dn">전주 4.695% ▲</div></div>
+    <div class="mkt"><div class="l">미 30Y 국채</div><div class="v">~5.25%</div><div class="c dn">장중 2007년 이후 최고</div></div>
+    <div class="mkt"><div class="l">GOLD</div><div class="v">$4,624.10</div><div class="c up">+2.4% 금 / 주간 +5.6%</div></div>
+    <div class="mkt"><div class="l">BITCOIN</div><div class="v">~$77,000</div><div class="c up">주간 +20%↑ · $80K 터치</div></div>
+    <div class="mkt"><div class="l">WTI 원유</div><div class="v">$87.06</div><div class="c nt">−$0.23 금 · 이란 리스크</div></div>
+    <div class="mkt"><div class="l">SILVER</div><div class="v">$69.47</div><div class="c up">주간 +3.1%</div></div>
+    <div class="mkt"><div class="l">DXY 달러지수</div><div class="v">98.835</div><div class="c dn">WSJ달러 주간 −0.7%</div></div>
+    <div class="mkt"><div class="l">VIX</div><div class="v">15.13</div><div class="c nt">여전히 저변동성</div></div>
+  </div>
+  <p class="mkt-note mono">Source: WSJ Weekend (2026.08.22–23) B1/B6/B10 · Tradeweb · Dow Jones Market Data</p>
+</section>
+
+<!-- ═══ 02 뉴스플로우 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">02</span><h2>Weekly News Flow</h2></div>
+  <div class="news-item">
+    <span class="tag t-red">BONDS</span>
+    <div><h3>채권시장의 난기류가 재무장관을 가르치다</h3>
+    <p>베센트 재무장관 취임 후 최대 시험대. 30년물이 장중 2007년 이후 최고치(5.3% 부근)를 찍자 재무부는 10~30년물 바이백을 회당 최소 20억→40억달러로 두 배 확대(9/9~11/4). 효과는 하루 만에 소멸 — 10년물은 4.737%로 되돌림. 시장이 "재정이 정책 개입보다 세다"는 것을 확인시킨 한 주. 미 국가부채는 40조달러를 돌파.</p></div>
+  </div>
+  <div class="news-item">
+    <span class="tag t-amber">DEBASE</span>
+    <div><h3>디베이스먼트 트레이드 점화 — 금 $4,600 · 비트코인 +20%</h3>
+    <p>바이백 발표를 시장은 "소프트 QE"로 해석. 달러 매도 → 금 주간 +5.6%로 $4,624, 비트코인은 3일 만에 +20% 폭등하며 $80,000 터치. BTC 현물 ETF 주간 유입 16억달러 이상으로 올해 최대, IBIT 하루 5억달러. 금·은·비트코인 동반 랠리는 통화가치 하락 헤지 수요의 전형.</p></div>
+  </div>
+  <div class="news-item">
+    <span class="tag t-blue">FED</span>
+    <div><h3>잭슨홀 D-5 — 워시 의장의 데뷔 무대</h3>
+    <p>케빈 워시 의장의 첫 잭슨홀 기조연설(8/28 금). 7월 의사록의 매파적 논의(9월 인상 준비론)가 본인의 메시지로 이어질지가 관건. 같은 주 수요일 엔비디아 실적·7월 PCE까지 겹치는 슈퍼위크. 금요일 미 8월 Flash PMI 56(4년래 최고)이 증시 반등의 촉매가 됐지만, 이는 동시에 인상 논거이기도 하다.</p></div>
+  </div>
+  <div class="news-item">
+    <span class="tag t-green">BIO</span>
+    <div><h3>모더나의 컴백 — mRNA 흑색종 백신 돌파</h3>
+    <p>머크와 공동개발한 개인맞춤형 mRNA 암백신이 키트루다 병용에서 흑색종 재발·사망 위험 44% 감소. 수요일 하루 시총 440억달러 증가, 주가는 6월 저점 대비 약 3배. 침체됐던 바이오텍 섹터 전반에 리레이팅 촉매.</p></div>
+  </div>
+  <div class="news-item">
+    <span class="tag t-purple">CHINA</span>
+    <div><h3>중국 AI의 약진 — "미국 최고 모델에 수개월 차"</h3>
+    <p>WSJ 커버스토리. 칭화대 사단(탕지에 Z.AI·양즈린 문샷)이 미국식 증류·모방+자체 효율화로 격차를 축소, Epoch 지수 기준 중국 최고 모델은 미국에 몇 달 뒤처진 수준까지 추격. 앤트로픽은 Z.AI·문샷을 사이버보안 정책 위반으로 지목. AI 패권 경쟁이 반도체 수출통제 논쟁을 재점화하는 국면.</p></div>
+  </div>
+  <div class="news-item">
+    <span class="tag t-red">GEO</span>
+    <div><h3>이란 제재 시즌 2 — "가장 압도적인 경제 작전"</h3>
+    <p>트럼프, 이란 금융망(두바이 환전상·UAE 네트워크) 겨냥 신규 제재 위협. 이란전쟁 6개월 차, 미사일 요격탄 재고 소진으로 "미국이 다면전을 수행할 수 있는가"라는 동맹국 의구심이 리뷰 섹션 커버로. 유가 $87은 이 리스크의 가격표.</p></div>
+  </div>
+</section>
+
+<!-- ═══ 03 Reddit 카드 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">03</span><h2>Reddit Sentiment</h2></div>
+  <div class="cards">
+    <div class="card">
+      <div class="src"><span>r/wallstreetbets</span><span class="mood up">EUPHORIC-ROTATION</span></div>
+      <h3>"채권이 무너지니 비트가 달린다"</h3>
+      <p>주간 담론의 중심은 단연 BTC +20% 랠리와 금 신고가. NVDA 실적(8/26) 앞두고 콜옵션 재장전 움직임과 "수익률 5% 시대에 멀티플이 버티냐"는 냉소가 공존. IBIT·MSTR 언급량 급증.</p>
+      <div class="quote">"Bonds crashed, Bessent panicked, bitcoin printed. This is the way."</div>
+    </div>
+    <div class="card">
+      <div class="src"><span>r/investing</span><span class="mood nt">DEFENSIVE</span></div>
+      <h3>장기채 손실 인증과 "그래도 분산" 논쟁</h3>
+      <p>30년물 5%대에 TLT 물타기 실패담이 속출. 바이백을 "수익률곡선 통제(YCC)의 예고편"으로 읽는 시각과, 4.7% 무위험 수익률에 주식 비중을 줄이겠다는 리밸런싱파가 맞섬. 금 ETF 편입 문의 급증.</p>
+      <div class="quote">"The Treasury buying its own bonds isn't a bull case, it's a confession."</div>
+    </div>
+    <div class="card">
+      <div class="src"><span>r/stocks</span><span class="mood nt">SELECTIVE</span></div>
+      <h3>모더나 3배 랠리 — "바이오의 엔비디아 모먼트?"</h3>
+      <p>MRNA 암백신 뉴스가 주간 최다 화제. 뒤늦게 올라타도 되냐는 FOMO와 "치료제 상용화까지 수년, $50만 가격표" 신중론이 팽팽. 메타 -7%, 반도체 약세로 기술주 순환매 체감 뚜렷.</p>
+      <div class="quote">"Covid made them, politics broke them, cancer brought them back."</div>
+    </div>
+    <div class="card">
+      <div class="src"><span>r/economics + r/geopolitics</span><span class="mood dn">STRUCTURAL-BEAR</span></div>
+      <h3>$40조 부채와 "재정지배" 담론의 주류화</h3>
+      <p>국가부채 40조달러 돌파 + 바이백 확대가 "재정이 통화정책을 삼켰다(fiscal dominance)" 스레드로 폭발. 지정학 쪽에선 러-일 쿠릴 긴장, 이란 제재 시즌2, 미 요격탄 재고 소진이 3대 화두.</p>
+      <div class="quote">"We're not monetizing the debt. We're just buying it back with borrowed money. Totally different."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 X 카드 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">04</span><h2>X Influencer Radar</h2></div>
+  <p class="lede">고정 코어 3인 + 금주 이슈 연동 로테이션 3인.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="src"><span>@LynAldenContact · 고정</span><span class="mood up">BULL / HARD ASSETS</span></div>
+      <h3>"비트코인 바닥은 확인됐다 — 불마켓 재가동"</h3>
+      <p>CNBC 출연에서 "패스트 머니는 씻겨나갔고, 재무부의 행동은 하드애셋에 유리하다"며 BTC 저점 통과 선언. 글로벌 주식·라틴아메리카 주식 강세론 유지. 그녀의 시그니처 프레임인 '재정지배 → 유동성 개입 불가피'가 이번주 바이백으로 실증된 모양새.</p>
+    </div>
+    <div class="card">
+      <div class="src"><span>@biancoresearch · 고정</span><span class="mood dn">RATES BEAR</span></div>
+      <h3>"바이백은 진통제, 병인은 재정"</h3>
+      <p>바이백 랠리가 하루 만에 반납된 점을 짚으며 장기금리의 구조적 상방(공급 폭증 + 인플레 재점화 + 텀프리미엄)을 재확인. "재무부가 시장을 이기려 하면 시장은 더 큰 프리미엄을 요구한다"는 톤. 잭슨홀에서 워시가 매파 본색을 드러낼 가능성에 무게.</p>
+    </div>
+    <div class="card">
+      <div class="src"><span>@SoberLook · 고정</span><span class="mood nt">DATA-DRIVEN</span></div>
+      <h3>Flash PMI 56 — 과열인가 회복인가</h3>
+      <p>8월 미 종합 PMI 56(2021년 이후 최고)·서비스 산출 최속 확장을 차트로 조명. 성장 서프라이즈 + 투입물가 상승 조합은 '노랜딩 + 금리 상방' 시나리오를 지지 — 주식엔 단기 호재, 밸류에이션엔 부담이라는 양면성 지적.</p>
+    </div>
+    <div class="card">
+      <div class="src"><span>@Nouriel (Roubini) · 로테이션</span><span class="mood dn">TAIL RISK</span></div>
+      <h3>"디베이스먼트는 공짜점심이 아니다"</h3>
+      <p>바이백-금-비트 랠리를 "부채의 화폐화가 아니라고 우기는 화폐화"로 규정. 이란 제재 확전 시 유가 재급등 → 스태그플레이션 꼬리 리스크 경고. 40조달러 부채 + 5% 장기금리 = 이자비용 나선의 시작점이라는 지론 반복.</p>
+    </div>
+    <div class="card">
+      <div class="src"><span>@kole_finance · 로테이션</span><span class="mood up">TRADING</span></div>
+      <h3>"BTC $67K 돌파는 레인지 탈출 — $80K는 1차 저항"</h3>
+      <p>비트코인의 구 레인지 상단($66.9K) 돌파 유지 여부를 핵심 트리거로 제시. ETF 유입 지속 + 달러 약세 조합이면 조정은 매수 기회, $80K 돌파 실패 후 레인지 회귀 시 페이크아웃 경계. 알트 대비 BTC 도미넌스 우위 지속 전망.</p>
+    </div>
+    <div class="card">
+      <div class="src"><span>@markminervini · 로테이션</span><span class="mood nt">TECHNICAL</span></div>
+      <h3>"지수는 조정, 리더십은 교체 중"</h3>
+      <p>나스닥 주간 -2.1% 속 브로커·금융(NYSE 브로커지수 사상 최고), 바이오(MRNA), 하드애셋 채굴주로 상대강도 이동을 포착. 반도체·메가캡의 베이스 재구축 전까지 신규 브레이크아웃은 소수 리더 중심 선별 대응 구간.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 05 비교 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">05</span><h2>Reddit vs X — 온도차</h2></div>
+  <div class="vs">
+    <div class="side">
+      <h4>REDDIT 리테일</h4>
+      <ul>
+        <li>BTC 랠리에 <b>추격 매수 심리</b> — "이번엔 다르다" 톤 재등장</li>
+        <li>채권 손실 인증 → 금 ETF·현물로 <b>도피성 이동</b></li>
+        <li>NVDA 실적 앞 콜 재장전, 이벤트 드리븐 단타 성향</li>
+        <li>모더나 FOMO — 뉴스 후행 진입 논쟁</li>
+      </ul>
+    </div>
+    <div class="mid">VS</div>
+    <div class="side">
+      <h4>X 프로페셔널</h4>
+      <ul>
+        <li>랠리의 <b>원인(재정지배)</b>에 집중 — 축하보다 경계</li>
+        <li>바이백 효과 소멸 속도를 <b>정책 신뢰도 지표</b>로 판독</li>
+        <li>잭슨홀 워시 연설을 주간 최대 변수로 지목</li>
+        <li>하드애셋 비중 확대는 <b>구조적 배분</b>으로 접근</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 06 티커 테이블 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">06</span><h2>Ticker Sentiment Board</h2></div>
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>티커</th><th>소셜 톤</th><th>주간 서사</th><th>핵심 트리거</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">BTC</td><td><span class="pill bull">BULL</span></td><td>3일 +20% 역대급 랠리, ETF 주간 유입 $1.6B로 연중 최대</td><td>$80K 돌파 · 달러 약세 지속</td></tr>
+      <tr><td class="mono">GLD</td><td><span class="pill bull">BULL</span></td><td>$4,624 신고가권 — 디베이스먼트 헤지 대장</td><td>실질금리 vs 재정 우려 힘겨루기</td></tr>
+      <tr><td class="mono">MRNA</td><td><span class="pill bull">BULL</span></td><td>암백신 44% 재발 감소 → 시총 +$44B, 6월 저점 대비 3배</td><td>2027 발매 · 가격 책정</td></tr>
+      <tr><td class="mono">NVDA</td><td><span class="pill mix">MIXED</span></td><td>실적 D-3, 기술주 조정 속 방향타 — 파월 아닌 젠슨이 먼저</td><td>8/26(수) 실적 · 중국 AI 추격</td></tr>
+      <tr><td class="mono">TLT</td><td><span class="pill bear">BEAR</span></td><td>30Y 5.25% — 바이백에도 하루 만에 되돌림, 손실 인증 속출</td><td>바이백 실집행(9/9~) · 잭슨홀</td></tr>
+      <tr><td class="mono">META</td><td><span class="pill bear">BEAR</span></td><td>주간 -7%, 기술주 로테이션의 최대 피해주</td><td>AI capex 회의론 재부상</td></tr>
+      <tr><td class="mono">GM</td><td><span class="pill bear">BEAR</span></td><td>V8 엔진결함 99.8만대 규제 조사 + 리콜 확대</td><td>NHTSA 조사 범위</td></tr>
+      <tr><td class="mono">NVDA·전력</td><td><span class="pill bull">BULL</span></td><td>클로버리프 인프라 투자 협상 — 데이터센터 전력 수직계열화</td><td>수억달러 투자 확정 여부</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ═══ 07 키워드 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">07</span><h2>Keyword Cloud</h2></div>
+  <div class="kw-cloud">
+    <span class="kw k1">debasement trade</span>
+    <span class="kw k1">Treasury buyback</span>
+    <span class="kw k2">bitcoin $80K</span>
+    <span class="kw k2">gold $4,600</span>
+    <span class="kw k2">Jackson Hole</span>
+    <span class="kw k2">30Y 5.25%</span>
+    <span class="kw k2">Warsh debut</span>
+    <span class="kw">fiscal dominance</span>
+    <span class="kw">$40T debt</span>
+    <span class="kw">NVDA earnings</span>
+    <span class="kw">mRNA cancer vaccine</span>
+    <span class="kw">soft QE</span>
+    <span class="kw k3">China AI gap</span>
+    <span class="kw k3">Iran sanctions</span>
+    <span class="kw k3">PMI 56</span>
+    <span class="kw k3">Fannie Mae shakeup</span>
+  </div>
+</section>
+
+<!-- ═══ 08 시그널 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">08</span><h2>Signal Grid</h2></div>
+  <div class="sig-grid">
+    <div class="sig bull">
+      <h4>▲ BULLISH</h4>
+      <ul>
+        <li>BTC ETF 주간 유입 $1.6B — 기관 수급 복귀 확인</li>
+        <li>미 8월 Flash PMI 56, 4년래 최고 성장 모멘텀</li>
+        <li>바이오텍 리레이팅 촉매(MRNA) — 섹터 로테이션 수혜</li>
+        <li>유럽 최고 실적시즌 + 자금 유입 &gt;$1B — 분산 대안 부상</li>
+        <li>금요일 광폭 반등 — 브로커지수 사상 최고</li>
+      </ul>
+    </div>
+    <div class="sig bear">
+      <h4>▼ BEARISH</h4>
+      <ul>
+        <li>3대 지수 7월 말 이후 첫 주간 하락 — 나스닥 −2.1%</li>
+        <li>30Y 5.25% — 바이백 효과 1일 소멸, 재정 우려 우위</li>
+        <li>기술주 IT 섹터 주간 −3%, 메타 −7% 리더십 균열</li>
+        <li>9월 금리 인상 논의 생존 — PMI 서프라이즈가 역설적 악재</li>
+        <li>이란 금융망 제재 확전 시 유가 재급등 리스크</li>
+      </ul>
+    </div>
+    <div class="sig watch">
+      <h4>◆ WATCH</h4>
+      <ul>
+        <li>8/26(수) NVDA 실적 + 7월 PCE 동시 발표</li>
+        <li>8/28(금) 워시 의장 잭슨홀 데뷔 연설</li>
+        <li>9/9 바이백 실집행 개시 — 장기금리 반응</li>
+        <li>BTC $80K / 구 레인지 상단 $66.9K 유지 여부</li>
+        <li>달러지수 98선 하향 이탈 시 디베이스 2라운드</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 09 차트 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">09</span><h2>Charts</h2></div>
+  <div class="charts-2">
+    <div class="chart-box">
+      <h4>주간 자산별 수익률 (%)</h4>
+      <div class="chart-wrap"><canvas id="chAssets"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h4>센티먼트 스코어 추이 (Vol.07–12)</h4>
+      <div class="chart-wrap"><canvas id="chScore"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 10 인사이트 ═══ -->
+<section class="insight">
+  <div class="sec-head"><span class="no">10</span><h2>Research Head's Insight</h2></div>
+  <ol>
+    <li><b>이번주의 진짜 뉴스는 주가가 아니라 '누가 가격을 정하는가'다.</b> 재무부가 자국 국채의 최종 매수자로 등판한 순간, 시장은 주식-채권이 아니라 '화폐 대 실물'로 판을 다시 짰다. 금·은·비트코인의 동반 신고가는 그 재편의 1차 청구서다.</li>
+    <li><b>바이백 랠리가 하루 만에 반납된 속도에 주목하라.</b> 정책 개입의 반감기가 짧아진다는 것은 다음 개입의 규모가 커져야 한다는 뜻이다. 드러켄밀러 식으로 말하면 — 유동성의 방향이 정해졌다면, 그 방향에 먼저 앉아 있어라. 하드애셋 코어 비중은 트레이드가 아니라 배분의 문제가 됐다.</li>
+    <li><b>PMI 56은 양날의 검이다.</b> 성장 서프라이즈는 금요일 주식을 살렸지만, 워시의 잭슨홀 원고에서는 인상 논거로 인용될 재료다. '좋은 뉴스 = 나쁜 뉴스' 레짐이 다음주 복귀할 수 있다. 이벤트 전 감마 확대는 자제.</li>
+    <li><b>NVDA 실적은 실적 그 이상 — 중국 AI 추격전의 중간 판정이다.</b> WSJ가 커버로 다룬 '수개월 격차'는 수출통제 강화(악재)와 미국 AI capex 재가속(호재)을 동시에 자극한다. 가이던스보다 중국 매출 코멘트가 변동성의 뇌관.</li>
+    <li><b>바이오의 시간이 돌아왔다.</b> 모더나의 +$44B는 개별 이벤트가 아니라 '금리 피크아웃 없이도 뉴스플로우로 오르는 섹터'의 등장이다. 금리 민감 성장주의 대체재로서 바이오 바스켓의 상대강도를 워치리스트 최상단에 둔다.</li>
+  </ol>
+</section>
+
+<!-- ═══ 11 워치리스트 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">11</span><h2>Next Week Watchlist</h2></div>
+  <div class="tbl-scroll">
+  <table class="watch-tbl">
+    <thead><tr><th>일정</th><th>이벤트</th><th>관전 포인트</th></tr></thead>
+    <tbody>
+      <tr><td>08.26 수</td><td>엔비디아 2분기 실적 (장후)</td><td>데이터센터 가이던스 · 중국 코멘트 · AI capex 연쇄효과</td></tr>
+      <tr><td>08.26 수</td><td>미 7월 PCE 물가</td><td>유가발 재인플레 확인 시 인상 확률 급등</td></tr>
+      <tr><td>08.27–29</td><td>잭슨홀 심포지엄</td><td>워시 의장 금요일 기조연설 — 9월 인상 시그널 유무</td></tr>
+      <tr><td>주중</td><td>미 국채 입찰</td><td>바이백 개시(9/9) 전 수요 강도 — 부진 시 30Y 5.3% 재시험</td></tr>
+      <tr><td>상시</td><td>이란 제재 헤드라인</td><td>두바이·UAE 금융망 제재 실행 시 유가 $90 시나리오</td></tr>
+      <tr><td>상시</td><td>BTC $80K 공방</td><td>돌파 안착 시 알트 확산, 실패 시 $66.9K 리테스트</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<footer>
+  바이사이드 위클리 센티먼트 리포트 Vol.12 · 2026.08.23<br>
+  Source: WSJ Weekend · Reddit(r/wallstreetbets · investing · stocks · economics · geopolitics) · X(Twitter) · CNBC · Bloomberg<br>
+  본 리포트는 소셜 센티먼트 합성 리서치이며 투자 권유가 아닙니다. 모든 투자 판단과 책임은 투자자 본인에게 있습니다.<br>
+  minkeun00-creator.github.io/weekly-report · 배포: Telegram · KakaoTalk 오픈채팅
+</footer>
+
+</div>
+<script>
+const ink='#111010',mut='#6b6558',line='#d8d2c4';
+Chart.defaults.font.family="'DM Mono',monospace";
+Chart.defaults.color=mut;
+new Chart(document.getElementById('chAssets'),{
+  type:'bar',
+  data:{labels:['BTC','Gold','Silver','Dow','S&P 500','Nasdaq','달러(WSJ)'],
+    datasets:[{data:[20,5.6,3.1,-0.8,-1.4,-2.1,-0.7],
+      backgroundColor:['#0d6b4f','#7d5a0a','#7d5a0a','#b03a2e','#b03a2e','#b03a2e','#6b6558']}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{y:{grid:{color:line},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}
+});
+new Chart(document.getElementById('chScore'),{
+  type:'line',
+  data:{labels:['Vol.07','Vol.08','Vol.09','Vol.10','Vol.11','Vol.12'],
+    datasets:[{data:[58,62,64,70,66,60],borderColor:ink,backgroundColor:'rgba(17,16,16,.06)',
+      fill:true,tension:.3,pointBackgroundColor:ink,pointRadius:4}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{y:{min:40,max:90,grid:{color:line}},x:{grid:{display:false}}}}
+});
+</script>
+</body>
+</html>

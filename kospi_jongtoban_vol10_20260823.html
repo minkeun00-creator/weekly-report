@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>종토방 위클리 Vol.10 — 2026.08.23</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0e0f13; --panel:#15171d; --panel2:#1a1d25; --line:#2a2e3a;
+  --text:#e8e6e0; --mut:#8b8fa0;
+  --red:#ff5c4d; --green:#3ddc97; --amber:#ffc94d; --blue:#5aa2ff; --purple:#b18aff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;line-height:1.65;font-size:15px}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 60px}
+.mono{font-family:'DM Mono',monospace}
+
+/* 마스트헤드 */
+.masthead{margin:0 -20px;padding:36px 24px 26px;text-align:center;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#12141a 0%,var(--bg) 100%)}
+.masthead .kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.35em;color:var(--mut);text-transform:uppercase}
+.masthead h1{font-weight:900;font-size:clamp(28px,6vw,48px);letter-spacing:-0.01em;margin:12px 0 6px}
+.masthead h1 .accent{color:var(--green)}
+.masthead .sub{font-size:13px;color:var(--mut)}
+.kospi-badge{display:inline-block;margin-top:16px;border:1px solid var(--line);background:var(--panel);
+  padding:8px 18px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text)}
+.kospi-badge .up{color:var(--green)}.kospi-badge .dn{color:var(--red)}
+.vol-band{margin:0 -20px;padding:12px 24px;background:var(--panel);border-bottom:1px solid var(--line);
+  display:flex;justify-content:center;gap:24px;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:12px;color:var(--mut)}
+.vol-band b{color:var(--amber)}
+
+/* 섹션 */
+section{margin-top:44px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--line);padding-bottom:8px;margin-bottom:18px}
+.sec-head .no{font-family:'DM Mono',monospace;font-size:12px;color:var(--green);letter-spacing:.2em}
+.sec-head h2{font-weight:900;font-size:clamp(19px,3.2vw,26px)}
+.lede{font-size:14px;color:var(--mut);margin-bottom:16px}
+.up{color:var(--green)}.dn{color:var(--red)}.nt{color:var(--amber)}
+
+/* 요약 */
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sum{background:var(--panel);border:1px solid var(--line);padding:16px}
+.sum .l{font-size:11px;color:var(--mut);letter-spacing:.08em;font-family:'DM Mono',monospace}
+.sum .v{font-family:'DM Mono',monospace;font-size:clamp(17px,3vw,22px);font-weight:500;margin:4px 0 2px}
+.sum .c{font-family:'DM Mono',monospace;font-size:12px}
+.sum-note{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--green);
+  padding:14px 16px;margin-top:12px;font-size:13.5px;color:#c9c7bf}
+
+/* HOT 테이블 */
+table{width:100%;border-collapse:collapse;background:var(--panel)}
+th{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-align:left;padding:10px;border-bottom:2px solid var(--line);color:var(--mut)}
+td{padding:10px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:top}
+tr:last-child td{border-bottom:none}
+.rk{font-family:'DM Mono',monospace;color:var(--mut)}
+.rk.top3{color:var(--amber);font-weight:500}
+td .code{font-family:'DM Mono',monospace;font-size:11px;color:var(--mut)}
+.pill{display:inline-block;font-family:'DM Mono',monospace;font-size:10.5px;padding:2px 8px;border:1px solid;white-space:nowrap}
+.pill.bull{color:var(--green);border-color:var(--green)}
+.pill.bear{color:var(--red);border-color:var(--red)}
+.pill.mix{color:var(--amber);border-color:var(--amber)}
+.tbl-scroll{overflow-x:auto}
+.num{font-family:'DM Mono',monospace;font-size:12.5px}
+
+/* 시그널 */
+.sig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sig{background:var(--panel);border:1px solid var(--line);border-top:3px solid;padding:14px}
+.sig.bull{border-top-color:var(--green)}
+.sig.bear{border-top-color:var(--red)}
+.sig.watch{border-top-color:var(--amber)}
+.sig h4{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;margin-bottom:10px}
+.sig.bull h4{color:var(--green)}.sig.bear h4{color:var(--red)}.sig.watch h4{color:var(--amber)}
+.sig ul{list-style:none}
+.sig li{font-size:13px;padding:5px 0 5px 14px;position:relative;color:#c9c7bf}
+.sig li:before{content:"▸";position:absolute;left:0;font-size:11px}
+
+/* 클러스터 */
+.clu{background:var(--panel);border:1px solid var(--line);padding:14px 16px;margin-bottom:10px}
+.clu-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:10px;flex-wrap:wrap}
+.clu-head h4{font-size:15px;font-weight:700}
+.clu-head .stat{font-family:'DM Mono',monospace;font-size:12px;color:var(--mut)}
+.bar{height:8px;background:var(--panel2);border:1px solid var(--line);margin:8px 0 8px;position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0}
+.clu p{font-size:13px;color:#b9b7af}
+.clu .tick{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--mut)}
+
+/* 심리 온도계 */
+.thermo{background:var(--panel);border:1px solid var(--line);padding:22px}
+.thermo-track{height:16px;background:linear-gradient(90deg,var(--red),var(--amber),var(--green));position:relative;border-radius:8px;margin:20px 6px 10px}
+.thermo-pin{position:absolute;top:-9px;width:4px;height:34px;background:var(--text);border-radius:2px;box-shadow:0 0 8px rgba(232,230,224,.6)}
+.thermo-scale{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:11px;color:var(--mut);padding:0 6px}
+.thermo-read{text-align:center;margin-top:14px;font-size:14px}
+.thermo-read b{font-family:'DM Mono',monospace;font-size:20px;color:var(--amber)}
+
+/* 차트 */
+.chart-box{background:var(--panel);border:1px solid var(--line);padding:18px}
+.chart-box h4{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--mut);margin-bottom:12px}
+.chart-wrap{position:relative;height:260px}
+.charts-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* 인사이트 */
+.insight{background:var(--panel2);border:1px solid var(--line);padding:24px}
+.insight ol{list-style:none;counter-reset:ins}
+.insight li{counter-increment:ins;padding:13px 0 13px 44px;position:relative;border-bottom:1px solid var(--line);font-size:14px;color:#d5d3cb}
+.insight li:last-child{border-bottom:none}
+.insight li:before{content:counter(ins,decimal-leading-zero);position:absolute;left:0;top:13px;font-family:'DM Mono',monospace;font-size:15px;color:var(--green)}
+.insight b{color:var(--text)}
+
+footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--mut);text-align:center;line-height:1.9}
+
+@media(max-width:768px){
+  .sum-grid{grid-template-columns:1fr 1fr}
+  .sig-grid{grid-template-columns:1fr}
+  .charts-2{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  body{font-size:14px}
+  .sum-grid{grid-template-columns:1fr 1fr}
+}
+@page{size:A4;margin:12mm}
+@media print{
+  :root{--bg:#ffffff;--panel:#f6f5f1;--panel2:#efede7;--line:#c9c4b6;--text:#111;--mut:#5a564c;
+    --red:#b03a2e;--green:#0d6b4f;--amber:#7d5a0a;--blue:#1a4f8a;--purple:#4a3580}
+  body{background:#fff;color:#111;font-size:10.5px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .wrap{max-width:100%;padding:0}
+  .masthead{background:#fff}
+  .thermo-pin{background:#111;box-shadow:none}
+  section,.sig,.clu,.chart-box,.insight,.thermo,table,tr,.sum{page-break-inside:avoid}
+  .chart-wrap{height:200px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ 마스트헤드 ═══ -->
+<div class="masthead">
+  <div class="kicker">Naver 종목토론실 Sentiment Terminal</div>
+  <h1>종토방 <span class="accent">위클리</span></h1>
+  <div class="sub">개미 심리 · 수급 서사 · 테마 클러스터 합성 리서치 — Domestic Edition</div>
+  <div class="kospi-badge">코스피 6,912.95 <span class="up">▲0.88%</span> · 코스닥 801.94 <span class="dn">▼4.63%</span> · 원달러 1,386.5원 <span class="up">▼6.1</span></div>
+</div>
+<div class="vol-band">
+  <span>VOL.10 · <b>2026.08.23</b></span>
+  <span>커버 기간 08.18 – 08.21 (8/17 광복절 대체휴일 휴장)</span>
+  <span>표본 20종목 · 게시글 <b>1,453</b> · 조회 <b>476,600</b></span>
+</div>
+
+<!-- ═══ 01 요약 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">01</span><h2>주간 요약 — 극단의 양극화</h2></div>
+  <div class="sum-grid">
+    <div class="sum"><div class="l">코스피 (8/21)</div><div class="v">6,912.95</div><div class="c"><span class="up">+0.88% 금</span> · <span class="dn">주간 −0.93%</span></div></div>
+    <div class="sum"><div class="l">코스닥 (8/21)</div><div class="v">801.94</div><div class="c dn">−4.63% 금 · 주간 −7.25%</div></div>
+    <div class="sum"><div class="l">원달러 (주간종가)</div><div class="v">1,386.5</div><div class="c up">주간 −31.8원 (원화 강세)</div></div>
+    <div class="sum"><div class="l">주간 게시글</div><div class="v">1,453</div><div class="c nt">20종목 합산</div></div>
+    <div class="sum"><div class="l">주간 조회수</div><div class="v">476,600</div><div class="c nt">1위 TIGER 미국S&P500</div></div>
+    <div class="sum"><div class="l">사이드카</div><div class="v">발동</div><div class="c dn">코스닥 매도 · 올해 14번째</div></div>
+  </div>
+  <div class="sum-note">
+    금요일 코스피는 하락 종목 683 vs 상승 193의 극단적 착시 장세. 삼성전자·SK하이닉스 단 두 종목의 주주환원 기대(110조원 설·40조 자사주)가 지수를 6,900선으로 끌어올렸고, 같은 시간 코스닥은 바이오·소부장 차익실현에 −4.63% 급락하며 매도 사이드카가 발동됐다. 종토방 민심도 정확히 둘로 갈라진 한 주 — "삼전우로 피신" vs "코스닥 물림".
+  </div>
+</section>
+
+<!-- ═══ 02 HOT 테이블 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">02</span><h2>HOT 20 — 조회수 랭킹 & 민심</h2></div>
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>#</th><th>종목</th><th>글/조회</th><th>톤</th><th>게시판 서사 (실제 제목 기반)</th></tr></thead>
+    <tbody>
+      <tr><td class="rk top3">1</td><td>TIGER 미국S&P500<br><span class="code">360750</span></td><td class="num">45<br>35,683</td><td><span class="pill mix">동요</span></td><td>미장 주간 조정 + 환율 급락 이중타. "적금보다 수익이 안나는데" "환율 고점대비 10% 하락 ㅠㅠ" — 환헤지 안 된 서학개미의 환차손 자각이 이번주 핵심 정서.</td></tr>
+      <tr><td class="rk top3">2</td><td>알테오젠<br><span class="code">196170</span></td><td class="num">80<br>34,934</td><td><span class="pill bull">재무장</span></td><td>모더나 mRNA 암백신 돌파의 국내 최대 수혜 서사. "알테오젠이 칼을 갈았다" "머크가 왜 투자할 수밖에" — 금요일 −5.74% 급락에도 톤은 오히려 강세. 코스닥승강제 9월 발표 기대까지.</td></tr>
+      <tr><td class="rk top3">3</td><td>KODEX 200타겟위클리커버드콜<br><span class="code">498400</span></td><td class="num">38<br>31,869</td><td><span class="pill mix">균열</span></td><td>"이번달 분배금 왤케 줄었어요?" "만능이 아닌 커버드콜" — 분배금 축소 + 상승장 소외에 배당족 신뢰 균열. 건보료·세금 계산글이 상위권.</td></tr>
+      <tr><td class="rk">4</td><td>삼성전자우<br><span class="code">005935</span></td><td class="num">80<br>31,036</td><td><span class="pill bull">환호</span></td><td>주주환원 공시의 최대 격전지. "소각이면 삼전, 배당이면 삼우 땡큐" "외인은 결국 우선주로 몰린다" — 배당 확대 시나리오에 30만원 목표가 등장.</td></tr>
+      <tr><td class="rk">5</td><td>삼성SDI<br><span class="code">006400</span></td><td class="num">80<br>28,794</td><td><span class="pill bull">기대</span></td><td>"4조 실탄" 매각대금 서사 + 미장 이차전지 강세. "담주 월욜 스디 큰거옵니다" — 반도체 쏠림의 반작용으로 순환매 기대 결집.</td></tr>
+      <tr><td class="rk">6</td><td>금호건설<br><span class="code">002990</span></td><td class="num">80<br>28,718</td><td><span class="pill bull">추격</span></td><td>삼성 수주 계약 모멘텀. "삼성 계약의 의미" "다음주 2만원 가능?" — 8천원부터 지켜봤다는 고인물과 고점 추격 신규의 온도차.</td></tr>
+      <tr><td class="rk">7</td><td>SK텔레콤<br><span class="code">017670</span></td><td class="num">80<br>27,014</td><td><span class="pill bull">테마</span></td><td>"앤트로픽 1000억달러" 밸류에이션 보도에 리벨리온·아이온큐 연결고리 재조명. "앤트로픽 가치를 원화로 계산" — AI 지분가치 리레이팅 서사. 단 "호재로 보이면 외인은 왜 팜" 경계도.</td></tr>
+      <tr><td class="rk">8</td><td>메지온<br><span class="code">140410</span></td><td class="num">67<br>23,595</td><td><span class="pill mix">공방</span></td><td>2분기 누적 흑자전환 공시 vs "마이다스 CB 행패" — 실적 호재와 CB·공매도 수급 불신이 정면충돌. "폰탄 2만명 5조 매출" 꿈의 서사는 건재.</td></tr>
+      <tr><td class="rk">9</td><td>우리기술<br><span class="code">032820</span></td><td class="num">80<br>22,348</td><td><span class="pill mix">단타</span></td><td>투자경고 지정 속 수주공시 재료. "■10원-한 호가" "투경해제일까지 에너지 응축" — 호가창 중계형 초단타 게시판의 전형.</td></tr>
+      <tr><td class="rk">10</td><td>삼성전기<br><span class="code">009150</span></td><td class="num">80<br>22,326</td><td><span class="pill bull">확신</span></td><td>"브로드컴 유리기판 납품건" + 9시뉴스 보도에 월요일 갭업 기대 만발. "하이닉스 &lt; 삼성전기 3가지 이유" — 반도체 낙수 2선 대장 굳히기.</td></tr>
+      <tr><td class="rk">11</td><td>KODEX 미국S&P500<br><span class="code">379800</span></td><td class="num">80<br>22,239</td><td><span class="pill mix">버티기</span></td><td>"장투 결심했으면 흔들리면 안 됨" vs "S&P 투자하고 망한 가족들" — 조정장에서 장투 신념 검증 중. 환율발 평가손 성토 다수.</td></tr>
+      <tr><td class="rk">12</td><td>성호전자<br><span class="code">043260</span></td><td class="num">80<br>21,992</td><td><span class="pill bear">불안</span></td><td>투자경고 지정. "지금 성호전자가 위험한 이유" vs "타짜들이 담는 종목" — 급등 후유증 국면의 전형적 공포·탐욕 교차.</td></tr>
+      <tr><td class="rk">13</td><td>에스에이엠티<br><span class="code">031330</span></td><td class="num">80<br>20,352</td><td><span class="pill bull">해석전</span></td><td>종속회사 무상증자 공시 해석 경쟁. "무상증자 3줄 요약" "과거 주주환원률로 본 예상 배당" — 공시 스터디형 게시판으로 진화.</td></tr>
+      <tr><td class="rk">14</td><td>네이처셀<br><span class="code">007390</span></td><td class="num">80<br>18,533</td><td><span class="pill mix">항전</span></td><td>이데일리 비판기사에 조직적 반박전. "FDA 신임국장 트럼프 보좌관 임명" 호재 연결 시도 — 언론 대 주주 대립 구도.</td></tr>
+      <tr><td class="rk">15</td><td>디앤디파마텍<br><span class="code">347850</span></td><td class="num">80<br>18,314</td><td><span class="pill mix">억울</span></td><td>"외인·기관 역대급 털기" — 모더나 폭등과 대비되는 소외에 공매도 음모론 확산. "임상 결과를 아니까" 신념 유지층 견고.</td></tr>
+      <tr><td class="rk">16</td><td>삼성증권<br><span class="code">016360</span></td><td class="num">80<br>18,264</td><td><span class="pill bull">계산</span></td><td>삼성전자 주주환원의 파생 수혜 + 자체 배당 계산. "8-9만 가격에서 7천배당일 경우 수익률" — 배당 시즌 선취매 논리 정연.</td></tr>
+      <tr><td class="rk">17</td><td>SK이터닉스<br><span class="code">475150</span></td><td class="num">80<br>18,218</td><td><span class="pill mix">롤러코스터</span></td><td>"미장 태양광 폭등" vs "신용등급 강등" — 급등락 반복에 "평단 17만원 3만주 주주다" 인증까지. 이란 종전 발언에 에너지 방향성 혼선.</td></tr>
+      <tr><td class="rk">18</td><td>심텍<br><span class="code">222800</span></td><td class="num">80<br>17,645</td><td><span class="pill mix">검증</span></td><td>CB 발행·유증 보도에 "주담과 통화했어요" 팩트체크 릴레이. 반도체 기판 사이클 기대와 물량 부담 사이 줄다리기.</td></tr>
+      <tr><td class="rk">19</td><td>KODEX 미국나스닥100<br><span class="code">379810</span></td><td class="num">23<br>17,423</td><td><span class="pill mix">기회론</span></td><td>나스닥 −2.1% 조정에 "6~7월 진입자에겐 기회" 물타기론 vs "유튜버들이 문제" 원망. 연금계좌 강제 장투의 순기능 재발견.</td></tr>
+      <tr><td class="rk">20</td><td>SK<br><span class="code">034730</span></td><td class="num">80<br>17,303</td><td><span class="pill bull">압박</span></td><td>"SK지주도 자사주 매입소각하라" — 삼성발 주주환원 도미노 요구. "올해 순이익 100조" 지주 디스카운트 해소 서사.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ═══ 03 시그널 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">03</span><h2>종토방 시그널</h2></div>
+  <div class="sig-grid">
+    <div class="sig bull">
+      <h4>▲ 강세 신호</h4>
+      <ul>
+        <li>주주환원 도미노 — 삼전 110조 설 → 삼전우·삼성증권·SK지주로 요구 확산</li>
+        <li>모더나發 mRNA 밸류체인 재점화 (알테오젠 낙폭에도 매수 톤)</li>
+        <li>삼성전기 유리기판 — 반도체 낙수 2선 확산 조짐</li>
+        <li>원화 강세 → 외인 수급 개선 기대 (삼전우 "외인 풀매수")</li>
+      </ul>
+    </div>
+    <div class="sig bear">
+      <h4>▼ 약세 신호</h4>
+      <ul>
+        <li>코스닥 −7.25% + 사이드카 — 바이오·소부장 투매 트라우마</li>
+        <li>환율 1,386원 — 서학개미 환차손 자각 본격화</li>
+        <li>커버드콜 분배금 축소 — 배당형 상품 신뢰 균열</li>
+        <li>투자경고 종목 2개 랭크인 (우리기술·성호전자) — 과열 후유증</li>
+      </ul>
+    </div>
+    <div class="sig watch">
+      <h4>◆ 관찰 포인트</h4>
+      <ul>
+        <li>월요일 삼성전자 자사주 매입 개시 — 지수 하단 지지력</li>
+        <li>코스닥승강제 9월 발표설 — 알테오젠 이전 상장 기대</li>
+        <li>NVDA 실적(8/26)·잭슨홀(8/28) — 미국 인덱스 ETF 민심 분수령</li>
+        <li>메지온·심텍 CB 수급 — 개별 이벤트 변동성</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 테마 클러스터 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">04</span><h2>테마 클러스터 — 조회수 점유율</h2></div>
+  <p class="lede">HOT 20 조회수 476,600을 서사 단위로 재분류. 바이오가 1위를 탈환했고, 배당·주주환원 클러스터가 삼성 공시를 타고 급부상.</p>
+  <div class="clu">
+    <div class="clu-head"><h4>① 바이오 · mRNA</h4><span class="stat">95,376 · 20.0%</span></div>
+    <div class="bar"><i style="width:100%;background:var(--purple)"></i></div>
+    <p>모더나 암백신이 점화한 K-바이오 재평가전. 수혜 직결(알테오젠)부터 소외 억울(디앤디파마텍), 언론 항전(네이처셀), 실적 공방(메지온)까지 온도는 제각각.</p>
+    <div class="tick">알테오젠 · 메지온 · 네이처셀 · 디앤디파마텍</div>
+  </div>
+  <div class="clu">
+    <div class="clu-head"><h4>② 반도체 밸류체인</h4><span class="stat">82,315 · 17.3%</span></div>
+    <div class="bar"><i style="width:86%;background:var(--blue)"></i></div>
+    <p>삼전·하이닉스 본진이 아닌 2선(전기·기판·유통)으로 관심 확산. 유리기판·무상증자·CB 등 종목별 개별 재료가 풍부한 것이 특징.</p>
+    <div class="tick">삼성전기 · 에스에이엠티 · 심텍 · 성호전자</div>
+  </div>
+  <div class="clu">
+    <div class="clu-head"><h4>③ 배당 · 주주환원</h4><span class="stat">81,169 · 17.0%</span></div>
+    <div class="bar"><i style="width:85%;background:var(--green)"></i></div>
+    <p>이번주 급부상 클러스터. 삼성전자 110조 주주환원 설이 우선주·증권주 재평가로 번지는 한편, 커버드콜 분배금 축소로 '월배당 환상'엔 첫 균열.</p>
+    <div class="tick">삼성전자우 · KODEX 커버드콜 · 삼성증권</div>
+  </div>
+  <div class="clu">
+    <div class="clu-head"><h4>④ 미국 인덱스 (서학 ETF)</h4><span class="stat">75,345 · 15.8%</span></div>
+    <div class="bar"><i style="width:79%;background:var(--amber)"></i></div>
+    <p>미장 주간 조정 + 환율 −2.2%의 이중 타격. 지수 하락보다 환차손 자각이 정서적 타격이 컸다 — "1561→1390 환율변화" 계산글이 상징적.</p>
+    <div class="tick">TIGER 미국S&P500 · KODEX 미국S&P500 · KODEX 미국나스닥100</div>
+  </div>
+  <div class="clu">
+    <div class="clu-head"><h4>⑤ 수주 · 단타 (건설·원전)</h4><span class="stat">51,066 · 10.7%</span></div>
+    <div class="bar"><i style="width:54%;background:var(--red)"></i></div>
+    <p>삼성 수주(금호건설)·수주공시(우리기술) 재료 단타 자금 집결지. 투자경고 지정에도 호가 중계형 게시글 최다 — 과열 국면의 온도계.</p>
+    <div class="tick">금호건설 · 우리기술</div>
+  </div>
+  <div class="clu">
+    <div class="clu-head"><h4>⑥ AI 지분가치 · 지주</h4><span class="stat">44,317 · 9.3%</span></div>
+    <div class="bar"><i style="width:46%;background:var(--blue)"></i></div>
+    <p>앤트로픽 1,000억달러 밸류에이션 보도가 SKT(리벨리온·아이온큐 연결)와 SK지주 순자산 재평가 서사로 확산. 주주환원 압박과 결합해 지주 디스카운트 해소론 부상.</p>
+    <div class="tick">SK텔레콤 · SK</div>
+  </div>
+  <div class="clu">
+    <div class="clu-head"><h4>⑦ 이차전지 · 에너지</h4><span class="stat">47,012 · 9.9%</span></div>
+    <div class="bar"><i style="width:49%;background:var(--green)"></i></div>
+    <p>삼성SDI "4조 실탄"과 미장 이차전지·태양광 강세가 순환매 기대를 자극. 다만 SK이터닉스는 신용등급 강등과 급등락으로 신뢰 소모전.</p>
+    <div class="tick">삼성SDI · SK이터닉스</div>
+  </div>
+</section>
+
+<!-- ═══ 05 심리 온도계 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">05</span><h2>개미 심리 온도계</h2></div>
+  <div class="thermo">
+    <div class="thermo-track"><div class="thermo-pin" style="left:52%"></div></div>
+    <div class="thermo-scale"><span>0 공포</span><span>25 위축</span><span>50 중립</span><span>75 낙관</span><span>100 과열</span></div>
+    <div class="thermo-read"><b>52 / 100</b> — "반쪽 강세" (전주 대비 하락)<br>
+    <span style="color:var(--mut);font-size:13px">삼성 주주환원 환호(코스피)와 코스닥 투매 트라우마·환차손 자각이 정확히 상쇄. 지수는 버텼지만 계좌는 아픈, 체감온도 괴리의 주간.</span></div>
+  </div>
+</section>
+
+<!-- ═══ 06 차트 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">06</span><h2>차트</h2></div>
+  <div class="charts-2">
+    <div class="chart-box">
+      <h4>조회수 TOP 10 (천 회)</h4>
+      <div class="chart-wrap"><canvas id="chTop"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h4>테마 클러스터 점유율 (%)</h4>
+      <div class="chart-wrap"><canvas id="chClu"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 07 인사이트 ═══ -->
+<section>
+  <div class="sec-head"><span class="no">07</span><h2>리서치 헤드 코멘트</h2></div>
+  <div class="insight">
+    <ol>
+      <li><b>이번주 종토방의 진짜 주인공은 '환율'이다.</b> 미국 인덱스 3형제 조회수 7.5만의 절반은 환차손 성토였다. 원화 −2.2% 강세는 외인 수급엔 청신호지만 서학개미 계좌엔 적신호 — 국내 증시로의 자금 유턴이 시작되는 변곡점일 수 있다.</li>
+      <li><b>주주환원은 이제 '테마'가 아니라 '요구'다.</b> 삼전 공시 하나가 우선주→증권주→지주사로 번지는 속도가 과거와 다르다. "SK지주도 소각하라"는 게시글은 밸류업 2라운드의 민심 선행지표로 읽어야 한다.</li>
+      <li><b>코스닥 −7.25%에도 알테오젠 게시판이 강세 톤인 것에 주목.</b> 하락을 '머크·모더나 서사의 할인 매수 기회'로 소화하는 학습된 개미들 — 다음 반등 시 바이오 쏠림이 더 가팔라질 수 있다는 신호다.</li>
+      <li><b>커버드콜 균열은 작지만 구조적이다.</b> 분배금 축소 한 번에 "만능이 아니다"가 상위 담론이 됐다. 상승장에서 소외 + 분배금 변동이면 배당형 ETF 자금의 재배치(고배당주·우선주行)가 이어질 수 있다.</li>
+      <li><b>투자경고 2종목 랭크인은 과열 사이클 후반부의 클래식한 신호.</b> 수주·테마 단타 자금이 소수 종목에 응축되는 국면 — 다음주 NVDA·잭슨홀 이벤트에서 변동성이 튀면 이 구간이 가장 먼저 깨진다.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  종토방 위클리 Vol.10 · 2026.08.23 · 바이사이드 위클리 센티먼트 리포트 Domestic Edition<br>
+  Source: 네이버 종목토론실 크롤링 (2026.08.23 14:42 수집) · 한국거래소 · 서울외국환시장<br>
+  본 리포트는 커뮤니티 심리 합성 리서치이며 투자 권유가 아닙니다. 모든 투자 판단과 책임은 투자자 본인에게 있습니다.<br>
+  minkeun00-creator.github.io/weekly-report · 배포: Telegram · KakaoTalk 오픈채팅
+</footer>
+
+</div>
+<script>
+const line='#2a2e3a',mut='#8b8fa0';
+Chart.defaults.font.family="'DM Mono',monospace";
+Chart.defaults.color=mut;
+new Chart(document.getElementById('chTop'),{
+  type:'bar',
+  data:{labels:['TIGER미S&P','알테오젠','커버드콜','삼전우','삼성SDI','금호건설','SKT','메지온','우리기술','삼성전기'],
+    datasets:[{data:[35.7,34.9,31.9,31.0,28.8,28.7,27.0,23.6,22.3,22.3],
+      backgroundColor:['#ffc94d','#b18aff','#3ddc97','#3ddc97','#3ddc97','#ff5c4d','#5aa2ff','#b18aff','#ff5c4d','#5aa2ff']}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:line}},y:{grid:{display:false},ticks:{font:{size:10}}}}}
+});
+new Chart(document.getElementById('chClu'),{
+  type:'doughnut',
+  data:{labels:['바이오 20.0','반도체 17.3','배당·환원 17.0','미국ETF 15.8','수주·단타 10.7','이차전지 9.9','AI·지주 9.3'],
+    datasets:[{data:[20.0,17.3,17.0,15.8,10.7,9.9,9.3],
+      backgroundColor:['#b18aff','#5aa2ff','#3ddc97','#ffc94d','#ff5c4d','#2fae76','#3a7fd6'],
+      borderColor:'#0e0f13',borderWidth:2}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}}}}
+});
+</script>
+</body>
+</html>
