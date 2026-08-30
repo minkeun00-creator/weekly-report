@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>바이사이드 위클리 센티먼트 리포트 Vol.13 — The Hawk Speaks</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#111010; --paper:#f4f1ea; --card:#fbf9f4; --line:#d8d2c4; --mut:#6b6558;
+  --green:#0d6b4f; --red:#b03a2e; --amber:#7d5a0a; --blue:#1a4f8a; --purple:#4a3580;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',sans-serif;line-height:1.65;font-size:15px}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 70px}
+.up{color:var(--green)} .dn{color:var(--red)} .neu{color:var(--mut)}
+
+/* ── 마스트헤드 ── */
+.masthead{background:var(--ink);color:var(--paper);margin:0 -20px;padding:38px 24px 28px;text-align:center}
+.masthead .kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.35em;color:#c9c2b2;text-transform:uppercase}
+.masthead h1{font-family:'DM Serif Display',serif;font-size:clamp(30px,6vw,52px);margin:10px 0 4px;line-height:1.1}
+.masthead .theme{font-family:'DM Serif Display',serif;font-size:clamp(17px,3.2vw,24px);color:#e8c15a;margin-top:8px}
+.masthead .sub{font-size:13px;color:#c9c2b2;margin-top:10px}
+.senti-box{display:inline-flex;align-items:center;gap:14px;border:1px solid #5a5548;margin-top:18px;padding:10px 22px}
+.senti-box .num{font-family:'DM Mono',monospace;font-size:34px;color:#e8c15a;font-weight:500}
+.senti-box .lab{font-size:12px;color:#c9c2b2;text-align:left;line-height:1.5}
+
+/* ── 티커바 ── */
+.tickerbar{display:flex;flex-wrap:wrap;gap:0;border-bottom:3px solid var(--ink);border-top:1px solid var(--line);background:var(--card);margin:0 -20px;padding:8px 14px;font-family:'DM Mono',monospace;font-size:12px}
+.ticker-item{padding:4px 12px;border-right:1px solid var(--line);display:flex;gap:6px;align-items:baseline}
+.ticker-item:last-child{border-right:none}
+.ticker-label{color:var(--mut);font-size:10.5px;letter-spacing:.06em}
+
+section{margin-top:48px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:20px;flex-wrap:wrap}
+.sec-head h2{font-family:'DM Serif Display',serif;font-size:clamp(21px,3.6vw,29px);font-weight:400}
+.sec-head .eng{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--mut);text-transform:uppercase}
+.lede{font-size:15.5px;margin-bottom:18px}
+.lede b{background:linear-gradient(transparent 62%, #e8c15a66 62%)}
+
+/* ── 표 공통 ── */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--mut);text-align:left;border-bottom:2px solid var(--ink);padding:7px 8px;text-transform:uppercase}
+td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
+.num-r{text-align:right;font-family:'DM Mono',monospace;white-space:nowrap}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl-note{font-size:12px;color:var(--mut);margin-top:8px}
+
+/* ── WSJ 그리드 ── */
+.wsj-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.wsj-box{background:var(--card);border:1px solid var(--line);padding:16px}
+.wsj-box h3{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.perf-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.perf-row:last-child{border-bottom:none}
+.perf-row .v{font-family:'DM Mono',monospace;font-size:13px}
+
+/* ── 뉴스플로우 ── */
+.newsflow{border-left:3px solid var(--ink);padding-left:0}
+.nf-day{display:grid;grid-template-columns:92px 1fr;gap:14px;padding:13px 0 13px 18px;border-bottom:1px solid var(--line)}
+.nf-day:last-child{border-bottom:none}
+.nf-date{font-family:'DM Mono',monospace;font-size:12px;color:var(--mut);padding-top:2px}
+.nf-date b{display:block;color:var(--ink);font-size:15px}
+.nf-body{font-size:14px}
+.nf-body b{font-weight:700}
+.nf-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;border:1px solid var(--ink);padding:1px 7px;margin-right:6px;vertical-align:1px}
+.nf-tag.hot{background:var(--ink);color:var(--paper)}
+
+/* ── 카드 그리드 (Reddit/X) ── */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.scard{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--ink);padding:16px 16px 14px}
+.scard .src{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.scard .mood{font-size:10.5px;letter-spacing:.08em;padding:2px 8px;border:1px solid currentColor}
+.mood.bull{color:var(--green)} .mood.bear{color:var(--red)} .mood.mixed{color:var(--amber)}
+.scard h4{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.45}
+.scard p{font-size:13.5px;color:#3a362e}
+.scard .quote{font-size:12.5px;color:var(--mut);border-left:2px solid var(--line);padding-left:10px;margin-top:9px;font-style:italic}
+.xcard{border-top-color:var(--blue)}
+.xcard .handle{color:var(--blue)}
+.xcard .rot{font-size:10px;color:var(--mut);letter-spacing:.1em;font-family:'DM Mono',monospace}
+
+/* ── 비교 ── */
+.versus{display:grid;grid-template-columns:1fr 44px 1fr;align-items:stretch;gap:0;border:1px solid var(--ink)}
+.vs-col{padding:18px}
+.vs-col h4{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;margin-bottom:10px;text-transform:uppercase}
+.vs-col ul{list-style:none}
+.vs-col li{font-size:13.5px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.vs-col li:last-child{border-bottom:none}
+.vs-mid{background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:17px;writing-mode:vertical-rl}
+
+/* ── 키워드 ── */
+.kw-cloud{display:flex;flex-wrap:wrap;gap:10px}
+.kw{font-family:'DM Mono',monospace;border:1px solid var(--ink);padding:6px 14px;font-size:13px}
+.kw.k1{background:var(--ink);color:var(--paper);font-size:16px}
+.kw.k2{font-size:14.5px;border-width:2px}
+.kw.k3{color:var(--mut);border-color:var(--line)}
+
+/* ── 시그널 ── */
+.signal{display:grid;grid-template-columns:46px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}
+.signal:last-child{border-bottom:none}
+.sig-no{font-family:'DM Serif Display',serif;font-size:30px;color:var(--line);line-height:1}
+.signal h4{font-size:15.5px;font-weight:700;margin-bottom:4px}
+.signal p{font-size:14px;color:#3a362e}
+
+/* ── 차트 ── */
+.chart-box{background:var(--card);border:1px solid var(--line);padding:18px;margin-bottom:18px}
+.chart-box h3{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.chart-box canvas{width:100%;height:auto}
+.chart-cap{font-size:12px;color:var(--mut);margin-top:8px}
+
+/* ── 인사이트 ── */
+.insight{background:var(--ink);color:var(--paper);margin:0 -20px;padding:36px 24px}
+.insight .sec-head{border-bottom-color:#5a5548}
+.insight .sec-head h2{color:var(--paper)}
+.insight .sec-head .eng{color:#c9c2b2}
+.ins-item{border-left:2px solid #e8c15a;padding-left:16px;margin-bottom:24px}
+.ins-item:last-child{margin-bottom:0}
+.ins-item h4{font-family:'DM Serif Display',serif;font-size:18px;color:#e8c15a;margin-bottom:6px}
+.ins-item p{font-size:14px;color:#d8d2c4}
+.ins-item .src{font-family:'DM Mono',monospace;font-size:11px;color:#8a8578;margin-top:6px;display:block}
+
+/* ── 워치리스트 ── */
+.watch li{list-style:none;display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.watch li:last-child{border-bottom:none}
+.watch .wd{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--mut)}
+
+footer{margin-top:56px;border-top:3px solid var(--ink);padding-top:16px;font-size:12px;color:var(--mut);text-align:center;line-height:1.9}
+
+/* ── 모바일 ── */
+@media(max-width:768px){
+  .wsj-grid,.card-grid{grid-template-columns:1fr}
+  .versus{grid-template-columns:1fr}
+  .vs-mid{writing-mode:horizontal-tb;padding:8px}
+  .nf-day{grid-template-columns:74px 1fr;gap:10px}
+}
+@media(max-width:480px){
+  body{font-size:14px}
+  .wrap{padding:0 14px 60px}
+  .masthead{margin:0 -14px;padding:30px 16px 24px}
+  .tickerbar{margin:0 -14px}
+  .insight{margin:0 -14px;padding:30px 16px}
+  .signal{grid-template-columns:36px 1fr}
+}
+/* ── 프린트 ── */
+@media print{
+  @page{size:A4;margin:12mm}
+  body{font-size:10.5px;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .masthead,.insight{margin:0}
+  .wsj-box,.scard,.signal,.nf-day,.chart-box,.ins-item,.versus{page-break-inside:avoid}
+  section{margin-top:22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══════════ 마스트헤드 ═══════════ -->
+<div class="masthead">
+  <div class="kicker">Buy-Side Weekly Sentiment Report · Global Edition</div>
+  <h1>바이사이드 위클리 센티먼트</h1>
+  <div class="theme">"The Hawk Speaks" — 잭슨홀, 매파의 침묵이 깨진 주</div>
+  <div class="sub">VOL.13 · 2026.08.30 발행 · 커버리지 2026.08.24 – 08.28 · Reddit × X(Twitter) 센티먼트 합성</div>
+  <div class="senti-box">
+    <span class="num">55</span>
+    <span class="lab">위클리 센티먼트 스코어 / 100<br>전주 60 ▼5 · <b style="color:#e8c15a">경계적 중립</b> — 인상 리스크 리프라이싱</span>
+  </div>
+</div>
+
+<!-- ═══════════ 티커바 ═══════════ -->
+<div class="tickerbar">
+  <div class="ticker-item"><span class="ticker-label">S&P500</span><span>7,711.76</span><span class="up">▲0.49%</span></div>
+  <div class="ticker-item"><span class="ticker-label">NASDAQ</span><span>26,402.42</span><span class="up">▲0.85%</span></div>
+  <div class="ticker-item"><span class="ticker-label">DOW</span><span>53,559.99</span><span class="up">▲0.53%</span></div>
+  <div class="ticker-item"><span class="ticker-label">RUT2000</span><span>2,972.37</span><span class="dn">▼1.63%</span></div>
+  <div class="ticker-item"><span class="ticker-label">VIX</span><span>14.43</span></div>
+  <div class="ticker-item"><span class="ticker-label">US10Y</span><span>4.73%</span></div>
+  <div class="ticker-item"><span class="ticker-label">US2Y</span><span class="dn">4.34% ▲8bp</span></div>
+  <div class="ticker-item"><span class="ticker-label">GOLD</span><span>$4,478</span><span class="dn">▼3.2%</span></div>
+  <div class="ticker-item"><span class="ticker-label">WTI</span><span>$83.40</span></div>
+  <div class="ticker-item"><span class="ticker-label">BTC</span><span>$78.7K</span><span class="dn">▼</span></div>
+  <div class="ticker-item"><span class="ticker-label">KOSPI</span><span>6,788.88</span><span class="dn">▼1.79%</span></div>
+  <div class="ticker-item"><span class="ticker-label">KOSDAQ</span><span>838.41</span><span class="up">▲4.55%</span></div>
+  <div class="ticker-item"><span class="ticker-label">원/달러</span><span>1,372.5원</span><span class="up">▼14.0</span></div>
+</div>
+
+<!-- ═══════════ WSJ 마켓 디지스트 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>주간 마켓 디지스트</h2><span class="eng">WSJ Markets Digest · 08.28 Close</span></div>
+  <p class="lede">완벽에 가까운 엔비디아 실적이 목요일 지수를 끌어올렸지만, 금요일 워시 의장의 잭슨홀 데뷔 연설이 판을 다시 짰다. <b>3대 지수는 5주 중 4번째 주간 상승을 지켰으나, 장 마감의 색깔은 "인상 리스크"였다.</b> 2년물 금리가 급등했고, 지난주의 주인공이던 금·은·비트코인은 일제히 되밀렸다.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>지수</th><th class="num-r">종가</th><th class="num-r">금요일</th><th class="num-r">주간</th><th class="num-r">YTD</th><th class="num-r">사상최고 대비</th></tr></thead>
+    <tbody>
+      <tr><td>다우존스</td><td class="num-r">53,559.99</td><td class="num-r dn">−0.02%</td><td class="num-r up">+0.53%</td><td class="num-r up">+11.4%</td><td class="num-r">−1.5% <span class="neu">(54,349 · 8/5)</span></td></tr>
+      <tr><td>S&P 500</td><td class="num-r">7,711.76</td><td class="num-r dn">−0.25%</td><td class="num-r up">+0.49%</td><td class="num-r up">+12.7%</td><td class="num-r">−1.1% <span class="neu">(7,799 · 8/13)</span></td></tr>
+      <tr><td>나스닥 종합</td><td class="num-r">26,402.42</td><td class="num-r dn">−0.52%</td><td class="num-r up">+0.85%</td><td class="num-r up">+13.6%</td><td class="num-r">−2.6% <span class="neu">(27,094 · 6/2)</span></td></tr>
+      <tr><td>나스닥-100</td><td class="num-r">29,433.43</td><td class="num-r dn">−0.70%</td><td class="num-r up">+0.43%</td><td class="num-r up">+16.6%</td><td class="num-r">−4.0%</td></tr>
+      <tr><td>러셀 2000</td><td class="num-r">2,972.37</td><td class="num-r dn">−1.39%</td><td class="num-r dn">−1.63%</td><td class="num-r up">+19.8%</td><td class="num-r">−3.1%</td></tr>
+      <tr><td>S&P 미드캡 400</td><td class="num-r">3,779.47</td><td class="num-r dn">−1.20%</td><td class="num-r dn">−1.51%</td><td class="num-r up">+14.4%</td><td class="num-r">−3.8%</td></tr>
+      <tr><td>필라델피아 반도체</td><td class="num-r">11,469.66</td><td class="num-r dn">−3.47%</td><td class="num-r dn">−</td><td class="num-r up">+31.1%</td><td class="num-r">−21.6%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">주간 등락은 8/21 종가 대비. 필라델피아 반도체는 금요일 −3.47% 급락으로 마감 — 목요일 +2.3% 급등분을 하루 만에 반납.</p>
+
+  <div class="wsj-grid" style="margin-top:22px">
+    <div class="wsj-box">
+      <h3>주간 섹터 스코어보드 (S&P 500)</h3>
+      <div class="perf-row"><span>정보기술 <b>1위</b></span><span class="v up">+1.80%</span></div>
+      <div class="perf-row"><span>커뮤니케이션 서비스</span><span class="v up">+1.56%</span></div>
+      <div class="perf-row"><span>금융</span><span class="v up">+1.01%</span></div>
+      <div class="perf-row"><span>임의소비재</span><span class="v up">+0.06%</span></div>
+      <div class="perf-row"><span>산업재</span><span class="v dn">−1.79%</span></div>
+      <div class="perf-row"><span>에너지</span><span class="v dn">−2.00%</span></div>
+      <div class="perf-row"><span>헬스케어 <b>최하위</b></span><span class="v dn">−3.07%</span></div>
+    </div>
+    <div class="wsj-box">
+      <h3>원자재 · 통화 · 금리</h3>
+      <div class="perf-row"><span>소맥 (주간 1위) 🌾</span><span class="v up">+12.55%</span></div>
+      <div class="perf-row"><span>옥수수</span><span class="v up">+5.84%</span></div>
+      <div class="perf-row"><span>천연가스 $2.888</span><span class="v up">+2.74%</span></div>
+      <div class="perf-row"><span>WTI $83.40</span><span class="v neu">보합권</span></div>
+      <div class="perf-row"><span>금 $4,478.10</span><span class="v dn">−3.65%</span></div>
+      <div class="perf-row"><span>은</span><span class="v dn">−4.20%</span></div>
+      <div class="perf-row"><span>WSJ 달러지수 95.90</span><span class="v up">+0.38%</span></div>
+      <div class="perf-row"><span>연방기금 목표 3.50–3.75% · 미 10Y 4.73%</span><span class="v neu">2Y 4.34%</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 뉴스플로우 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>위클리 뉴스플로우</h2><span class="eng">Five Sessions, One Narrative</span></div>
+  <div class="newsflow">
+    <div class="nf-day">
+      <div class="nf-date"><b>월 8/24</b>D-2</div>
+      <div class="nf-body"><span class="nf-tag">칩 디리스킹</span><b>엔비디아 실적을 이틀 앞두고 반도체 선제 매도.</b> 인텔 −5%, AMD −4%, TSMC −3%. 엔비디아는 서버 가격 인상 보도까지 겹치며 7거래일 연속 하락으로 눈높이를 낮춘 채 실적 주간 진입. 옵션 시장은 풋콜비율 상승으로 방어 태세.</div>
+    </div>
+    <div class="nf-day">
+      <div class="nf-date"><b>화 8/25</b>D-1</div>
+      <div class="nf-body"><span class="nf-tag">BTC $80K</span><b>비트코인, 3개월 만에 $80,000 재돌파 후 반락.</b> 재무부 바이백발 디베이스먼트 트레이드의 마지막 불꽃. 주식은 스티키 인플레이션 경계 속 보합 — S&P 500은 엔비디아 대기 모드로 제자리걸음.</div>
+    </div>
+    <div class="nf-day">
+      <div class="nf-date"><b>수 8/26</b></div>
+      <div class="nf-body"><span class="nf-tag hot">NVDA 실적</span><b>엔비디아, 장 마감 후 블록버스터.</b> 분기 매출 $92.2B(전년비 +106%), 다음 분기 가이던스 $108B, FY28 매출 +70% 성장 전망 — 그것도 "공급 제약 하" 단서를 달고. 같은 날 네팔 히말라야에서 빙하호 붕괴 대홍수 발생, 한국 건설 인력 실종 소식에 아시아 인프라주 긴장.</div>
+    </div>
+    <div class="nf-day">
+      <div class="nf-date"><b>목 8/27</b></div>
+      <div class="nf-body"><span class="nf-tag hot">+$442B</span><b>엔비디아 +8.7% — 2년여 만의 최대 실적 반응, 시총 하루 +$4,420억.</b> 필라델피아 반도체 +2.3%. 그러나 7월 PCE가 3.7%로 예상 상회(+0.2% MoM), 연내 인상 기대를 자극. 한국은행은 기준금리를 2.75→3.00%로 두 달 연속 '백투백' 인상. 긴축의 공기가 태평양 양쪽에서 동시에 짙어졌다.</div>
+    </div>
+    <div class="nf-day">
+      <div class="nf-date"><b>금 8/28</b>D-Day</div>
+      <div class="nf-body"><span class="nf-tag hot">잭슨홀</span><b>워시 의장 데뷔 연설 — "우리는 할 일이 있다(We have work to do)."</b> 7월 PCE 3.7%를 "우려스럽다"고 규정하고, 65개월간의 고물가 책임이 "전적으로 중앙은행에 있다"고 발언. 포워드 가이던스는 끝내 거부. 2년물 +8bp 4.34%, CME 기준 9월 인상 확률 ~50%까지 급등. 금·은·BTC 동반 조정, 마벨 −8%(호실적에도), 반도체지수 −3.47%. 지수는 낙폭을 줄이며 주간 상승 방어.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ REDDIT ═══════════ -->
+<section>
+  <div class="sec-head"><h2>Reddit 커뮤니티 온도</h2><span class="eng">Retail Sentiment · 6 Subreddits</span></div>
+  <p class="lede">리테일의 한 주는 <b>수요일 밤(NVDA)에 환호했고 금요일 오전(잭슨홀)에 식었다.</b> 이벤트 드리븐 낙관과 금리 공포가 48시간 간격으로 교차한 주간.</p>
+  <div class="card-grid">
+    <div class="scard">
+      <div class="src">r/wallstreetbets <span class="mood mixed">이벤트 도박 → 페이드</span></div>
+      <h4>"NVDA 콜은 익었는데, 섹터는 왜 안 오르지"</h4>
+      <p>실적 전 7연속 하락에 베팅한 역발상 콜 매수가 목요일 +8.7%로 보상받으며 수익 인증 러시. 그러나 금요일 반도체 −3.47% 급반전에 "실적이 완벽해도 팔리는 장"이라는 자조가 확산. 0DTE 잭슨홀 스트래들 후기가 주말 피드 점령.</p>
+      <div class="quote">"Blowout earnings, red sector. This market only rewards perfection... and then sells it."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/stocks <span class="mood mixed">가이던스의 역설</span></div>
+      <h4>마벨 쇼크 — "비트가 아니라 서프라이즈 크기를 산다"</h4>
+      <p>매출 +106%에도 반도체 랠리가 하루를 못 간 이유를 두고 갑론을박. 컨센서스 상회에도 −8% 급락한 마벨이 반면교사로 소환. BofA의 "칩 13% 오버웨이트 · SOX 10% 다운사이드" 노트가 가장 많이 인용된 셀사이드 자료.</p>
+      <div class="quote">"The bar isn't 'beat'. The bar is 'beat by more than positioning'."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/investing <span class="mood bear">금리 방어 모드</span></div>
+      <h4>"인하가 아니라 인상을 대비하라고?"</h4>
+      <p>워시 연설 이후 "생애 첫 인상 사이클 대비" 스레드가 급증. 단기 국채·MMF 비중 확대, 장기채 ETF 손절 인증이 이어짐. 30년 모기지 6.67% 시대의 주택 매수 타이밍 논쟁도 재점화.</p>
+      <div class="quote">"My bond ladder just became a bond escalator. Going up."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/economics <span class="mood mixed">연설문 정독반</span></div>
+      <h4>워시의 침묵 전략 — 독립성 방어인가, 소통 실패인가</h4>
+      <p>"시장이 연준만 쳐다보는 체제를 방치하지 않겠다"는 워시 발언의 해석 전쟁. 베센트 재무장관의 바이백 개입과 연준 긴축의 정면충돌 구도, 트럼프의 리사 쿡 이사 해임 재시도, $40조 국가부채가 한 스레드에서 만나는 주간.</p>
+      <div class="quote">"Treasury pushes yields down, Fed hints them up. Someone's steering wheel comes off."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/Bitcoin <span class="mood bear">디베이스먼트 되감기</span></div>
+      <h4>$80K 터치 사흘 만의 $78.7K — "YCC 베팅의 청산"</h4>
+      <p>지난주 랠리의 전제였던 '연준-재무부 공조(사실상 수익률 통제)' 시나리오가 워시의 독립성 선언으로 흔들리자 차익실현 우위로 전환. 다만 "인상해도 재정적자는 그대로"라는 구조론 강세파는 조정을 매집 구간으로 프레이밍.</p>
+      <div class="quote">"Warsh can hike rates. He can't hike away $40 trillion."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/geopolitics <span class="mood bear">기후 꼬리리스크</span></div>
+      <h4>네팔 빙하호 붕괴 — 히말라야 수력의 구조적 취약성</h4>
+      <p>8/26 트리슐리강 유역 대홍수(사망 359명+·실종 800명+ 집계 진행 중)를 두고 GLOF(빙하호 붕괴 홍수)가 히말라야 수력발전 벨트 전체의 디스카운트 요인이라는 분석 확산. 외국인 근로자 다수 실종으로 한국·중국 인프라 기업 익스포저가 조명.</p>
+      <div class="quote">"Every dam in the Himalayas was priced for a climate that no longer exists."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ X 인플루언서 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>X 인플루언서 레이더</h2><span class="eng">Core 3 + Weekly Rotation 3</span></div>
+  <div class="card-grid">
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Lyn Alden</span> <span class="mood mixed">고정 · 매크로</span></div>
+      <h4>재정 지배 vs 매파 연준 — "모순은 유지된다"</h4>
+      <p>알든의 재정 지배(fiscal dominance) 프레임에서 이번 주는 교과서적 충돌 사례. 연준이 인상을 시사해도 재무부가 장기물을 되사는 구조라면, 긴축의 실효 전달경로는 단기물에 갇힌다는 시각. 하드애셋 조정은 "구조가 아닌 포지션의 청산"으로 읽는 진영의 대표 논거.</p>
+      <span class="src">관전 포인트: 단기금리 상승에도 재정적자 경로가 불변인지</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Bianco Research</span> <span class="mood bear">고정 · 채권</span></div>
+      <h4>"채권시장은 왜 워시를 무시하는가"</h4>
+      <p>비앙코는 연설 전부터 "워시가 반응함수를 설명하지 않으면 채권시장이 연준을 상대해주지 않을 것"이라 지적해 온 대표 논자. 연설 후에도 10년물이 4.73%에 눌러앉은 것은 시장이 '인상 의지'보다 '재무부 개입'을 더 크게 계산하고 있다는 방증이라는 해석.</p>
+      <span class="src">관전 포인트: 장단기 스프레드 — 2Y만 뛰는 베어 플래트닝의 지속 여부</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">The Daily Shot (SoberLook)</span> <span class="mood mixed">고정 · 차트</span></div>
+      <h4>이번 주 차트: 칩 포지셔닝 13% OW · 9월 인상확률 점프</h4>
+      <p>포지셔닝·확률 차트가 서사를 압축한 주간. ① 반도체 오버웨이트가 S&P 대비 +13%로 역사적 상단 ② 잭슨홀 직후 9월 인상 확률 급등 ③ 밀 선물 +12.55% — 식량발 인플레이션 재료가 조용히 쌓이는 그림.</p>
+      <span class="src">관전 포인트: 농산물發 헤드라인 CPI 재점화 여부</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Nouriel Roubini</span> <span class="rot">ROTATION · 꼬리리스크</span></div>
+      <h4>"긴축 재개 + $40조 부채 = 스태그플레이션의 문"</h4>
+      <p>루비니 프레임의 핵심 경고 조합이 완성된 주간: 고물가 고착(65개월) · 금리 인상 리스크 · 재정 한계. 인상이 현실화되면 부채 이자비용이 재정을 더 조이는 악순환(doom loop) 시나리오가 로테이션 픽의 이유.</p>
+      <span class="src">관전 포인트: 9월 FOMC 전 국채 입찰 수요 지표</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Mark Minervini</span> <span class="rot">ROTATION · 모멘텀</span></div>
+      <h4>실패한 브레이크아웃 — SOX는 21·50일선 아래</h4>
+      <p>모멘텀 규율의 관점에서 이번 주 반도체는 "최고의 재료에도 저항선을 못 넘은" 전형적 실패 셋업. 반도체 ETF(XSD)가 21일·50일 이평선 아래 유지 — 리스크 축소·현금 확보가 교과서적 대응이라는 기술적 진영의 시각.</p>
+      <span class="src">관전 포인트: NVDA가 실적 갭 상단을 지키는지(분배 vs 재축적)</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Vivek Arya (BofA)</span> <span class="rot">ROTATION · 어닝시즌 애널리스트</span></div>
+      <h4>"셋업은 매력적, 그러나 SOX 10% 다운사이드"</h4>
+      <p>이번 어닝시즌 가장 많이 회자된 셀사이드 콜. 수요는 견조하나 ① 금리 상승 ② AI 순환 파이낸싱 우려 ③ 13% 오버웨이트 포지셔닝이 단기 상단을 누른다는 양면 진단 — 금요일 반도체 급락이 이 노트를 하루 만에 검증한 모양새.</p>
+      <span class="src">관전 포인트: 9월 초 브로드컴 실적이 '순환 파이낸싱' 논쟁을 키울지</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 리테일 vs 프로 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>리테일 vs 프로 시각차</h2><span class="eng">Divergence Map</span></div>
+  <div class="versus">
+    <div class="vs-col">
+      <h4>Reddit — 리테일</h4>
+      <ul>
+        <li><b>이벤트 중심</b> — NVDA 실적이 한 주의 전부, 잭슨홀은 금요일에야 급부상</li>
+        <li>조정을 "완벽한 실적 뒤의 눌림" = 매수 기회로 해석하는 관성</li>
+        <li>BTC 진영은 조정에도 구조론($40조 부채)으로 버티기</li>
+        <li>금리 인상을 아직 '가능성'이 아닌 '엄포'로 취급하는 다수파</li>
+      </ul>
+    </div>
+    <div class="vs-mid">VS</div>
+    <div class="vs-col">
+      <h4>X — 프로</h4>
+      <ul>
+        <li><b>구조 중심</b> — 연준·재무부 충돌과 반응함수 부재가 핵심 의제</li>
+        <li>9월 FOMC를 '라이브 인상 미팅'으로 즉시 리프라이싱</li>
+        <li>포지셔닝(칩 13% OW)을 근거로 실적 무관 하방 경계</li>
+        <li>베어 플래트닝(2Y↑·10Y 정체)을 조기 경보로 주시</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 티커 테이블 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>금주의 티커 보드</h2><span class="eng">Most Mentioned</span></div>
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>티커</th><th>멘션 동인</th><th class="num-r">주간 톤</th><th>커뮤니티 한 줄</th></tr></thead>
+    <tbody>
+      <tr><td><b>NVDA</b></td><td>매출 +106% · 가이던스 $108B · 목 +8.7%(+$442B)</td><td class="num-r up">환호→경계</td><td>"실적은 신, 주가는 인간"</td></tr>
+      <tr><td><b>MRVL</b></td><td>컨센 상회에도 −8% — 눈높이 리스크의 상징</td><td class="num-r dn">약세</td><td>"비트로는 부족하다"</td></tr>
+      <tr><td><b>AMD</b></td><td>드러켄밀러 신규 편입 13F · 주초 −4%</td><td class="num-r neu">혼조</td><td>"듀케인이 고른 칩"</td></tr>
+      <tr><td><b>INTC</b></td><td>주초 −5% 선제 매도 · 파운드리 회의론</td><td class="num-r dn">약세</td><td>"랠리 뒤 첫 이탈 후보"</td></tr>
+      <tr><td><b>GOLD/SLV</b></td><td>금 −3.65% · 은 −4.20% — 디베이스먼트 되감기</td><td class="num-r dn">차익실현</td><td>"매파는 금의 적"</td></tr>
+      <tr><td><b>BTC</b></td><td>$80K 터치 후 $78.7K — YCC 기대 후퇴</td><td class="num-r dn">조정</td><td>"구조는 그대로" vs "포지션 청산"</td></tr>
+      <tr><td><b>US2Y</b></td><td>잭슨홀 직후 +8bp 4.34% — 9월 인상 ~50%</td><td class="num-r dn">금리↑</td><td>"올해 최대 서프라이즈 후보"</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ═══════════ 키워드 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>금주의 키워드 클라우드</h2><span class="eng">Narrative Keywords</span></div>
+  <div class="kw-cloud">
+    <span class="kw k1">#JacksonHole</span>
+    <span class="kw k1">#RateHike50%</span>
+    <span class="kw k2">#WeHaveWorkToDo</span>
+    <span class="kw k2">#NVDA가이던스</span>
+    <span class="kw k2">#PCE_3.7%</span>
+    <span class="kw k2">#디베이스먼트_되감기</span>
+    <span class="kw">#백투백인상_한은</span>
+    <span class="kw">#MarvellShock</span>
+    <span class="kw">#FedVsTreasury</span>
+    <span class="kw">#포지셔닝13%OW</span>
+    <span class="kw k3">#GLOF_네팔</span>
+    <span class="kw k3">#소맥+12.55%</span>
+    <span class="kw k3">#LisaCook</span>
+    <span class="kw k3">#40조달러부채</span>
+  </div>
+</section>
+
+<!-- ═══════════ 시그널 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>위클리 시그널</h2><span class="eng">What Actually Changed</span></div>
+  <div class="signal">
+    <div class="sig-no">01</div>
+    <div><h4>9월 FOMC가 '라이브 인상 미팅'이 됐다</h4>
+    <p>워시 연설 후 시장 내재 9월 인상 확률 ~50%(CME). 불과 2주 전까지 인하 시점을 재던 시장이 방향 자체를 뒤집었다. 2년물 단독 급등(베어 플래트닝)은 정책 충격의 전형적 1차 반응 — 다음 단계는 밸류에이션 멀티플 재계산이다.</p></div>
+  </div>
+  <div class="signal">
+    <div class="sig-no">02</div>
+    <div><h4>디베이스먼트 트레이드, 1주 만에 정반대로 — 과밀의 증거</h4>
+    <p>지난주 금 +5.6% · BTC +20%였던 자산들이 이번 주 금 −3.65% · 은 −4.20% · BTC 반락. 서사(부채·바이백)는 그대로인데 가격만 왕복했다는 것은 이 트레이드가 펀더멘털보다 포지셔닝에 지배되고 있다는 뜻이다.</p></div>
+  </div>
+  <div class="signal">
+    <div class="sig-no">03</div>
+    <div><h4>완벽한 실적으로도 섹터를 못 끌어올린다 — AI 랠리의 내부 피로</h4>
+    <p>NVDA 매출 +106%·가이던스 상향에도 반도체는 주간 내내 무거웠고 금요일 −3.47%로 마감. 마벨은 비트에도 −8%. 칩 13% 오버웨이트 상태에서 '좋은 뉴스'의 한계효용이 소진되는 국면 — 어닝 모멘텀 장세에서 포지셔닝 장세로의 전환 신호.</p></div>
+  </div>
+  <div class="signal">
+    <div class="sig-no">04</div>
+    <div><h4>소형주·중형주의 조용한 이탈</h4>
+    <p>러셀 2000 −1.63%, 미드캡 −1.51%, 스몰캡 −1.28% — 대형 기술주가 지수를 방어하는 사이 금리 민감 하위 시장은 이미 인상 시나리오를 가격에 반영하기 시작했다. 시장 폭(breadth)의 축소는 8월 랠리의 질이 바뀌었다는 경고.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════ 차트 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>차트로 보는 한 주</h2><span class="eng">Two Charts That Matter</span></div>
+  <div class="chart-box">
+    <h3>① 주간 크로스에셋 퍼포먼스 (%)</h3>
+    <canvas id="chartAssets" width="860" height="380"></canvas>
+    <p class="chart-cap">소맥이 압도적 1위(+12.55%) — 매파 주간의 역설적 인플레이션 재료. 지난주의 승자(금·은)와 KOSPI가 최하단.</p>
+  </div>
+  <div class="chart-box">
+    <h3>② 금리의 재편 — 연방기금 vs 2Y vs 10Y (%)</h3>
+    <canvas id="chartRates" width="860" height="320"></canvas>
+    <p class="chart-cap">기준금리 3.50–3.75% 위에 2년물 4.34%가 얹히며 시장은 이미 '다음 행보 = 인상'을 절반쯤 가격에 반영. 10년물 4.73%는 재무부 바이백이 누르는 힘과 인플레이션이 미는 힘의 교착점.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 인사이트 ═══════════ -->
+<div class="insight">
+  <div class="sec-head"><h2>헤드 오브 리서치 인사이트</h2><span class="eng">House View · Druckenmiller Style</span></div>
+  <div class="ins-item">
+    <h4>1. 반응함수가 사라진 시장에서는 유동성이 곧 나침반이다</h4>
+    <p>워시는 가이던스를 주지 않겠다고 선언했다. 이는 매 지표가 정책 이벤트가 되는 체제로의 회귀다. 우리 하우스의 원칙대로라면 이럴 때 볼 것은 연설문이 아니라 돈의 흐름 — 재무부는 장기물을 사고(9/9 바이백 개시), 연준은 단기를 위협한다. 커브 양끝을 서로 다른 기관이 쥔 이 뒤틀린 구조에서는 '커브 형태' 자체가 최고의 정책 관측 지표다. 2Y-10Y 재역전 시 방어 강화.</p>
+    <span class="src">Ref. 잭슨홀 연설(8/28) · 재무부 바이백 캘린더 · CME FedWatch</span>
+  </div>
+  <div class="ins-item">
+    <h4>2. 드러켄밀러의 손끝 — 칩을 떠난 게 아니라 칩 안에서 갈아탔다</h4>
+    <p>이번 주 회자된 듀케인 13F(6/30 기준): 인텔·마이크론·브로드컴 전량 처분, AMD 신규 편입. 메시지는 'AI 엑시트'가 아니라 '승자 압축'이다. 포지셔닝이 13% 오버웨이트로 과열된 섹터에서는 평균이 아니라 개별 승자만 산다는 것 — 금요일처럼 섹터 전체가 팔리는 날이 오히려 이 전략의 진입 창이 된다.</p>
+    <span class="src">Ref. Duquesne Family Office 13F(2Q26) · BofA 반도체 포지셔닝 노트</span>
+  </div>
+  <div class="ins-item">
+    <h4>3. 진짜 꼬리리스크는 '인상'이 아니라 '인상 + 바이백'의 동시 실패다</h4>
+    <p>인상 자체는 감내 가능하다 — 성장이 강하니까(워시 스스로 "full employment"). 위험한 조합은 연준이 올리는데 재무부 바이백이 장기금리를 못 누르는 시나리오다. 그 경우 8월 랠리의 전제(금리 안정)가 무너진다. 헤지는 복잡할 필요 없다: 소형주 숏 성향 유지, 현금 수익률 4%대의 옵션가치 재평가, 그리고 하드애셋은 '되감기 완료' 신호(포지셔닝 정상화) 전까지 신규 진입 유보.</p>
+    <span class="src">Ref. 러셀 2000 주간 −1.63% · 30년 모기지 6.67% · 금 주간 −3.65%</span>
+  </div>
+</div>
+
+<!-- ═══════════ 워치리스트 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>다음 주 워치리스트</h2><span class="eng">Week of 08.31 – 09.04</span></div>
+  <ul class="watch">
+    <li><span class="wd">화 9/1</span><span><b>미 ISM 제조업(8월)</b> — 인상 논쟁 속 첫 실물 지표. 물가지불지수가 헤드라인보다 중요</span></li>
+    <li><span class="wd">목 9/3</span><span><b>브로드컴 실적(예정)</b> — 'AI 순환 파이낸싱' 논쟁의 2차전. 커스텀 칩 수주 코멘트 주목</span></li>
+    <li><span class="wd">금 9/4</span><span><b>미 8월 고용보고서</b> — "완전고용" 진단의 검증대. 강하면 9월 인상 확률 50%→60%대 진입 가능</span></li>
+    <li><span class="wd">주중</span><span><b>연준 인사 발언 러시</b> — 해맥(클리블랜드) 등 매파의 "now is the time to act" 발언 확산 여부</span></li>
+    <li><span class="wd">주중</span><span><b>네팔 GLOF 수습</b> — 두산에너빌리티·남동발전 실종자 수색 및 UT-1(216MW) 손실 정량화</span></li>
+    <li><span class="wd">월 9/7</span><span><b>미 노동절 휴장 예고</b> — 다음 주 금요일 고용 지표 후 3일 연휴, 포지션 경량화 수요 체크</span></li>
+  </ul>
+</section>
+
+<footer>
+  바이사이드 위클리 센티먼트 리포트 · Global Edition Vol.13 · 2026.08.30<br>
+  Source: WSJ Markets Digest(08.29 지면) · Reddit · X(Twitter) · CNBC · Bloomberg · CME FedWatch · 웹 교차검증<br>
+  본 리포트는 소셜미디어 시장 심리를 합성한 리서치 자료이며 투자 권유가 아닙니다. 커뮤니티 인용문은 여론 흐름을 압축한 표현입니다.<br>
+  minkeun00-creator.github.io/weekly-report/
+</footer>
+
+</div>
+
+<script>
+(function(){
+  function setup(id){
+    var c=document.getElementById(id);
+    var dpr=window.devicePixelRatio||1;
+    var w=c.width, h=c.height;
+    c.style.width='100%';
+    var ctx=c.getContext('2d');
+    return {c:c,ctx:ctx,w:w,h:h};
+  }
+  /* ① 크로스에셋 바차트 */
+  var A=setup('chartAssets'), ctx=A.ctx;
+  var data=[
+    ['소맥',12.55],['옥수수',5.84],['천연가스',2.74],['나스닥',0.85],['다우',0.53],['S&P500',0.49],
+    ['달러지수',0.38],['러셀2000',-1.63],['KOSPI',-1.79],['금',-3.65],['은',-4.20]
+  ];
+  var pad=70, right=20, top=16, bot=30, W=A.w-pad-right, H=A.h-top-bot;
+  var max=14, min=-6, zero=top+H*(max/(max-min));
+  ctx.font='12px "DM Mono",monospace'; ctx.fillStyle='#6b6558';
+  [-4,0,4,8,12].forEach(function(g){
+    var y=top+H*((max-g)/(max-min));
+    ctx.strokeStyle=g===0?'#111010':'#d8d2c4'; ctx.lineWidth=g===0?1.6:1;
+    ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(pad+W,y);ctx.stroke();
+    ctx.fillText(g+'%',18,y+4);
+  });
+  var bw=W/data.length;
+  data.forEach(function(d,i){
+    var x=pad+i*bw+bw*0.18, barW=bw*0.64;
+    var y=top+H*((max-d[1])/(max-min));
+    ctx.fillStyle=d[1]>=0?'#0d6b4f':'#b03a2e';
+    if(d[1]>=0){ctx.fillRect(x,y,barW,zero-y);}else{ctx.fillRect(x,zero,barW,y-zero);}
+    ctx.fillStyle='#111010'; ctx.font='11px "DM Mono",monospace';
+    ctx.textAlign='center';
+    ctx.fillText((d[1]>0?'+':'')+d[1].toFixed(1),x+barW/2,d[1]>=0?y-6:y+14);
+    ctx.save();
+    ctx.translate(x+barW/2, A.h-4); ctx.rotate(-0.42);
+    ctx.font='11px "Noto Sans KR",sans-serif'; ctx.fillStyle='#6b6558'; ctx.textAlign='right';
+    ctx.fillText(d[0],6,0);
+    ctx.restore();
+    ctx.textAlign='left';
+  });
+
+  /* ② 금리 차트 */
+  var B=setup('chartRates'), bx=B.ctx;
+  var labels=['5월','6월','7월','8/21','8/28'];
+  var ffr=[3.625,3.625,3.625,3.625,3.625];
+  var y2=[3.95,4.05,4.18,4.26,4.34];
+  var y10=[4.42,4.55,4.68,4.737,4.73];
+  var p2=56,r2=24,t2=18,b2=44,W2=B.w-p2-r2,H2=B.h-t2-b2;
+  var mx=5.0,mn=3.4;
+  bx.font='12px "DM Mono",monospace';
+  [3.5,4.0,4.5,5.0].forEach(function(g){
+    var y=t2+H2*((mx-g)/(mx-mn));
+    bx.strokeStyle='#d8d2c4';bx.lineWidth=1;
+    bx.beginPath();bx.moveTo(p2,y);bx.lineTo(p2+W2,y);bx.stroke();
+    bx.fillStyle='#6b6558';bx.fillText(g.toFixed(1),16,y+4);
+  });
+  function line(arr,col,dash){
+    bx.strokeStyle=col;bx.lineWidth=2.4;bx.setLineDash(dash||[]);
+    bx.beginPath();
+    arr.forEach(function(v,i){
+      var x=p2+W2*(i/(arr.length-1));
+      var y=t2+H2*((mx-v)/(mx-mn));
+      i===0?bx.moveTo(x,y):bx.lineTo(x,y);
+    });
+    bx.stroke();bx.setLineDash([]);
+    arr.forEach(function(v,i){
+      var x=p2+W2*(i/(arr.length-1));
+      var y=t2+H2*((mx-v)/(mx-mn));
+      bx.fillStyle=col;bx.beginPath();bx.arc(x,y,3.4,0,7);bx.fill();
+    });
+  }
+  line(ffr,'#6b6558',[5,4]);
+  line(y2,'#b03a2e');
+  line(y10,'#1a4f8a');
+  labels.forEach(function(l,i){
+    var x=p2+W2*(i/(labels.length-1));
+    bx.fillStyle='#6b6558';bx.textAlign='center';
+    bx.fillText(l,x,B.h-22);
+  });
+  bx.textAlign='left';
+  bx.fillStyle='#b03a2e';bx.fillText('■ 미 2년물 4.34%',p2,B.h-4);
+  bx.fillStyle='#1a4f8a';bx.fillText('■ 미 10년물 4.73%',p2+150,B.h-4);
+  bx.fillStyle='#6b6558';bx.fillText('- - 연방기금 3.50–3.75%',p2+310,B.h-4);
+})();
+</script>
+</body>
+</html>
