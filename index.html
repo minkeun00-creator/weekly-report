@@ -12,6 +12,7 @@
   --dbg:#0e0f13; --dtext:#e8e6e0; --dline:#2a2e3a; --dmut:#8b8fa0; --damber:#ffc94d;
 }
 *{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
 body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',sans-serif;line-height:1.6;font-size:15px}
 .wrap{max-width:920px;margin:0 auto;padding:0 20px 60px}
 
@@ -28,37 +29,40 @@ section{margin-top:44px}
 .sec-head .cnt{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--mut)}
 
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.card{display:block;background:var(--card);border:1px solid var(--line);padding:16px 16px 14px;text-decoration:none;color:var(--ink);position:relative;transition:transform .12s ease, box-shadow .12s ease}
-.card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(17,16,16,.10)}
-.card .vol{font-family:'DM Mono',monospace;font-size:12px;color:var(--mut);margin-bottom:6px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-top:3px solid var(--ink);padding:16px;text-decoration:none;color:var(--ink);position:relative;transition:transform .12s ease}
+.card:hover{transform:translateY(-2px)}
+.card .vol{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--mut);letter-spacing:.08em;margin-bottom:6px}
 .card .vol b{color:var(--ink)}
 .card h3{font-size:15.5px;font-weight:700;line-height:1.45;margin-bottom:6px}
-.card p{font-size:12.5px;color:var(--mut)}
-.latest-card{border:2px solid var(--ink);grid-column:1 / -1}
-.latest-card h3{font-size:17.5px}
-.badge{position:absolute;top:12px;right:12px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;padding:2px 9px}
+.card p{font-size:12.5px;color:var(--mut);line-height:1.6}
+.badge{position:absolute;top:12px;right:12px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;padding:2px 8px}
 .badge.new{background:var(--ink);color:#e8c15a}
 .badge.recon{border:1px solid var(--line);color:var(--mut)}
+.latest-card{border-top-color:var(--amber);background:#fdf9ec}
 
-/* 종토방 섹션 다크 스킨 */
-.dom{background:var(--dbg);color:var(--dtext);margin:44px -20px 0;padding:34px 20px 40px}
+/* Domestic — 다크 반전 섹션 */
+.dom{background:var(--dbg);color:var(--dtext);margin:44px -20px 0;padding:36px 20px 40px}
 .dom .sec-head{border-bottom-color:var(--damber)}
 .dom .sec-head h2{color:var(--dtext);font-family:'Noto Sans KR',sans-serif;font-weight:900}
 .dom .sec-head .cnt{color:var(--dmut)}
-.dom .card{background:#151720;border-color:var(--dline);color:var(--dtext)}
-.dom .card:hover{box-shadow:0 4px 14px rgba(0,0,0,.5)}
-.dom .card .vol{color:var(--dmut)}
-.dom .card .vol b{color:var(--damber)}
+.dom .card{background:#151720;border-color:var(--dline);border-top-color:var(--damber);color:var(--dtext)}
+.dom .card .vol{color:var(--dmut)} .dom .card .vol b{color:var(--damber)}
 .dom .card p{color:var(--dmut)}
 .dom .badge.new{background:var(--damber);color:#111}
 .dom .badge.recon{border-color:var(--dline);color:var(--dmut)}
+.dom .latest-card{background:#1a1708}
 
-.note{margin-top:34px;background:var(--card);border:1px solid var(--line);padding:14px 16px;font-size:12.5px;color:var(--mut)}
+.note{margin-top:36px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--amber);padding:14px 16px;font-size:12.5px;color:var(--mut);line-height:1.7}
 .note b{color:var(--ink)}
 
-footer{margin-top:44px;border-top:3px solid var(--ink);padding-top:16px;font-size:12px;color:var(--mut);text-align:center;line-height:1.9}
+footer{margin-top:48px;border-top:3px solid var(--ink);padding-top:16px;font-size:12px;color:var(--mut);text-align:center;line-height:1.9}
 
-@media(max-width:768px){.grid{grid-template-columns:1fr}}
+@media(max-width:640px){
+  .grid{grid-template-columns:1fr}
+  .wrap{padding:0 14px 50px}
+  .masthead{margin:0 -14px}
+  .dom{margin:44px -14px 0;padding:32px 14px 36px}
+}
 @media print{
   @page{size:A4;margin:12mm}
   body{font-size:10.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -75,15 +79,20 @@ footer{margin-top:44px;border-top:3px solid var(--ink);padding-top:16px;font-siz
   <div class="kicker">Buy-Side Weekly Sentiment Report</div>
   <h1>바이사이드 위클리 센티먼트</h1>
   <div class="sub">Reddit × X × 네이버 종토방 — 소셜 센티먼트 합성 리서치 아카이브</div>
-  <div class="latest">LATEST · <b>2026.08.30</b> · GLOBAL VOL.13 / DOMESTIC VOL.11</div>
+  <div class="latest">LATEST · <b>2026.09.06</b> · GLOBAL VOL.14 / DOMESTIC VOL.12</div>
 </div>
 
 <!-- ═══ Global Edition ═══ -->
 <section>
-  <div class="sec-head"><h2>Global Edition — Reddit × X 위클리</h2><span class="cnt">11 ISSUES</span></div>
+  <div class="sec-head"><h2>Global Edition — Reddit × X 위클리</h2><span class="cnt">12 ISSUES</span></div>
   <div class="grid">
-    <a class="card latest-card" href="vol13_20260830.html">
+    <a class="card latest-card" href="vol14_20260906.html">
       <span class="badge new">NEW</span>
+      <div class="vol"><b>VOL.14</b> · 2026.09.06</div>
+      <h3>Small Potatoes — 전쟁을 학습한 시장, 인상을 가격에 넣다</h3>
+      <p>미-이란 공습 재개 · 유조선 3척 타격 · WTI $91 · 고용 +162K(예상 3배) · 인상 연내 40bp 프라이싱 · S&amp;P 주간 +0.09% 복원력 논쟁 · GPRO 밈 부활 · 센티먼트 48/100</p>
+    </a>
+    <a class="card" href="vol13_20260830.html">
       <div class="vol"><b>VOL.13</b> · 2026.08.30</div>
       <h3>The Hawk Speaks — 잭슨홀, 매파의 침묵이 깨진 주</h3>
       <p>워시 데뷔 연설 "We have work to do" · 9월 인상확률 ~50% · NVDA +106% 실적에도 반도체 −3.47% · 금·은·BTC 디베이스먼트 되감기 · 한은 백투백 인상 · 센티먼트 55/100</p>
@@ -96,7 +105,7 @@ footer{margin-top:44px;border-top:3px solid var(--ink);padding-top:16px;font-siz
     <a class="card" href="vol11_20260815.html">
       <div class="vol"><b>VOL.11</b> · 2026.08.15</div>
       <h3>Fragile Records — 사상 최고가의 균열</h3>
-      <p>S&P 500 사상 최고 종가 7,798.99 · CPI/PPI 냉각 · 소매판매 쇼크 · AI 크레딧 스트레스 · 센티먼트 66/100</p>
+      <p>S&amp;P 500 사상 최고 종가 7,798.99 · CPI/PPI 냉각 · 소매판매 쇼크 · AI 크레딧 스트레스 · 센티먼트 66/100</p>
     </a>
     <a class="card" href="vol10_20260808.html">
       <div class="vol"><b>VOL.10</b> · 2026.08.08</div>
@@ -133,7 +142,7 @@ footer{margin-top:44px;border-top:3px solid var(--ink);padding-top:16px;font-siz
     <a class="card" href="vol04_20260418.html">
       <div class="vol"><b>VOL.04</b> · 2026.04.18</div>
       <h3>호르무즈 개방 — 오일쇼크의 출구</h3>
-      <p>WTI −13.55% 급락 · S&P +4.54% 사상 최고치 랠리 · 이란전쟁 5주차 변곡점</p>
+      <p>WTI −13.55% 급락 · S&amp;P +4.54% 사상 최고치 랠리 · 이란전쟁 5주차 변곡점</p>
     </a>
     <a class="card" href="vol02_20260405.html">
       <div class="vol"><b>VOL.02</b> · 2026.04.05</div>
@@ -145,10 +154,15 @@ footer{margin-top:44px;border-top:3px solid var(--ink);padding-top:16px;font-siz
 
 <!-- ═══ Domestic Edition ═══ -->
 <div class="dom">
-  <div class="sec-head"><h2>Domestic Edition — 네이버 종토방 위클리</h2><span class="cnt">11 ISSUES</span></div>
+  <div class="sec-head"><h2>Domestic Edition — 네이버 종토방 위클리</h2><span class="cnt">12 ISSUES</span></div>
   <div class="grid">
-    <a class="card latest-card" href="kospi_jongtoban_vol11_20260830.html">
+    <a class="card latest-card" href="kospi_jongtoban_vol12_20260906.html">
       <span class="badge new">NEW</span>
+      <div class="vol"><b>VOL.12</b> · 2026.09.06</div>
+      <h3>전쟁의 수요일, 로봇의 금요일</h3>
+      <p>코스피 −3.99% 폭락일 개인 2.3조 매수 · 원익홀딩스 상한가·로보티즈 +22.5% 정책 랠리 · 서학 환차손 3주차 · 펩트론 9/7 카운트다운 · 원화 14개월 최저 · 투심 44/100</p>
+    </a>
+    <a class="card" href="kospi_jongtoban_vol11_20260830.html">
       <div class="vol"><b>VOL.11</b> · 2026.08.30</div>
       <h3>금리 3% 시대의 개미들 — 백투백의 충격</h3>
       <p>한은 2연속 인상 3.00% · 코스피 −1.79% vs 코스닥 +4.55% · 커버드콜 인컴 대피 · 환차손 성토 2주차 · 네팔 리스크 · 투심 46/100</p>

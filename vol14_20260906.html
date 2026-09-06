@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>바이사이드 위클리 센티먼트 리포트 Vol.14 — Small Potatoes</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#111010; --paper:#f4f1ea; --card:#fbf9f4; --line:#d8d2c4; --mut:#6b6558;
+  --green:#0d6b4f; --red:#b03a2e; --amber:#7d5a0a; --blue:#1a4f8a; --purple:#4a3580;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',sans-serif;line-height:1.65;font-size:15px}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 70px}
+.up{color:var(--green)} .dn{color:var(--red)} .neu{color:var(--mut)}
+
+/* ── 마스트헤드 ── */
+.masthead{background:var(--ink);color:var(--paper);margin:0 -20px;padding:38px 24px 28px;text-align:center}
+.masthead .kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.35em;color:#c9c2b2;text-transform:uppercase}
+.masthead h1{font-family:'DM Serif Display',serif;font-size:clamp(30px,6vw,52px);margin:10px 0 4px;line-height:1.1}
+.masthead .theme{font-family:'DM Serif Display',serif;font-size:clamp(17px,3.2vw,24px);color:#e8c15a;margin-top:8px}
+.masthead .sub{font-size:13px;color:#c9c2b2;margin-top:10px}
+.senti-box{display:inline-flex;align-items:center;gap:14px;border:1px solid #5a5548;margin-top:18px;padding:10px 22px}
+.senti-box .num{font-family:'DM Mono',monospace;font-size:34px;color:#e8c15a;font-weight:500}
+.senti-box .lab{font-size:12px;color:#c9c2b2;text-align:left;line-height:1.5}
+
+/* ── 티커바 ── */
+.tickerbar{display:flex;flex-wrap:wrap;gap:0;border-bottom:3px solid var(--ink);border-top:1px solid var(--line);background:var(--card);margin:0 -20px;padding:8px 14px;font-family:'DM Mono',monospace;font-size:12px}
+.ticker-item{padding:4px 12px;border-right:1px solid var(--line);display:flex;gap:6px;align-items:baseline}
+.ticker-item:last-child{border-right:none}
+.ticker-label{color:var(--mut);font-size:10.5px;letter-spacing:.06em}
+
+section{margin-top:48px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:20px;flex-wrap:wrap}
+.sec-head h2{font-family:'DM Serif Display',serif;font-size:clamp(21px,3.6vw,29px);font-weight:400}
+.sec-head .eng{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--mut);text-transform:uppercase}
+.lede{font-size:15.5px;margin-bottom:18px}
+.lede b{background:linear-gradient(transparent 62%, #e8c15a66 62%)}
+
+/* ── 표 공통 ── */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--mut);text-align:left;border-bottom:2px solid var(--ink);padding:7px 8px;text-transform:uppercase}
+td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
+.num-r{text-align:right;font-family:'DM Mono',monospace;white-space:nowrap}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl-note{font-size:12px;color:var(--mut);margin-top:8px}
+
+/* ── WSJ 그리드 ── */
+.wsj-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.wsj-box{background:var(--card);border:1px solid var(--line);padding:16px}
+.wsj-box h3{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.perf-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.perf-row:last-child{border-bottom:none}
+.perf-row .v{font-family:'DM Mono',monospace;font-size:13px}
+
+/* ── 뉴스플로우 ── */
+.newsflow{border-left:3px solid var(--ink);padding-left:0}
+.nf-day{display:grid;grid-template-columns:92px 1fr;gap:14px;padding:13px 0 13px 18px;border-bottom:1px solid var(--line)}
+.nf-day:last-child{border-bottom:none}
+.nf-date{font-family:'DM Mono',monospace;font-size:12px;color:var(--mut);padding-top:2px}
+.nf-date b{display:block;color:var(--ink);font-size:15px}
+.nf-body{font-size:14px}
+.nf-body b{font-weight:700}
+.nf-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;border:1px solid var(--ink);padding:1px 7px;margin-right:6px;vertical-align:1px}
+.nf-tag.hot{background:var(--ink);color:var(--paper)}
+
+/* ── 카드 그리드 (Reddit/X) ── */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.scard{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--ink);padding:16px 16px 14px}
+.scard .src{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.scard .mood{font-size:10.5px;letter-spacing:.08em;padding:2px 8px;border:1px solid currentColor}
+.mood.bull{color:var(--green)} .mood.bear{color:var(--red)} .mood.mixed{color:var(--amber)}
+.scard h4{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.45}
+.scard p{font-size:13.5px;color:#3a362e}
+.scard .quote{font-size:12.5px;color:var(--mut);border-left:2px solid var(--line);padding-left:10px;margin-top:9px;font-style:italic}
+.xcard{border-top-color:var(--blue)}
+.xcard .handle{color:var(--blue)}
+.xcard .rot{font-size:10px;color:var(--mut);letter-spacing:.1em;font-family:'DM Mono',monospace}
+
+/* ── 비교 ── */
+.versus{display:grid;grid-template-columns:1fr 44px 1fr;align-items:stretch;gap:0;border:1px solid var(--ink)}
+.vs-col{padding:18px}
+.vs-col h4{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;margin-bottom:10px;text-transform:uppercase}
+.vs-col ul{list-style:none}
+.vs-col li{font-size:13.5px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.vs-col li:last-child{border-bottom:none}
+.vs-mid{background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:17px;writing-mode:vertical-rl}
+
+/* ── 키워드 ── */
+.kw-cloud{display:flex;flex-wrap:wrap;gap:10px}
+.kw{font-family:'DM Mono',monospace;border:1px solid var(--ink);padding:6px 14px;font-size:13px}
+.kw.k1{background:var(--ink);color:var(--paper);font-size:16px}
+.kw.k2{font-size:14.5px;border-width:2px}
+.kw.k3{color:var(--mut);border-color:var(--line)}
+
+/* ── 시그널 ── */
+.signal{display:grid;grid-template-columns:46px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}
+.signal:last-child{border-bottom:none}
+.sig-no{font-family:'DM Serif Display',serif;font-size:30px;color:var(--line);line-height:1}
+.signal h4{font-size:15.5px;font-weight:700;margin-bottom:4px}
+.signal p{font-size:14px;color:#3a362e}
+
+/* ── 차트 ── */
+.chart-box{background:var(--card);border:1px solid var(--line);padding:18px;margin-bottom:18px}
+.chart-box h3{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.chart-box canvas{width:100%;height:auto}
+.chart-cap{font-size:12px;color:var(--mut);margin-top:8px}
+
+/* ── 인사이트 ── */
+.insight{background:var(--ink);color:var(--paper);margin:0 -20px;padding:36px 24px}
+.insight .sec-head{border-bottom-color:#5a5548}
+.insight .sec-head h2{color:var(--paper)}
+.insight .sec-head .eng{color:#c9c2b2}
+.ins-item{border-left:2px solid #e8c15a;padding-left:16px;margin-bottom:24px}
+.ins-item:last-child{margin-bottom:0}
+.ins-item h4{font-family:'DM Serif Display',serif;font-size:18px;color:#e8c15a;margin-bottom:6px}
+.ins-item p{font-size:14px;color:#d8d2c4}
+.ins-item .src{font-family:'DM Mono',monospace;font-size:11px;color:#8a8578;margin-top:6px;display:block}
+
+/* ── 워치리스트 ── */
+.watch li{list-style:none;display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.watch li:last-child{border-bottom:none}
+.watch .wd{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--mut)}
+
+footer{margin-top:56px;border-top:3px solid var(--ink);padding-top:16px;font-size:12px;color:var(--mut);text-align:center;line-height:1.9}
+
+/* ── 모바일 ── */
+@media(max-width:768px){
+  .wsj-grid,.card-grid{grid-template-columns:1fr}
+  .versus{grid-template-columns:1fr}
+  .vs-mid{writing-mode:horizontal-tb;padding:8px}
+  .nf-day{grid-template-columns:74px 1fr;gap:10px}
+}
+@media(max-width:480px){
+  body{font-size:14px}
+  .wrap{padding:0 14px 60px}
+  .masthead{margin:0 -14px;padding:30px 16px 24px}
+  .tickerbar{margin:0 -14px}
+  .insight{margin:0 -14px;padding:30px 16px}
+  .signal{grid-template-columns:36px 1fr}
+}
+/* ── 프린트 ── */
+@media print{
+  @page{size:A4;margin:12mm}
+  body{font-size:10.5px;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .masthead,.insight{margin:0}
+  .wsj-box,.scard,.signal,.nf-day,.chart-box,.ins-item,.versus{page-break-inside:avoid}
+  section{margin-top:22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══════════ 마스트헤드 ═══════════ -->
+<div class="masthead">
+  <div class="kicker">Buy-Side Weekly Sentiment Report · Global Edition</div>
+  <h1>바이사이드 위클리 센티먼트</h1>
+  <div class="theme">"Small Potatoes" — 전쟁을 학습한 시장, 인상을 가격에 넣다</div>
+  <div class="sub">VOL.14 · 2026.09.06 발행 · 커버리지 2026.08.31 – 09.04 · Reddit × X(Twitter) 센티먼트 합성</div>
+  <div class="senti-box">
+    <span class="num">48</span>
+    <span class="lab">위클리 센티먼트 스코어 / 100<br>전주 55 ▼7 · <b style="color:#e8c15a">불안한 균형</b> — 전쟁 재개·인상 베이스에도 지수는 보합</span>
+  </div>
+</div>
+
+<!-- ═══════════ 티커바 ═══════════ -->
+<div class="tickerbar">
+  <div class="ticker-item"><span class="ticker-label">S&amp;P500</span><span>7,718.60</span><span class="up">▲0.09%</span></div>
+  <div class="ticker-item"><span class="ticker-label">NASDAQ</span><span>26,506.99</span><span class="up">▲0.40%</span></div>
+  <div class="ticker-item"><span class="ticker-label">DOW</span><span>53,414.25</span><span class="dn">▼0.27%</span></div>
+  <div class="ticker-item"><span class="ticker-label">RUT2000</span><span class="up">주간 ▲0.11%</span></div>
+  <div class="ticker-item"><span class="ticker-label">US10Y</span><span class="dn">4.783% ▲5bp</span></div>
+  <div class="ticker-item"><span class="ticker-label">US2Y</span><span class="dn">4.379%</span></div>
+  <div class="ticker-item"><span class="ticker-label">WTI</span><span>$91.48</span><span class="dn">주간 ▲6%대</span></div>
+  <div class="ticker-item"><span class="ticker-label">GOLD</span><span>$4,429.80</span><span class="dn">▼1.08%</span></div>
+  <div class="ticker-item"><span class="ticker-label">BTC</span><span>$77K대</span><span class="dn">▼</span></div>
+  <div class="ticker-item"><span class="ticker-label">KOSPI</span><span>6,687.21</span><span class="dn">▼1.50%</span></div>
+  <div class="ticker-item"><span class="ticker-label">원/달러</span><span>1,350.40원</span><span class="up">▼22.1</span></div>
+  <div class="ticker-item"><span class="ticker-label">달러지수</span><span>95.24</span><span class="dn">▼0.68%</span></div>
+</div>
+
+<!-- ═══════════ WSJ 마켓 디지스트 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>주간 마켓 디지스트</h2><span class="eng">WSJ Markets Digest · 09.04 Close</span></div>
+  <p class="lede">한 달의 휴전이 끝났다. 미-이란 공습이 재개되며 WTI는 $91선(주간 약 +$5), 브렌트는 $95 부근까지 치솟았고, 10년물은 4.8%를 터치했다. 금요일 고용은 예상의 3배(+16.2만). 그런데도 <b>S&amp;P 500의 주간 성적표는 +0.09% — 3월 개전 당시 주간 −1.67%씩 밀리던 시장이, 같은 종류의 헤드라인을 이제 보합으로 소화한다.</b> 복원력인가, 안일함인가 — 이번 주의 유일한 질문이다.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>지수</th><th class="num-r">종가</th><th class="num-r">금요일</th><th class="num-r">주간</th><th class="num-r">YTD</th><th class="num-r">52주 고점 대비</th></tr></thead>
+    <tbody>
+      <tr><td>다우존스</td><td class="num-r">53,414.25</td><td class="num-r dn">−0.51%</td><td class="num-r dn">−0.27%</td><td class="num-r up">+11.1%</td><td class="num-r">−1.7% <span class="neu">(54,349)</span></td></tr>
+      <tr><td>S&amp;P 500</td><td class="num-r">7,718.60</td><td class="num-r dn">−0.38%</td><td class="num-r up">+0.09%</td><td class="num-r up">+12.8%</td><td class="num-r">−1.0% <span class="neu">(7,799)</span></td></tr>
+      <tr><td>나스닥 종합</td><td class="num-r">26,506.99</td><td class="num-r dn">−0.29%</td><td class="num-r up">+0.40%</td><td class="num-r up">+14.0%</td><td class="num-r">−2.2% <span class="neu">(27,094)</span></td></tr>
+      <tr><td>나스닥-100</td><td class="num-r">29,544.16</td><td class="num-r up">+0.21%</td><td class="num-r up">+0.38%</td><td class="num-r up">+17.0%</td><td class="num-r">−3.6%</td></tr>
+      <tr><td>러셀 2000</td><td class="num-r">—</td><td class="num-r neu">—</td><td class="num-r up">+0.11%</td><td class="num-r up">—</td><td class="num-r neu">주간 승자 목록 잔류</td></tr>
+      <tr><td>다우 수송</td><td class="num-r">21,011.73</td><td class="num-r up">+0.72%</td><td class="num-r neu">—</td><td class="num-r up">+21.1%</td><td class="num-r">−12.2%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">주간 등락은 8/28 종가 대비(WSJ Track the Markets 주간 수치와 교차 일치). 트레이딩 다이어리: NYSE 상승 1,341 vs 하락 1,378 — 지수는 버텼지만 시장 폭은 정확히 반반.</p>
+
+  <div class="wsj-grid" style="margin-top:22px">
+    <div class="wsj-box">
+      <h3>주간 승자·패자 (WSJ Track the Markets)</h3>
+      <div class="perf-row"><span>구리(Comex) <b>주간 1위</b></span><span class="v up">+0.53%</span></div>
+      <div class="perf-row"><span>원화(달러 대비 절상)</span><span class="v up">+2.32%</span></div>
+      <div class="perf-row"><span>나스닥 종합</span><span class="v up">+0.40%</span></div>
+      <div class="perf-row"><span>항셍</span><span class="v up">+0.26%</span></div>
+      <div class="perf-row"><span>S&amp;P 헬스케어</span><span class="v up">+0.17%</span></div>
+      <div class="perf-row"><span>WSJ 달러지수</span><span class="v dn">−0.68%</span></div>
+      <div class="perf-row"><span>KOSPI <b>주간 최하위권</b></span><span class="v dn">−1.50%</span></div>
+    </div>
+    <div class="wsj-box">
+      <h3>원자재 · 금리 · 에너지 물가</h3>
+      <div class="perf-row"><span>WTI $91.48 (52주 고점 $112.95)</span><span class="v up">YTD +59.3%</span></div>
+      <div class="perf-row"><span>천연가스 $2.975</span><span class="v up">+2.13% (금)</span></div>
+      <div class="perf-row"><span>금 $4,429.80</span><span class="v dn">주간 −1.08%</span></div>
+      <div class="perf-row"><span>DJ 원자재지수 1,473</span><span class="v up">YTD +30.3%</span></div>
+      <div class="perf-row"><span>미 10Y 4.783% · 2Y 4.379%</span><span class="v dn">10Y 주간 +5bp</span></div>
+      <div class="perf-row"><span>연방기금 목표 3.50–3.75% · 30년 모기지 6.78%</span><span class="v neu">동결 중</span></div>
+      <div class="perf-row"><span>가솔린 $4.15/갤런 (1년 전 $3.19) · 디젤 $5.85</span><span class="v dn">전가 진행</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 뉴스플로우 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>위클리 뉴스플로우</h2><span class="eng">Five Sessions, One Narrative</span></div>
+  <div class="newsflow">
+    <div class="nf-day">
+      <div class="nf-date"><b>일 8/30</b>전조</div>
+      <div class="nf-body"><span class="nf-tag">라라크섬</span><b>미군, 한 달 만의 첫 이란 타격.</b> 호르무즈 해협의 라라크섬 로켓 발사대를 공습 — "IRGC의 해협 기뢰 부설을 차단하기 위해서"라는 명분. 8월 한 달간 이어진 '호르무즈 재개방 협상' 소강이 공식 종료됐다. 이란은 요르단의 미군기지 2곳에 보복.</div>
+    </div>
+    <div class="nf-day">
+      <div class="nf-date"><b>화 9/1</b></div>
+      <div class="nf-body"><span class="nf-tag hot">공습 재개</span><b>미군 이란 본토 공습 — 결혼식장 피격으로 민간인 5명 사망.</b> 유가는 주간 누적 +7% 페이스로 급등, 다우 −400pt대 하락. 트럼프 행정부는 만료된 MOU 복귀를 거부하고 "호르무즈 + 핵 프로그램" 패키지 합의를 요구 — 단기 휴전의 문이 닫혔다.</div>
+    </div>
+    <div class="nf-day">
+      <div class="nf-date"><b>수 9/2</b></div>
+      <div class="nf-body"><span class="nf-tag hot">걸프 보복</span><b>이란, 이라크·UAE·바레인·쿠웨이트·요르단 미군기지 일제 타격.</b> 브렌트 $95 부근(개전 대비 +30%↑), 글로벌 채권 동반 매도. 9월 인상 확률 68%까지 상승(CME). 아시아 증시 급락 — 코스피 −3.99%, 외인·기관 4조 매도. 트럼프는 기자들 앞에서 전쟁을 "small potatoes"라 축소.</div>
+    </div>
+    <div class="nf-day">
+      <div class="nf-date"><b>목 9/3</b></div>
+      <div class="nf-body"><span class="nf-tag">월러의 비둘기</span><b>월러 이사 "디스인플레이션에 기회를 주자(give disinflation a chance)"</b> — 존 레논 패러디까지 동원한 동결론에 10년물 4.77%로 반락, 위험자산 안도 랠리. 밴스 부통령은 "이건 전쟁이라 부르지 않겠다" 발언. AVGO(브로드컴)는 연환산 100% 가까운 이익 성장으로 어닝시즌 대미를 장식.</div>
+    </div>
+    <div class="nf-day">
+      <div class="nf-date"><b>금 9/4</b>D-Day</div>
+      <div class="nf-body"><span class="nf-tag hot">고용 +162K</span><b>8월 비농업 고용 +16.2만 — 예상(5.5만)의 3배.</b> 7월도 −2.3만→+2.1만으로 상향, 실업률 4.1%. 월러가 열어둔 동결의 문이 하루 만에 좁아지며 연내 인상 프라이싱 ~40bp로 확대. 다우 −272pt, 2년물 4.379%로 급등. 트럼프는 Truth Social에서 "BE PATRIOTS" — 인상이 아니라 인하를 압박. 장 마감 후(토): 미군, 이란 유조선 3척 타격 — "필요시 이란 유조선단 파괴" 경고.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ REDDIT ═══════════ -->
+<section>
+  <div class="sec-head"><h2>Reddit 커뮤니티 온도</h2><span class="eng">Retail Sentiment · 5 Subreddits</span></div>
+  <p class="lede">리테일의 한 주는 <b>전쟁 헤드라인에 무뎌지고, 밈에 다시 불붙은 주간.</b> GPRO(고프로)가 거래량 +1,070%로 최다거래 1위에 오르며 2021년식 밈 문법이 부활했고, 매크로 스레드는 "인상장에서 뭘 사야 하나"로 수렴했다.</p>
+  <div class="card-grid">
+    <div class="scard">
+      <div class="src">r/wallstreetbets <span class="mood mixed">밈 부활 + 유가 도박</span></div>
+      <h4>GPRO 거래량 +1,070% — "2021이 전화 왔다"</h4>
+      <p>고프로가 금요일 +22.3%, 2.79억주 거래로 최다거래 1위. 저가 밈주 로테이션(DVLT +763% 거래량, BAOS +4,039%)이 동반 점화 — 전쟁·인상 헤드라인에 지친 리테일의 도피처가 다시 복권형 소형주로. 한편 USO·XOM 콜과 TSLL(테슬라 2x) 물타기 인증이 유가·테슬라 양쪽에서 병행.</p>
+      <div class="quote">"World's on fire, rates going up, so naturally we're all-in on GoPro."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/stocks <span class="mood bull">복원력 논쟁</span></div>
+      <h4>"S&amp;P 주간 +0.09% — 이게 바로 강세장이다"</h4>
+      <p>전쟁 재개 + 인상 베이스 + 3배 고용 서프라이즈를 다 맞고도 보합인 지수를 두고 "역대급 복원력" vs "역대급 안일함" 논쟁. NVDA가 230.36으로 52주 고점(236.54)에 재접근한 것과 AVGO의 ~100% 이익 성장이 강세론의 양대 근거. 폴리마켓 '연말 시총 1위 NVDA 77%'가 밈처럼 인용됨.</p>
+      <div class="quote">"The market survived a war restart and a hot jobs print in the same week. What exactly is supposed to break it?"</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/investing <span class="mood bear">인상 적응기</span></div>
+      <h4>"9월 15-16일까지는 아무것도 사지 마라"</h4>
+      <p>FOMC(9/15-16)와 CPI(9/11)를 앞둔 관망론이 지배. 단기 국채·MMF 4%대 수익률을 '무료 옵션'으로 재평가하는 스레드가 상단 고정. 30년 모기지 6.78%(주간 +8bp) 재상승에 주택 매수 포기 인증 증가 — "현금이 처음으로 포지션이 된 해"라는 표현이 유행.</p>
+      <div class="quote">"T-bill and chill until Warsh shows his cards."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/economics <span class="mood mixed">고용 리포트 해부반</span></div>
+      <h4>+162K의 각주 — 벤치마크 수정 −79K, 실질임금 마이너스</h4>
+      <p>헤드라인 3배 서프라이즈 이면의 모순 정리 스레드 다수: ① 연간 벤치마크 수정으로 3월까지 고용 −7.9만 하향 ② 시간당 임금 +3.1% &lt; CPI 3.4% = 실질임금 마이너스 ③ 시카고 PMI 47.1 위축. "강한 고용"과 "구직자 지옥"(신규 진입 채용 절벽)이 동시에 참인 이중 노동시장론이 최다 추천.</p>
+      <div class="quote">"Great jobs report if you have a job. Terrible one if you're looking for one."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/geopolitics <span class="mood bear">유조선 전쟁</span></div>
+      <h4>타깃이 바뀌었다 — 군사시설에서 '오일 플릿'으로</h4>
+      <p>토요일 미군의 이란 유조선 3척 타격("2척 영구 무력화·1척 파괴")을 두고 전쟁의 성격 전환 분석 확산: 공급 '우려'가 아니라 공급 '파괴' 국면. 이란의 걸프 5개국 동시 타격, 이르빌 드론 10기 요격까지 — 개전(2/28) 후 6개월, 협상 실패가 확인된 주.</p>
+      <div class="quote">"When you start sinking tankers, the oil premium stops being a premium and becomes the price."</div>
+    </div>
+    <div class="scard">
+      <div class="src">r/Bitcoin <span class="mood bear">$77K 방어전</span></div>
+      <h4>전쟁에도 안 오르는 '디지털 금'의 정체성 논쟁</h4>
+      <p>수요일 지정학 패닉에 BTC가 금과 함께 하락($77K대)하자 "위험자산 판정 확정" 자조 확산. 현물 ETF 주중 2억달러 이탈. 다만 구조론 진영은 인상 사이클에도 재정적자·부채 경로가 불변임을 들어 "4.8% 금리의 세계에서 살아남으면 진짜 자산"으로 프레이밍.</p>
+      <div class="quote">"Gold down, BTC down, oil up. The only hedge that worked this week was the thing causing the problem."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ X 인플루언서 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>X 인플루언서 레이더</h2><span class="eng">Core 3 + Weekly Rotation 3</span></div>
+  <div class="card-grid">
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Lyn Alden</span> <span class="mood mixed">고정 · 매크로</span></div>
+      <h4>에너지發 인플레이션은 금리로 못 잡는다</h4>
+      <p>알든 프레임의 핵심 논거가 실증되는 주간: 유가 +59% YTD는 통화 현상이 아니라 공급(전쟁) 현상이다. 연준이 인상해도 유조선이 불타면 헤드라인 물가는 오른다 — 긴축은 수요만 죽이고 원인은 못 건드리는 조합. 재정지배 관점에서 '인상 + $40조 부채 + 전쟁 재정'의 3중 부담을 주시하는 시각.</p>
+      <span class="src">관전 포인트: 9/11 CPI의 에너지 기여도 — 코어와 헤드라인의 괴리 폭</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Bianco Research</span> <span class="mood bear">고정 · 채권</span></div>
+      <h4>연내 40bp 인상 프라이싱 — "채권시장이 먼저 움직였다"</h4>
+      <p>비앙코가 추적해온 인상 프라이싱이 1주 만에 30bp 미만→40bp 부근으로 점프. 월러의 비둘기 발언(목)조차 하루짜리였다는 점, 10년물이 4.8%에 재안착한 점이 "시장은 이미 인상 사이클 안에 있다"는 논거. 9월 확률의 널뛰기(36→62→68→고용 후 재상승)는 반응함수 부재의 비용.</p>
+      <span class="src">관전 포인트: 2Y 4.38% — FOMC 전 4.5% 진입 여부</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">The Daily Shot (SoberLook)</span> <span class="mood mixed">고정 · 차트</span></div>
+      <h4>이번 주 차트: PMI 47.1 vs 고용 +162K의 모순</h4>
+      <p>차트 3장이 서사를 압축: ① 시카고 PMI 47.1(예상 57.9) 급락 vs 고용 서프라이즈의 디버전스 ② 가솔린 $4.15 — 전년비 +30%의 소비 압박 ③ 임금 3.1% vs 물가 3.4% — 실질임금 마이너스 재진입. '강한 고용, 약한 체감'의 그림.</p>
+      <span class="src">관전 포인트: 미시간 소비심리(9/11)의 인플레 기대 항목</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Peter Zeihan</span> <span class="rot">ROTATION · 지정학</span></div>
+      <h4>"유조선을 치기 시작하면 봉쇄전이다"</h4>
+      <p>자이한 프레임 픽의 이유: 호르무즈는 세계 원유 해상 물동량의 급소이고, 미군의 '이란 유조선단 파괴' 경고는 에너지 수출 차단전으로의 전환 선언이다. 걸프 산유국 기지 피격 → 보험료·운임 급등 → 아시아 수입국(한국·일본·인도) 교역조건 직격의 전달 경로를 주시하는 시각.</p>
+      <span class="src">관전 포인트: 호르무즈 통항량·전쟁보험료 — 물리적 차질의 첫 데이터</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">Elon Musk</span> <span class="rot">ROTATION · 테슬라/AI</span></div>
+      <h4>주중 −5% 급락과 ESS 공급망 재편의 두 얼굴</h4>
+      <p>테슬라는 수요일 지정학 패닉에 −5%대 급락, TSLL(2x 레버리지)이 최다거래 3위에 오르며 리테일 물타기의 상징이 됐다. 반면 에너지 부문에서는 중국산 배터리 배제 기조 속 한국 셀(삼성SDI·LG엔솔) ESS 조달 확대 서사가 진행 — '주가의 테슬라'와 '공급망의 테슬라'가 따로 노는 주간.</p>
+      <span class="src">관전 포인트: 네바다 자체 LFP 라인 수율 — 외부 조달 확대의 트리거</span>
+    </div>
+    <div class="scard xcard">
+      <div class="src"><span class="handle">kole_finance</span> <span class="rot">ROTATION · 트레이딩</span></div>
+      <h4>휩쏘의 교과서 — 수요일 패닉 매도자가 최대 패자</h4>
+      <p>트레이딩 관점에서 이번 주는 '헤드라인 역추종'의 표본: 수요일 공포 저점 매도 → 목요일 월러 랠리로 역손절 → 금요일 고용 쇼크로 재반전. 이벤트 캘린더가 빽빽할수록(월 휴장, 목 PPI, 금 CPI, FOMC) 포지션 축소·현금 비중이 우위라는 진영의 목소리.</p>
+      <span class="src">관전 포인트: 노동절 연휴 후 화요일 갭 — 유조선 타격의 첫 가격 반영</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 리테일 vs 프로 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>리테일 vs 프로 시각차</h2><span class="eng">Divergence Map</span></div>
+  <div class="versus">
+    <div class="vs-col">
+      <h4>Reddit — 리테일</h4>
+      <ul>
+        <li><b>헤드라인 피로</b> — 전쟁·인상 뉴스에 무뎌지고 밈(GPRO)으로 도피</li>
+        <li>지수 보합을 "시장은 무적" 복원력 서사로 소비</li>
+        <li>NVDA 52주 고점 재접근을 랠리 재개 신호로 해석</li>
+        <li>현금 4%를 '패배'가 아닌 '포지션'으로 받아들이기 시작</li>
+      </ul>
+    </div>
+    <div class="vs-mid">VS</div>
+    <div class="vs-col">
+      <h4>X — 프로</h4>
+      <ul>
+        <li><b>전달경로 중심</b> — 유조선 타격 = 공급 파괴 국면 전환으로 판독</li>
+        <li>지수 보합을 "폭(breadth) 반반의 착시"로 경계(상승 1,341 vs 하락 1,378)</li>
+        <li>실질임금 마이너스·PMI 47을 소비 둔화 선행지표로 주시</li>
+        <li>9/11 CPI를 연내 최대 단일 이벤트로 리프라이싱</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 티커 테이블 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>금주의 티커 보드</h2><span class="eng">Most Mentioned</span></div>
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>티커</th><th>멘션 동인</th><th class="num-r">주간 톤</th><th>커뮤니티 한 줄</th></tr></thead>
+    <tbody>
+      <tr><td><b>GPRO</b></td><td>금 +22.3% · 거래량 65일 평균 +1,070% — 밈 부활 1호</td><td class="num-r up">광기</td><td>"2021이 전화 왔다"</td></tr>
+      <tr><td><b>NVDA</b></td><td>230.36 (+0.84%) · 52주 고점 236.54 재접근 · 폴리마켓 시총1위 77%</td><td class="num-r up">강세</td><td>"전쟁도 못 막는 칩"</td></tr>
+      <tr><td><b>AVGO</b></td><td>연환산 ~100% 이익 성장 비트 — 어닝시즌 피날레</td><td class="num-r up">강세</td><td>"커스텀 칩의 계절"</td></tr>
+      <tr><td><b>TSLA/TSLL</b></td><td>수요일 −5%대 급락 · TSLL 최다거래 3위 — 물타기 성지</td><td class="num-r dn">혼조</td><td>"레버리지로 버티는 신앙"</td></tr>
+      <tr><td><b>GWRE</b></td><td>가이드와이어 −19.9% — 소프트웨어 실적 쇼크</td><td class="num-r dn">급락</td><td>"SaaS의 인상 감수성"</td></tr>
+      <tr><td><b>USO/XOM</b></td><td>WTI $91.48 주간 +$5 · 유조선 타격 프리미엄</td><td class="num-r up">유가 롱</td><td>"문제가 곧 헤지"</td></tr>
+      <tr><td><b>BTC</b></td><td>$77K대 — 지정학 패닉에 금과 동반 하락</td><td class="num-r dn">약세</td><td>"위험자산 판정 확정?"</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ═══════════ 키워드 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>금주의 키워드 클라우드</h2><span class="eng">Narrative Keywords</span></div>
+  <div class="kw-cloud">
+    <span class="kw k1">#전쟁재개</span>
+    <span class="kw k1">#고용162K</span>
+    <span class="kw k2">#SmallPotatoes</span>
+    <span class="kw k2">#유조선타격</span>
+    <span class="kw k2">#WTI91</span>
+    <span class="kw k2">#GiveDisinflationAChance</span>
+    <span class="kw">#인상40bp프라이싱</span>
+    <span class="kw">#10Y_4.8%</span>
+    <span class="kw">#GPRO밈부활</span>
+    <span class="kw">#가솔린4.15</span>
+    <span class="kw k3">#실질임금마이너스</span>
+    <span class="kw k3">#PMI47</span>
+    <span class="kw k3">#호르무즈</span>
+    <span class="kw k3">#CPI_D-5</span>
+  </div>
+</section>
+
+<!-- ═══════════ 시그널 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>위클리 시그널</h2><span class="eng">What Actually Changed</span></div>
+  <div class="signal">
+    <div class="sig-no">01</div>
+    <div><h4>전쟁 프리미엄의 성격이 바뀌었다 — '우려'에서 '파괴'로</h4>
+    <p>8월의 소강은 협상용이었고, 협상은 죽었다. 미군의 유조선 3척 타격과 "이란 유조선단 파괴" 경고는 에너지 공급 자체를 무기화하는 국면 전환이다. 3~4월의 오일쇼크가 '차단 공포'였다면 지금은 '물리적 감축' — 유가 $91은 프리미엄이 아니라 새 균형가격일 수 있다.</p></div>
+  </div>
+  <div class="signal">
+    <div class="sig-no">02</div>
+    <div><h4>인상은 이제 기본 시나리오 — 확률이 아니라 횟수를 세는 시장</h4>
+    <p>2주 전 36%였던 9월 인상 확률이 워시 연설로 62%, 이란 재개전으로 68%, 고용 서프라이즈로 연내 ~40bp 프라이싱까지 왔다. 논쟁의 축이 '올리냐'에서 '몇 번 올리냐'로 이동 완료. 남은 변수는 하나 — 9/11 CPI가 운전석에 앉아 있다.</p></div>
+  </div>
+  <div class="signal">
+    <div class="sig-no">03</div>
+    <div><h4>지수 보합의 해부 — 복원력의 절반은 착시다</h4>
+    <p>S&amp;P +0.09%는 인상적이지만, NYSE 상승 1,341 vs 하락 1,378로 시장 폭은 정확히 반반이고 방어 섹터(헬스케어 +0.17%)가 주간 상위권이다. 3월의 학습(전쟁 헤드라인 = 저가매수 기회)이 하방을 받치고 있으나, 이 학습은 '유동성이 남아있다'는 전제 위에서만 유효 — 인상 사이클이 그 전제를 갉아먹는 중.</p></div>
+  </div>
+  <div class="signal">
+    <div class="sig-no">04</div>
+    <div><h4>에너지 물가의 2차 파급이 시작됐다</h4>
+    <p>가솔린 $4.15(전년 $3.19), 디젤 $5.85. 임금 +3.1% vs 물가 +3.4%로 실질임금은 마이너스 재진입 — EY-파테논 "소비 성장 상한" 경고가 이번 주 가장 저평가된 코멘트다. 유가가 CPI에 완전 반영되는 것은 9월 지표부터: 인플레이션 재가속의 시한폭탄이 10월에 터진다.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════ 차트 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>차트로 보는 한 주</h2><span class="eng">Two Charts That Matter</span></div>
+  <div class="chart-box">
+    <h3>① 주간 크로스에셋 퍼포먼스 (%)</h3>
+    <canvas id="chartAssets" width="860" height="380"></canvas>
+    <p class="chart-cap">WTI 홀로 +6%대 질주 — 전쟁이 만든 외딴 승자. 주식은 보합권 밀집, 원화 +2.32% 절상이 눈에 띄는 이탈값, KOSPI가 주요지수 최하위.</p>
+  </div>
+  <div class="chart-box">
+    <h3>② 9월 인상 확률의 한 달 — 이벤트별 점프 (%)</h3>
+    <canvas id="chartHike" width="860" height="320"></canvas>
+    <p class="chart-cap">잭슨홀(8/28) → 이란 재개전(9/2) → 고용(9/4)까지 3단 점프. 남은 계단은 CPI(9/11)와 FOMC(9/15-16) 둘뿐.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 인사이트 ═══════════ -->
+<div class="insight">
+  <div class="sec-head"><h2>헤드 오브 리서치 인사이트</h2><span class="eng">House View · Druckenmiller Style</span></div>
+  <div class="ins-item">
+    <h4>1. 시장이 전쟁을 학습했다 — 그러나 학습된 복원력은 유동성의 함수다</h4>
+    <p>3월 개전 주간의 S&amp;P는 −1.67%, VIX 31이었다. 이번 주 같은 급의 헤드라인(본토 공습·걸프 보복·유조선 타격)에 S&amp;P는 +0.09%. 시장은 '전쟁 헤드라인 = 며칠 뒤 되돌림'을 6개월간 반복 학습했다. 문제는 이 학습이 성립한 배경 — 풍부한 유동성과 인하 기대 — 이 정확히 지금 제거되고 있다는 것이다. 학습된 반사가 조건 변화를 못 따라갈 때가 가장 비싼 수업료를 내는 순간이다. 헤드라인 매수 반사에 편승하되, 규모는 3월의 절반 이하로.</p>
+    <span class="src">Ref. 3월 개전 주간 vs 금주 지수 반응 · NYSE 등락 종목수 1,341:1,378</span>
+  </div>
+  <div class="ins-item">
+    <h4>2. 고용보고서의 진짜 메시지 — 인상 장벽 제거 ≠ 인상 확정, CPI가 결승선</h4>
+    <p>WSJ의 정리가 정확하다: "약한 고용이었다면 '왜 약한 노동시장에 인상하나'라는 반론이 살아있었을 것 — 금요일 보고서가 그 반론을 죽였다." 그러나 연준은 노동시장을 인플레 압력원으로 보지 않는다(임금 3.1%). 결정 변수는 오직 9/11 CPI다. 유가 전가가 아직 8월 CPI에 다 실리지 않았다는 점이 아이러니한 완충 — '마지막으로 착한 CPI'가 나올 수 있는 달이고, 그 경우 FOMC 동결 + 10월 인상 시그널이 베이스가 된다.</p>
+    <span class="src">Ref. 8월 고용보고서 · Timiraos 해설 · CPI 9/11(금) · FOMC 9/15-16</span>
+  </div>
+  <div class="ins-item">
+    <h4>3. WSJ가 한국 개미를 1면에 올렸다 — 레버리지의 거울을 볼 시간</h4>
+    <p>이번 주말판 Exchange 섹션의 주인공은 한국이다: KOSPI YTD +58.7%(세계 1위권), 그리고 그 뒤에서 수조 원 규모로 부푼 개인의 레버리지 펀드. 기사가 인용한 연구의 결론 — "레버리지 상품은 하락장에서 기하급수적으로 침식된다" — 은 새롭지 않지만, 타이밍이 무섭다. 금리 인상 사이클 + 유가 쇼크 + 세계 1위 상승률 + 사상 최대 개인 레버리지의 조합은 되돌림이 왔을 때 낙폭을 증폭시키는 구조다. 수요일 코스피 −3.99%는 그 예고편이었다.</p>
+    <span class="src">Ref. WSJ Exchange(9/5-6) 한국 레버리지 펀드 기획 · KOSPI YTD +58.7%(WSJ 국제지수 테이블)</span>
+  </div>
+  <div class="ins-item">
+    <h4>4. 헤지는 단순하게 — 문제 자체가 헤지인 장세</h4>
+    <p>이번 주 작동한 유일한 헤지는 에너지였다(금도 −1.1%, BTC도 −, 채권도 −). 유가발 쇼크 국면에서는 에너지 롱 자체가 포트폴리오 보험이다: WTI $91은 52주 고점 $112.95 대비 아직 19% 아래, 유조선 파괴전이 이어지면 갭은 닫힌다. 반대편 방어는 현금 — 4%대 단기금리는 '기다림의 보수'로 역사적 상단이다. 화려한 헤지 구조물보다 에너지 오버웨이트 + 현금 버퍼의 투박한 조합이 지금 장세의 정답에 가깝다.</p>
+    <span class="src">Ref. 주간 크로스에셋 수익률 · WTI 52주 레인지 $55.27–112.95</span>
+  </div>
+</div>
+
+<!-- ═══════════ 워치리스트 ═══════════ -->
+<section>
+  <div class="sec-head"><h2>다음 주 워치리스트</h2><span class="eng">Week of 09.07 – 09.11</span></div>
+  <ul class="watch">
+    <li><span class="wd">월 9/7</span><span><b>미국 노동절 휴장</b> — 주말 유조선 타격·이란 보복이 화요일 개장에 한꺼번에 반영. 갭 리스크 주의</span></li>
+    <li><span class="wd">화 9/8</span><span><b>이란 보복 사이클 체크</b> — 미 해군 드론 공격 이후 확전 수위 · 전쟁보험료·운임 데이터 첫 확인</span></li>
+    <li><span class="wd">목 9/10</span><span><b>미 8월 PPI · 신규 실업수당</b> — CPI 전야제. 파이프라인 물가에 유가 전가 흔적 확인</span></li>
+    <li><span class="wd">금 9/11</span><span><b>미 8월 CPI + 미시간 소비심리</b> — 연내 최대 단일 이벤트. 헤드라인/코어 괴리와 인플레 기대가 9월 FOMC를 결정</span></li>
+    <li><span class="wd">9/15-16</span><span><b>FOMC</b> — 인상 확률 68%에서 출발하는 회의. 동결 시에도 성명서·점도표의 인상 시그널 강도가 관건</span></li>
+    <li><span class="wd">9/17-18</span><span><b>일본은행 금정위</b> — 노무라 "중립금리 3% 접근" 진단. 글로벌 채권 매도의 두 번째 진원지 후보</span></li>
+  </ul>
+</section>
+
+<footer>
+  바이사이드 위클리 센티먼트 리포트 · Global Edition Vol.14 · 2026.09.06<br>
+  Source: WSJ Markets Digest(09.05-06 지면 B6) · Reddit · X(Twitter) · NPR · CNBC · Nasdaq Economic Institute · CME FedWatch · 웹 교차검증<br>
+  본 리포트는 소셜미디어 시장 심리를 합성한 리서치 자료이며 투자 권유가 아닙니다. 커뮤니티 인용문은 여론 흐름을 압축한 표현입니다.<br>
+  minkeun00-creator.github.io/weekly-report/
+</footer>
+
+</div>
+
+<script>
+(function(){
+  function setup(id){
+    var c=document.getElementById(id);
+    var ctx=c.getContext('2d');
+    return {c:c,ctx:ctx,w:c.width,h:c.height};
+  }
+  /* ① 크로스에셋 바차트 */
+  var A=setup('chartAssets'), ctx=A.ctx;
+  var data=[
+    ['WTI',6.0],['원화(vs$)',2.32],['구리',0.53],['나스닥',0.40],['항셍',0.26],['S&P500',0.09],
+    ['러셀2000',0.11],['다우',-0.27],['달러지수',-0.68],['금',-1.08],['KOSPI',-1.50]
+  ];
+  var pad=70, right=20, top=16, bot=30, W=A.w-pad-right, H=A.h-top-bot;
+  var max=7, min=-3, zero=top+H*(max/(max-min));
+  ctx.font='12px "DM Mono",monospace'; ctx.fillStyle='#6b6558';
+  [-2,0,2,4,6].forEach(function(g){
+    var y=top+H*((max-g)/(max-min));
+    ctx.strokeStyle=g===0?'#111010':'#d8d2c4'; ctx.lineWidth=g===0?1.6:1;
+    ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(pad+W,y);ctx.stroke();
+    ctx.fillText(g+'%',18,y+4);
+  });
+  var bw=W/data.length;
+  data.forEach(function(d,i){
+    var x=pad+i*bw+bw*0.18, barW=bw*0.64;
+    var y=top+H*((max-d[1])/(max-min));
+    ctx.fillStyle=d[1]>=0?'#0d6b4f':'#b03a2e';
+    if(d[1]>=0){ctx.fillRect(x,y,barW,zero-y);}else{ctx.fillRect(x,zero,barW,y-zero);}
+    ctx.fillStyle='#111010'; ctx.font='11px "DM Mono",monospace';
+    ctx.textAlign='center';
+    ctx.fillText((d[1]>0?'+':'')+d[1].toFixed(1),x+barW/2,d[1]>=0?y-6:y+14);
+    ctx.save();
+    ctx.translate(x+barW/2, A.h-4); ctx.rotate(-0.42);
+    ctx.font='11px "Noto Sans KR",sans-serif'; ctx.fillStyle='#6b6558'; ctx.textAlign='right';
+    ctx.fillText(d[0],6,0);
+    ctx.restore();
+    ctx.textAlign='left';
+  });
+
+  /* ② 인상 확률 계단 차트 */
+  var B=setup('chartHike'), bx=B.ctx;
+  var labels=['8/14\nCPI냉각','8/27\n연설 전','8/28\n잭슨홀','9/2\n이란재개','9/4\n고용'];
+  var prob=[30,36,62,68,72];
+  var p2=56,r2=24,t2=18,b2=52,W2=B.w-p2-r2,H2=B.h-t2-b2;
+  var mx=80,mn=20;
+  bx.font='12px "DM Mono",monospace';
+  [20,40,60,80].forEach(function(g){
+    var y=t2+H2*((mx-g)/(mx-mn));
+    bx.strokeStyle='#d8d2c4';bx.lineWidth=1;
+    bx.beginPath();bx.moveTo(p2,y);bx.lineTo(p2+W2,y);bx.stroke();
+    bx.fillStyle='#6b6558';bx.fillText(g+'%',16,y+4);
+  });
+  bx.strokeStyle='#b03a2e';bx.lineWidth=2.6;
+  bx.beginPath();
+  prob.forEach(function(v,i){
+    var x=p2+W2*(i/(prob.length-1));
+    var y=t2+H2*((mx-v)/(mx-mn));
+    i===0?bx.moveTo(x,y):bx.lineTo(x,y);
+  });
+  bx.stroke();
+  prob.forEach(function(v,i){
+    var x=p2+W2*(i/(prob.length-1));
+    var y=t2+H2*((mx-v)/(mx-mn));
+    bx.fillStyle='#b03a2e';bx.beginPath();bx.arc(x,y,4,0,7);bx.fill();
+    bx.fillStyle='#111010';bx.textAlign='center';
+    bx.fillText(v+'%',x,y-10);
+    var parts=labels[i].split('\n');
+    bx.fillStyle='#6b6558';
+    bx.fillText(parts[0],x,B.h-30);
+    bx.font='11px "Noto Sans KR",sans-serif';
+    bx.fillText(parts[1],x,B.h-14);
+    bx.font='12px "DM Mono",monospace';
+  });
+  bx.textAlign='left';
+  bx.fillStyle='#b03a2e';bx.fillText('■ CME 9월 25bp 인상 내재확률 (근사)',p2,16);
+})();
+</script>
+</body>
+</html>
